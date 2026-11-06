@@ -1,0 +1,115 @@
+{
+  "captured_at": "2026-11-05",
+  "name": "La Casa de la Mantarraya",
+  "city": "Cancún, Quintana Roo, México",
+  "positioning": "Restaurante de cocina de mar con recetas familiares de tres generaciones de la Península de Yucatán, especialidades de mantarraya, ambiente caribeño y terraza.",
+  "address": "Av. Xpuhil Sur, Supermanzana 19, Manzana 2, Lote 26, 77505 Cancún, Q. Roo, México",
+  "hours": {
+    "Sunday-Thursday": "13:00–23:00",
+    "Friday-Saturday": "13:00–00:00",
+    "timezone": "America/Cancun",
+    "note": "Horario publicado en el sitio oficial. Para festivos o llegadas cerca del cierre, confirmar con el equipo."
+  },
+  "contact": {
+    "whatsapp_for_reservations": "+52 998 489 5643",
+    "phone_for_calls": "+52 998 255 6502",
+    "email": "casadelamantarraya@gmail.com",
+    "website": "https://casadelamantarraya.com/",
+    "menu": "https://casadelamantarraya.com/menu/",
+    "reservations": "https://wa.me/529984895643",
+    "directions": "https://www.google.com/maps/search/?api=1&query=La%20Casa%20de%20la%20Mantarraya%20Cancun",
+    "instagram": "https://www.instagram.com/lacasadelamantarraya/",
+    "facebook": "https://www.facebook.com/lacasadelamantarraya"
+  },
+  "reservation_process": {
+    "known": "El sitio oficial pide enviar fecha, hora y número de personas por WhatsApp y esperar la confirmación del equipo.",
+    "agent_rule": "No asegurar disponibilidad ni decir que la mesa quedó reservada. Recoger fecha, hora, personas y nombre opcional; indicar que el equipo debe confirmar."
+  },
+  "menu_notes": [
+    "Los precios del menú oficial están en pesos mexicanos.",
+    "El sitio pide confirmar disponibilidad y presentaciones al ordenar.",
+    "Si la persona menciona una alergia, recomendar que la informe al equipo antes de elegir; no garantizar ausencia de alérgenos ni contaminación cruzada."
+  ],
+  "weekly_promotions": [
+    {
+      "day": "Lunes",
+      "status": "conflicting details on official promotions page",
+      "published_claims": ["Pide un ceviche y la cerveza va por la casa", "Lunes de destilados dobles"],
+      "agent_answer": "El sitio publica promociones de lunes con detalles que se contradicen. Pregunta al equipo cuál aplica en la fecha de tu visita."
+    },
+    {
+      "day": "Martes",
+      "status": "published, conditions not specified",
+      "published_claims": ["Promoción de tostadas; confirmar cuáles participan"],
+      "agent_answer": "Hay promoción de tostadas los martes; confirma con el equipo qué tostadas participan y sus condiciones."
+    },
+    {
+      "day": "Miércoles",
+      "status": "published, conditions not specified",
+      "published_claims": ["Cervezas nacionales dobles; confirmar marcas y presentaciones"],
+      "agent_answer": "El sitio anuncia cervezas nacionales dobles los miércoles; confirma marcas y presentaciones participantes."
+    },
+    {
+      "day": "Jueves",
+      "status": "published, conditions not specified",
+      "published_claims": ["Ladies Night; confirmar beneficios y condiciones"],
+      "agent_answer": "El sitio anuncia Ladies Night los jueves; pregunta al equipo por los beneficios y condiciones vigentes."
+    },
+    {
+      "day": "Viernes",
+      "status": "published, conditions not specified",
+      "published_claims": ["Promoción de cumpleaños; confirmar requisitos"],
+      "agent_answer": "El sitio anuncia una promoción de cumpleaños los viernes; pregunta por requisitos y condiciones."
+    },
+    {
+      "day": "Sábado",
+      "status": "published, schedule needs confirmation",
+      "published_claims": ["Sábados de salsa; confirmar actividad, horario y disponibilidad"],
+      "agent_answer": "El sitio anuncia sábados de salsa; confirma el programa y horario de esta semana."
+    }
+  ],
+  "seasonal_information": {
+    "posadas_2026": {
+      "status": "seasonal; verify date and availability",
+      "food_packages_mxn_per_person": [
+        {"package": 1, "price": 380, "courses": ["Sopa de lima", "Pechuga rellena de espinaca y champiñones en salsa poblana, con puré de papa y verduras asadas", "Budín de la casa"]},
+        {"package": 2, "price": 480, "courses": ["Pescadilla de mantarraya", "Pescado en salsa de pimienta blanca, con arroz y ensalada fresca", "Carlota de limón"]},
+        {"package": 3, "price": 540, "courses": ["Ensalada fresca con queso de cabra y vinagreta de fresa", "Camarones momias rellenos de queso crema con aderezo de chipotle, zanahorias baby y puré de papa", "Cheesecake de temporada"]},
+        {"package": 4, "price": 620, "courses": ["Crema de papa y poro", "Salmón glaseado con miel y mostaza, verduras salteadas, salsa teriyaki y papas cambray", "Brownie con helado de vainilla"]},
+        {"package": 5, "price": 950, "courses": ["Tacos de carnita de atún", "Rib eye con chimichurri, elotes asados y papas gajo", "Ensalada navideña"]}
+      ],
+      "drink_packages_mxn_per_person": [
+        {"name": "Refresque", "price": 369, "description": "Barra libre de caguamas de cerveza, aguas de sabor y refrescos."},
+        {"name": "Festejes", "price": 579, "description": "Barra libre de caguamas de cerveza, whisky etiqueta roja, ron Capitán Morgan, Bacardí, tequila Tradicional y vodka Absolut."}
+      ],
+      "terms": ["Apartado con 30% de depósito.", "Liquidar el resto el día del evento, antes de empezar.", "Precios publicados incluyen IVA.", "La propina no está incluida; el sitio sugiere 10%–15% y aclara que es voluntaria.", "Confirmar disponibilidad para la fecha y condiciones del paquete de bebidas."]
+    },
+    "breakfast_announcement": {
+      "published_start": "2026-11-08 08:00 America/Cancun",
+      "status": "announcement only; no breakfast menu or regular hours published on the pages captured",
+      "agent_answer": "El sitio anunció desayunos desde el 8 de noviembre de 2026 a las 8:00 a. m.; confirma con el restaurante que el servicio ya esté disponible y consulta el menú."
+    }
+  },
+  "social_event_posts": {
+    "captured_post": "Un directorio que reproduce publicaciones de Facebook mostró el 29 de octubre de 2026 un anuncio de música en vivo viernes y sábados desde las 20:30.",
+    "official_site_listing": "La página oficial de promociones anuncia Sábados de salsa y pide consultar actividad, horario y disponibilidad.",
+    "agent_answer": "El sitio anuncia Sábados de Salsa. Una publicación reciente de Facebook también menciona música en vivo viernes y sábados desde las 20:30. La programación puede cambiar; confirma la fecha con el restaurante.",
+    "source": "https://www.findglocal.com/MX/Canc%C3%BAn/1659326791009438/La-Casa-De-La-Mantarraya"
+  },
+  "not_confirmed_by_current_official_pages": [
+    "Delivery, takeout, and active delivery-app availability",
+    "Pet policy",
+    "Parking availability",
+    "Payment methods",
+    "Accessibility details",
+    "Dietary certifications or allergen-free preparation",
+    "Exact terms for weekly promotions"
+  ],
+  "sources": [
+    "https://casadelamantarraya.com/",
+    "https://casadelamantarraya.com/menu/",
+    "https://casadelamantarraya.com/contacto/",
+    "https://casadelamantarraya.com/promociones-y-eventos/",
+    "https://casadelamantarraya.com/nuestra-historia/"
+  ]
+}

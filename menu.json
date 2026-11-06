@@ -1,0 +1,1270 @@
+[
+  {
+    "category": "Entradas",
+    "group": "food",
+    "items": [
+      {
+        "name": "Tártara de atún",
+        "price": "$296",
+        "description": "Atún con aceite de ajonjolí, cebolla y tomate, sobre aguacate y zanahoria rallada."
+      },
+      {
+        "name": "Tártara de salmón",
+        "price": "$297",
+        "description": "Salmón con aceite de ajonjolí, cebolla y tomate, sobre aguacate y zanahoria rallada."
+      },
+      {
+        "name": "Tapas de salmón",
+        "price": "$210",
+        "description": "Salmón sobre mousse de queso de cabra y crotones."
+      },
+      {
+        "name": "Tapas de bacalao",
+        "price": "$210",
+        "description": "Bacalao a la vizcaína sobre crotones."
+      },
+      {
+        "name": "Tapas de mantarraya",
+        "price": "$198",
+        "description": "Mantarraya a la vizcaína sobre crotones con mayonesa de mostaza."
+      },
+      {
+        "name": "Carpaccio de pulpo",
+        "price": "$370",
+        "description": "Láminas de pulpo con aceite de oliva, limón, cebolla morada y chile habanero."
+      },
+      {
+        "name": "Carpaccio de salmón",
+        "price": "$296",
+        "description": "Láminas de salmón con aceite de oliva, limón y cebolla morada."
+      },
+      {
+        "name": "Carpaccio de atún",
+        "price": "$290",
+        "description": "Láminas de atún con aceite de oliva, limón, cebolla morada y chile habanero."
+      },
+      {
+        "name": "Guacamole tradicional",
+        "price": "$130",
+        "description": "Guacamole de la carta."
+      },
+      {
+        "name": "Trilogía del Caribe, 3 piezas",
+        "price": "$209",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "category": "Pescadillas",
+    "group": "food",
+    "items": [
+      {
+        "name": "Pescadillas de mantarraya, 3 piezas",
+        "price": "$159",
+        "description": "Tortillas de maíz rellenas de mantarraya y fritas."
+      },
+      {
+        "name": "Pescadilla de mantarraya, 1 pieza",
+        "price": "$58",
+        "description": "Tortilla de maíz rellena de mantarraya y frita."
+      },
+      {
+        "name": "Pescadilla de bacalao, 1 pieza",
+        "price": "$60",
+        "description": "Tortilla de maíz rellena de bacalao y frita."
+      },
+      {
+        "name": "Pescadillas de bacalao, 3 piezas",
+        "price": "$189",
+        "description": "Tortillas de maíz rellenas de bacalao y fritas."
+      }
+    ]
+  },
+  {
+    "category": "Tacos",
+    "group": "food",
+    "items": [
+      {
+        "name": "Tacos de mantarraya al tamarindo, 3 piezas",
+        "price": "$179",
+        "description": "Mantarraya con salsa de tamarindo."
+      },
+      {
+        "name": "Tacos de mantarraya a la vizcaína, 3 piezas",
+        "price": "$169",
+        "description": "Mantarraya a la vizcaína."
+      },
+      {
+        "name": "Tacos de camarón capeado, 3 piezas",
+        "price": "$169",
+        "description": "Camarón capeado."
+      },
+      {
+        "name": "Tacos de pescado al tamarindo, 3 piezas",
+        "price": "$169",
+        "description": "Pescado al tamarindo."
+      },
+      {
+        "name": "Tacos de carnitas de atún, 3 piezas",
+        "price": "$179",
+        "description": "Atún estilo carnitas."
+      },
+      {
+        "name": "Tacos gobernador de camarón, 2 piezas",
+        "price": "$190",
+        "description": "Tacos gobernador de camarón."
+      },
+      {
+        "name": "Tacos de bacalao a la vizcaína, 3 piezas",
+        "price": "$189",
+        "description": "Bacalao a la vizcaína."
+      }
+    ]
+  },
+  {
+    "category": "Tostadas",
+    "group": "food",
+    "items": [
+      {
+        "name": "Tostada de mantarraya",
+        "price": "$78",
+        "description": "Mantarraya a la vizcaína."
+      },
+      {
+        "name": "Tostada de bacalao",
+        "price": "$98",
+        "description": "Tostada de bacalao."
+      },
+      {
+        "name": "Tostada de camarón",
+        "price": "$89",
+        "description": "Tostada de camarón."
+      },
+      {
+        "name": "Tostada de pescado",
+        "price": "$78",
+        "description": "Tostada de pescado."
+      },
+      {
+        "name": "Tostada de atún",
+        "price": "$89",
+        "description": "Tostada de atún."
+      },
+      {
+        "name": "Tostada de ceviche negro",
+        "price": "$89",
+        "description": "Tostada de ceviche negro."
+      }
+    ]
+  },
+  {
+    "category": "Sopas y ensaladas",
+    "group": "food",
+    "items": [
+      {
+        "name": "Sopa de camarón",
+        "price": "$229",
+        "description": "Camarón, fumet de camarón, apio y zanahoria."
+      },
+      {
+        "name": "Ensalada César con pollo",
+        "price": "$260",
+        "description": "Lechuga, aderezo César de la casa, pechuga marinada a la plancha, parmesano rallado y crotones."
+      },
+      {
+        "name": "Ensalada César con camarón",
+        "price": "$290",
+        "description": "Variante con camarón."
+      },
+      {
+        "name": "Ensalada César con salmón",
+        "price": "$360",
+        "description": "Salmón crudo o cocido, según la carta."
+      }
+    ]
+  },
+  {
+    "category": "Mantarraya",
+    "group": "food",
+    "items": [
+      {
+        "name": "Mantarraya alcaparrada",
+        "price": "$320",
+        "description": "Filete de mantarraya a la mantequilla, bañado en salsa de alcaparras y acompañado de puré de papa."
+      },
+      {
+        "name": "Mantarraya a la vizcaína",
+        "price": "$320",
+        "description": "Acompañada de aguacate y arroz."
+      },
+      {
+        "name": "Mantarraya frita",
+        "price": "$320",
+        "description": "Con papas salteadas."
+      }
+    ]
+  },
+  {
+    "category": "Platos fuertes",
+    "group": "food",
+    "items": [
+      {
+        "name": "Salmón a la parrilla",
+        "price": "$399",
+        "description": "Con verduras al vapor y papa al horno."
+      },
+      {
+        "name": "Camarones al gusto",
+        "price": "$360",
+        "description": "Empanizados, al mojo de ajo, a la plancha o al ajillo; con pasta salteada con pimientos y papa al horno."
+      },
+      {
+        "name": "Filete de pescado al gusto",
+        "price": "$340",
+        "description": "Al mojo de ajo, a la parrilla, a la mantequilla, a la plancha o al ajillo."
+      },
+      {
+        "name": "Arroz a la tumbada",
+        "price": "$340",
+        "description": "Arroz con mariscos al estilo veracruzano."
+      },
+      {
+        "name": "Filete de pescado a la veracruzana",
+        "price": "$340",
+        "description": "Bañado en salsa veracruzana y acompañado de arroz."
+      },
+      {
+        "name": "Mariscada, para 3 personas",
+        "price": "$1,500",
+        "description": "Pulpo, pescado empanizado, pasta, atún y camarones, con guacamole, papas a la francesa y arroz."
+      },
+      {
+        "name": "Atún sellado con ajonjolí",
+        "price": "$380",
+        "description": "Salsa agridulce con ajonjolí, vegetales al vapor y papa al horno."
+      },
+      {
+        "name": "Pechuga napolitana",
+        "price": "$260",
+        "description": "Con salsa napolitana, gratinada con queso y servida con papas salteadas."
+      },
+      {
+        "name": "Camarones momia",
+        "price": "$420",
+        "description": "Camarones al grill envueltos en tocino y queso, con puré y vegetales salteados."
+      },
+      {
+        "name": "Camarones a la diabla",
+        "price": "$360",
+        "description": "Camarones en salsa diabla, con arroz y guacamole."
+      },
+      {
+        "name": "Pulpo al ajillo",
+        "price": "$490",
+        "description": "Con arroz y vegetales salteados."
+      }
+    ]
+  },
+  {
+    "category": "Pastas",
+    "group": "food",
+    "items": [
+      {
+        "name": "Pasta al ajo con camarón",
+        "price": "$360",
+        "description": "Salsa de mantequilla, pimientos salteados y camarones."
+      },
+      {
+        "name": "Espagueti a la carbonara con pollo",
+        "price": "$290",
+        "description": "Salsa cremosa a base de huevo, con tocino y cebolla."
+      },
+      {
+        "name": "Espagueti a la carbonara con camarones",
+        "price": "$380",
+        "description": "Salsa cremosa a base de huevo, con tocino y cebolla."
+      },
+      {
+        "name": "Pasta con vegetales al olivo",
+        "price": "$210",
+        "description": "Con zanahoria, calabaza y pimiento morrón."
+      },
+      {
+        "name": "Pasta de la casa con pollo",
+        "price": "$260",
+        "description": "Fetuccini de la casa con un toque de vodka."
+      },
+      {
+        "name": "Pasta de la casa con salmón",
+        "price": "$380",
+        "description": "Fetuccini de la casa con un toque de vodka."
+      }
+    ]
+  },
+  {
+    "category": "Ceviches y aguachiles",
+    "group": "food",
+    "items": [
+      {
+        "name": "Ceviche de camarón",
+        "price": "$286",
+        "description": "Con limón, tomate, cebolla y cilantro."
+      },
+      {
+        "name": "Ceviche de pescado",
+        "price": "$297",
+        "description": "Con limón, tomate, cebolla y cilantro."
+      },
+      {
+        "name": "Ceviche de pulpo",
+        "price": "$379",
+        "description": "Con limón, tomate, cebolla y cilantro."
+      },
+      {
+        "name": "Ceviche mixto",
+        "price": "$370",
+        "description": "Con limón, tomate, cebolla y cilantro."
+      },
+      {
+        "name": "Ceviche negro de pescado",
+        "price": "$370",
+        "description": "Dorado, cebolla, tomate y cilantro en salsa tatemada."
+      },
+      {
+        "name": "Ceviche negro de camarón",
+        "price": "$380",
+        "description": "Variante con camarón."
+      },
+      {
+        "name": "Ceviche negro mixto",
+        "price": "$390",
+        "description": "Pescado y camarón."
+      },
+      {
+        "name": "Aguachile verde",
+        "price": "$289",
+        "description": ""
+      },
+      {
+        "name": "Aguachile de maracuyá",
+        "price": "$310",
+        "description": "Camarones con cebolla, ajo, limón, aguacate, chile serrano y salsa de maracuyá."
+      },
+      {
+        "name": "Aguachile molcajeteado",
+        "price": "$380",
+        "description": "Camarones con chiles tatemados, ajo, naranja agria, cebolla morada, pepino y cubos de aguacate."
+      },
+      {
+        "name": "Cóctel de camarón tradicional",
+        "price": "$215",
+        "description": "Camarones en salsa cátsup, con cebolla, tomate y cilantro."
+      }
+    ]
+  },
+  {
+    "category": "Hamburguesa y baguettes",
+    "group": "food",
+    "items": [
+      {
+        "name": "Hamburguesa de res artesanal",
+        "price": "$210",
+        "description": "Carne preparada en casa, al grill, acompañada de papas."
+      },
+      {
+        "name": "Baguette de mantarraya",
+        "price": "$180",
+        "description": "Mantarraya a la vizcaína y aderezo de mostaza."
+      },
+      {
+        "name": "Baguette de bacalao",
+        "price": "$220",
+        "description": "Bacalao a la vizcaína y aderezo de mostaza."
+      },
+      {
+        "name": "Baguette de salmón",
+        "price": "$190",
+        "description": "Con queso de cabra y aderezo de la casa."
+      }
+    ]
+  },
+  {
+    "category": "Cortes y parrilla",
+    "group": "food",
+    "items": [
+      {
+        "name": "Rib eye Sonora Choice, 400 g",
+        "price": "$750",
+        "description": "Con papa al horno con crema y cebolla toreada."
+      },
+      {
+        "name": "Arrachera a la parrilla",
+        "price": "$450",
+        "description": "Con papa al horno con crema y cebolla toreada."
+      },
+      {
+        "name": "Fajitas de pollo",
+        "price": "$230",
+        "description": "En plato de hierro, con pimientos y cebolla al grill."
+      },
+      {
+        "name": "Fajitas de arrachera",
+        "price": "$430",
+        "description": "En plato de hierro, con pimientos y cebolla al grill."
+      },
+      {
+        "name": "Fajitas de camarón y arrachera",
+        "price": "$450",
+        "description": "En plato de hierro, con pimientos y cebolla al grill."
+      },
+      {
+        "name": "Pollo a la leña",
+        "price": "$298",
+        "description": "Con ajo, mantequilla, papas a la francesa y arroz."
+      }
+    ]
+  },
+  {
+    "category": "Pizzas",
+    "group": "food",
+    "items": [
+      {
+        "name": "Pizza de mantarraya Signature",
+        "price": "$239",
+        "description": "Mantarraya y queso mozzarella."
+      },
+      {
+        "name": "Marea Roja",
+        "price": "$315",
+        "description": "Camarón, chile guajillo, ajo, cebolla, mantequilla y mozzarella."
+      },
+      {
+        "name": "Champotona",
+        "price": "$315",
+        "description": "Camarón, arúgula marinada, aceite de oliva y queso."
+      },
+      {
+        "name": "Reina Noruega",
+        "price": "$360",
+        "description": "Láminas de salmón, queso de cabra y mozzarella."
+      },
+      {
+        "name": "Cuatro Estaciones",
+        "price": "$260",
+        "description": "Mozzarella, crema, roquefort y gouda."
+      },
+      {
+        "name": "Reina del Norte",
+        "price": "$430",
+        "description": "Arrachera, cebolla toreada y pimientos de colores."
+      },
+      {
+        "name": "Princesa Inglesa",
+        "price": "$210",
+        "description": "Mozzarella, tomate y albahaca."
+      },
+      {
+        "name": "La Italiana",
+        "price": "$179",
+        "description": "Pepperoni y mozzarella."
+      },
+      {
+        "name": "Hawaiana",
+        "price": "$195",
+        "description": "Jamón y piña asada."
+      }
+    ]
+  },
+  {
+    "category": "Postres",
+    "group": "food",
+    "items": [
+      {
+        "name": "Brownie con helado de vainilla",
+        "price": "$150",
+        "description": "Brownie acompañado de helado de vainilla."
+      },
+      {
+        "name": "Cheesecake de temporada",
+        "price": "$120",
+        "description": ""
+      },
+      {
+        "name": "Strudel de manzana con helado de vainilla",
+        "price": "$150",
+        "description": "Strudel de manzana acompañado de helado de vainilla."
+      },
+      {
+        "name": "Flan de la casa",
+        "price": "$120",
+        "description": "Flan de la casa."
+      },
+      {
+        "name": "Copa de helado de vainilla",
+        "price": "$140",
+        "description": "Helado de vainilla servido en copa."
+      }
+    ]
+  },
+  {
+    "category": "Menú infantil",
+    "group": "food",
+    "items": [
+      {
+        "name": "Dedos de pollo",
+        "price": "$120",
+        "description": "Con papas fritas."
+      },
+      {
+        "name": "Dedos de pescado",
+        "price": "$160",
+        "description": "Con papas fritas."
+      },
+      {
+        "name": "Minihamburguesa",
+        "price": "$120",
+        "description": "Con papas fritas."
+      }
+    ]
+  },
+  {
+    "category": "Bebidas sin alcohol",
+    "group": "drinks",
+    "items": [
+      {
+        "name": "Agua de pepino con moringa",
+        "price": "$45",
+        "description": "Agua de sabor de pepino con moringa."
+      },
+      {
+        "name": "Agua de jamaica",
+        "price": "$45",
+        "description": "Agua de jamaica."
+      },
+      {
+        "name": "Limonada",
+        "price": "$45",
+        "description": ""
+      },
+      {
+        "name": "Naranjada",
+        "price": "$45",
+        "description": ""
+      },
+      {
+        "name": "Refrescos",
+        "price": "$55",
+        "description": "Coca-Cola regular, Light y Sin Azúcar; Sidral Mundet, Sprite, Fresca y Fanta."
+      },
+      {
+        "name": "Botella de agua",
+        "price": "$35",
+        "description": ""
+      },
+      {
+        "name": "Agua mineral",
+        "price": "$35",
+        "description": ""
+      },
+      {
+        "name": "Agua Perrier",
+        "price": "$85",
+        "description": ""
+      },
+      {
+        "name": "Agua de maracuyá grande",
+        "price": "$79",
+        "description": ""
+      },
+      {
+        "name": "Jarra de naranjada",
+        "price": "$250",
+        "description": ""
+      },
+      {
+        "name": "Jarra de limonada",
+        "price": "Consultar",
+        "description": ""
+      },
+      {
+        "name": "Jarra de maracuyá",
+        "price": "$250",
+        "description": ""
+      },
+      {
+        "name": "Heineken 0.0, 250 ml",
+        "price": "$55",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "category": "Café y té",
+    "group": "drinks",
+    "items": [
+      {
+        "name": "Café americano",
+        "price": "$60",
+        "description": ""
+      },
+      {
+        "name": "Capuchino",
+        "price": "$80",
+        "description": ""
+      },
+      {
+        "name": "Espresso",
+        "price": "$50",
+        "description": ""
+      },
+      {
+        "name": "Variedad de tés",
+        "price": "$80",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "category": "Mixología de la casa",
+    "group": "drinks",
+    "items": [
+      {
+        "name": "Mantarraya Rosse",
+        "price": "$210",
+        "description": "Cóctel de la casa."
+      },
+      {
+        "name": "Flor de Mar",
+        "price": "$200",
+        "description": ""
+      },
+      {
+        "name": "Manglar",
+        "price": "$190",
+        "description": "Tequila Altos Plata, miel con pepino, jarabe natural y jugo de limón."
+      },
+      {
+        "name": "Tropicalito",
+        "price": "$190",
+        "description": "Ron Havana 3 años, jugo de piña, canela, limón amarillo y milk punch."
+      },
+      {
+        "name": "Mar Rojo",
+        "price": "$190",
+        "description": "Vodka Absolut, jarabe de jamaica, jugo de limón y frutos rojos."
+      },
+      {
+        "name": "Anémona",
+        "price": "$200",
+        "description": "Ginebra Beefeater, licor St-Germain, lichi y arándano."
+      },
+      {
+        "name": "Caribeña",
+        "price": "$190",
+        "description": "Mezcal 400 Conejos, maracuyá, jugo de limón y jarabe natural."
+      },
+      {
+        "name": "Mezcal del Alma",
+        "price": "$190",
+        "description": "Mezcal 400 Conejos, jarabe de tamarindo y jugos de naranja y limón."
+      },
+      {
+        "name": "Brisa Tropical",
+        "price": "$190",
+        "description": "Ginebra Beefeater, vermut rosso, jarabe de piña y jugo de toronja."
+      },
+      {
+        "name": "Lily & Gin",
+        "price": "$200",
+        "description": "Ginebra Beefeater, Lillet blanco y toronja."
+      },
+      {
+        "name": "Strawberry Kiss",
+        "price": "$190",
+        "description": "Ginebra Beefeater Pink, jarabe de fresa, limón amarillo y fresas."
+      },
+      {
+        "name": "Summer Fizz",
+        "price": "$190",
+        "description": "Ginebra Beefeater, jugo de pepino, jarabe natural y jugo de limón."
+      },
+      {
+        "name": "Lemon & Ginger",
+        "price": "$190",
+        "description": ""
+      },
+      {
+        "name": "Green Day",
+        "price": "$190",
+        "description": "Ginebra Beefeater, cordial de hierbas y bitter de romero."
+      },
+      {
+        "name": "St-Germain Spritz",
+        "price": "$210",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "category": "Coctelería clásica",
+    "group": "drinks",
+    "items": [
+      {
+        "name": "Sangría",
+        "price": "$155",
+        "description": ""
+      },
+      {
+        "name": "Clericot",
+        "price": "$165",
+        "description": ""
+      },
+      {
+        "name": "Jarra de clericot",
+        "price": "$650",
+        "description": ""
+      },
+      {
+        "name": "Mojito",
+        "price": "$150",
+        "description": ""
+      },
+      {
+        "name": "Margaritas",
+        "price": "$160",
+        "description": ""
+      },
+      {
+        "name": "Martini",
+        "price": "$160",
+        "description": "Vodka o ginebra."
+      },
+      {
+        "name": "Aperol Spritz",
+        "price": "$165",
+        "description": ""
+      },
+      {
+        "name": "Negroni",
+        "price": "$190",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "category": "Mocktails",
+    "group": "drinks",
+    "items": [
+      {
+        "name": "Doradita",
+        "price": "$120",
+        "description": "Durazno, jarabe de miel, manzanilla y limón amarillo."
+      },
+      {
+        "name": "Trópico",
+        "price": "$120",
+        "description": "Jugo de piña, toronja, limón amarillo y miel de agave."
+      }
+    ]
+  },
+  {
+    "category": "Vinos espumosos",
+    "group": "drinks",
+    "items": [
+      {
+        "name": "Cava La Rosca Brut, 750 ml",
+        "price": "$590",
+        "description": "Botella de cava brut."
+      }
+    ]
+  },
+  {
+    "category": "Vinos rosados",
+    "group": "drinks",
+    "items": [
+      {
+        "name": "Anécdota Cabernet Sauvignon Merlot, 750 ml",
+        "price": "Consultar",
+        "description": ""
+      },
+      {
+        "name": "The Girls in the Vineyard White de Zinfandel, 750 ml",
+        "price": "$590",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "category": "Vinos tintos",
+    "group": "drinks",
+    "items": [
+      {
+        "name": "Anécdota Primeros Pasos, 750 ml",
+        "price": "Consultar",
+        "description": "Vino mexicano."
+      },
+      {
+        "name": "Altotinto Selección, 750 ml",
+        "price": "$1,050",
+        "description": "Vino mexicano, 9 meses en barrica según carta."
+      },
+      {
+        "name": "Brigantello Salento Primitivo Rosso, 750 ml",
+        "price": "$570",
+        "description": "Vino italiano."
+      },
+      {
+        "name": "Avaniel Joven Tempranillo, 750 ml",
+        "price": "$690",
+        "description": "Vino tinto tempranillo."
+      },
+      {
+        "name": "Don Silvestre Merlot / Cabernet Sauvignon",
+        "price": "Consultar",
+        "description": ""
+      },
+      {
+        "name": "JMC Selección",
+        "price": "Consultar",
+        "description": ""
+      },
+      {
+        "name": "Ménage à Trois Red Blend, 750 ml",
+        "price": "Consultar",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "category": "Vinos blancos",
+    "group": "drinks",
+    "items": [
+      {
+        "name": "Don Silvestre Chardonnay, 750 ml",
+        "price": "Consultar",
+        "description": ""
+      },
+      {
+        "name": "Avaniel Rueda Verdejo, 750 ml",
+        "price": "$860",
+        "description": "Vino blanco verdejo."
+      },
+      {
+        "name": "Brigantello Pinot Grigio IGT, 750 ml",
+        "price": "$570",
+        "description": "Vino blanco pinot grigio."
+      },
+      {
+        "name": "Anécdota Chenin Blanc, 750 ml",
+        "price": "Consultar",
+        "description": ""
+      },
+      {
+        "name": "Altotinto Chardonnay, 750 ml",
+        "price": "$970",
+        "description": "9 meses en barrica según carta."
+      }
+    ]
+  },
+  {
+    "category": "Cervezas",
+    "group": "drinks",
+    "items": [
+      {
+        "name": "Heineken, 355 ml",
+        "price": "$67",
+        "description": ""
+      },
+      {
+        "name": "Bohemia Pilsner, 355 ml",
+        "price": "$65",
+        "description": ""
+      },
+      {
+        "name": "Bohemia Vienna, 355 ml",
+        "price": "$65",
+        "description": ""
+      },
+      {
+        "name": "Bohemia Cristal, 355 ml",
+        "price": "$65",
+        "description": ""
+      },
+      {
+        "name": "Amstel Ultra, 355 ml",
+        "price": "$70",
+        "description": ""
+      },
+      {
+        "name": "XX Lager y Ámbar, 355 ml",
+        "price": "$59",
+        "description": ""
+      },
+      {
+        "name": "Indio, 355 ml",
+        "price": "$59",
+        "description": ""
+      },
+      {
+        "name": "Tecate Light, 355 ml",
+        "price": "$55",
+        "description": ""
+      },
+      {
+        "name": "Tecate Roja, 355 ml",
+        "price": "$55",
+        "description": ""
+      },
+      {
+        "name": "Sol, 355 ml",
+        "price": "$55",
+        "description": ""
+      },
+      {
+        "name": "Cerveza de barril",
+        "price": "$70",
+        "description": ""
+      },
+      {
+        "name": "Heineken en tarro",
+        "price": "$90",
+        "description": ""
+      },
+      {
+        "name": "Cerveza con michelada",
+        "price": "$70",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "category": "Preparados",
+    "group": "drinks",
+    "items": [
+      {
+        "name": "Chelada",
+        "price": "$29",
+        "description": ""
+      },
+      {
+        "name": "Michelada",
+        "price": "$33",
+        "description": ""
+      },
+      {
+        "name": "Ojo rojo",
+        "price": "$44",
+        "description": ""
+      },
+      {
+        "name": "Clamato preparado",
+        "price": "$90",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "category": "Sidras",
+    "group": "drinks",
+    "items": [
+      {
+        "name": "Strongbow Red Berries, 330 ml",
+        "price": "$54",
+        "description": ""
+      },
+      {
+        "name": "Strongbow Rosé, 330 ml",
+        "price": "$54",
+        "description": ""
+      },
+      {
+        "name": "Strongbow Honey, 330 ml",
+        "price": "$54",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "category": "Licores y carajillo",
+    "group": "drinks",
+    "items": [
+      {
+        "name": "Carajillo",
+        "price": "$155",
+        "description": ""
+      },
+      {
+        "name": "Frangelico",
+        "price": "$145",
+        "description": ""
+      },
+      {
+        "name": "Kahlúa",
+        "price": "$125",
+        "description": ""
+      },
+      {
+        "name": "Licor 43",
+        "price": "$125",
+        "description": ""
+      },
+      {
+        "name": "Baileys",
+        "price": "$125",
+        "description": ""
+      },
+      {
+        "name": "Chinchón seco o dulce",
+        "price": "$129",
+        "description": ""
+      },
+      {
+        "name": "Xtabentún",
+        "price": "$120",
+        "description": ""
+      },
+      {
+        "name": "Grand Marnier",
+        "price": "$186",
+        "description": ""
+      },
+      {
+        "name": "Disaronno",
+        "price": "$145",
+        "description": ""
+      },
+      {
+        "name": "Sambuca",
+        "price": "$150",
+        "description": ""
+      },
+      {
+        "name": "St-Germain",
+        "price": "$190",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "category": "Ginebras",
+    "group": "drinks",
+    "items": [
+      {
+        "name": "Beefeater",
+        "price": "$161",
+        "description": ""
+      },
+      {
+        "name": "Tanqueray",
+        "price": "$165",
+        "description": ""
+      },
+      {
+        "name": "Bombay",
+        "price": "$189",
+        "description": ""
+      },
+      {
+        "name": "Hendrick's",
+        "price": "$210",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "category": "Ron y brandy",
+    "group": "drinks",
+    "items": [
+      {
+        "name": "Havana Club 3 años",
+        "price": "$135",
+        "description": ""
+      },
+      {
+        "name": "Havana 7 años",
+        "price": "$160",
+        "description": ""
+      },
+      {
+        "name": "Captain Morgan",
+        "price": "$125",
+        "description": ""
+      },
+      {
+        "name": "Matusalem Clásico",
+        "price": "$129",
+        "description": ""
+      },
+      {
+        "name": "Matusalem Platino",
+        "price": "$139",
+        "description": ""
+      },
+      {
+        "name": "Appleton Estate",
+        "price": "$155",
+        "description": ""
+      },
+      {
+        "name": "Zacapa 12",
+        "price": "$165",
+        "description": ""
+      },
+      {
+        "name": "Zacapa 23",
+        "price": "$217",
+        "description": ""
+      },
+      {
+        "name": "Bacardí blanco",
+        "price": "$129",
+        "description": ""
+      },
+      {
+        "name": "Torres 10",
+        "price": "$135",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "category": "Tequilas",
+    "group": "drinks",
+    "items": [
+      {
+        "name": "Don Julio 70",
+        "price": "$195",
+        "description": ""
+      },
+      {
+        "name": "Don Julio Reposado",
+        "price": "$175",
+        "description": ""
+      },
+      {
+        "name": "1800 Cristalino",
+        "price": "$175",
+        "description": ""
+      },
+      {
+        "name": "Herradura Reposado",
+        "price": "$170",
+        "description": ""
+      },
+      {
+        "name": "Herradura Plata",
+        "price": "$160",
+        "description": ""
+      },
+      {
+        "name": "Herradura Blanco",
+        "price": "$190",
+        "description": ""
+      },
+      {
+        "name": "Tradicional",
+        "price": "$155",
+        "description": ""
+      },
+      {
+        "name": "Maestro Dobel Diamante",
+        "price": "$170",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "category": "Mezcales",
+    "group": "drinks",
+    "items": [
+      {
+        "name": "Montelobos",
+        "price": "$180",
+        "description": ""
+      },
+      {
+        "name": "Amores",
+        "price": "$160",
+        "description": ""
+      },
+      {
+        "name": "400 Conejos",
+        "price": "$150",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "category": "Whiskies",
+    "group": "drinks",
+    "items": [
+      {
+        "name": "Chivas",
+        "price": "$179",
+        "description": ""
+      },
+      {
+        "name": "Whisky etiqueta roja",
+        "price": "$145",
+        "description": ""
+      },
+      {
+        "name": "Whisky etiqueta negra",
+        "price": "$191",
+        "description": ""
+      },
+      {
+        "name": "Jack Daniel's",
+        "price": "$163",
+        "description": ""
+      },
+      {
+        "name": "Buchanan's",
+        "price": "$189",
+        "description": ""
+      },
+      {
+        "name": "Buchanan's 18",
+        "price": "$275",
+        "description": ""
+      },
+      {
+        "name": "Macallan Gold",
+        "price": "$209",
+        "description": ""
+      },
+      {
+        "name": "Old Parr",
+        "price": "$169",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "category": "Vodkas",
+    "group": "drinks",
+    "items": [
+      {
+        "name": "Absolut",
+        "price": "$139",
+        "description": ""
+      },
+      {
+        "name": "Smirnoff",
+        "price": "$120",
+        "description": ""
+      },
+      {
+        "name": "Stolichnaya",
+        "price": "$129",
+        "description": ""
+      },
+      {
+        "name": "Grey Goose",
+        "price": "$208",
+        "description": ""
+      }
+    ]
+  }
+]
