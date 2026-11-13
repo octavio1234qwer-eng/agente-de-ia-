@@ -19,7 +19,8 @@ from . import originality
 from .originality import normalize
 
 ROOT = Path(__file__).resolve().parent.parent
-PLACEHOLDERS = re.compile(r"\b(TODO|TBD|lorem ipsum|XXX|FIXME|\[insertar|\[nombre del)", re.I)
+# TODO/XXX en mayúsculas (en español "todo" es una palabra normal); el resto sin distinguir mayúsculas.
+PLACEHOLDERS = re.compile(r"\b(?:TODO|TBD|XXX|FIXME)\b|(?i:lorem ipsum|\[insertar|\[nombre del)")
 RISKY_CLAIMS = re.compile(
     r"(hazte rico|ganancias garantizadas|garantizad[oa]s? (de|que)|100 ?% (seguro|garantizado)|"
     r"sin ningún esfuerzo|ingresos pasivos garantizados|cura |asesoría (fiscal|legal) oficial|"
@@ -175,6 +176,16 @@ def check_listing(product: dict, listing_md: str) -> list[tuple]:
     return res
 
 
+def check_claims(listing_md: str, built: dict) -> list[tuple]:
+    """Lo que promete la descripción debe coincidir con los archivos (p. ej. número de páginas)."""
+    from pypdf import PdfReader
+    pages = {len(PdfReader(f).pages) for f in built.get("files", []) if f.endswith(".pdf")}
+    claimed = {int(n) for n in re.findall(r"(\d+) páginas", listing_md)}
+    wrong = sorted(claimed - pages)
+    return [("Páginas prometidas = páginas reales", "FAIL" if wrong else "PASS",
+             f"promete {sorted(claimed)}, PDF tiene {sorted(pages)}" if claimed else "sin cifras de páginas")]
+
+
 def check_originality(slug: str) -> list[tuple]:
     o = originality.check(slug)
     w = o["max_local_similarity"]
@@ -212,6 +223,7 @@ def run(slug: str, built: dict) -> dict:
     checks += check_images(built.get("images", {}))
     listing = (pdir / "listing.md").read_text(encoding="utf-8") if (pdir / "listing.md").exists() else ""
     checks += check_listing(product, listing)
+    checks += check_claims(listing, built)
     orig_checks, orig = check_originality(slug)
     checks += orig_checks
     status = "FAIL" if any(c[1] == "FAIL" for c in checks) else "PASS"

@@ -1,0 +1,12 @@
+{
+  "checked_at": "2026-11-13",
+  "method": "Búsqueda web de cada frase entre comillas",
+  "phrases": [
+    "Aquí cae todo el dinero que cobras",
+    "gana como independiente, vive con sueldo",
+    "no tiene que tocar el colchón ni dejar de trabajar"
+  ],
+  "matches": 0,
+  "notes": "Ninguna frase tiene coincidencias literales en la web.",
+  "checked_by": "Claude (agente de la fábrica)"
+}

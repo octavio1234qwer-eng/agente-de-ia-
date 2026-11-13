@@ -53,7 +53,15 @@ def main(argv: list[str] | None = None) -> int:
     if a.cmd == "niches":
         print(niches.report())
     elif a.cmd == "price":
-        print(json.dumps(pipeline.price(a.slug, a.store_median), ensure_ascii=False, indent=2))
+        median = a.store_median
+        if median is None:
+            try:  # coherencia con el catálogo real de la tienda
+                import statistics
+                from .gumroad import Gumroad
+                median = statistics.median(p["price"] / 100 for p in Gumroad().products() if p.get("price"))
+            except Exception as e:  # noqa: BLE001
+                print(f"(sin datos de la tienda: {e})", file=sys.stderr)
+        print(json.dumps({"store_median": median, **pipeline.price(a.slug, median)}, ensure_ascii=False, indent=2))
     elif a.cmd == "build":
         for s in _targets(a.slug):
             print(s, "->", pipeline.build(s)["files"])

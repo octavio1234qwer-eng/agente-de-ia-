@@ -31,8 +31,10 @@ def _header(cv: Canvas, c: dict, title: str, product: dict, page_no: int) -> flo
     cv.setFillColor(white)
     cv.setFont("Sans-Bold", 17)
     cv.drawString(M, H - 14 * mm, title)
-    cv.setFont("Sans", 8)
-    cv.drawRightString(W - M, H - 14 * mm, product.get("short_name", product["title"])[:60])
+    label = product.get("short_name", product["title"])[:60]
+    if cv.stringWidth(title, "Sans-Bold", 17) + cv.stringWidth(label, "Sans", 8) + 12 * mm < W - 2 * M:
+        cv.setFont("Sans", 8)
+        cv.drawRightString(W - M, H - 14 * mm, label)
     cv.setFillColor(c["primary"])
     cv.setFont("Sans", 7)
     cv.drawRightString(W - M, 8 * mm, f"{page_no}")
@@ -151,7 +153,28 @@ def _checklist(cv, c, page, product, n):
         y -= 4 * mm
 
 
-RENDER = {"text": _text, "grid": _grid, "checklist": _checklist}
+def _cover(cv, c, page, product, n):
+    """Portada: imagen generada por covers.py (si existe) + título, subtítulo y autor."""
+    cv.setFillColor(c["primary"])
+    cv.rect(0, 0, W, H, stroke=0, fill=1)
+    cv.setFillColor(c["accent"])
+    cv.rect(0, 0, W, 10 * mm, stroke=0, fill=1)
+    cv.setFillColor(white)
+    y = H - 70 * mm
+    for line in textwrap.wrap(product.get("cover_title", product["title"]), 22):
+        cv.setFont("Sans-Bold", 34)
+        cv.drawString(M + 6 * mm, y, line)
+        y -= 42
+    y -= 10
+    for line in textwrap.wrap(product.get("subtitle", ""), 58):
+        cv.setFont("Sans", 13)
+        cv.drawString(M + 6 * mm, y, line)
+        y -= 18
+    cv.setFont("Sans-Bold", 12)
+    cv.drawString(M + 6 * mm, 24 * mm, f"{product.get('author', '')} · Edición {product.get('version', '1.0')}")
+
+
+RENDER = {"cover": _cover, "text": _text, "grid": _grid, "checklist": _checklist}
 
 
 def build(product: dict, spec_path: Path, out: Path) -> Path:
@@ -163,7 +186,7 @@ def build(product: dict, spec_path: Path, out: Path) -> Path:
     cv.setTitle(product["title"])
     cv.setAuthor(product.get("author", ""))
     n = 0
-    pages = []
+    pages = [{"type": "cover", "title": product["title"]}]
     for p in spec["pages"]:
         if p["type"] == "repeat":
             for k in range(p["times"]):

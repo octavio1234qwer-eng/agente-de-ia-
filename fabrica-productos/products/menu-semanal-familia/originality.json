@@ -1,0 +1,12 @@
+{
+  "checked_at": "2026-11-13",
+  "method": "Búsqueda web de cada frase entre comillas",
+  "phrases": [
+    "Decidir qué cocinar todos los días cansa",
+    "Deja de preguntarte todos los días qué hacer de comer",
+    "cocinar una vez y comer dos"
+  ],
+  "matches": 0,
+  "notes": "'cocinar una vez y comer dos' aparece en artículos de batch cooking: es una expresión genérica de la técnica, no un texto copiado. Las otras frases no tienen coincidencias literales.",
+  "checked_by": "Claude (agente de la fábrica)"
+}

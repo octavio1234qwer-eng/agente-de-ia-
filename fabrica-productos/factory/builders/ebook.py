@@ -26,7 +26,7 @@ def _inline(text: str) -> str:
     text = text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
     text = re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", text)
     text = re.sub(r"(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)", r"<i>\1</i>", text)
-    return text
+    return text.replace(" %", "\u00a0%")  # no separar el número del signo de porcentaje
 
 
 class _Doc(SimpleDocTemplate):
@@ -62,10 +62,9 @@ def build(product: dict, manuscript: Path, out: Path, cover_png: Path | None = N
     width = A5[0] - 32 * mm
     story: list = []
 
-    if cover_png and cover_png.exists():
-        from reportlab.platypus import Image
-        story += [Image(str(cover_png), width=A5[0] - 20 * mm, height=(A5[0] - 20 * mm) * 1.5),
-                  PageBreak()]
+    has_cover = bool(cover_png and cover_png.exists())
+    if has_cover:
+        story += [Spacer(1, 1), PageBreak()]  # página 1 = portada a sangre (ver _first)
     story += [Spacer(1, 40 * mm), Paragraph(_inline(product["title"]), st["title"]), Spacer(1, 6 * mm),
               Paragraph(_inline(product.get("subtitle", "")), st["subtitle"]), Spacer(1, 30 * mm),
               Paragraph(f"{product.get('author', '')} · Edición {product.get('version', '1.0')}",
@@ -156,9 +155,14 @@ def build(product: dict, manuscript: Path, out: Path, cover_png: Path | None = N
         canvas.drawRightString(A5[0] - 16 * mm, 9 * mm, str(doc.page))
         canvas.restoreState()
 
+    def _first(canvas, doc):
+        if has_cover:
+            canvas.drawImage(str(cover_png), 0, 0, width=A5[0], height=A5[1],
+                             preserveAspectRatio=False)
+
     out.parent.mkdir(parents=True, exist_ok=True)
     doc = _Doc(str(out), pagesize=A5, leftMargin=16 * mm, rightMargin=16 * mm, topMargin=16 * mm,
                bottomMargin=18 * mm, title=product["title"], author=product.get("author", ""),
                subject=product.get("subtitle", ""))
-    doc.multiBuild(story, onLaterPages=_footer)
+    doc.multiBuild(story, onFirstPage=_first, onLaterPages=_footer)
     return out

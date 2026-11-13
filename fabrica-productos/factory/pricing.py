@@ -18,13 +18,15 @@ def charm_round(value: float) -> int:
 
 
 def suggest(product_type: str, reference_price: float | None, value_points: int = 0,
-            store_median: float | None = None) -> dict:
+            store_median: float | None = None, extra_formats: tuple[str, ...] = ()) -> dict:
     """Devuelve el precio sugerido en USD y su justificación.
 
     value_points: extras objetivos del producto (hojas con fórmulas, páginas, bonos), 0-5.
     store_median: mediana de precios de la tienda propia, para coherencia del catálogo.
     """
-    floor, ceil = FORMAT_FLOOR[product_type], FORMAT_CEIL[product_type]
+    # Un producto que incluye otros formatos (p. ej. ebook + Excel) no vale menos que el mayor de ellos
+    floor = max(FORMAT_FLOOR[t] for t in (product_type, *extra_formats))
+    ceil = max(FORMAT_CEIL[t] for t in (product_type, *extra_formats))
     base = (reference_price or floor * 1.5) * SPANISH_MARKET_FACTOR
     base *= 1 + 0.08 * max(0, min(5, value_points))
     if store_median:

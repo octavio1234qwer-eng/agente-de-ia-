@@ -12,7 +12,7 @@
   "author": "Octavio",
   "file_basename": "Costeo-Platillos-Food-Cost-v1",
   "value_points": 4,
-  "price_cents": 900,
+  "price_cents": 1200,
   "brand": {"primary": "#1F4E5F", "accent": "#E07A2F", "light": "#F4EFE6", "text": "#222222"},
   "listing": {
     "hook": "Descubre cuánto te cuesta de verdad cada platillo, cuál te deja dinero y cuál te lo está quitando, en una plantilla de Excel hecha para cocinas mexicanas.",

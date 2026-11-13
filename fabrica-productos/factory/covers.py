@@ -29,12 +29,14 @@ def _fit(draw, text, max_w, max_lines, start, min_size=20, bold=True):
     while size >= min_size:
         f = _font(size, bold)
         avg = f.getlength("abcdefghijklmnopqrstuvwxyz") / 26
-        lines = textwrap.wrap(text, max(6, int(max_w / avg)))
+        lines = textwrap.wrap(text, max(6, int(max_w / avg)), break_long_words=False,
+                              break_on_hyphens=False)
         if len(lines) <= max_lines and all(draw.textlength(l, font=f) <= max_w for l in lines):
             return f, lines
         size -= 2
     f = _font(min_size, bold)
-    return f, textwrap.wrap(text, int(max_w / (f.getlength("a") or 10)))[:max_lines]
+    return f, textwrap.wrap(text, int(max_w / (f.getlength("a") or 10)),
+                            break_long_words=False)[:max_lines]
 
 
 def _motif(draw, w, h, accent, light, kind):
@@ -58,9 +60,10 @@ def _motif(draw, w, h, accent, light, kind):
                 draw.line([x0 + 8, yy + int(w * 0.022), x0 + int(w * 0.017), yy + int(w * 0.033),
                            x0 + int(w * 0.034), yy + 6], fill=accent, width=6)
     else:  # ebook: barras ascendentes
-        base = int(h * 0.82)
+        portrait = h > w
+        base = int(h * (0.88 if portrait else 0.82))
         for k in range(6):
-            bh = int(h * (0.12 + 0.09 * k))
+            bh = int(h * ((0.04 + 0.035 * k) if portrait else (0.12 + 0.09 * k)))
             x = int(w * 0.62) + k * int(w * 0.055)
             draw.rectangle([x, base - bh, x + int(w * 0.04), base], fill=accent if k == 5 else light)
 

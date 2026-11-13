@@ -50,7 +50,13 @@ class Gumroad:
 
     # --- catálogo ---------------------------------------------------------
     def products(self) -> list[dict]:
-        return self._req("GET", "/products")["products"]
+        out, page_key = [], None
+        while True:
+            body = self._req("GET", "/products", {"page_key": page_key} if page_key else None)
+            out += body.get("products", [])
+            page_key = body.get("next_page_key")
+            if not page_key:
+                return out
 
     def product(self, product_id: str) -> dict:
         return self._req("GET", f"/products/{product_id}")["product"]

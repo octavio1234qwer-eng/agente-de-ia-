@@ -1,0 +1,425 @@
+{
+ "sheets": [
+  {
+   "name": "Instrucciones",
+   "title": "Calculadora de sueldo para ingresos irregulares",
+   "note": "Hoja compañera del libro. Celdas amarillas: escribes tú. Grises: se calculan solas.",
+   "text": [
+    "CÓMO SE USA:",
+    "1. Mes mínimo: escribe cuánto necesitas al mes en cada categoría indispensable (capítulo Paso 1).",
+    "2. Ingresos: captura lo que cobraste en cada uno de los últimos 12 meses, tu porcentaje de impuestos y tus costos de trabajo.",
+    "3. Mi sistema: revisa tu mediana, tu peor trimestre, tu sueldo fijo sugerido, el tamaño de tu colchón y tus alarmas.",
+    "4. Registro semanal: úsalo en tu ritual de 20 minutos para anotar entradas y el saldo del colchón.",
+    "Los datos de ejemplo son los de Mariana, la diseñadora del libro. Bórralos (solo las celdas amarillas) y escribe los tuyos.",
+    "El porcentaje de impuestos depende de tu régimen fiscal: pregúntalo a tu contador. Esta hoja no es asesoría fiscal."
+   ]
+  },
+  {
+   "name": "Mes mínimo",
+   "title": "Mi mes mínimo",
+   "rows": 12,
+   "columns": [
+    {
+     "header": "Categoría",
+     "width": 34
+    },
+    {
+     "header": "Monto mensual",
+     "width": 16,
+     "format": "money"
+    }
+   ],
+   "sample": [
+    [
+     "Vivienda",
+     7500
+    ],
+    [
+     "Servicios básicos",
+     1650
+    ],
+    [
+     "Comida en casa",
+     3200
+    ],
+    [
+     "Transporte para trabajar",
+     900
+    ],
+    [
+     "Salud",
+     350
+    ],
+    [
+     "Pagos mínimos de deudas",
+     600
+    ],
+    [
+     "Dependientes",
+     0
+    ],
+    [
+     "Herramientas de trabajo",
+     0
+    ],
+    [
+     "Gastos anuales ÷ 12",
+     0
+    ]
+   ],
+   "cells": [
+    {
+     "ref": "A17",
+     "value": "TOTAL MES MÍNIMO",
+     "bold": true
+    },
+    {
+     "ref": "B17",
+     "value": "=SUM(B4:B15)",
+     "format": "money",
+     "calc": true
+    }
+   ]
+  },
+  {
+   "name": "Ingresos",
+   "title": "Mis ingresos de los últimos 12 meses",
+   "rows": 12,
+   "columns": [
+    {
+     "header": "Mes",
+     "width": 10
+    },
+    {
+     "header": "Ingreso bruto",
+     "width": 15,
+     "format": "money"
+    },
+    {
+     "header": "% impuestos",
+     "width": 12,
+     "format": "pct"
+    },
+    {
+     "header": "Costos de trabajo",
+     "width": 15,
+     "format": "money"
+    },
+    {
+     "header": "Ingreso neto",
+     "width": 15,
+     "format": "money",
+     "formula": "=IF(B{r}=\"\",\"\",B{r}*(1-C{r})-D{r})"
+    },
+    {
+     "header": "Promedio de 3 meses (termina aquí)",
+     "width": 18,
+     "format": "money",
+     "formula": "=IF(COUNT(OFFSET(E{r},-2,0,3,1))=3,SUM(OFFSET(E{r},-2,0,3,1))/3,\"\")"
+    }
+   ],
+   "sample": [
+    [
+     1,
+     18000,
+     0.1,
+     0
+    ],
+    [
+     2,
+     32000,
+     0.1,
+     0
+    ],
+    [
+     3,
+     9500,
+     0.1,
+     0
+    ],
+    [
+     4,
+     25000,
+     0.1,
+     0
+    ],
+    [
+     5,
+     41000,
+     0.1,
+     0
+    ],
+    [
+     6,
+     14000,
+     0.1,
+     0
+    ],
+    [
+     7,
+     22000,
+     0.1,
+     0
+    ],
+    [
+     8,
+     27500,
+     0.1,
+     0
+    ],
+    [
+     9,
+     12000,
+     0.1,
+     0
+    ],
+    [
+     10,
+     36000,
+     0.1,
+     0
+    ],
+    [
+     11,
+     19500,
+     0.1,
+     0
+    ],
+    [
+     12,
+     30000,
+     0.1,
+     0
+    ]
+   ]
+  },
+  {
+   "name": "Mi sistema",
+   "title": "Mi sistema",
+   "cells": [
+    {
+     "ref": "A4",
+     "value": "Mes mínimo",
+     "bold": true,
+     "width": 52
+    },
+    {
+     "ref": "B4",
+     "value": "='Mes mínimo'!B17",
+     "format": "money",
+     "calc": true,
+     "width": 18
+    },
+    {
+     "ref": "A5",
+     "value": "Mediana de ingreso neto",
+     "bold": true
+    },
+    {
+     "ref": "B5",
+     "value": "=IFERROR(MEDIAN(Ingresos!E4:E15),0)",
+     "format": "money",
+     "calc": true
+    },
+    {
+     "ref": "A6",
+     "value": "Promedio de ingreso neto (solo referencia)",
+     "bold": true
+    },
+    {
+     "ref": "B6",
+     "value": "=IFERROR(AVERAGE(Ingresos!E4:E15),0)",
+     "format": "money",
+     "calc": true
+    },
+    {
+     "ref": "A7",
+     "value": "Peor trimestre (promedio mensual neto)",
+     "bold": true
+    },
+    {
+     "ref": "B7",
+     "value": "=IFERROR(MIN(Ingresos!F4:F15),0)",
+     "format": "money",
+     "calc": true
+    },
+    {
+     "ref": "A8",
+     "value": "Peor mes",
+     "bold": true
+    },
+    {
+     "ref": "B8",
+     "value": "=IFERROR(MIN(Ingresos!E4:E15),0)",
+     "format": "money",
+     "calc": true
+    },
+    {
+     "ref": "A10",
+     "value": "SUELDO FIJO SUGERIDO (peor trimestre, redondeado hacia abajo a $500)",
+     "bold": true
+    },
+    {
+     "ref": "B10",
+     "value": "=FLOOR(B7,500)",
+     "format": "money",
+     "calc": true
+    },
+    {
+     "ref": "A11",
+     "value": "Dinero flexible al mes (sueldo − mes mínimo)",
+     "bold": true
+    },
+    {
+     "ref": "B11",
+     "value": "=B10-B4",
+     "format": "money",
+     "calc": true
+    },
+    {
+     "ref": "A12",
+     "value": "Diagnóstico",
+     "bold": true
+    },
+    {
+     "ref": "B12",
+     "value": "=IF(B10>=B4*1.1,\"El sueldo cubre el mes mínimo con margen\",IF(B10>=B4,\"El sueldo cubre el mes mínimo, sin margen\",\"El sueldo NO alcanza: revisa el Paso 3\"))",
+     "calc": true
+    },
+    {
+     "ref": "A14",
+     "value": "Meses de colchón objetivo",
+     "bold": true
+    },
+    {
+     "ref": "B14",
+     "value": 3,
+     "input": true,
+     "format": "int"
+    },
+    {
+     "ref": "A15",
+     "value": "Colchón objetivo",
+     "bold": true
+    },
+    {
+     "ref": "B15",
+     "value": "=B10*B14",
+     "format": "money",
+     "calc": true
+    },
+    {
+     "ref": "A16",
+     "value": "Saldo actual del colchón",
+     "bold": true
+    },
+    {
+     "ref": "B16",
+     "value": 19400,
+     "input": true,
+     "format": "money"
+    },
+    {
+     "ref": "A17",
+     "value": "Avance del colchón",
+     "bold": true
+    },
+    {
+     "ref": "B17",
+     "value": "=IFERROR(B16/B15,0)",
+     "format": "pct",
+     "calc": true
+    },
+    {
+     "ref": "A19",
+     "value": "Alarma amarilla (menos de 2 meses de sueldo)",
+     "bold": true
+    },
+    {
+     "ref": "B19",
+     "value": "=B10*2",
+     "format": "money",
+     "calc": true
+    },
+    {
+     "ref": "A20",
+     "value": "Alarma naranja (menos de 1 mes de sueldo)",
+     "bold": true
+    },
+    {
+     "ref": "B20",
+     "value": "=B10",
+     "format": "money",
+     "calc": true
+    },
+    {
+     "ref": "A21",
+     "value": "Estado del colchón hoy",
+     "bold": true
+    },
+    {
+     "ref": "B21",
+     "value": "=IF(B16>=B15,\"Lleno: reparte el excedente\",IF(B16>=B19,\"En construcción\",IF(B16>=B20,\"Alarma amarilla\",\"Alarma naranja o roja\")))",
+     "calc": true
+    }
+   ],
+   "conditional": [
+    {
+     "range": "B21",
+     "formula": "ISNUMBER(SEARCH(\"Alarma\",B21))",
+     "color": "F8D7DA"
+    },
+    {
+     "range": "B12",
+     "formula": "ISNUMBER(SEARCH(\"NO\",B12))",
+     "color": "F8D7DA"
+    }
+   ]
+  },
+  {
+   "name": "Registro semanal",
+   "title": "Ritual semanal de 20 minutos",
+   "rows": 60,
+   "freeze": "A4",
+   "columns": [
+    {
+     "header": "Fecha",
+     "width": 12,
+     "format": "date"
+    },
+    {
+     "header": "Entradas de la semana",
+     "width": 16,
+     "format": "money"
+    },
+    {
+     "header": "¿Apartaste impuestos? (Sí/No)",
+     "width": 14,
+     "validation": [
+      "Sí",
+      "No"
+     ]
+    },
+    {
+     "header": "Por cobrar",
+     "width": 14,
+     "format": "money"
+    },
+    {
+     "header": "Saldo del colchón",
+     "width": 15,
+     "format": "money"
+    },
+    {
+     "header": "Estado",
+     "width": 18,
+     "formula": "=IF(E{r}=\"\",\"\",IF(E{r}<'Mi sistema'!$B$20,\"Naranja/roja\",IF(E{r}<'Mi sistema'!$B$19,\"Amarilla\",\"Bien\")))"
+    },
+    {
+     "header": "Acción de la semana",
+     "width": 40
+    }
+   ]
+  }
+ ]
+}

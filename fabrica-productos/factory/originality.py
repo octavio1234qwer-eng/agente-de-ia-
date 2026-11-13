@@ -64,9 +64,12 @@ def product_text(pdir: Path) -> str:
 
 def _strings(obj) -> list[str]:
     if isinstance(obj, str):
-        return [] if obj.startswith("=") or "!$" in obj else [obj]
+        if obj.startswith("=") or "!$" in obj or len(obj.split()) < 3:
+            return []  # fórmulas, referencias y etiquetas sueltas no son prosa
+        return [obj]
     if isinstance(obj, dict):
-        return [s for v in obj.values() for s in _strings(v)]
+        # "sample" = filas de datos de ejemplo de una hoja: se repiten a propósito, no son prosa
+        return [s for k, v in obj.items() if k != "sample" for s in _strings(v)]
     if isinstance(obj, list):
         return [s for v in obj for s in _strings(v)]
     return []

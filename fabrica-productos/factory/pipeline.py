@@ -73,8 +73,11 @@ def price(slug: str, store_median: float | None = None) -> dict:
     from . import niches
     product = load(slug)
     ref = {n.id: n for n in niches.load()}.get(product.get("niche"))
+    pdir = PRODUCTS / slug
+    extras = tuple(t for t, f in (("spreadsheet", "spreadsheet.json"), ("printable", "printable.json"))
+                   if t != product["type"] and (pdir / f).exists())
     s = pricing.suggest(product["type"], ref.reference_price if ref else None,
-                        product.get("value_points", 0), store_median)
+                        product.get("value_points", 0), store_median, extras)
     return s
 
 

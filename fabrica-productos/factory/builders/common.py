@@ -3,6 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from reportlab.lib.colors import HexColor
+from reportlab.lib.fonts import addMapping
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
@@ -26,6 +27,11 @@ def register_fonts() -> None:
         if not path.exists():
             raise FileNotFoundError(f"Falta la fuente {path}. Instala fonts-dejavu.")
         pdfmetrics.registerFont(TTFont(name, str(path)))
+    for fam in ("Sans", "Serif"):  # para que <b> e <i> funcionen dentro de los párrafos
+        addMapping(fam, 0, 0, fam)
+        addMapping(fam, 1, 0, f"{fam}-Bold")
+        addMapping(fam, 0, 1, fam)
+        addMapping(fam, 1, 1, f"{fam}-Bold")
     _registered = True
 
 
