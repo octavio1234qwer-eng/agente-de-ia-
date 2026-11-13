@@ -13,7 +13,12 @@
   "file_basename": "Gana-como-independiente-vive-con-sueldo-v1",
   "value_points": 3,
   "price_cents": 700,
-  "brand": {"primary": "#2E3A59", "accent": "#F2A541", "light": "#EEF1F7", "text": "#1E1E1E"},
+  "brand": {
+    "primary": "#2E3A59",
+    "accent": "#F2A541",
+    "light": "#EEF1F7",
+    "text": "#1E1E1E"
+  },
   "legal": "Este libro es material de educación financiera práctica. No es asesoría fiscal, legal ni de inversión personalizada. Las personas de los ejemplos son ficticias. Para decisiones sobre impuestos, consulta a un contador. © 2026 Octavio. Licencia de uso personal: no se permite revender ni redistribuir este archivo.",
   "listing": {
     "hook": "Un sistema paso a paso para dejar de vivir al ritmo de tus clientes: págate un sueldo fijo aunque cada mes cobres distinto.",
@@ -43,11 +48,31 @@
       "Mantén el sistema con el ritual semanal de 20 minutos."
     ],
     "faq": [
-      ["¿Sirve si llevo poco tiempo como independiente?", "Sí. El libro explica qué hacer si tienes menos de 12 meses de historial."],
-      ["¿Necesito abrir cuentas nuevas?", "No necesariamente: puedes usar los apartados de tu banco digital o incluso sobres de efectivo."],
-      ["¿Funciona fuera de México?", "El método funciona con cualquier moneda. Los ejemplos están en pesos mexicanos y las referencias a impuestos son generales."]
+      [
+        "¿Sirve si llevo poco tiempo como independiente?",
+        "Sí. El libro explica qué hacer si tienes menos de 12 meses de historial."
+      ],
+      [
+        "¿Necesito abrir cuentas nuevas?",
+        "No necesariamente: puedes usar los apartados de tu banco digital o incluso sobres de efectivo."
+      ],
+      [
+        "¿Funciona fuera de México?",
+        "El método funciona con cualquier moneda. Los ejemplos están en pesos mexicanos y las referencias a impuestos son generales."
+      ]
     ],
-    "format": "Formato: un PDF (tamaño A5, cómodo en celular, tableta e impresión) y un archivo .xlsx compatible con Excel, Google Sheets y LibreOffice. Descarga inmediata después del pago.",
-    "refund": "Garantía y reembolso: si el contenido no es lo que describe esta página, escríbenos dentro de los 30 días posteriores a la compra y te devolvemos tu dinero."
+    "format": "Un PDF (tamaño A5, cómodo en celular, tableta e impresión) y un archivo .xlsx compatible con Excel, Google Sheets y LibreOffice. Descarga inmediata después del pago.",
+    "refund": "Si el contenido no es lo que describe esta página, escríbenos dentro de los 30 días posteriores a la compra y te devolvemos tu dinero."
+  },
+  "gumroad": {
+    "id": "53afSRe19LIVe-PN02LV7w==",
+    "permalink": "bleofy",
+    "url": "https://octavius724.gumroad.com/l/bleofy",
+    "status": "borrador",
+    "bundle": {
+      "id": "Xo5iaaajFFUkkxOocjl_gQ==",
+      "url": "https://octavius724.gumroad.com/l/shgbyx",
+      "price_cents": 1500
+    }
   }
 }

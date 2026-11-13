@@ -47,8 +47,8 @@ Todas las recetas y platillos que lo usan se recalculan solos.
 
 ## Formato y entrega
 
-Formato: un archivo .xlsx de descarga inmediata. Lo recibes por correo al pagar y queda guardado en tu biblioteca de Gumroad.
+Un archivo .xlsx de descarga inmediata. Lo recibes por correo al pagar y queda guardado en tu biblioteca de Gumroad.
 
 ## Garantía y reembolso
 
-Garantía y reembolso: si el archivo no abre o no hace lo que describe esta página, escríbenos dentro de los 30 días posteriores a la compra y te devolvemos tu dinero.
+Si el archivo no abre o no hace lo que describe esta página, escríbenos dentro de los 30 días posteriores a la compra y te devolvemos tu dinero.

@@ -43,8 +43,8 @@ El método funciona con cualquier moneda. Los ejemplos están en pesos mexicanos
 
 ## Formato y entrega
 
-Formato: un PDF (tamaño A5, cómodo en celular, tableta e impresión) y un archivo .xlsx compatible con Excel, Google Sheets y LibreOffice. Descarga inmediata después del pago.
+Un PDF (tamaño A5, cómodo en celular, tableta e impresión) y un archivo .xlsx compatible con Excel, Google Sheets y LibreOffice. Descarga inmediata después del pago.
 
 ## Garantía y reembolso
 
-Garantía y reembolso: si el contenido no es lo que describe esta página, escríbenos dentro de los 30 días posteriores a la compra y te devolvemos tu dinero.
+Si el contenido no es lo que describe esta página, escríbenos dentro de los 30 días posteriores a la compra y te devolvemos tu dinero.

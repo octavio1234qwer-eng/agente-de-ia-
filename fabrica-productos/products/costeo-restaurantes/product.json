@@ -13,7 +13,12 @@
   "file_basename": "Costeo-Platillos-Food-Cost-v1",
   "value_points": 4,
   "price_cents": 1200,
-  "brand": {"primary": "#1F4E5F", "accent": "#E07A2F", "light": "#F4EFE6", "text": "#222222"},
+  "brand": {
+    "primary": "#1F4E5F",
+    "accent": "#E07A2F",
+    "light": "#F4EFE6",
+    "text": "#222222"
+  },
   "listing": {
     "hook": "Descubre cuánto te cuesta de verdad cada platillo, cuál te deja dinero y cuál te lo está quitando, en una plantilla de Excel hecha para cocinas mexicanas.",
     "problem": "La mayoría de las fondas y restaurantes ponen precios \"a ojo\" o copiando al de enfrente. Cuando sube el pollo, el limón o el aceite, el margen se va sin que nadie lo note. Esta plantilla convierte tus recetas y tus compras en números claros: costo por porción, food cost %, margen y un precio sugerido según el objetivo que tú decidas.",
@@ -43,12 +48,35 @@
       "Revisa en rojo los platillos que pasan tu objetivo y usa el precio sugerido y la clasificación para decidir."
     ],
     "faq": [
-      ["¿Funciona en Google Sheets?", "Sí. Sube el archivo a Google Drive y ábrelo con Hojas de cálculo de Google. También abre en Excel para Windows y Mac, y en LibreOffice."],
-      ["¿Necesito saber fórmulas?", "No. Las fórmulas ya están hechas y protegidas visualmente en gris; tú solo escribes en las celdas amarillas."],
-      ["¿Sirve si vendo en dólares u otra moneda?", "Sí. Los cálculos no dependen de la moneda; solo cambia el formato de las celdas si quieres otro símbolo."],
-      ["¿Qué pasa si cambio el precio de un insumo?", "Todas las recetas y platillos que lo usan se recalculan solos."]
+      [
+        "¿Funciona en Google Sheets?",
+        "Sí. Sube el archivo a Google Drive y ábrelo con Hojas de cálculo de Google. También abre en Excel para Windows y Mac, y en LibreOffice."
+      ],
+      [
+        "¿Necesito saber fórmulas?",
+        "No. Las fórmulas ya están hechas y protegidas visualmente en gris; tú solo escribes en las celdas amarillas."
+      ],
+      [
+        "¿Sirve si vendo en dólares u otra moneda?",
+        "Sí. Los cálculos no dependen de la moneda; solo cambia el formato de las celdas si quieres otro símbolo."
+      ],
+      [
+        "¿Qué pasa si cambio el precio de un insumo?",
+        "Todas las recetas y platillos que lo usan se recalculan solos."
+      ]
     ],
-    "format": "Formato: un archivo .xlsx de descarga inmediata. Lo recibes por correo al pagar y queda guardado en tu biblioteca de Gumroad.",
-    "refund": "Garantía y reembolso: si el archivo no abre o no hace lo que describe esta página, escríbenos dentro de los 30 días posteriores a la compra y te devolvemos tu dinero."
+    "format": "Un archivo .xlsx de descarga inmediata. Lo recibes por correo al pagar y queda guardado en tu biblioteca de Gumroad.",
+    "refund": "Si el archivo no abre o no hace lo que describe esta página, escríbenos dentro de los 30 días posteriores a la compra y te devolvemos tu dinero."
+  },
+  "gumroad": {
+    "id": "pWjrDREEGNV8WC0RO5SgVg==",
+    "permalink": "qkcnlf",
+    "url": "https://octavius724.gumroad.com/l/qkcnlf",
+    "status": "borrador",
+    "bundle": {
+      "id": "Xo5iaaajFFUkkxOocjl_gQ==",
+      "url": "https://octavius724.gumroad.com/l/shgbyx",
+      "price_cents": 1500
+    }
   }
 }

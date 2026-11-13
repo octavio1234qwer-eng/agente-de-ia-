@@ -43,8 +43,8 @@ Sí, solo ajusta cantidades. Las ideas y el orden de la semana funcionan igual.
 
 ## Formato y entrega
 
-Formato: un archivo PDF tamaño carta, de descarga inmediata después del pago.
+Un archivo PDF tamaño carta, de descarga inmediata después del pago.
 
 ## Garantía y reembolso
 
-Garantía y reembolso: si el archivo no abre o no es lo que describe esta página, escríbenos dentro de los 30 días posteriores a la compra y te devolvemos tu dinero.
+Si el archivo no abre o no es lo que describe esta página, escríbenos dentro de los 30 días posteriores a la compra y te devolvemos tu dinero.

@@ -14,7 +14,12 @@
   "file_basename": "Planificador-Menu-Semanal-v1",
   "value_points": 2,
   "price_cents": 500,
-  "brand": {"primary": "#3D6B45", "accent": "#D9534F", "light": "#F3F7EF", "text": "#1F2A1F"},
+  "brand": {
+    "primary": "#3D6B45",
+    "accent": "#D9534F",
+    "light": "#F3F7EF",
+    "text": "#1F2A1F"
+  },
   "listing": {
     "hook": "Deja de preguntarte todos los días qué hacer de comer: planea la semana en 15 minutos y llega al súper con una lista que sí sirve.",
     "problem": "Decidir qué cocinar todos los días cansa, y comprar sin plan sale caro: se repiten productos, se echan a perder verduras y se termina pidiendo comida a domicilio. Este planificador imprimible te da un método sencillo para organizar la comida de la semana y cuatro semanas de menú casero mexicano ya resueltas para que empieces hoy mismo.",
@@ -43,11 +48,31 @@
       "Pasa los ingredientes a la lista por pasillo y anota lo que gastaste."
     ],
     "faq": [
-      ["¿Puedo imprimirlo varias veces?", "Sí, para uso personal y de tu familia puedes imprimir todas las copias que quieras."],
-      ["¿Lo puedo llenar en la tableta?", "Sí, en apps que permiten escribir sobre PDF como GoodNotes, Notability o Xodo."],
-      ["¿Los menús sirven si somos menos personas?", "Sí, solo ajusta cantidades. Las ideas y el orden de la semana funcionan igual."]
+      [
+        "¿Puedo imprimirlo varias veces?",
+        "Sí, para uso personal y de tu familia puedes imprimir todas las copias que quieras."
+      ],
+      [
+        "¿Lo puedo llenar en la tableta?",
+        "Sí, en apps que permiten escribir sobre PDF como GoodNotes, Notability o Xodo."
+      ],
+      [
+        "¿Los menús sirven si somos menos personas?",
+        "Sí, solo ajusta cantidades. Las ideas y el orden de la semana funcionan igual."
+      ]
     ],
-    "format": "Formato: un archivo PDF tamaño carta, de descarga inmediata después del pago.",
-    "refund": "Garantía y reembolso: si el archivo no abre o no es lo que describe esta página, escríbenos dentro de los 30 días posteriores a la compra y te devolvemos tu dinero."
+    "format": "Un archivo PDF tamaño carta, de descarga inmediata después del pago.",
+    "refund": "Si el archivo no abre o no es lo que describe esta página, escríbenos dentro de los 30 días posteriores a la compra y te devolvemos tu dinero."
+  },
+  "gumroad": {
+    "id": "hKJM1rX4S3-5J-NUmpUiGA==",
+    "permalink": "gqjiht",
+    "url": "https://octavius724.gumroad.com/l/gqjiht",
+    "status": "borrador",
+    "bundle": {
+      "id": "Xo5iaaajFFUkkxOocjl_gQ==",
+      "url": "https://octavius724.gumroad.com/l/shgbyx",
+      "price_cents": 1500
+    }
   }
 }
