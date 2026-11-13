@@ -1,0 +1,55 @@
+{
+  "slug": "inventario-abarrotes",
+  "niche": "inventario-abarrotes",
+  "type": "spreadsheet",
+  "version": "1.0",
+  "title": "Control de Inventario para Tienda de Abarrotes (Excel)",
+  "short_name": "Inventario para Tienda de Abarrotes",
+  "subtitle": "Sabe cuánto tienes, qué se está acabando, qué pedir y cuánto te deja cada producto.",
+  "cover_title": "Control de Inventario para Tiendita",
+  "cover_subtitle": "Plantilla de Excel para abarrotes y misceláneas · existencias, pedidos y utilidad",
+  "cover_tag": "EXCEL · GOOGLE SHEETS",
+  "author": "Octavio",
+  "file_basename": "Inventario-Tienda-Abarrotes-v1",
+  "value_points": 3,
+  "price_cents": 700,
+  "brand": {"primary": "#7A3E1D", "accent": "#2A9D8F", "light": "#FBF3EA", "text": "#222222"},
+  "listing": {
+    "hook": "Deja de llevar el inventario de tu tiendita de memoria: sabe qué tienes, qué se está acabando y cuánto te deja cada producto, en una sola plantilla de Excel.",
+    "problem": "En una tienda de abarrotes el dinero se va en detalles: productos que se agotan justo cuando más se venden, mercancía que se caduca en el anaquel, pedidos al proveedor hechos a ojo y precios que ya no dejan margen porque subió el costo. Esta plantilla registra compras, ventas y mermas, y te dice automáticamente la existencia de cada producto, qué hay que pedir y cuánto ganas.",
+    "includes": [
+      "Libro .xlsx de 5 pestañas enlazadas: Instrucciones, Productos, Movimientos, Conteo físico y Resumen.",
+      "Catálogo de productos con costo, precio de venta y margen calculado; los márgenes menores al 15 % se marcan en rojo.",
+      "Registro de movimientos con listas desplegables: compra, venta, merma y ajustes.",
+      "Existencia actual de cada producto, calculada sola a partir de la existencia inicial y los movimientos.",
+      "Alertas de resurtido: cada producto se marca como OK, Pedir o Agotado según tu stock mínimo, con la cantidad sugerida para el pedido.",
+      "Hoja de conteo físico que compara lo que hay en el anaquel con lo que dice la hoja y te indica qué ajuste registrar.",
+      "Resumen del periodo: valor del inventario, ventas, utilidad bruta, margen, mermas y productos por pedir.",
+      "Revisión automática de captura: avisa si un movimiento tiene un producto mal escrito o le falta un dato.",
+      "Ejemplo completo con 14 productos de una tienda ficticia. Capacidad para 500 productos y 2,000 movimientos."
+    ],
+    "for_who": [
+      "Tiendas de abarrotes, misceláneas, minisúper, cremerías y papelerías pequeñas.",
+      "Quien atiende su propio negocio y quiere dejar el cuaderno sin pagar una mensualidad de software.",
+      "Cualquier persona que sepa capturar datos en una hoja de cálculo, aunque sea lo básico."
+    ],
+    "not_for": [
+      "Tiendas que quieren cobrar con lector de código de barras o imprimir tickets y facturas: eso lo hace una caja registradora con software.",
+      "Quien busca contabilidad completa: la utilidad bruta no descuenta renta, luz ni sueldos."
+    ],
+    "how": [
+      "Da de alta tus productos con costo, precio, existencia inicial y stock mínimo.",
+      "Anota cada compra, venta o merma en Movimientos (puedes registrar las ventas una vez al día).",
+      "Revisa la columna Estado para saber qué pedir y en qué cantidad.",
+      "Una vez al mes haz el conteo físico y registra los ajustes."
+    ],
+    "faq": [
+      ["¿Lo puedo usar desde el celular?", "Sí: guárdalo en tu Drive y ábrelo con la app de Hojas de cálculo. También funciona en Excel y LibreOffice."],
+      ["¿Tengo que anotar cada venta?", "No necesariamente. Muchas tiendas registran las ventas una vez al día por producto al cerrar. Lo importante es ser constante."],
+      ["¿Lee códigos de barras?", "No. Es una herramienta para controlar existencias, no una caja registradora."],
+      ["¿Qué hago al terminar el mes?", "Copia el archivo, pon la existencia actual como existencia inicial y borra los movimientos. Las instrucciones lo explican paso a paso."]
+    ],
+    "format": "Un archivo .xlsx de descarga inmediata. Lo recibes por correo al pagar y queda guardado en tu biblioteca de Gumroad.",
+    "refund": "Si el archivo no abre o no hace lo que describe esta página, escríbenos dentro de los 30 días posteriores a la compra y te devolvemos tu dinero."
+  }
+}

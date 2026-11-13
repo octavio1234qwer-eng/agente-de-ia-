@@ -1,0 +1,8 @@
+{
+  "checked_at": "2026-11-13",
+  "method": "Búsqueda web de cada frase entre comillas",
+  "phrases": ["Deja de llevar el inventario de tu tiendita de memoria", "cada vez que compras, vendes, se echa a perder algo", "la utilidad bruta no descuenta renta, luz ni sueldos"],
+  "matches": 0,
+  "notes": "Sin coincidencias literales. La búsqueda también confirmó que la afirmación contable sobre utilidad bruta es correcta. La similitud local inicial (10.1 % con costeo-restaurantes) se corrigió reescribiendo instrucciones y descripción.",
+  "checked_by": "Claude (agente de la fábrica)"
+}

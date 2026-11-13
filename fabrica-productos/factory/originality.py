@@ -53,13 +53,30 @@ def corpus(exclude_slug: str) -> dict[str, str]:
 def product_text(pdir: Path) -> str:
     """Todo el texto original de un producto: manuscrito, especificaciones y descripción."""
     parts = []
-    for name in ("manuscript.md", "listing.md"):
-        if (pdir / name).exists():
-            parts.append((pdir / name).read_text(encoding="utf-8"))
+    if (pdir / "manuscript.md").exists():
+        parts.append((pdir / "manuscript.md").read_text(encoding="utf-8"))
+    if (pdir / "listing.md").exists():
+        parts.append(_without_boilerplate((pdir / "listing.md").read_text(encoding="utf-8")))
     for name in ("spreadsheet.json", "printable.json"):
         if (pdir / name).exists():
             parts.append(" ".join(_strings(json.loads((pdir / name).read_text(encoding="utf-8")))))
     return "\n".join(parts)
+
+
+POLICY_SECTIONS = ("## Formato y entrega", "## Garantía y reembolso")
+
+
+def _without_boilerplate(listing_md: str) -> str:
+    """Quita encabezados y las secciones de política de la tienda (entrega y reembolso), que son
+    idénticas a propósito en todos los productos y no cuentan como contenido."""
+    out, skip = [], False
+    for line in listing_md.splitlines():
+        if line.startswith("## "):
+            skip = line.strip() in POLICY_SECTIONS
+            continue
+        if not skip:
+            out.append(line)
+    return "\n".join(out)
 
 
 def _strings(obj) -> list[str]:

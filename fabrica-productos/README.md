@@ -34,7 +34,7 @@ Un FAIL bloquea la publicación; un WARN se muestra para revisión.
 - **Archivos:** el PDF abre, tiene páginas suficientes, título y metadatos. El Excel abre, tiene fórmulas, **LibreOffice lo recalcula sin un solo error** (#REF!, #DIV/0!…) y los resultados coinciden con `expected_values.json`, que se calcula por separado en Python.
 - **Imágenes:** tamaños exactos de portada (1280×720), miniatura (600×600) y portada de ebook (1200×1800).
 - **Descripción:** extensión, secciones obligatorias (qué incluye, para quién, formato, reembolso), precio definido y **páginas prometidas = páginas reales**.
-- **Originalidad (factory/originality.py):**
+- **Originalidad (factory/originality.py):** las secciones de política de la tienda (entrega y reembolso) se excluyen porque son idénticas a propósito.
   1. Similitud por fragmentos de 5 palabras contra el resto de productos y `data/corpus/*.txt` (máximo 8 %).
   2. Auto-repetición (relleno o copiar y pegar, máximo 3 %).
   3. Verificación web: el QA extrae frases distintivas; se buscan entre comillas y el resultado se registra en `products/<slug>/originality.json`. Sin ese registro, o con coincidencias, el producto no pasa.
@@ -72,12 +72,13 @@ Cada mejora sube la versión (`improve.bump_version`) y vuelve a pasar por QA y 
    - imprimible: `printable.json` (páginas `text`, `grid`, `checklist`, `repeat`)
 3. `build` → `qa` → corregir hasta PASS → verificación web → leer los archivos tú mismo → `approve`.
 
-## Productos de la primera ronda
+## Productos
 
 | Producto | Formato | Precio | Estado |
 |---|---|---|---|
 | Costeo de Platillos y Food Cost para Restaurantes | Excel, 6 hojas, 3,500+ fórmulas | $12 | QA PASS · pendiente de aprobación |
 | Gana como independiente, vive con sueldo | Ebook de 35 páginas + calculadora Excel | $7 | QA PASS · pendiente de aprobación |
 | Planificador de Menú Semanal y Lista del Súper | PDF imprimible de 16 páginas | $5 | QA PASS · pendiente de aprobación |
+| Control de Inventario para Tienda de Abarrotes | Excel, 5 hojas | $7 | QA PASS · pendiente de aprobación |
 
 Pruebas: `python -m unittest discover -s tests -t .`
