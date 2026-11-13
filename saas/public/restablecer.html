@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Nueva contraseña · ImpulsaIA</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <script type="module" src="/js/auth.js"></script>
+</head>
+<body data-page="restablecer">
+  <header class="site-header">
+    <div class="container">
+      <a class="logo" href="/"><span class="logo-mark" aria-hidden="true">IA</span><span data-app-name>ImpulsaIA</span></a>
+    </div>
+  </header>
+  <main class="auth-wrap">
+    <div class="card auth-card">
+      <h1>Crea una nueva contraseña</h1>
+      <div class="alert alert-success hidden" id="done" role="status">Listo, tu contraseña cambió y cerramos las demás sesiones. <a href="/entrar">Inicia sesión</a>.</div>
+      <form id="form" novalidate>
+        <div class="alert alert-error hidden" data-form-error role="alert"></div>
+        <div class="field">
+          <label for="password">Nueva contraseña</label>
+          <input id="password" name="password" type="password" autocomplete="new-password" minlength="10" maxlength="128" required>
+          <span class="help">Mínimo 10 caracteres.</span>
+          <div class="field-error" data-error-for="password"></div>
+        </div>
+        <button class="btn btn-block" type="submit">Guardar contraseña</button>
+      </form>
+    </div>
+  </main>
+</body>
+</html>

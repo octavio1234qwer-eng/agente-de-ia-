@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Recuperar contraseña · ImpulsaIA</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <script type="module" src="/js/auth.js"></script>
+</head>
+<body data-page="recuperar">
+  <header class="site-header">
+    <div class="container">
+      <a class="logo" href="/"><span class="logo-mark" aria-hidden="true">IA</span><span data-app-name>ImpulsaIA</span></a>
+    </div>
+  </header>
+  <main class="auth-wrap">
+    <div class="card auth-card">
+      <h1>Recupera tu contraseña</h1>
+      <p class="muted">Te enviaremos un enlace para crear una nueva. Vence en 1 hora.</p>
+      <div class="alert alert-success hidden" id="done" role="status"></div>
+      <form id="form" novalidate>
+        <div class="alert alert-error hidden" data-form-error role="alert"></div>
+        <div class="field">
+          <label for="email">Correo de tu cuenta</label>
+          <input id="email" name="email" type="email" autocomplete="email" required>
+          <div class="field-error" data-error-for="email"></div>
+        </div>
+        <button class="btn btn-block" type="submit">Enviar enlace</button>
+      </form>
+      <p class="switch"><a href="/entrar">Volver a iniciar sesión</a></p>
+    </div>
+  </main>
+</body>
+</html>

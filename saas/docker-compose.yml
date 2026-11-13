@@ -1,0 +1,37 @@
+# Producción en un servidor propio (VPS) o pruebas locales con PostgreSQL real.
+#   cp .env.example .env   (y completa los valores)
+#   docker compose up -d --build
+# Pon un proxy con HTTPS (Caddy, Nginx o el balanceador de tu proveedor) delante del puerto 3000.
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: impulsaia
+      POSTGRES_USER: impulsaia
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Define POSTGRES_PASSWORD en .env}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U impulsaia -d impulsaia"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgres://impulsaia:${POSTGRES_PASSWORD}@db:5432/impulsaia
+      DATABASE_SSL: disable
+      TRUST_PROXY: "1"
+    ports:
+      - "127.0.0.1:3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:

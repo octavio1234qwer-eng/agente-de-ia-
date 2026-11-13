@@ -1,5 +1,7 @@
 # Agente de WhatsApp de La Casa de la Mantarraya
 
+> **Este repositorio también contiene [`saas/`](saas/README.md)**, una plataforma SaaS de herramientas de IA para pymes mexicanas (cuentas, planes, suscripciones con Stripe, límites de uso y panel de administración). Es independiente de este agente: tiene su propio `package.json` y se despliega con `render.yaml`. Lo que sigue describe solo el agente de WhatsApp.
+
 Aplicación Node.js para conectar el número de WhatsApp Business del restaurante con Meta Cloud API y OpenAI Responses API. Incluye la carta capturada del sitio oficial, respuestas inmediatas para preguntas frecuentes y un flujo conversacional que conserva fecha, hora, asistentes y menú para cotizar posadas.
 
 > El código está preparado para operar, pero el número no queda activo hasta que el administrador del restaurante complete Meta, OpenAI y el alojamiento HTTPS. No pongas contraseñas ni claves en este chat.

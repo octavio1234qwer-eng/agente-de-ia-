@@ -1,0 +1,29 @@
+{
+  "name": "impulsaia-saas",
+  "version": "1.0.0",
+  "description": "Plataforma SaaS de herramientas de IA para pymes mexicanas: registro, planes, suscripciones con Stripe, límites de uso y panel de administración.",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20.12 <25"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "migrate": "node scripts/migrate.js",
+    "admin:promote": "node scripts/promote-admin.js",
+    "stripe:setup": "node scripts/stripe-setup.js",
+    "test": "node --test --test-concurrency=1 test/*.test.js"
+  },
+  "dependencies": {
+    "express": "5.3.0",
+    "helmet": "8.3.0",
+    "nodemailer": "10.5.0",
+    "pg": "8.23.1",
+    "stripe": "23.1.0",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.16"
+  }
+}

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Confirmar correo · ImpulsaIA</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <script type="module" src="/js/auth.js"></script>
+</head>
+<body data-page="verificar">
+  <header class="site-header">
+    <div class="container">
+      <a class="logo" href="/"><span class="logo-mark" aria-hidden="true">IA</span><span data-app-name>ImpulsaIA</span></a>
+    </div>
+  </header>
+  <main class="auth-wrap">
+    <div class="card auth-card">
+      <h1>Confirmación de correo</h1>
+      <div class="loading" id="status"><span class="spinner dark"></span> Confirmando tu correo…</div>
+      <div class="alert alert-success hidden" id="done" role="status">¡Listo! Tu correo quedó confirmado.</div>
+      <div class="alert alert-error hidden" id="failed" role="alert"></div>
+      <a class="btn btn-block hidden" id="go" href="/app">Ir a mi panel</a>
+    </div>
+  </main>
+</body>
+</html>
