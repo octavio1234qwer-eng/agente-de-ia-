@@ -1,0 +1,76 @@
+{
+  "researched_at": "2026-11-13",
+  "method": "Búsquedas en el catálogo de Gumroad (Discover) + revisión del catálogo propio para evitar canibalizar productos existentes. 'competitors' = resultados relevantes en español; los precios de referencia se toman de esos resultados y de equivalentes en inglés.",
+  "niches": [
+    {
+      "id": "costeo-restaurantes",
+      "name": "Costeo de platillos (food cost) para restaurantes y fondas",
+      "audience": "Dueños de restaurantes, fondas, cocinas económicas y food trucks en México y LatAm",
+      "query": "plantilla excel restaurante costos / escandallo food cost",
+      "competitors_es": 2,
+      "competitor_prices_usd": [29.0, 43.0],
+      "competitor_prices_en_usd": [15.75, 67.0, 19.0],
+      "demand": 4,
+      "pain": 5,
+      "ease": 4,
+      "own_catalog_overlap": "Plantilla de Costeo de Repostería (otro público: repostería por pieza, no restaurante ni ingeniería de menú)",
+      "notes": "En español solo aparecen productos de España en euros a €27–40. No hay versión pensada para México en pesos."
+    },
+    {
+      "id": "presupuesto-ingresos-irregulares",
+      "name": "Presupuesto para ingresos irregulares (freelancers, comisionistas, vendedores)",
+      "audience": "Freelancers, vendedores por comisión, choferes de app y comerciantes con ingresos variables",
+      "query": "ingresos irregulares finanzas personales ebook / presupuesto freelancer",
+      "competitors_es": 1,
+      "competitor_prices_usd": [3.65],
+      "competitor_prices_en_usd": [7.0, 12.0],
+      "demand": 4,
+      "pain": 5,
+      "ease": 4,
+      "own_catalog_overlap": "Kit RESICO (impuestos, no presupuesto personal). Sin traslape directo.",
+      "notes": "La búsqueda de 'ingresos irregulares' dio 0 resultados; 'presupuesto freelancer' dio 3 resultados, solo 1 del tema."
+    },
+    {
+      "id": "menu-semanal-familia",
+      "name": "Planificador de menú semanal + lista de compras",
+      "audience": "Familias que quieren gastar menos en el súper y decidir qué cocinar",
+      "query": "planificador menú semanal lista de compras imprimible",
+      "competitors_es": 1,
+      "competitor_prices_usd": [0.0],
+      "competitor_prices_en_usd": [7.0, 5.0],
+      "demand": 4,
+      "pain": 3,
+      "ease": 5,
+      "own_catalog_overlap": "Achiote & Lime (recetario en inglés). Sin traslape.",
+      "notes": "Solo hay planificadores genéricos gratuitos. Puede diferenciarse con menús mexicanos y una lista ordenada por pasillo."
+    },
+    {
+      "id": "planificador-contenido-redes",
+      "name": "Planificador de contenido para redes sociales",
+      "audience": "Emprendedores y community managers",
+      "query": "planificador contenido redes sociales",
+      "competitors_es": 3,
+      "competitor_prices_usd": [3.99, 2.99, 10.0],
+      "competitor_prices_en_usd": [9.0, 15.0],
+      "demand": 4,
+      "pain": 3,
+      "ease": 5,
+      "own_catalog_overlap": "36 prompts para emprendedores en redes (traslape parcial)",
+      "notes": "Mercado saturado y con precios bajos."
+    },
+    {
+      "id": "inventario-abarrotes",
+      "name": "Control de inventario para tienda de abarrotes",
+      "audience": "Tienditas y misceláneas",
+      "query": "control de inventario tienda abarrotes excel",
+      "competitors_es": 0,
+      "competitor_prices_usd": [],
+      "competitor_prices_en_usd": [12.0],
+      "demand": 3,
+      "pain": 4,
+      "ease": 4,
+      "own_catalog_overlap": "Control de Ventas Mercado Libre (traslape parcial)",
+      "notes": "Público con baja adopción de compras digitales. Candidato para la siguiente ronda."
+    }
+  ]
+}
