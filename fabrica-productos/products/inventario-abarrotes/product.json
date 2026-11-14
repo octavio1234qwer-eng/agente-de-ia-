@@ -13,7 +13,12 @@
   "file_basename": "Inventario-Tienda-Abarrotes-v1",
   "value_points": 3,
   "price_cents": 700,
-  "brand": {"primary": "#7A3E1D", "accent": "#2A9D8F", "light": "#FBF3EA", "text": "#222222"},
+  "brand": {
+    "primary": "#7A3E1D",
+    "accent": "#2A9D8F",
+    "light": "#FBF3EA",
+    "text": "#222222"
+  },
   "listing": {
     "hook": "Deja de llevar el inventario de tu tiendita de memoria: sabe qué tienes, qué se está acabando y cuánto te deja cada producto, en una sola plantilla de Excel.",
     "problem": "En una tienda de abarrotes el dinero se va en detalles: productos que se agotan justo cuando más se venden, mercancía que se caduca en el anaquel, pedidos al proveedor hechos a ojo y precios que ya no dejan margen porque subió el costo. Esta plantilla registra compras, ventas y mermas, y te dice automáticamente la existencia de cada producto, qué hay que pedir y cuánto ganas.",
@@ -44,12 +49,36 @@
       "Una vez al mes haz el conteo físico y registra los ajustes."
     ],
     "faq": [
-      ["¿Lo puedo usar desde el celular?", "Sí: guárdalo en tu Drive y ábrelo con la app de Hojas de cálculo. También funciona en Excel y LibreOffice."],
-      ["¿Tengo que anotar cada venta?", "No necesariamente. Muchas tiendas registran las ventas una vez al día por producto al cerrar. Lo importante es ser constante."],
-      ["¿Lee códigos de barras?", "No. Es una herramienta para controlar existencias, no una caja registradora."],
-      ["¿Qué hago al terminar el mes?", "Copia el archivo, pon la existencia actual como existencia inicial y borra los movimientos. Las instrucciones lo explican paso a paso."]
+      [
+        "¿Lo puedo usar desde el celular?",
+        "Sí: guárdalo en tu Drive y ábrelo con la app de Hojas de cálculo. También funciona en Excel y LibreOffice."
+      ],
+      [
+        "¿Tengo que anotar cada venta?",
+        "No necesariamente. Muchas tiendas registran las ventas una vez al día por producto al cerrar. Lo importante es ser constante."
+      ],
+      [
+        "¿Lee códigos de barras?",
+        "No. Es una herramienta para controlar existencias, no una caja registradora."
+      ],
+      [
+        "¿Qué hago al terminar el mes?",
+        "Copia el archivo, pon la existencia actual como existencia inicial y borra los movimientos. Las instrucciones lo explican paso a paso."
+      ]
     ],
     "format": "Un archivo .xlsx de descarga inmediata. Lo recibes por correo al pagar y queda guardado en tu biblioteca de Gumroad.",
     "refund": "Si el archivo no abre o no hace lo que describe esta página, escríbenos dentro de los 30 días posteriores a la compra y te devolvemos tu dinero."
+  },
+  "gumroad": {
+    "id": "1pGsxE0bPyoTSL2tP7e1tw==",
+    "permalink": "meugkp",
+    "url": "https://octavius724.gumroad.com/l/meugkp",
+    "status": "publicado",
+    "published_at": "2026-11-14",
+    "bundle": {
+      "id": "Xo5iaaajFFUkkxOocjl_gQ==",
+      "url": "https://octavius724.gumroad.com/l/shgbyx",
+      "price_cents": 2400
+    }
   }
 }

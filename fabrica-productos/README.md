@@ -76,9 +76,9 @@ Cada mejora sube la versión (`improve.bump_version`) y vuelve a pasar por QA y 
 
 | Producto | Formato | Precio | Estado |
 |---|---|---|---|
-| Costeo de Platillos y Food Cost para Restaurantes | Excel, 6 hojas, 3,500+ fórmulas | $12 | QA PASS · pendiente de aprobación |
-| Gana como independiente, vive con sueldo | Ebook de 35 páginas + calculadora Excel | $7 | QA PASS · pendiente de aprobación |
-| Planificador de Menú Semanal y Lista del Súper | PDF imprimible de 16 páginas | $5 | QA PASS · pendiente de aprobación |
-| Control de Inventario para Tienda de Abarrotes | Excel, 5 hojas | $7 | QA PASS · pendiente de aprobación |
+| Costeo de Platillos y Food Cost para Restaurantes | Excel, 6 hojas, 3,500+ fórmulas | $12 | Publicado en Gumroad |
+| Gana como independiente, vive con sueldo | Ebook de 35 páginas + calculadora Excel | $7 | Publicado en Gumroad |
+| Planificador de Menú Semanal y Lista del Súper | PDF imprimible de 16 páginas | $5 | Publicado en Gumroad |
+| Control de Inventario para Tienda de Abarrotes | Excel, 5 hojas | $7 | Publicado en Gumroad |
 
 Pruebas: `python -m unittest discover -s tests -t .`
