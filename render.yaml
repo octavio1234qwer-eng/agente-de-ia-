@@ -27,29 +27,27 @@ services:
         fromDatabase:
           name: impulsaia-db
           property: connectionString
+      - key: AI_PROVIDER
+        value: anthropic
+      - key: AI_EFFORT
+        value: low
+      # Valores que Render te pedirá al crear el Blueprint:
       - key: APP_URL
-        sync: false
-      - key: APP_NAME
         sync: false
       - key: ADMIN_EMAILS
         sync: false
       - key: SUPPORT_EMAIL
         sync: false
-      - key: AI_PROVIDER
-        sync: false
       - key: AI_MODEL
-        sync: false
-      - key: OPENAI_API_KEY
         sync: false
       - key: ANTHROPIC_API_KEY
         sync: false
+      # Opcionales: puedes dejarlos vacíos y agregarlos después en Environment.
       - key: STRIPE_SECRET_KEY
         sync: false
       - key: STRIPE_WEBHOOK_SECRET
         sync: false
       - key: MAIL_HOST
-        sync: false
-      - key: MAIL_PORT
         sync: false
       - key: MAIL_USER
         sync: false

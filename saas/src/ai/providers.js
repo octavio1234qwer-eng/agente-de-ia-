@@ -81,21 +81,37 @@ function openAiProvider({ apiKey, model, timeoutMs }) {
   };
 }
 
-function anthropicProvider({ apiKey, model, timeoutMs }) {
+// Modelos que aceptan el respaldo automático del servidor cuando el modelo rechaza una solicitud.
+const SERVER_FALLBACK_MODELS = new Set(['claude-opus-5-5', 'claude-sonnet-5-5', 'claude-fable-5-2', 'claude-fable-5-1']);
+// Margen para el razonamiento interno: en los modelos actuales cuenta dentro de max_tokens.
+const THINKING_HEADROOM_TOKENS = 3000;
+
+function anthropicProvider({ apiKey, model, timeoutMs, effort }) {
+  const fallback = SERVER_FALLBACK_MODELS.has(model);
   return {
     name: 'anthropic',
     model,
     async generate({ system, user, maxOutputTokens }) {
       const payload = await withRetry(() => postJson('https://api.anthropic.com/v1/messages', {
-        headers: { 'x-api-key': apiKey, 'anthropic-version': '2023-06-01' },
+        headers: {
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01',
+          ...(fallback ? { 'anthropic-beta': 'server-side-fallback-2026-07-01' } : {}),
+        },
         timeoutMs,
         body: {
           model,
-          max_tokens: maxOutputTokens,
+          max_tokens: maxOutputTokens + THINKING_HEADROOM_TOKENS,
+          // Textos cortos de negocio: esfuerzo bajo = más rápido y barato sin perder calidad.
+          ...(effort ? { output_config: { effort } } : {}),
+          ...(fallback ? { fallbacks: 'default' } : {}),
           system,
           messages: [{ role: 'user', content: user }],
         },
       }));
+      if (payload.stop_reason === 'refusal') {
+        throw new AiError(`El modelo rechazó la solicitud (${payload.stop_details?.category ?? 'sin categoría'})`, { status: 'refusal' });
+      }
       const text = (payload.content ?? [])
         .filter((block) => block.type === 'text')
         .map((block) => block.text)
@@ -136,7 +152,7 @@ export function createAiProvider(aiConfig) {
     case 'openai':
       return openAiProvider({ apiKey: aiConfig.openaiApiKey, model: aiConfig.model, timeoutMs: aiConfig.timeoutMs });
     case 'anthropic':
-      return anthropicProvider({ apiKey: aiConfig.anthropicApiKey, model: aiConfig.model, timeoutMs: aiConfig.timeoutMs });
+      return anthropicProvider({ apiKey: aiConfig.anthropicApiKey, model: aiConfig.model, timeoutMs: aiConfig.timeoutMs, effort: aiConfig.effort });
     default:
       return mockProvider();
   }

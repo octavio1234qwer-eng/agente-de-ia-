@@ -41,6 +41,8 @@ const schema = z.object({
   OPENAI_API_KEY: optionalString,
   ANTHROPIC_API_KEY: optionalString,
   AI_TIMEOUT_MS: z.coerce.number().int().min(5000).max(300000).default(60000),
+  // Solo Anthropic: nivel de esfuerzo de los modelos Claude actuales (vacío = valor por defecto del modelo).
+  AI_EFFORT: z.enum(['low', 'medium', 'high', 'xhigh', 'max', '']).default('low'),
   AI_COST_INPUT_USD_PER_MTOK: z.coerce.number().min(0).default(0),
   AI_COST_OUTPUT_USD_PER_MTOK: z.coerce.number().min(0).default(0),
 
@@ -120,6 +122,7 @@ export function loadConfig(env = process.env) {
       openaiApiKey: e.OPENAI_API_KEY,
       anthropicApiKey: e.ANTHROPIC_API_KEY,
       timeoutMs: e.AI_TIMEOUT_MS,
+      effort: e.AI_EFFORT || undefined,
       costInputPerMTok: e.AI_COST_INPUT_USD_PER_MTOK,
       costOutputPerMTok: e.AI_COST_OUTPUT_USD_PER_MTOK,
     },

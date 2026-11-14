@@ -92,16 +92,34 @@ describe('proveedores de IA (respuestas simuladas)', () => {
   });
 
   it('Anthropic Messages API: arma la petición y lee los bloques de texto', async () => {
-    const ai = createAiProvider({ provider: 'anthropic', anthropicApiKey: 'sk-ant-test', model: 'modelo-y', timeoutMs: 5000 });
+    const ai = createAiProvider({ provider: 'anthropic', anthropicApiKey: 'sk-ant-test', model: 'claude-haiku-5-5', timeoutMs: 5000, effort: 'low' });
     const { result, calls } = await withFetch(() => json(200, {
-      model: 'modelo-y', content: [{ type: 'text', text: 'Respuesta' }], usage: { input_tokens: 20, output_tokens: 5 },
+      model: 'claude-haiku-5-5',
+      stop_reason: 'end_turn',
+      content: [{ type: 'thinking', thinking: '' }, { type: 'text', text: 'Respuesta' }],
+      usage: { input_tokens: 20, output_tokens: 5 },
     }), () => ai.generate(prompt));
     assert.equal(calls[0].url, 'https://api.anthropic.com/v1/messages');
     assert.equal(calls[0].init.headers['x-api-key'], 'sk-ant-test');
     assert.equal(calls[0].init.headers['anthropic-version'], '2023-06-01');
-    assert.deepEqual(calls[0].body, { model: 'modelo-y', max_tokens: 300, system: 'sistema', messages: [{ role: 'user', content: 'usuario' }] });
+    assert.equal(calls[0].init.headers['anthropic-beta'], undefined, 'Haiku no usa respaldo del servidor');
+    assert.deepEqual(calls[0].body, {
+      model: 'claude-haiku-5-5', max_tokens: 3300, output_config: { effort: 'low' },
+      system: 'sistema', messages: [{ role: 'user', content: 'usuario' }],
+    });
     assert.equal(result.text, 'Respuesta');
     assert.equal(result.inputTokens, 20);
+  });
+
+  it('Anthropic: activa el respaldo del servidor en Sonnet/Opus 5.5 y trata los rechazos como error', async () => {
+    const ai = createAiProvider({ provider: 'anthropic', anthropicApiKey: 'k', model: 'claude-sonnet-5-5', timeoutMs: 5000, effort: 'low' });
+    const { calls } = await withFetch(() => json(200, { stop_reason: 'end_turn', content: [{ type: 'text', text: 'ok' }] }), () => ai.generate(prompt));
+    assert.equal(calls[0].init.headers['anthropic-beta'], 'server-side-fallback-2026-07-01');
+    assert.equal(calls[0].body.fallbacks, 'default');
+    await assert.rejects(
+      withFetch(() => json(200, { stop_reason: 'refusal', stop_details: { category: 'cyber' }, content: [] }), () => ai.generate(prompt)),
+      /rechazó/,
+    );
   });
 
   it('reintenta una vez ante 429/5xx y no reintenta errores 4xx', async () => {
