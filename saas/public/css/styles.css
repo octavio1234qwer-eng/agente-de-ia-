@@ -135,7 +135,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--brand); outline:
 .hero p.lead { font-size: clamp(1.05rem, 1.8vw, 1.25rem); color: var(--text-2); max-width: 60ch; }
 .hero .btn-row { margin-top: 1.5rem; }
 .hero .fineprint { margin-top: 0.9rem; color: var(--text-3); font-size: 0.88rem; }
-.section { padding: 3.5rem 0; }
+.section { padding: 3.5rem 0; scroll-margin-top: 64px; }
 .section-alt { background: var(--surface); border-block: 1px solid var(--border); }
 .section-head { max-width: 680px; margin-bottom: 2rem; }
 .section-head p { color: var(--text-2); }
