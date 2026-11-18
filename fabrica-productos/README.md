@@ -82,3 +82,7 @@ Cada mejora sube la versión (`improve.bump_version`) y vuelve a pasar por QA y 
 | Control de Inventario para Tienda de Abarrotes | Excel, 5 hojas | $7 | Publicado en Gumroad |
 
 Pruebas: `python -m unittest discover -s tests -t .`
+
+## Sitio de calculadoras gratis (tráfico de búsqueda)
+
+`sitio/build.py` genera https://calculatunegocio.vercel.app : calculadora de food cost, punto de reorden para tiendita y sueldo fijo con ingresos irregulares. Usan las mismas fórmulas que los productos y cada página enlaza a su plantilla en Gumroad. Incluye `sitemap.xml` y datos estructurados de preguntas frecuentes.
