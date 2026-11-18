@@ -36,6 +36,15 @@ function table(columns, rows, { onRowClick, empty = 'Sin registros.' } = {}) {
     }))));
 }
 
+/** Importes separados por moneda: "$11,860 MXN · $480 USD" (nunca se suman monedas distintas). */
+function byCurrency(map, pick) {
+  const entries = Object.entries(map ?? {}).filter(([, value]) => pick(value) > 0);
+  if (!entries.length) return fmt.cents(0, 'mxn');
+  return entries.map(([currency, value]) => `${fmt.cents(pick(value), currency)} ${currency.toUpperCase()}`).join(' · ');
+}
+
+const LOCALE_NAMES = { es: 'Español', en: 'Inglés' };
+
 function kpi(label, value, sub) {
   return h('div', { class: 'card kpi' }, h('div', { class: 'kpi-label', text: label }), h('div', { class: 'kpi-value', text: value }), sub ? h('div', { class: 'kpi-sub', text: sub }) : null);
 }
@@ -73,8 +82,9 @@ async function overview() {
     pageHead('Resumen', `Actualizado ${fmt.dateTime(stats.generatedAt)}`, refresh),
     warnings,
     h('div', { class: 'kpis' },
-      kpi('Ingreso recurrente mensual (MRR)', fmt.cents(stats.subscriptions.mrrCents), `${fmt.num(stats.subscriptions.active)} suscripciones activas`),
-      kpi('Cobrado últimos 30 días', fmt.cents(stats.revenue.paid30dCents), `${fmt.cents(stats.revenue.paidTotalCents)} histórico`),
+      kpi('Ingreso recurrente mensual (MRR)', byCurrency(stats.subscriptions.mrrByCurrency, (v) => v), `${fmt.num(stats.subscriptions.active)} suscripciones activas`),
+      kpi('Cobrado últimos 30 días', byCurrency(stats.revenue.byCurrency, (v) => v.paid30dCents),
+        `Histórico: ${byCurrency(stats.revenue.byCurrency, (v) => v.paidTotalCents)}`),
       kpi('Usuarios', fmt.num(stats.users.total), `+${fmt.num(stats.users.new7d)} en 7 días · +${fmt.num(stats.users.new30d)} en 30`),
       kpi('Conversión a pago', `${stats.conversionRate.toLocaleString('es-MX')}%`, `${fmt.num(stats.subscriptions.canceled30d)} cancelaciones en 30 días`),
       kpi('Generaciones (30 días)', fmt.num(u.generations), `${fmt.num(u.failed)} fallidas · ${fmt.num(u.activeUsers)} ${u.activeUsers === 1 ? 'usuario activo' : 'usuarios activos'}`),
@@ -90,7 +100,9 @@ async function overview() {
       h('div', { class: 'card chart-card' }, h('h3', { text: 'Herramientas más usadas' }), h('div', { class: 'chart-sub', text: 'Usos en los últimos 30 días' }),
         hbarChart({ data: stats.topTools.map((t) => ({ label: t.name, value: t.uses })) })),
       h('div', { class: 'card chart-card' }, h('h3', { text: 'Usuarios por plan' }), h('div', { class: 'chart-sub', text: 'Plan vigente hoy' }),
-        hbarChart({ data: stats.plans.map((p) => ({ label: p.name, value: p.users })) }))),
+        hbarChart({ data: stats.plans.map((p) => ({ label: p.name, value: p.users })) }),
+        h('h3', { class: 'stack', text: 'Usuarios por idioma' }),
+        hbarChart({ data: (stats.usersByLocale ?? []).map((row) => ({ label: LOCALE_NAMES[row.locale] ?? row.locale, value: row.users })) }))),
     h('div', { class: 'card stack' }, h('h3', { text: 'Sistema' }),
       h('dl', { class: 'kv' },
         h('dt', { text: 'Entorno' }), h('dd', { text: system.environment }),
@@ -222,12 +234,12 @@ async function userDetail(id) {
       h('div', {}, h('h3', { text: 'Suscripciones' }), table([
         { label: 'Plan', render: (r) => r.plan_id },
         { label: 'Estado', render: (r) => r.status },
-        { label: 'Monto mensual', num: true, render: (r) => fmt.cents(r.amount_cents) },
+        { label: 'Monto mensual', num: true, render: (r) => fmt.cents(r.amount_cents, r.currency) },
         { label: 'Periodo hasta', render: (r) => fmt.date(r.current_period_end) },
       ], data.subscriptions, { empty: 'Sin suscripciones.' })),
       h('div', {}, h('h3', { text: 'Pagos' }), table([
         { label: 'Fecha', render: (r) => fmt.date(r.paid_at) },
-        { label: 'Monto', num: true, render: (r) => fmt.cents(r.amount_cents) },
+        { label: 'Monto', num: true, render: (r) => fmt.cents(r.amount_cents, r.currency) },
       ], data.payments, { empty: 'Sin pagos.' }))));
 }
 
@@ -238,7 +250,7 @@ async function paymentsView() {
   mount(view, pageHead('Pagos', 'Cobros confirmados por Stripe (eventos invoice.paid).'), table([
     { label: 'Fecha', render: (r) => fmt.dateTime(r.paid_at) },
     { label: 'Usuario', render: (r) => r.email ?? '(cuenta eliminada)' },
-    { label: 'Monto', num: true, render: (r) => fmt.cents(r.amount_cents) },
+    { label: 'Monto', num: true, render: (r) => fmt.cents(r.amount_cents, r.currency) },
     { label: 'Moneda', render: (r) => r.currency.toUpperCase() },
     { label: 'Factura Stripe', render: (r) => r.provider_invoice_id },
   ], data.items, { onRowClick: (r) => { if (r.user_id) window.location.hash = `#/usuarios/${r.user_id}`; }, empty: 'Aún no hay pagos.' }));

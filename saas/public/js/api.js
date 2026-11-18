@@ -1,6 +1,8 @@
+import { locale, t } from './i18n.js';
+
 export class ApiError extends Error {
   constructor(status, error) {
-    super(error?.message ?? 'Ocurrió un error. Intenta de nuevo.');
+    super(error?.message ?? t('common.error'));
     this.status = status;
     this.code = error?.code;
     this.fields = error?.fields;
@@ -13,11 +15,11 @@ export async function api(path, { method = 'GET', body } = {}) {
     response = await fetch(`/api${path}`, {
       method,
       credentials: 'same-origin',
-      headers: body === undefined ? {} : { 'Content-Type': 'application/json' },
+      headers: { 'X-Locale': locale, ...(body === undefined ? {} : { 'Content-Type': 'application/json' }) },
       body: body === undefined ? undefined : JSON.stringify(body),
     });
   } catch {
-    throw new ApiError(0, { code: 'network', message: 'No hay conexión con el servidor. Revisa tu internet.' });
+    throw new ApiError(0, { code: 'network', message: t('common.network') });
   }
   if (response.status === 204) return null;
   const data = await response.json().catch(() => ({}));

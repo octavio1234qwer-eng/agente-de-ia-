@@ -1,5 +1,6 @@
 import { api, currentUser } from './api.js';
 import { $, applyBrand, busy, clearErrors, safeNext, showErrors } from './dom.js';
+import { languageSelect, locale, preferredCurrency, t } from './i18n.js';
 
 const page = document.body.dataset.page;
 const params = new URLSearchParams(window.location.search);
@@ -20,7 +21,7 @@ function onSubmit(handler) {
     clearErrors(form);
     const button = form.querySelector('button[type="submit"]');
     try {
-      await busy(button, 'Un momento…', () => handler(formData(form), form));
+      await busy(button, t('common.wait'), () => handler(formData(form), form));
     } catch (error) {
       showErrors(form, error);
     }
@@ -46,7 +47,7 @@ const handlers = {
   async registro() {
     if (await currentUser().catch(() => null)) return window.location.replace('/app');
     onSubmit(async (data) => {
-      await api('/auth/register', { method: 'POST', body: data });
+      await api('/auth/register', { method: 'POST', body: { ...data, locale, currency: preferredCurrency() } });
       window.location.assign('/app?bienvenida=1');
     });
   },
@@ -63,7 +64,7 @@ const handlers = {
   async restablecer() {
     const token = takeToken();
     if (!token) {
-      showErrors($('#form'), { message: 'El enlace está incompleto. Ábrelo de nuevo desde tu correo o solicita otro.' });
+      showErrors($('#form'), { message: t('auth.bad_link') });
       return;
     }
     onSubmit(async (data, form) => {
@@ -77,7 +78,7 @@ const handlers = {
     const token = takeToken();
     $('#status').classList.add('hidden');
     try {
-      if (!token) throw new Error('El enlace está incompleto. Ábrelo de nuevo desde tu correo.');
+      if (!token) throw new Error(t('auth.bad_link_verify'));
       // La confirmación se hace con POST desde la página: los antivirus de correo que abren enlaces no la consumen.
       await api('/auth/verify-email', { method: 'POST', body: { token } });
       $('#done').classList.remove('hidden');
@@ -89,5 +90,6 @@ const handlers = {
   },
 };
 
+$('#lang-slot')?.append(languageSelect());
 api('/plans').then((data) => applyBrand(data.appName)).catch(() => {});
 handlers[page]?.();

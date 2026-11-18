@@ -71,3 +71,14 @@ Ordenado por impacto esperado en ingresos:
 5. **Planes anuales** con descuento, para mejorar el flujo de efectivo y reducir cancelaciones.
 6. **Cuentas de equipo** (varios usuarios por negocio) para el plan Negocio.
 7. **Cola de trabajos** para generaciones largas cuando el tráfico crezca.
+
+## Mercado global
+
+La plataforma ya se puede vender fuera de México:
+
+- **Clientes objetivo fuera de México**: pymes y freelancers de EE. UU. (incluido el mercado hispano), Latinoamérica y España, que atienden clientes por WhatsApp, venden en marketplaces o facturan servicios.
+- **Precio en dólares**: Pro $12 USD y Negocio $29 USD al mes (más impuestos). Es una hipótesis: compárala con alternativas locales y ajústala con `PLAN_*_PRICE_USD` y `npm run stripe:setup`.
+- **Diferenciador internacional**: un mismo negocio puede contestar a turistas o clientes extranjeros en su idioma (6 idiomas) sin saber ese idioma.
+- **Impuestos**: al vender a otros países pueden aplicar IVA/VAT o sales tax del cliente. Activa Stripe Tax y `STRIPE_AUTOMATIC_TAX=true`, y consulta a tu contador sobre tus obligaciones.
+- **Canales sugeridos**: Product Hunt y comunidades de vendedores de Amazon/Etsy en inglés; grupos de emprendedores y agencias en Latinoamérica; alianzas con agencias que ya venden agentes de WhatsApp.
+- **Qué medir**: en el panel, usuarios por idioma e ingresos por moneda; si un país crece, prioriza su idioma, métodos de pago locales y testimonios de ese mercado.

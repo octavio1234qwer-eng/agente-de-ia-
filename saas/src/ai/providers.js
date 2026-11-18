@@ -133,14 +133,15 @@ function mockProvider() {
     name: 'mock',
     model: 'demo',
     async generate({ user }) {
-      const task = user.split('Tarea:').pop().trim().slice(0, 160);
+      const task = user.split('Task:').pop().trim().slice(0, 160);
       const text = [
-        'Resultado de demostración',
+        'Demo result / Resultado de demostración',
         '',
-        'Este texto lo generó el modo de demostración (AI_PROVIDER=mock), sin llamar a un modelo de IA.',
-        'Configura AI_PROVIDER, AI_MODEL y la clave del proveedor para obtener resultados reales.',
+        'This text was produced by demo mode (AI_PROVIDER=mock) without calling an AI model.',
+        'Este texto lo generó el modo de demostración, sin llamar a un modelo de IA.',
+        'Set AI_PROVIDER, AI_MODEL and the provider key to get real results.',
         '',
-        `Tarea recibida: ${task}…`,
+        `Task: ${task}…`,
       ].join('\n');
       return { text, inputTokens: Math.ceil(user.length / 4), outputTokens: Math.ceil(text.length / 4), model: 'demo', provider: 'mock' };
     },

@@ -1,8 +1,17 @@
-# ImpulsaIA: plataforma SaaS de herramientas de IA para pymes en México
+# ImpulsaIA: plataforma SaaS de herramientas de IA para pymes (México y mercado global)
 
 MVP funcional de una plataforma de suscripción con herramientas de inteligencia artificial para negocios pequeños y profesionistas independientes en México. Incluye registro de usuarios, plan gratuito y planes de pago, suscripciones mensuales con Stripe en pesos mexicanos, límites de uso por créditos, historial, panel de administración con estadísticas y documentación de instalación y despliegue.
 
 > "ImpulsaIA" es un nombre de ejemplo. Cámbialo con la variable `APP_NAME` (correos y páginas) y en los textos de `public/`.
+
+## Lista para vender en el mercado global
+
+- **Interfaz en español e inglés**, con selector de idioma; correos, errores y planes traducidos (`src/i18n.js` y `public/js/i18n.js`).
+- **Respuestas en 6 idiomas** (español, inglés, portugués, francés, alemán, italiano): el cliente elige en cada herramienta.
+- **Precios en pesos (MXN, IVA incluido) y dólares (USD, más impuestos)**: el cliente elige la moneda al pagar; Stripe cobra en esa moneda. Impuestos por país con Stripe Tax (`STRIPE_AUTOMATIC_TAX=true`).
+- **Herramientas sin supuestos de un solo país**: Amazon, Etsy, eBay y Mercado Libre; impuestos según el país del usuario; prácticas de cobranza justas.
+- **Estadísticas por moneda** (nunca se suman pesos con dólares) y usuarios por idioma.
+- Para agregar un idioma: un bloque nuevo en los dos archivos `i18n.js` y en `text` de cada herramienta. Para agregar una moneda: `CURRENCIES` en `src/plans.js`, la migración y los precios.
 
 ## Qué problema resuelve
 
@@ -22,7 +31,7 @@ Cada herramienta ataca una tarea repetitiva que le cuesta tiempo o ventas a una 
 ## Funciones
 
 - **Cuentas**: registro con correo y contraseña, confirmación de correo, recuperación de contraseña, cambio de contraseña, edición de perfil, exportación de datos y eliminación de cuenta (derechos ARCO).
-- **Planes**: Gratis (25 créditos), Pro ($199 MXN/mes, 500 créditos) y Negocio ($499 MXN/mes, 2,000 créditos), configurables por variables de entorno. Cada plan define créditos, caracteres por solicitud, herramientas disponibles y días de historial.
+- **Planes**: Gratis (25 créditos), Pro ($199 MXN o $12 USD/mes, 500 créditos) y Negocio ($499 MXN o $29 USD/mes, 2,000 créditos), configurables por variables de entorno. Cada plan define créditos, caracteres por solicitud, herramientas disponibles y días de historial.
 - **Pagos**: Stripe Checkout para suscribirse, portal de cliente de Stripe para cambiar de plan, actualizar tarjeta o cancelar, webhooks firmados e idempotentes, aviso por correo si falla un cobro. Asignación manual de planes desde el panel para pagos por transferencia u OXXO.
 - **Límites de uso**: créditos mensuales que se reservan de forma atómica antes de llamar a la IA y se devuelven si la IA falla; límite de caracteres por plan; límite de peticiones por minuto por usuario; límites contra fuerza bruta en el inicio de sesión y los correos.
 - **IA**: proveedores intercambiables (OpenAI Responses API, Anthropic Messages API o modo demostración sin costo), prompts con reglas para no inventar datos y separar los datos del usuario de las instrucciones.
@@ -113,7 +122,7 @@ saas/
 | `npm test` | Pruebas (PGlite en memoria; con `TEST_DATABASE_URL` usa PostgreSQL real) |
 | `npm run migrate` | Aplica migraciones pendientes |
 | `npm run admin:promote -- correo` | Convierte a un usuario en administrador |
-| `npm run stripe:setup` | Crea en Stripe los productos y precios mensuales en MXN |
+| `npm run stripe:setup` | Crea en Stripe los productos y precios mensuales en MXN y USD |
 
 ## Seguridad
 

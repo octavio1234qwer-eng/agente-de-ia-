@@ -1,3 +1,5 @@
+import { numberLocale, t } from './i18n.js';
+
 // Utilidades de DOM. Todo el texto se inserta con textContent: nunca innerHTML con datos.
 const SVG_NS = 'http://www.w3.org/2000/svg';
 
@@ -41,17 +43,18 @@ export function mount(target, ...children) {
 
 export const $ = (selector, root = document) => root.querySelector(selector);
 
-const pesos = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN', maximumFractionDigits: 0 });
-const pesosExact = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' });
+const fmtDate = (options) => new Intl.DateTimeFormat(numberLocale, options);
 export const fmt = {
-  mxn: (amount) => pesos.format(amount),
-  cents: (cents) => pesosExact.format(Number(cents) / 100),
-  num: (value) => Number(value ?? 0).toLocaleString('es-MX'),
-  date: (iso) => (iso ? new Intl.DateTimeFormat('es-MX', { dateStyle: 'medium' }).format(new Date(iso)) : '—'),
-  dateTime: (iso) => (iso ? new Intl.DateTimeFormat('es-MX', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(iso)) : '—'),
+  /** Precio entero en la moneda indicada (199 -> $199 / MX$199 según idioma). */
+  money: (amount, currency = 'mxn') => new Intl.NumberFormat(numberLocale, { style: 'currency', currency: currency.toUpperCase(), currencyDisplay: 'narrowSymbol', maximumFractionDigits: 0 }).format(amount),
+  cents: (cents, currency = 'mxn') => new Intl.NumberFormat(numberLocale, { style: 'currency', currency: currency.toUpperCase(), currencyDisplay: 'narrowSymbol' }).format(Number(cents) / 100),
+  mxn: (amount) => fmt.money(amount, 'mxn'),
+  num: (value) => Number(value ?? 0).toLocaleString(numberLocale),
+  date: (iso) => (iso ? fmtDate({ dateStyle: 'medium' }).format(new Date(iso)) : '—'),
+  dateTime: (iso) => (iso ? fmtDate({ dateStyle: 'medium', timeStyle: 'short' }).format(new Date(iso)) : '—'),
   day: (ymd) => {
     const [year, month, day] = ymd.split('-').map(Number);
-    return new Intl.DateTimeFormat('es-MX', { day: 'numeric', month: 'short', timeZone: 'UTC' }).format(Date.UTC(year, month - 1, day));
+    return fmtDate({ day: 'numeric', month: 'short', timeZone: 'UTC' }).format(Date.UTC(year, month - 1, day));
   },
 };
 
@@ -78,7 +81,7 @@ export function showErrors(form, error) {
   }
   const general = form.querySelector('[data-form-error]');
   if (general && (!shownInline || !Object.keys(fields).length)) {
-    general.textContent = error?.message ?? 'Ocurrió un error. Intenta de nuevo.';
+    general.textContent = error?.message ?? t('common.error');
     general.classList.remove('hidden');
   }
 }
@@ -109,9 +112,9 @@ export async function busy(button, label, fn) {
 export async function copyText(text) {
   try {
     await navigator.clipboard.writeText(text);
-    toast('Copiado al portapapeles', 'success', 2000);
+    toast(t('common.copied'), 'success', 2000);
   } catch {
-    toast('No se pudo copiar. Selecciona el texto y cópialo manualmente.', 'error');
+    toast(t('common.copy_failed'), 'error');
   }
 }
 
