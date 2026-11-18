@@ -1,0 +1,490 @@
+{
+ "pages": [
+  {
+   "type": "text",
+   "title": "Cómo usar tu planificador",
+   "paragraphs": [
+    "Este planificador te ayuda a decidir qué cocinar en 15 minutos a la semana, comprar solo lo necesario y gastar menos en el súper. Imprime las hojas en tamaño carta, en blanco y negro o a color.",
+    "## 1. Revisa tu alacena",
+    "Antes de planear, llena la hoja de inventario: lo que ya tienes es lo primero que se cocina. Así evitas comprar dos veces lo mismo y que se eche a perder.",
+    "## 2. Planea la semana",
+    "Llena el menú semanal empezando por las comidas, que suelen ser las más caras. Repite ingredientes entre días: si compras cilantro el lunes, que también aparezca el miércoles. Reserva un día para sobras.",
+    "## 3. Haz la lista por pasillo",
+    "Pasa los ingredientes a la lista de compras, ya ordenada por secciones del súper o del mercado. Así recorres la tienda una sola vez y no regresas por lo olvidado.",
+    "## 4. Lleva la cuenta",
+    "Anota cuánto gastaste cada semana en el control de gasto. En un mes sabrás tu promedio real y podrás ponerte una meta.",
+    "## Los menús de ejemplo",
+    "Incluimos cuatro semanas de menú ya resueltas, pensadas para una familia de cuatro, con comida casera mexicana y la estrategia de cocinar una vez y comer dos. Úsalas tal cual, combínalas o tómalas como inspiración. Ajusta cantidades y platillos a los gustos, alergias y necesidades de salud de tu familia."
+   ]
+  },
+  {
+   "type": "grid",
+   "title": "Menú de ejemplo · Semana 1 · Pollo que rinde",
+   "columns": [
+    "Día",
+    "Desayuno",
+    "Comida",
+    "Cena",
+    "Nota"
+   ],
+   "col_widths": [
+    0.8,
+    1.4,
+    1.7,
+    1.4,
+    1.3
+   ],
+   "rows": [
+    "Lunes",
+    "Martes",
+    "Miércoles",
+    "Jueves",
+    "Viernes",
+    "Sábado",
+    "Domingo"
+   ],
+   "fill": [
+    [
+     "",
+     "Huevos a la mexicana con frijoles",
+     "Pollo en salsa verde con arroz",
+     "Quesadillas de flor de calabaza",
+     "Cocer 1 pollo entero el lunes: rinde 3 comidas"
+    ],
+    [
+     "",
+     "Avena con plátano y canela",
+     "Tinga de pollo (del pollo del lunes) con tostadas",
+     "Molletes con pico de gallo",
+     ""
+    ],
+    [
+     "",
+     "Chilaquiles verdes (salsa del lunes)",
+     "Sopa de fideo y calabacitas a la mexicana",
+     "Sincronizadas de jamón y queso",
+     ""
+    ],
+    [
+     "",
+     "Fruta picada con yogur y granola",
+     "Caldo de pollo con verduras (huesos del lunes)",
+     "Tacos de papa dorados",
+     "Congelar 2 porciones de caldo"
+    ],
+    [
+     "",
+     "Huevos rancheros",
+     "Pescado empapelado con verduras",
+     "Tostadas de frijol con queso",
+     ""
+    ],
+    [
+     "",
+     "Hot cakes de avena",
+     "Enfrijoladas con crema y cebolla",
+     "Cena libre / sobras",
+     ""
+    ],
+    [
+     "",
+     "Pan dulce con café o atole",
+     "Comida familiar: carne asada en casa",
+     "Tortas de lo que sobre",
+     "Planear la semana siguiente (15 min)"
+    ]
+   ]
+  },
+  {
+   "type": "grid",
+   "title": "Menú de ejemplo · Semana 2 · Sin carne entre semana",
+   "columns": [
+    "Día",
+    "Desayuno",
+    "Comida",
+    "Cena",
+    "Nota"
+   ],
+   "col_widths": [
+    0.8,
+    1.4,
+    1.7,
+    1.4,
+    1.3
+   ],
+   "rows": [
+    "Lunes",
+    "Martes",
+    "Miércoles",
+    "Jueves",
+    "Viernes",
+    "Sábado",
+    "Domingo"
+   ],
+   "fill": [
+    [
+     "",
+     "Licuado de plátano y avena",
+     "Lentejas con plátano macho",
+     "Quesadillas de champiñones",
+     "Remojar lentejas el domingo"
+    ],
+    [
+     "",
+     "Huevos revueltos con nopales",
+     "Arroz rojo con huevo estrellado",
+     "Elotes o esquites en casa",
+     ""
+    ],
+    [
+     "",
+     "Molletes",
+     "Calabacitas con elote y queso + frijoles",
+     "Sopa de lentejas (sobrante del lunes)",
+     ""
+    ],
+    [
+     "",
+     "Fruta con yogur",
+     "Tortitas de papa en caldillo de jitomate",
+     "Tacos de frijol con queso fresco",
+     ""
+    ],
+    [
+     "",
+     "Chilaquiles rojos",
+     "Ensalada de atún con galletas saladas",
+     "Sopes caseros",
+     "Masa para sopes: comprar el jueves"
+    ],
+    [
+     "",
+     "Huevos divorciados",
+     "Pozole de pollo (lo prepara toda la familia)",
+     "Tostadas de pozole sobrante",
+     ""
+    ],
+    [
+     "",
+     "Avena caliente",
+     "Sobras de pozole",
+     "Cena ligera: pan tostado y fruta",
+     "Planear la semana siguiente (15 min)"
+    ]
+   ]
+  },
+  {
+   "type": "grid",
+   "title": "Menú de ejemplo · Semana 3 · Cocina una vez, come dos",
+   "columns": [
+    "Día",
+    "Desayuno",
+    "Comida",
+    "Cena",
+    "Nota"
+   ],
+   "col_widths": [
+    0.8,
+    1.4,
+    1.7,
+    1.4,
+    1.3
+   ],
+   "rows": [
+    "Lunes",
+    "Martes",
+    "Miércoles",
+    "Jueves",
+    "Viernes",
+    "Sábado",
+    "Domingo"
+   ],
+   "fill": [
+    [
+     "",
+     "Huevos con chorizo",
+     "Picadillo de res con arroz",
+     "Taquitos de picadillo",
+     "Hacer doble de picadillo"
+    ],
+    [
+     "",
+     "Avena con manzana",
+     "Chiles rellenos de picadillo (sin capear)",
+     "Quesadillas",
+     ""
+    ],
+    [
+     "",
+     "Chilaquiles",
+     "Sopa de verduras + tostadas",
+     "Molletes",
+     ""
+    ],
+    [
+     "",
+     "Fruta con granola",
+     "Albóndigas en chipotle con arroz",
+     "Tortas de albóndiga",
+     "Doble de albóndigas: congelar la mitad"
+    ],
+    [
+     "",
+     "Huevos a la mexicana",
+     "Tacos de pescado a la plancha con col",
+     "Tostadas de frijol",
+     ""
+    ],
+    [
+     "",
+     "Hot cakes",
+     "Albóndigas congeladas del jueves",
+     "Antojitos en casa",
+     ""
+    ],
+    [
+     "",
+     "Café y pan",
+     "Comida libre con la familia",
+     "Sobras de la semana",
+     "Planear la semana siguiente (15 min)"
+    ]
+   ]
+  },
+  {
+   "type": "grid",
+   "title": "Menú de ejemplo · Semana 4 · Fin de quincena",
+   "columns": [
+    "Día",
+    "Desayuno",
+    "Comida",
+    "Cena",
+    "Nota"
+   ],
+   "col_widths": [
+    0.8,
+    1.4,
+    1.7,
+    1.4,
+    1.3
+   ],
+   "rows": [
+    "Lunes",
+    "Martes",
+    "Miércoles",
+    "Jueves",
+    "Viernes",
+    "Sábado",
+    "Domingo"
+   ],
+   "fill": [
+    [
+     "",
+     "Avena con canela",
+     "Frijoles charros con arroz",
+     "Quesadillas",
+     "Usar lo que hay en la alacena primero"
+    ],
+    [
+     "",
+     "Huevos con frijoles",
+     "Sopa de pasta con verduras",
+     "Tacos de papa",
+     ""
+    ],
+    [
+     "",
+     "Chilaquiles",
+     "Arroz con huevo y plátano frito",
+     "Molletes",
+     ""
+    ],
+    [
+     "",
+     "Fruta de temporada",
+     "Tortitas de atún con ensalada",
+     "Tostadas de frijol",
+     ""
+    ],
+    [
+     "",
+     "Huevos rancheros",
+     "Enchiladas de queso",
+     "Sopa de tortilla",
+     ""
+    ],
+    [
+     "",
+     "Hot cakes",
+     "Caldo de verduras con garbanzos",
+     "Sobras",
+     ""
+    ],
+    [
+     "",
+     "Pan y café",
+     "Pasta con pollo deshebrado",
+     "Cena ligera",
+     "Hacer el inventario de alacena"
+    ]
+   ]
+  },
+  {
+   "type": "checklist",
+   "title": "Lista de ejemplo · Semana 1",
+   "sections": {
+    "Frutas y verduras": [
+     "Jitomate 2 kg",
+     "Tomate verde 1 kg",
+     "Cebolla 1 kg",
+     "Chile serrano 150 g",
+     "Calabacita 1 kg",
+     "Papa 1.5 kg",
+     "Plátano 1 kg",
+     "Limón 1 kg",
+     "Cilantro 1 manojo",
+     "Flor de calabaza 1 manojo"
+    ],
+    "Carnes y pescado": [
+     "Pollo entero 1",
+     "Filete de pescado 600 g",
+     "Carne para asar 1 kg"
+    ],
+    "Lácteos y huevo": [
+     "Huevo 30 pzas",
+     "Queso Oaxaca 500 g",
+     "Queso fresco 400 g",
+     "Crema 450 ml",
+     "Yogur natural 1 l"
+    ],
+    "Abarrotes": [
+     "Arroz 1 kg",
+     "Frijol 1 kg",
+     "Fideo 2 paquetes",
+     "Avena 1 kg",
+     "Aceite 1 l"
+    ],
+    "Tortillería y panadería": [
+     "Tortillas (diario)",
+     "Bolillos 10 pzas",
+     "Tostadas 1 paquete"
+    ]
+   },
+   "blank_lines": 1
+  },
+  {
+   "type": "repeat",
+   "times": 4,
+   "page": {
+    "type": "grid",
+    "title": "Mi menú · Semana {n}",
+    "subtitle": "Semana del ____ al ____ de __________   ·   Presupuesto: $________",
+    "columns": [
+     "Día",
+     "Desayuno",
+     "Comida",
+     "Cena",
+     "Nota"
+    ],
+    "col_widths": [
+     0.8,
+     1.4,
+     1.7,
+     1.4,
+     1.3
+    ],
+    "rows": [
+     "Lunes",
+     "Martes",
+     "Miércoles",
+     "Jueves",
+     "Viernes",
+     "Sábado",
+     "Domingo"
+    ]
+   }
+  },
+  {
+   "type": "repeat",
+   "times": 2,
+   "page": {
+    "type": "checklist",
+    "title": "Mi lista de compras {n}",
+    "blank_lines": 5,
+    "sections": {
+     "Frutas y verduras": [
+      "",
+      "",
+      ""
+     ],
+     "Carnes, pollo y pescado": [],
+     "Lácteos y huevo": [],
+     "Abarrotes y despensa": [],
+     "Tortillería y panadería": [],
+     "Limpieza y hogar": [],
+     "Bebés y mascotas": [],
+     "Otros": []
+    }
+   }
+  },
+  {
+   "type": "grid",
+   "title": "Inventario de alacena y refri",
+   "subtitle": "Anota lo que ya tienes y su fecha de caducidad. Úsalo primero.",
+   "columns": [
+    "Producto",
+    "Cantidad",
+    "Caduca",
+    "Producto",
+    "Cantidad",
+    "Caduca"
+   ],
+   "col_widths": [
+    2,
+    1,
+    1,
+    2,
+    1,
+    1
+   ],
+   "row_count": 24
+  },
+  {
+   "type": "grid",
+   "title": "Control de gasto en el súper",
+   "subtitle": "Anota cada compra. Al final del mes, divide el total entre las semanas para conocer tu promedio.",
+   "columns": [
+    "Fecha",
+    "Tienda o mercado",
+    "Monto",
+    "Total acumulado"
+   ],
+   "col_widths": [
+    1,
+    2.4,
+    1,
+    1.2
+   ],
+   "row_count": 22,
+   "footer_note": "Meta mensual: $__________     Gasto real del mes: $__________     Diferencia: $__________"
+  },
+  {
+   "type": "grid",
+   "title": "Recetas favoritas de la familia",
+   "subtitle": "Las que todos comen sin quejarse. Úsalas cuando no se te ocurra qué cocinar.",
+   "columns": [
+    "Platillo",
+    "Ingredientes principales",
+    "Tiempo",
+    "Costo aprox."
+   ],
+   "col_widths": [
+    1.6,
+    2.6,
+    0.8,
+    0.9
+   ],
+   "row_count": 18
+  }
+ ]
+}

@@ -1,0 +1,942 @@
+{
+ "named": {
+  "FC_OBJETIVO": "'Configuración'!$B$4",
+  "IVA": "'Configuración'!$B$5"
+ },
+ "sheets": [
+  {
+   "name": "Instrucciones",
+   "title": "Costeo de platillos y food cost para restaurantes",
+   "note": "Versión 1.0 · Funciona en Excel 2016+, Excel para Mac, Microsoft 365, Google Sheets y LibreOffice.",
+   "text": [
+    "CÓMO SE USA ESTA PLANTILLA:",
+    "Las celdas amarillas son para que escribas. Las grises se calculan solas: no las borres.",
+    "1. Configuración: escribe tu food cost objetivo (30 % es un punto de partida común en México para comida; bebidas suelen andar más bajo) y si los precios de tu menú ya incluyen IVA.",
+    "2. Insumos: registra cada ingrediente con el precio y la cantidad que realmente compras. La unidad base (kg, l o pza) es la unidad en la que después vas a medir la receta.",
+    "   Merma: la parte que pagas pero no llega al plato (cáscara, hueso, piel, jugo que no sale). Si de 1 kg de limón sacas 500 g de jugo, la merma es 50 %.",
+    "3. Platillos: da de alta cada platillo, cuántas porciones rinde la receta y su precio actual en el menú.",
+    "4. Recetas: una fila por ingrediente de cada platillo. Elige el platillo y el insumo de las listas y escribe la cantidad en la unidad base (por ejemplo 0.180 kg = 180 g).",
+    "5. Lee los resultados en Platillos y en Resumen: costo por porción, food cost %, margen, precio sugerido y la clasificación de ingeniería de menú.",
+    "QUÉ SIGNIFICA CADA CLASIFICACIÓN:",
+    "Estrella: se vende mucho y deja buen margen. Cuídalo: misma porción, misma calidad, buen lugar en el menú.",
+    "Caballo de batalla: se vende mucho pero deja poco. Sube el precio en pasos pequeños o ajusta la receta sin bajar la calidad que el cliente nota.",
+    "Rompecabezas: deja buen margen pero se vende poco. Muévelo a un lugar visible del menú, pide al personal que lo recomiende o cambia el nombre.",
+    "Perro: se vende poco y deja poco. Rediséñalo o sácalo del menú para simplificar compras y cocina.",
+    "CONSEJOS PARA QUE LOS NÚMEROS SEAN REALES:",
+    "Actualiza los precios de insumos cada vez que cambien (la columna Fecha te ayuda a saber cuáles están viejos).",
+    "Pesa las porciones reales durante una semana: lo que se sirve casi siempre es más que lo que dice la receta.",
+    "Incluye en Costo extra por porción lo que acompaña siempre al platillo: desechables, salsas de cortesía, totopos de la mesa.",
+    "Los datos de ejemplo son de una fonda ficticia; bórralos (solo las celdas amarillas) y captura los tuyos.",
+    "LIMITACIONES:",
+    "La plantilla calcula costo de materia prima. No incluye renta, sueldos, gas ni luz: esos se cubren con el margen. Es una herramienta de gestión, no sustituye la asesoría de tu contador."
+   ]
+  },
+  {
+   "name": "Configuración",
+   "title": "Configuración",
+   "note": "Ajusta estos valores una sola vez.",
+   "cells": [
+    {
+     "ref": "A4",
+     "value": "Food cost objetivo",
+     "bold": true,
+     "width": 46
+    },
+    {
+     "ref": "B4",
+     "value": 0.3,
+     "format": "pct",
+     "input": true,
+     "width": 16
+    },
+    {
+     "ref": "A5",
+     "value": "Tasa de IVA",
+     "bold": true
+    },
+    {
+     "ref": "B5",
+     "value": 0.16,
+     "format": "pct",
+     "input": true
+    },
+    {
+     "ref": "A6",
+     "value": "¿Los precios del menú incluyen IVA? (Sí / No)",
+     "bold": true
+    },
+    {
+     "ref": "B6",
+     "value": "Sí",
+     "input": true,
+     "validation": [
+      "Sí",
+      "No"
+     ]
+    },
+    {
+     "ref": "A8",
+     "value": "Cálculos de apoyo (no editar)",
+     "bold": true
+    },
+    {
+     "ref": "A9",
+     "value": "Unidades vendidas en el mes (total)"
+    },
+    {
+     "ref": "B9",
+     "value": "=SUM(Platillos!L4:L153)",
+     "format": "int",
+     "calc": true
+    },
+    {
+     "ref": "A10",
+     "value": "Platillos con ventas"
+    },
+    {
+     "ref": "B10",
+     "value": "=COUNTIF(Platillos!L4:L153,\">0\")",
+     "format": "int",
+     "calc": true
+    },
+    {
+     "ref": "A11",
+     "value": "Umbral de popularidad (70 % del promedio)"
+    },
+    {
+     "ref": "B11",
+     "value": "=IFERROR(B9/B10*0.7,0)",
+     "format": "int",
+     "calc": true
+    },
+    {
+     "ref": "A12",
+     "value": "Margen promedio ponderado por platillo"
+    },
+    {
+     "ref": "B12",
+     "value": "=IFERROR(SUM(Platillos!N4:N153)/B9,0)",
+     "format": "money",
+     "calc": true
+    }
+   ]
+  },
+  {
+   "name": "Insumos",
+   "title": "Insumos y precios de compra",
+   "rows": 200,
+   "freeze": "B4",
+   "note": "Una fila por ingrediente o desechable. El costo neto ya considera la merma.",
+   "columns": [
+    {
+     "header": "Insumo",
+     "width": 30
+    },
+    {
+     "header": "Categoría",
+     "width": 17,
+     "validation": [
+      "Proteínas",
+      "Verduras y frutas",
+      "Lácteos",
+      "Abarrotes",
+      "Bebidas",
+      "Desechables",
+      "Otros"
+     ]
+    },
+    {
+     "header": "Unidad base",
+     "width": 9,
+     "validation": [
+      "kg",
+      "l",
+      "pza"
+     ]
+    },
+    {
+     "header": "Precio que pagas",
+     "width": 13,
+     "format": "money"
+    },
+    {
+     "header": "Cantidad comprada (unidad base)",
+     "width": 14,
+     "format": "num"
+    },
+    {
+     "header": "Merma",
+     "width": 9,
+     "format": "pct"
+    },
+    {
+     "header": "Costo neto por unidad base",
+     "width": 14,
+     "format": "money",
+     "formula": "=IF(A{r}=\"\",\"\",IFERROR(D{r}/E{r}/(1-F{r}),\"\"))"
+    },
+    {
+     "header": "Proveedor",
+     "width": 22
+    },
+    {
+     "header": "Fecha del precio",
+     "width": 13,
+     "format": "date"
+    }
+   ],
+   "sample": [
+    [
+     "Filete de pescado (tilapia)",
+     "Proteínas",
+     "kg",
+     700,
+     5,
+     0.05,
+     null,
+     "Pescadería del mercado",
+     "2026-11-10"
+    ],
+    [
+     "Pechuga de pollo",
+     "Proteínas",
+     "kg",
+     390,
+     3,
+     0.12,
+     null,
+     "Pollería",
+     "2026-11-10"
+    ],
+    [
+     "Tortilla de maíz",
+     "Abarrotes",
+     "kg",
+     26,
+     1,
+     0,
+     null,
+     "Tortillería",
+     "2026-11-10"
+    ],
+    [
+     "Harina de trigo",
+     "Abarrotes",
+     "kg",
+     22,
+     1,
+     0,
+     null,
+     "Abarrotes",
+     "2026-11-10"
+    ],
+    [
+     "Aceite vegetal",
+     "Abarrotes",
+     "l",
+     45,
+     1,
+     0,
+     null,
+     "Abarrotes",
+     "2026-11-10"
+    ],
+    [
+     "Sal",
+     "Abarrotes",
+     "kg",
+     15,
+     1,
+     0,
+     null,
+     "Abarrotes",
+     "2026-11-10"
+    ],
+    [
+     "Azúcar",
+     "Abarrotes",
+     "kg",
+     30,
+     1,
+     0,
+     null,
+     "Abarrotes",
+     "2026-11-10"
+    ],
+    [
+     "Flor de jamaica",
+     "Abarrotes",
+     "kg",
+     110,
+     0.5,
+     0,
+     null,
+     "Mercado",
+     "2026-11-10"
+    ],
+    [
+     "Col blanca",
+     "Verduras y frutas",
+     "kg",
+     20,
+     1,
+     0.15,
+     null,
+     "Mercado",
+     "2026-11-10"
+    ],
+    [
+     "Limón",
+     "Verduras y frutas",
+     "kg",
+     35,
+     1,
+     0.5,
+     null,
+     "Mercado",
+     "2026-11-10"
+    ],
+    [
+     "Cebolla blanca",
+     "Verduras y frutas",
+     "kg",
+     28,
+     1,
+     0.1,
+     null,
+     "Mercado",
+     "2026-11-10"
+    ],
+    [
+     "Jitomate",
+     "Verduras y frutas",
+     "kg",
+     30,
+     1,
+     0.08,
+     null,
+     "Mercado",
+     "2026-11-10"
+    ],
+    [
+     "Tomate verde",
+     "Verduras y frutas",
+     "kg",
+     28,
+     1,
+     0.05,
+     null,
+     "Mercado",
+     "2026-11-10"
+    ],
+    [
+     "Chile serrano",
+     "Verduras y frutas",
+     "kg",
+     50,
+     1,
+     0.05,
+     null,
+     "Mercado",
+     "2026-11-10"
+    ],
+    [
+     "Aguacate",
+     "Verduras y frutas",
+     "kg",
+     70,
+     1,
+     0.3,
+     null,
+     "Mercado",
+     "2026-11-10"
+    ],
+    [
+     "Cilantro (manojo)",
+     "Verduras y frutas",
+     "pza",
+     8,
+     1,
+     0,
+     null,
+     "Mercado",
+     "2026-11-10"
+    ],
+    [
+     "Crema",
+     "Lácteos",
+     "kg",
+     90,
+     1,
+     0,
+     null,
+     "Cremería",
+     "2026-11-10"
+    ],
+    [
+     "Queso fresco",
+     "Lácteos",
+     "kg",
+     140,
+     1,
+     0,
+     null,
+     "Cremería",
+     "2026-11-10"
+    ],
+    [
+     "Plato desechable",
+     "Desechables",
+     "pza",
+     85,
+     50,
+     0,
+     null,
+     "Desechables",
+     "2026-11-10"
+    ]
+   ]
+  },
+  {
+   "name": "Platillos",
+   "title": "Platillos: costo, precio y ingeniería de menú",
+   "rows": 150,
+   "freeze": "B4",
+   "note": "Captura porciones, precio y ventas del mes. Rojo = food cost arriba del objetivo.",
+   "columns": [
+    {
+     "header": "Platillo",
+     "width": 30
+    },
+    {
+     "header": "Sección del menú",
+     "width": 15,
+     "validation": [
+      "Entradas",
+      "Platos fuertes",
+      "Mariscos",
+      "Tacos",
+      "Bebidas",
+      "Postres",
+      "Otros"
+     ]
+    },
+    {
+     "header": "Porciones que rinde la receta",
+     "width": 11,
+     "format": "int"
+    },
+    {
+     "header": "Costo de la receta",
+     "width": 12,
+     "format": "money",
+     "formula": "=IF(A{r}=\"\",\"\",SUMIF(Recetas!$A$4:$A$503,A{r},Recetas!$F$4:$F$503))"
+    },
+    {
+     "header": "Costo extra por porción",
+     "width": 11,
+     "format": "money"
+    },
+    {
+     "header": "Costo por porción",
+     "width": 12,
+     "format": "money",
+     "formula": "=IF(A{r}=\"\",\"\",IFERROR(D{r}/C{r}+E{r},\"\"))"
+    },
+    {
+     "header": "Precio en menú",
+     "width": 11,
+     "format": "money"
+    },
+    {
+     "header": "Precio sin IVA",
+     "width": 11,
+     "format": "money",
+     "formula": "=IF(G{r}=\"\",\"\",IF('Configuración'!$B$6=\"Sí\",G{r}/(1+'Configuración'!$B$5),G{r}))"
+    },
+    {
+     "header": "Food cost %",
+     "width": 10,
+     "format": "pct",
+     "formula": "=IF(OR(F{r}=\"\",H{r}=\"\"),\"\",IFERROR(F{r}/H{r},\"\"))"
+    },
+    {
+     "header": "Margen por porción",
+     "width": 11,
+     "format": "money",
+     "formula": "=IF(OR(F{r}=\"\",H{r}=\"\"),\"\",H{r}-F{r})"
+    },
+    {
+     "header": "Precio sugerido en menú",
+     "width": 12,
+     "format": "money",
+     "formula": "=IF(F{r}=\"\",\"\",CEILING(F{r}/'Configuración'!$B$4*IF('Configuración'!$B$6=\"Sí\",1+'Configuración'!$B$5,1),5))"
+    },
+    {
+     "header": "Vendidos en el mes",
+     "width": 10,
+     "format": "int"
+    },
+    {
+     "header": "Popularidad",
+     "width": 11,
+     "formula": "=IF(OR(A{r}=\"\",L{r}=\"\"),\"\",IF(L{r}>='Configuración'!$B$11,\"Alta\",\"Baja\"))"
+    },
+    {
+     "header": "Margen total del mes",
+     "width": 13,
+     "format": "money",
+     "formula": "=IF(OR(J{r}=\"\",L{r}=\"\"),\"\",J{r}*L{r})"
+    },
+    {
+     "header": "Rentabilidad",
+     "width": 11,
+     "formula": "=IF(OR(A{r}=\"\",J{r}=\"\",L{r}=\"\"),\"\",IF(J{r}>='Configuración'!$B$12,\"Alta\",\"Baja\"))"
+    },
+    {
+     "header": "Clasificación",
+     "width": 17,
+     "formula": "=IF(OR(M{r}=\"\",O{r}=\"\"),\"\",IF(AND(M{r}=\"Alta\",O{r}=\"Alta\"),\"Estrella\",IF(M{r}=\"Alta\",\"Caballo de batalla\",IF(O{r}=\"Alta\",\"Rompecabezas\",\"Perro\"))))"
+    },
+    {
+     "header": "Qué hacer",
+     "width": 38,
+     "formula": "=IF(P{r}=\"\",\"\",IF(P{r}=\"Estrella\",\"Mantener porción, calidad y lugar destacado\",IF(P{r}=\"Caballo de batalla\",\"Subir precio en pasos pequeños o ajustar receta\",IF(P{r}=\"Rompecabezas\",\"Darle mejor lugar en el menú y recomendarlo\",\"Rediseñar o sacar del menú\"))))"
+    },
+    {
+     "header": "Venta del mes sin IVA",
+     "width": 13,
+     "format": "money",
+     "formula": "=IF(OR(H{r}=\"\",L{r}=\"\"),\"\",H{r}*L{r})"
+    }
+   ],
+   "sample": [
+    [
+     "Tacos de pescado (orden de 3)",
+     "Tacos",
+     1,
+     null,
+     1.7,
+     null,
+     135,
+     null,
+     null,
+     null,
+     null,
+     420
+    ],
+    [
+     "Ceviche de pescado",
+     "Mariscos",
+     4,
+     null,
+     1.7,
+     null,
+     165,
+     null,
+     null,
+     null,
+     null,
+     160
+    ],
+    [
+     "Enchiladas verdes con pollo",
+     "Platos fuertes",
+     4,
+     null,
+     0,
+     null,
+     125,
+     null,
+     null,
+     null,
+     null,
+     210
+    ],
+    [
+     "Chilaquiles rojos con pollo",
+     "Platos fuertes",
+     4,
+     null,
+     0,
+     null,
+     120,
+     null,
+     null,
+     null,
+     null,
+     300
+    ],
+    [
+     "Agua de jamaica (vaso)",
+     "Bebidas",
+     4,
+     null,
+     0,
+     null,
+     35,
+     null,
+     null,
+     null,
+     null,
+     600
+    ]
+   ],
+   "conditional": [
+    {
+     "range": "I4:I153",
+     "formula": "AND(ISNUMBER(I4),I4>'Configuración'!$B$4)",
+     "color": "F8D7DA"
+    },
+    {
+     "range": "I4:I153",
+     "formula": "AND(ISNUMBER(I4),I4<='Configuración'!$B$4)",
+     "color": "D4EDDA"
+    }
+   ]
+  },
+  {
+   "name": "Recetas",
+   "title": "Recetas estándar",
+   "rows": 500,
+   "freeze": "A4",
+   "note": "Una fila por ingrediente. Cantidades en la unidad base del insumo (0.180 kg = 180 g).",
+   "columns": [
+    {
+     "header": "Platillo",
+     "width": 30,
+     "validation_range": "Platillos!$A$4:$A$153"
+    },
+    {
+     "header": "Insumo",
+     "width": 30,
+     "validation_range": "Insumos!$A$4:$A$203"
+    },
+    {
+     "header": "Cantidad (unidad base)",
+     "width": 13,
+     "format": "num"
+    },
+    {
+     "header": "Unidad",
+     "width": 8,
+     "formula": "=IF(B{r}=\"\",\"\",IFERROR(VLOOKUP(B{r},Insumos!$A$4:$G$203,3,FALSE),\"¿insumo?\"))"
+    },
+    {
+     "header": "Costo por unidad",
+     "width": 12,
+     "format": "money",
+     "formula": "=IF(B{r}=\"\",\"\",IFERROR(VLOOKUP(B{r},Insumos!$A$4:$G$203,7,FALSE),\"\"))"
+    },
+    {
+     "header": "Costo de la línea",
+     "width": 12,
+     "format": "money",
+     "formula": "=IF(OR(C{r}=\"\",E{r}=\"\"),\"\",C{r}*E{r})"
+    }
+   ],
+   "sample": [
+    [
+     "Tacos de pescado (orden de 3)",
+     "Filete de pescado (tilapia)",
+     0.18
+    ],
+    [
+     "Tacos de pescado (orden de 3)",
+     "Tortilla de maíz",
+     0.09
+    ],
+    [
+     "Tacos de pescado (orden de 3)",
+     "Harina de trigo",
+     0.03
+    ],
+    [
+     "Tacos de pescado (orden de 3)",
+     "Aceite vegetal",
+     0.04
+    ],
+    [
+     "Tacos de pescado (orden de 3)",
+     "Col blanca",
+     0.06
+    ],
+    [
+     "Tacos de pescado (orden de 3)",
+     "Crema",
+     0.03
+    ],
+    [
+     "Tacos de pescado (orden de 3)",
+     "Limón",
+     0.03
+    ],
+    [
+     "Tacos de pescado (orden de 3)",
+     "Sal",
+     0.002
+    ],
+    [
+     "Ceviche de pescado",
+     "Filete de pescado (tilapia)",
+     0.6
+    ],
+    [
+     "Ceviche de pescado",
+     "Limón",
+     0.4
+    ],
+    [
+     "Ceviche de pescado",
+     "Jitomate",
+     0.3
+    ],
+    [
+     "Ceviche de pescado",
+     "Cebolla blanca",
+     0.15
+    ],
+    [
+     "Ceviche de pescado",
+     "Chile serrano",
+     0.03
+    ],
+    [
+     "Ceviche de pescado",
+     "Cilantro (manojo)",
+     1
+    ],
+    [
+     "Ceviche de pescado",
+     "Aguacate",
+     0.2
+    ],
+    [
+     "Ceviche de pescado",
+     "Sal",
+     0.01
+    ],
+    [
+     "Enchiladas verdes con pollo",
+     "Pechuga de pollo",
+     0.5
+    ],
+    [
+     "Enchiladas verdes con pollo",
+     "Tortilla de maíz",
+     0.36
+    ],
+    [
+     "Enchiladas verdes con pollo",
+     "Tomate verde",
+     0.5
+    ],
+    [
+     "Enchiladas verdes con pollo",
+     "Chile serrano",
+     0.04
+    ],
+    [
+     "Enchiladas verdes con pollo",
+     "Cebolla blanca",
+     0.1
+    ],
+    [
+     "Enchiladas verdes con pollo",
+     "Crema",
+     0.12
+    ],
+    [
+     "Enchiladas verdes con pollo",
+     "Queso fresco",
+     0.12
+    ],
+    [
+     "Enchiladas verdes con pollo",
+     "Aceite vegetal",
+     0.06
+    ],
+    [
+     "Enchiladas verdes con pollo",
+     "Cilantro (manojo)",
+     1
+    ],
+    [
+     "Chilaquiles rojos con pollo",
+     "Tortilla de maíz",
+     0.4
+    ],
+    [
+     "Chilaquiles rojos con pollo",
+     "Aceite vegetal",
+     0.15
+    ],
+    [
+     "Chilaquiles rojos con pollo",
+     "Jitomate",
+     0.5
+    ],
+    [
+     "Chilaquiles rojos con pollo",
+     "Chile serrano",
+     0.03
+    ],
+    [
+     "Chilaquiles rojos con pollo",
+     "Cebolla blanca",
+     0.1
+    ],
+    [
+     "Chilaquiles rojos con pollo",
+     "Crema",
+     0.1
+    ],
+    [
+     "Chilaquiles rojos con pollo",
+     "Queso fresco",
+     0.1
+    ],
+    [
+     "Chilaquiles rojos con pollo",
+     "Pechuga de pollo",
+     0.3
+    ],
+    [
+     "Agua de jamaica (vaso)",
+     "Flor de jamaica",
+     0.02
+    ],
+    [
+     "Agua de jamaica (vaso)",
+     "Azúcar",
+     0.08
+    ]
+   ],
+   "conditional": [
+    {
+     "range": "D4:D503",
+     "formula": "D4=\"¿insumo?\"",
+     "color": "F8D7DA"
+    }
+   ]
+  },
+  {
+   "name": "Resumen",
+   "title": "Resumen del mes",
+   "cells": [
+    {
+     "ref": "A4",
+     "value": "Venta del mes sin IVA",
+     "bold": true,
+     "width": 50
+    },
+    {
+     "ref": "B4",
+     "value": "=SUM(Platillos!R4:R153)",
+     "format": "money",
+     "calc": true,
+     "width": 18
+    },
+    {
+     "ref": "A5",
+     "value": "Costo de alimentos vendidos",
+     "bold": true
+    },
+    {
+     "ref": "B5",
+     "value": "=B4-SUM(Platillos!N4:N153)",
+     "format": "money",
+     "calc": true
+    },
+    {
+     "ref": "A6",
+     "value": "Food cost real del mes",
+     "bold": true
+    },
+    {
+     "ref": "B6",
+     "value": "=IFERROR(B5/B4,0)",
+     "format": "pct",
+     "calc": true
+    },
+    {
+     "ref": "A7",
+     "value": "Food cost objetivo",
+     "bold": true
+    },
+    {
+     "ref": "B7",
+     "value": "='Configuración'!B4",
+     "format": "pct",
+     "calc": true
+    },
+    {
+     "ref": "A8",
+     "value": "Dinero por encima del objetivo este mes (negativo = vas bien)",
+     "bold": true
+    },
+    {
+     "ref": "B8",
+     "value": "=(B6-B7)*B4",
+     "format": "money",
+     "calc": true
+    },
+    {
+     "ref": "A9",
+     "value": "Platillos con food cost arriba del objetivo",
+     "bold": true
+    },
+    {
+     "ref": "B9",
+     "value": "=COUNTIF(Platillos!I4:I153,\">\"&'Configuración'!B4)",
+     "format": "int",
+     "calc": true
+    },
+    {
+     "ref": "A11",
+     "value": "Estrellas",
+     "bold": true
+    },
+    {
+     "ref": "B11",
+     "value": "=COUNTIF(Platillos!P4:P153,\"Estrella\")",
+     "format": "int",
+     "calc": true
+    },
+    {
+     "ref": "A12",
+     "value": "Caballos de batalla",
+     "bold": true
+    },
+    {
+     "ref": "B12",
+     "value": "=COUNTIF(Platillos!P4:P153,\"Caballo de batalla\")",
+     "format": "int",
+     "calc": true
+    },
+    {
+     "ref": "A13",
+     "value": "Rompecabezas",
+     "bold": true
+    },
+    {
+     "ref": "B13",
+     "value": "=COUNTIF(Platillos!P4:P153,\"Rompecabezas\")",
+     "format": "int",
+     "calc": true
+    },
+    {
+     "ref": "A14",
+     "value": "Perros",
+     "bold": true
+    },
+    {
+     "ref": "B14",
+     "value": "=COUNTIF(Platillos!P4:P153,\"Perro\")",
+     "format": "int",
+     "calc": true
+    }
+   ]
+  }
+ ]
+}

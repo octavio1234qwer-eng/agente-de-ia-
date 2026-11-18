@@ -1,0 +1,759 @@
+{
+ "sheets": [
+  {
+   "name": "Instrucciones",
+   "title": "Control de inventario para tienda de abarrotes",
+   "note": "Versión 1.0 · Compatible con Excel (Windows y Mac), Google Sheets y LibreOffice Calc.",
+   "text": [
+    "CÓMO SE USA:",
+    "Lo amarillo lo llenas tú; lo gris trae fórmulas y se actualiza solo, así que no lo sobrescribas.",
+    "1. Productos: da de alta cada producto con su costo de compra, su precio de venta, la existencia con la que empiezas y el stock mínimo (la cantidad a la que quieres que te avise para resurtir).",
+    "2. Movimientos: cada vez que compras, vendes, se echa a perder algo o corriges un conteo, agrega una fila. Elige el producto y el tipo de la lista.",
+    "   Compra = entra mercancía.  Venta = sale vendida.  Merma = sale porque se caducó, se rompió o se perdió.",
+    "   Ajuste + y Ajuste − = corrección después de contar físicamente (si contaste más o menos de lo que dice la hoja).",
+    "3. Productos (columnas grises): existencia actual, estado (OK, Pedir, Agotado), pedido sugerido, valor del inventario y utilidad bruta por producto.",
+    "4. Conteo físico: una vez al mes cuenta lo que hay en anaquel, escríbelo y la hoja te dice la diferencia. Registra cada diferencia como Ajuste en Movimientos.",
+    "5. Resumen: valor total del inventario, ventas y utilidad bruta del periodo, mermas y cuántos productos hay que pedir.",
+    "CONSEJOS:",
+    "Si vendes muchos productos pequeños y no puedes anotar cada venta, registra las ventas una vez al día por producto (por ejemplo, al cerrar).",
+    "El pedido sugerido es el doble del stock mínimo menos lo que tienes. Ajusta el stock mínimo según qué tan rápido se vende cada producto y cada cuánto pasa tu proveedor.",
+    "Usa un periodo por archivo (por ejemplo, un mes). Al empezar el siguiente, copia el archivo, pon la existencia actual como existencia inicial y borra los movimientos.",
+    "La tienda de ejemplo es inventada: cuando estés listo, vacía las celdas amarillas y empieza con tu mercancía.",
+    "LIMITACIONES:",
+    "Es una herramienta de control, no un punto de venta ni un sistema contable. La utilidad bruta no descuenta renta, luz ni sueldos."
+   ]
+  },
+  {
+   "name": "Productos",
+   "title": "Productos y existencias",
+   "rows": 500,
+   "freeze": "C4",
+   "note": "Rojo = agotado · Amarillo = pedir pronto.",
+   "columns": [
+    {
+     "header": "Código",
+     "width": 9
+    },
+    {
+     "header": "Producto",
+     "width": 28
+    },
+    {
+     "header": "Categoría",
+     "width": 13,
+     "validation": [
+      "Abarrotes",
+      "Bebidas",
+      "Lácteos",
+      "Botanas",
+      "Panadería",
+      "Limpieza",
+      "Higiene",
+      "Frutas y verduras",
+      "Carnes frías",
+      "Otros"
+     ]
+    },
+    {
+     "header": "Proveedor",
+     "width": 20
+    },
+    {
+     "header": "Unidad",
+     "width": 8,
+     "validation": [
+      "pza",
+      "kg",
+      "l",
+      "paquete",
+      "caja"
+     ]
+    },
+    {
+     "header": "Costo de compra",
+     "width": 11,
+     "format": "money"
+    },
+    {
+     "header": "Precio de venta",
+     "width": 11,
+     "format": "money"
+    },
+    {
+     "header": "Margen",
+     "width": 9,
+     "format": "pct",
+     "formula": "=IF(OR(F{r}=\"\",G{r}=\"\"),\"\",IFERROR((G{r}-F{r})/G{r},\"\"))"
+    },
+    {
+     "header": "Existencia inicial",
+     "width": 10,
+     "format": "num"
+    },
+    {
+     "header": "Compras",
+     "width": 9,
+     "format": "num",
+     "formula": "=IF(B{r}=\"\",\"\",SUMIFS(Movimientos!$D$4:$D$2003,Movimientos!$B$4:$B$2003,B{r},Movimientos!$C$4:$C$2003,\"Compra\"))"
+    },
+    {
+     "header": "Ventas",
+     "width": 9,
+     "format": "num",
+     "formula": "=IF(B{r}=\"\",\"\",SUMIFS(Movimientos!$D$4:$D$2003,Movimientos!$B$4:$B$2003,B{r},Movimientos!$C$4:$C$2003,\"Venta\"))"
+    },
+    {
+     "header": "Mermas",
+     "width": 9,
+     "format": "num",
+     "formula": "=IF(B{r}=\"\",\"\",SUMIFS(Movimientos!$D$4:$D$2003,Movimientos!$B$4:$B$2003,B{r},Movimientos!$C$4:$C$2003,\"Merma\"))"
+    },
+    {
+     "header": "Ajustes",
+     "width": 9,
+     "format": "num",
+     "formula": "=IF(B{r}=\"\",\"\",SUMIFS(Movimientos!$D$4:$D$2003,Movimientos!$B$4:$B$2003,B{r},Movimientos!$C$4:$C$2003,\"Ajuste +\")-SUMIFS(Movimientos!$D$4:$D$2003,Movimientos!$B$4:$B$2003,B{r},Movimientos!$C$4:$C$2003,\"Ajuste -\"))"
+    },
+    {
+     "header": "Existencia actual",
+     "width": 11,
+     "format": "num",
+     "formula": "=IF(B{r}=\"\",\"\",N(I{r})+J{r}-K{r}-L{r}+M{r})"
+    },
+    {
+     "header": "Stock mínimo",
+     "width": 9,
+     "format": "num"
+    },
+    {
+     "header": "Estado",
+     "width": 10,
+     "formula": "=IF(B{r}=\"\",\"\",IF(N{r}<=0,\"Agotado\",IF(N{r}<=N(O{r}),\"Pedir\",\"OK\")))"
+    },
+    {
+     "header": "Pedido sugerido",
+     "width": 10,
+     "format": "num",
+     "formula": "=IF(OR(B{r}=\"\",O{r}=\"\"),\"\",MAX(0,O{r}*2-N{r}))"
+    },
+    {
+     "header": "Valor a costo",
+     "width": 11,
+     "format": "money",
+     "formula": "=IF(OR(B{r}=\"\",F{r}=\"\"),\"\",MAX(0,N{r})*F{r})"
+    },
+    {
+     "header": "Venta del periodo",
+     "width": 12,
+     "format": "money",
+     "formula": "=IF(OR(B{r}=\"\",G{r}=\"\"),\"\",K{r}*G{r})"
+    },
+    {
+     "header": "Utilidad bruta",
+     "width": 11,
+     "format": "money",
+     "formula": "=IF(OR(B{r}=\"\",F{r}=\"\",G{r}=\"\"),\"\",K{r}*(G{r}-F{r}))"
+    },
+    {
+     "header": "Merma a costo",
+     "width": 11,
+     "format": "money",
+     "formula": "=IF(OR(B{r}=\"\",F{r}=\"\"),\"\",L{r}*F{r})"
+    }
+   ],
+   "sample": [
+    [
+     "A001",
+     "Refresco de cola 600 ml",
+     "Bebidas",
+     "Distribuidora de refrescos",
+     "pza",
+     13.5,
+     18,
+     null,
+     48,
+     null,
+     null,
+     null,
+     null,
+     null,
+     24
+    ],
+    [
+     "A002",
+     "Agua natural 1.5 l",
+     "Bebidas",
+     "Distribuidora de refrescos",
+     "pza",
+     9,
+     14,
+     null,
+     30,
+     null,
+     null,
+     null,
+     null,
+     null,
+     12
+    ],
+    [
+     "A003",
+     "Leche entera 1 l",
+     "Lácteos",
+     "Lechería",
+     "pza",
+     24,
+     29,
+     null,
+     20,
+     null,
+     null,
+     null,
+     null,
+     null,
+     10
+    ],
+    [
+     "A004",
+     "Huevo blanco",
+     "Abarrotes",
+     "Granja local",
+     "kg",
+     38,
+     46,
+     null,
+     15,
+     null,
+     null,
+     null,
+     null,
+     null,
+     5
+    ],
+    [
+     "A005",
+     "Arroz 1 kg",
+     "Abarrotes",
+     "Central de abasto",
+     "pza",
+     24,
+     32,
+     null,
+     25,
+     null,
+     null,
+     null,
+     null,
+     null,
+     10
+    ],
+    [
+     "A006",
+     "Frijol negro a granel",
+     "Abarrotes",
+     "Central de abasto",
+     "kg",
+     30,
+     40,
+     null,
+     20,
+     null,
+     null,
+     null,
+     null,
+     null,
+     8
+    ],
+    [
+     "A007",
+     "Aceite vegetal 1 l",
+     "Abarrotes",
+     "Central de abasto",
+     "pza",
+     36,
+     45,
+     null,
+     12,
+     null,
+     null,
+     null,
+     null,
+     null,
+     6
+    ],
+    [
+     "A008",
+     "Atún en lata 140 g",
+     "Abarrotes",
+     "Mayorista",
+     "pza",
+     17,
+     23,
+     null,
+     36,
+     null,
+     null,
+     null,
+     null,
+     null,
+     12
+    ],
+    [
+     "A009",
+     "Pan blanco grande",
+     "Panadería",
+     "Panificadora",
+     "pza",
+     38,
+     47,
+     null,
+     10,
+     null,
+     null,
+     null,
+     null,
+     null,
+     4
+    ],
+    [
+     "A010",
+     "Papas fritas 45 g",
+     "Botanas",
+     "Mayorista",
+     "pza",
+     12,
+     17,
+     null,
+     40,
+     null,
+     null,
+     null,
+     null,
+     null,
+     15
+    ],
+    [
+     "A011",
+     "Galletas surtidas",
+     "Botanas",
+     "Mayorista",
+     "pza",
+     15,
+     21,
+     null,
+     30,
+     null,
+     null,
+     null,
+     null,
+     null,
+     10
+    ],
+    [
+     "A012",
+     "Papel higiénico 4 rollos",
+     "Limpieza",
+     "Mayorista",
+     "pza",
+     27,
+     36,
+     null,
+     18,
+     null,
+     null,
+     null,
+     null,
+     null,
+     6
+    ],
+    [
+     "A013",
+     "Jabón de barra",
+     "Limpieza",
+     "Mayorista",
+     "pza",
+     14,
+     19,
+     null,
+     24,
+     null,
+     null,
+     null,
+     null,
+     null,
+     8
+    ],
+    [
+     "A014",
+     "Detergente en polvo 1 kg",
+     "Limpieza",
+     "Mayorista",
+     "pza",
+     32,
+     42,
+     null,
+     10,
+     null,
+     null,
+     null,
+     null,
+     null,
+     5
+    ]
+   ],
+   "conditional": [
+    {
+     "range": "P4:P503",
+     "formula": "P4=\"Agotado\"",
+     "color": "F8D7DA"
+    },
+    {
+     "range": "P4:P503",
+     "formula": "P4=\"Pedir\"",
+     "color": "FFF3CD"
+    },
+    {
+     "range": "H4:H503",
+     "formula": "AND(ISNUMBER(H4),H4<0.15)",
+     "color": "F8D7DA"
+    }
+   ]
+  },
+  {
+   "name": "Movimientos",
+   "title": "Movimientos de inventario",
+   "rows": 2000,
+   "freeze": "A4",
+   "note": "Una fila por compra, venta, merma o ajuste. Las cantidades siempre en positivo.",
+   "columns": [
+    {
+     "header": "Fecha",
+     "width": 12,
+     "format": "date"
+    },
+    {
+     "header": "Producto",
+     "width": 30,
+     "validation_range": "Productos!$B$4:$B$503"
+    },
+    {
+     "header": "Tipo",
+     "width": 11,
+     "validation": [
+      "Compra",
+      "Venta",
+      "Merma",
+      "Ajuste +",
+      "Ajuste -"
+     ]
+    },
+    {
+     "header": "Cantidad",
+     "width": 10,
+     "format": "num"
+    },
+    {
+     "header": "Nota",
+     "width": 30
+    },
+    {
+     "header": "Revisión",
+     "width": 12,
+     "formula": "=IF(B{r}=\"\",\"\",IF(COUNTIF(Productos!$B$4:$B$503,B{r})=0,\"¿producto?\",IF(OR(C{r}=\"\",D{r}=\"\"),\"falta dato\",\"ok\")))"
+    }
+   ],
+   "sample": [
+    [
+     "2026-11-02",
+     "Refresco de cola 600 ml",
+     "Venta",
+     20
+    ],
+    [
+     "2026-11-02",
+     "Leche entera 1 l",
+     "Venta",
+     8
+    ],
+    [
+     "2026-11-02",
+     "Papas fritas 45 g",
+     "Venta",
+     14
+    ],
+    [
+     "2026-11-03",
+     "Refresco de cola 600 ml",
+     "Compra",
+     24
+    ],
+    [
+     "2026-11-03",
+     "Huevo blanco",
+     "Venta",
+     6
+    ],
+    [
+     "2026-11-03",
+     "Pan blanco grande",
+     "Venta",
+     7
+    ],
+    [
+     "2026-11-04",
+     "Pan blanco grande",
+     "Merma",
+     1
+    ],
+    [
+     "2026-11-04",
+     "Arroz 1 kg",
+     "Venta",
+     9
+    ],
+    [
+     "2026-11-04",
+     "Frijol negro a granel",
+     "Venta",
+     7.5
+    ],
+    [
+     "2026-11-05",
+     "Atún en lata 140 g",
+     "Venta",
+     15
+    ],
+    [
+     "2026-11-05",
+     "Aceite vegetal 1 l",
+     "Venta",
+     5
+    ],
+    [
+     "2026-11-05",
+     "Galletas surtidas",
+     "Venta",
+     12
+    ],
+    [
+     "2026-11-06",
+     "Refresco de cola 600 ml",
+     "Venta",
+     31
+    ],
+    [
+     "2026-11-06",
+     "Agua natural 1.5 l",
+     "Venta",
+     19
+    ],
+    [
+     "2026-11-06",
+     "Leche entera 1 l",
+     "Venta",
+     9
+    ],
+    [
+     "2026-11-06",
+     "Leche entera 1 l",
+     "Merma",
+     1
+    ],
+    [
+     "2026-11-07",
+     "Papel higiénico 4 rollos",
+     "Venta",
+     9
+    ],
+    [
+     "2026-11-07",
+     "Jabón de barra",
+     "Venta",
+     11
+    ],
+    [
+     "2026-11-07",
+     "Huevo blanco",
+     "Venta",
+     5.5
+    ],
+    [
+     "2026-11-08",
+     "Leche entera 1 l",
+     "Compra",
+     12
+    ],
+    [
+     "2026-11-08",
+     "Papas fritas 45 g",
+     "Venta",
+     22
+    ],
+    [
+     "2026-11-08",
+     "Detergente en polvo 1 kg",
+     "Venta",
+     6
+    ],
+    [
+     "2026-11-09",
+     "Arroz 1 kg",
+     "Ajuste -",
+     1
+    ],
+    [
+     "2026-11-09",
+     "Atún en lata 140 g",
+     "Ajuste +",
+     2
+    ]
+   ],
+   "conditional": [
+    {
+     "range": "F4:F2003",
+     "formula": "AND(F4<>\"\",F4<>\"ok\")",
+     "color": "F8D7DA"
+    }
+   ]
+  },
+  {
+   "name": "Conteo físico",
+   "title": "Conteo físico mensual",
+   "rows": 500,
+   "freeze": "A4",
+   "note": "Cuenta lo que hay en anaquel y escríbelo en la columna amarilla. Registra las diferencias como Ajuste.",
+   "columns": [
+    {
+     "header": "Producto",
+     "width": 30,
+     "formula": "=IF(Productos!B{r}=\"\",\"\",Productos!B{r})"
+    },
+    {
+     "header": "Según la hoja",
+     "width": 12,
+     "format": "num",
+     "formula": "=IF(Productos!B{r}=\"\",\"\",Productos!N{r})"
+    },
+    {
+     "header": "Conteo real",
+     "width": 12,
+     "format": "num"
+    },
+    {
+     "header": "Diferencia",
+     "width": 11,
+     "format": "num",
+     "formula": "=IF(OR(A{r}=\"\",C{r}=\"\"),\"\",C{r}-B{r})"
+    },
+    {
+     "header": "Registrar como",
+     "width": 14,
+     "formula": "=IF(D{r}=\"\",\"\",IF(D{r}>0,\"Ajuste +\",IF(D{r}<0,\"Ajuste -\",\"Sin diferencia\")))"
+    }
+   ],
+   "conditional": [
+    {
+     "range": "D4:D503",
+     "formula": "AND(ISNUMBER(D4),D4<>0)",
+     "color": "FFF3CD"
+    }
+   ]
+  },
+  {
+   "name": "Resumen",
+   "title": "Resumen del periodo",
+   "cells": [
+    {
+     "ref": "A4",
+     "value": "Valor del inventario a costo",
+     "bold": true,
+     "width": 46
+    },
+    {
+     "ref": "B4",
+     "value": "=SUM(Productos!R4:R503)",
+     "format": "money",
+     "calc": true,
+     "width": 18
+    },
+    {
+     "ref": "A5",
+     "value": "Ventas del periodo",
+     "bold": true
+    },
+    {
+     "ref": "B5",
+     "value": "=SUM(Productos!S4:S503)",
+     "format": "money",
+     "calc": true
+    },
+    {
+     "ref": "A6",
+     "value": "Utilidad bruta del periodo",
+     "bold": true
+    },
+    {
+     "ref": "B6",
+     "value": "=SUM(Productos!T4:T503)",
+     "format": "money",
+     "calc": true
+    },
+    {
+     "ref": "A7",
+     "value": "Margen bruto",
+     "bold": true
+    },
+    {
+     "ref": "B7",
+     "value": "=IFERROR(B6/B5,0)",
+     "format": "pct",
+     "calc": true
+    },
+    {
+     "ref": "A8",
+     "value": "Mermas a costo",
+     "bold": true
+    },
+    {
+     "ref": "B8",
+     "value": "=SUM(Productos!U4:U503)",
+     "format": "money",
+     "calc": true
+    },
+    {
+     "ref": "A10",
+     "value": "Productos agotados",
+     "bold": true
+    },
+    {
+     "ref": "B10",
+     "value": "=COUNTIF(Productos!P4:P503,\"Agotado\")",
+     "format": "int",
+     "calc": true
+    },
+    {
+     "ref": "A11",
+     "value": "Productos por pedir",
+     "bold": true
+    },
+    {
+     "ref": "B11",
+     "value": "=COUNTIF(Productos!P4:P503,\"Pedir\")",
+     "format": "int",
+     "calc": true
+    },
+    {
+     "ref": "A12",
+     "value": "Movimientos con error de captura",
+     "bold": true
+    },
+    {
+     "ref": "B12",
+     "value": "=COUNTIF(Movimientos!F4:F2003,\"¿producto?\")+COUNTIF(Movimientos!F4:F2003,\"falta dato\")",
+     "format": "int",
+     "calc": true
+    }
+   ]
+  }
+ ]
+}

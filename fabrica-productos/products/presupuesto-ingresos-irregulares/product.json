@@ -1,0 +1,79 @@
+{
+  "slug": "presupuesto-ingresos-irregulares",
+  "niche": "presupuesto-ingresos-irregulares",
+  "type": "ebook",
+  "version": "1.0",
+  "title": "Gana como independiente, vive con sueldo",
+  "short_name": "Gana como independiente, vive con sueldo",
+  "subtitle": "Sistema de presupuesto para ingresos irregulares: freelancers, comisionistas y conductores de aplicación",
+  "cover_title": "Gana como independiente, vive con sueldo",
+  "cover_subtitle": "Ebook + calculadora de Excel para quien no cobra lo mismo cada mes",
+  "cover_tag": "EBOOK + EXCEL",
+  "author": "Octavio",
+  "file_basename": "Gana-como-independiente-vive-con-sueldo-v1",
+  "value_points": 3,
+  "price_cents": 700,
+  "brand": {
+    "primary": "#2E3A59",
+    "accent": "#F2A541",
+    "light": "#EEF1F7",
+    "text": "#1E1E1E"
+  },
+  "legal": "Este libro es material de educación financiera práctica. No es asesoría fiscal, legal ni de inversión personalizada. Las personas de los ejemplos son ficticias. Para decisiones sobre impuestos, consulta a un contador. © 2026 Octavio. Licencia de uso personal: no se permite revender ni redistribuir este archivo.",
+  "listing": {
+    "hook": "Un sistema paso a paso para dejar de vivir al ritmo de tus clientes: págate un sueldo fijo aunque cada mes cobres distinto.",
+    "problem": "Si cobras por proyecto, por comisión o por viaje, los consejos de presupuesto normales no te sirven: dan por hecho un sueldo que no tienes. Un mes bueno se va en ponerte al corriente y el siguiente mes flojo termina en la tarjeta de crédito. Este libro te enseña a separar lo que ganas de lo que vives, con un sueldo que tú mismo te pagas, un colchón que absorbe los meses flojos y reglas claras para decidir qué hacer cuando entra mucho y cuando entra poco.",
+    "includes": [
+      "Ebook en PDF de 35 páginas (más de 5,000 palabras) organizado en 8 pasos, escrito en español de México y cómodo de leer en el celular.",
+      "Método en cinco piezas: mes mínimo, ingreso realista, sueldo fijo, colchón de nivelación y reglas para meses buenos y flacos.",
+      "Tres casos completos con los cálculos paso a paso (personas ficticias): una diseñadora freelance, un vendedor por comisión y una conductora de aplicación.",
+      "Plan de mes flaco con tres niveles de alarma y orden de recortes.",
+      "Ritual semanal de 20 minutos para que el sistema no se abandone.",
+      "Calculadora en Excel / Google Sheets: calcula tu mes mínimo, la mediana y el peor trimestre de tus ingresos, tu sueldo fijo sugerido, el tamaño de tu colchón y tus alarmas.",
+      "Plantillas en tablas para quien prefiere trabajar en papel."
+    ],
+    "for_who": [
+      "Freelancers, diseñadores, programadores, fotógrafos, traductores y cualquier persona que cobre por proyecto.",
+      "Vendedores con sueldo base más comisiones.",
+      "Conductores y repartidores de aplicaciones, comerciantes y personas con negocio propio pequeño."
+    ],
+    "not_for": [
+      "Quien busca recomendaciones de inversión o cómo hacerse rico rápido.",
+      "Quien necesita resolver su declaración de impuestos: para eso, tu contador."
+    ],
+    "how": [
+      "Lee el capítulo y haz la tarea del final: cada una toma de 15 a 40 minutos.",
+      "Captura tus datos en la calculadora de Excel para obtener tu sueldo fijo y tu colchón objetivo.",
+      "Abre tus cuentas o apartados y empieza a pagarte el sueldo en tu día de pago.",
+      "Mantén el sistema con el ritual semanal de 20 minutos."
+    ],
+    "faq": [
+      [
+        "¿Sirve si llevo poco tiempo como independiente?",
+        "Sí. El libro explica qué hacer si tienes menos de 12 meses de historial."
+      ],
+      [
+        "¿Necesito abrir cuentas nuevas?",
+        "No necesariamente: puedes usar los apartados de tu banco digital o incluso sobres de efectivo."
+      ],
+      [
+        "¿Funciona fuera de México?",
+        "El método funciona con cualquier moneda. Los ejemplos están en pesos mexicanos y las referencias a impuestos son generales."
+      ]
+    ],
+    "format": "Un PDF (tamaño A5, cómodo en celular, tableta e impresión) y un archivo .xlsx compatible con Excel, Google Sheets y LibreOffice. Descarga inmediata después del pago.",
+    "refund": "Si el contenido no es lo que describe esta página, escríbenos dentro de los 30 días posteriores a la compra y te devolvemos tu dinero."
+  },
+  "gumroad": {
+    "id": "53afSRe19LIVe-PN02LV7w==",
+    "permalink": "bleofy",
+    "url": "https://octavius724.gumroad.com/l/bleofy",
+    "status": "publicado",
+    "published_at": "2026-11-14",
+    "bundle": {
+      "id": "Xo5iaaajFFUkkxOocjl_gQ==",
+      "url": "https://octavius724.gumroad.com/l/shgbyx",
+      "price_cents": 2400
+    }
+  }
+}

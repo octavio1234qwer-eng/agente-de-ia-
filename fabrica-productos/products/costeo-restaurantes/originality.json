@@ -1,0 +1,12 @@
+{
+  "checked_at": "2026-11-13",
+  "method": "Búsqueda web de cada frase entre comillas",
+  "phrases": [
+    "la parte que pagas pero no llega al plato",
+    "Descubre cuánto te cuesta de verdad cada platillo",
+    "se vende mucho y deja buen margen"
+  ],
+  "matches": 0,
+  "notes": "Ninguna frase tiene coincidencias literales en la web.",
+  "checked_by": "Claude (agente de la fábrica)"
+}
