@@ -39,10 +39,10 @@ export function csrfProtection(config) {
     if (!UNSAFE.has(req.method)) return next();
     const origin = req.get('origin');
     const fetchSite = req.get('sec-fetch-site');
-    if (origin && origin !== allowedOrigin) throw new HttpError(403, 'csrf', 'Origen no permitido.');
-    if (!origin && fetchSite && !['same-origin', 'none'].includes(fetchSite)) throw new HttpError(403, 'csrf', 'Origen no permitido.');
+    if (origin && origin !== allowedOrigin) throw new HttpError(403, 'csrf', 'err.csrf');
+    if (!origin && fetchSite && !['same-origin', 'none'].includes(fetchSite)) throw new HttpError(403, 'csrf', 'err.csrf');
     const length = Number(req.get('content-length') ?? 0);
-    if (length > 0 && !req.is('application/json')) throw new HttpError(415, 'unsupported_media_type', 'Envía los datos como JSON.');
+    if (length > 0 && !req.is('application/json')) throw new HttpError(415, 'unsupported_media_type', 'err.json_only');
     next();
   };
 }

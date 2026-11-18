@@ -1,4 +1,4 @@
-import { effectivePlanId } from '../plans.js';
+import { effectivePlanId, planName } from '../plans.js';
 import { normalizeEmail } from '../lib/security.js';
 
 export async function findUserById(db, id) {
@@ -11,13 +11,14 @@ export async function findUserByEmail(db, email) {
   return rows[0] ?? null;
 }
 
-export async function createUser(db, { name, email, passwordHash, businessName, role = 'user' }) {
+export async function createUser(db, { name, email, passwordHash, businessName, role = 'user', locale = 'es', currency = 'mxn', country = null }) {
   const { rows } = await db.query(
-    `INSERT INTO users (name, email, email_normalized, password_hash, business_name, role, terms_accepted_at, last_login_at)
-     VALUES ($1, $2, $3, $4, $5, $6, now(), now())
+    `INSERT INTO users (name, email, email_normalized, password_hash, business_name, role, locale, currency, country,
+       terms_accepted_at, last_login_at)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, now(), now())
      ON CONFLICT (email_normalized) DO NOTHING
      RETURNING *`,
-    [name, email.trim(), normalizeEmail(email), passwordHash, businessName ?? null, role],
+    [name, email.trim(), normalizeEmail(email), passwordHash, businessName ?? null, role, locale, currency, country],
   );
   return rows[0] ?? null;
 }
@@ -32,7 +33,7 @@ export async function getActiveSubscription(db, userId) {
   return rows[0] ?? null;
 }
 
-export function userView(user, { plans, usage, subscription, billingEnabled }) {
+export function userView(user, { plans, usage, subscription, billingEnabled, locale }) {
   const plan = plans.get(effectivePlanId(user));
   return {
     id: user.id,
@@ -42,10 +43,13 @@ export function userView(user, { plans, usage, subscription, billingEnabled }) {
     role: user.role,
     emailVerified: Boolean(user.email_verified_at),
     createdAt: user.created_at,
+    locale: user.locale,
+    currency: user.currency,
+    country: user.country,
     plan: {
       id: plan.id,
-      name: plan.name,
-      priceMxn: plan.priceMxn,
+      name: planName(plan.id, locale ?? user.locale),
+      prices: plan.prices,
       monthlyCredits: plan.monthlyCredits,
       maxInputChars: plan.maxInputChars,
       premiumTools: plan.premiumTools,

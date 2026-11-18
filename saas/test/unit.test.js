@@ -33,7 +33,7 @@ describe('periodos de créditos', () => {
 });
 
 describe('planes', () => {
-  const plans = buildPlans({ freeCredits: 25, proCredits: 500, negocioCredits: 2000, proPriceMxn: 199, negocioPriceMxn: 499 });
+  const plans = buildPlans({ freeCredits: 25, proCredits: 500, negocioCredits: 2000, prices: { pro: { mxn: 199, usd: 12 }, negocio: { mxn: 499, usd: 29 } } });
   it('resuelve el plan vigente', () => {
     assert.equal(effectivePlanId({ plan_id: 'pro', plan_expires_at: null }), 'pro');
     assert.equal(effectivePlanId({ plan_id: 'pro', plan_expires_at: new Date(Date.now() - 1000) }), 'free');

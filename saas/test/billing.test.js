@@ -45,7 +45,7 @@ describe('suscripciones con Stripe', () => {
     assert.equal(me.body.user.plan.id, 'pro');
     assert.equal(me.body.user.plan.monthlyCredits, 500);
     assert.equal(me.body.user.subscription.status, 'active');
-    const run = await client.post('/api/tools/cobranza/run', { input: { cliente: 'Roberto', concepto: 'Factura A-1', monto: '$1,000', vencimiento: '1 de noviembre', etapa: 'Primer aviso (1 a 15 días de atraso)', canal: 'WhatsApp' } });
+    const run = await client.post('/api/tools/cobranza/run', { input: { cliente: 'Roberto', concepto: 'Factura A-1', monto: '$1,000', vencimiento: '1 de noviembre', etapa: 'first', canal: 'chat' } });
     assert.equal(run.status, 201);
     assert.equal((await client.post('/api/billing/checkout', { planId: 'negocio' })).status, 409);
   });

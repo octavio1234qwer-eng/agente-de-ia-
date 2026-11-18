@@ -14,14 +14,14 @@ export function loadSession({ db, config }) {
 
 export function requireUser(req, _res, next) {
   if (!req.user) throw unauthorized();
-  if (req.user.status !== 'active') throw new HttpError(403, 'account_suspended', 'Tu cuenta está suspendida. Escríbenos para revisarla.');
+  if (req.user.status !== 'active') throw new HttpError(403, 'account_suspended', 'err.account_suspended');
   next();
 }
 
 export function requireVerified(config) {
   return (req, _res, next) => {
     if (config.auth.requireEmailVerification && !req.user.email_verified_at) {
-      throw new HttpError(403, 'email_not_verified', 'Confirma tu correo para usar las herramientas. Revisa tu bandeja o pide un nuevo enlace.');
+      throw new HttpError(403, 'email_not_verified', 'err.email_not_verified');
     }
     next();
   };

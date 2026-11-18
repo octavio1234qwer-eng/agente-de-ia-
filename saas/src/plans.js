@@ -1,56 +1,62 @@
+import { t } from './i18n.js';
+
+/** Monedas en las que se cobran los planes. Para agregar una, súmala aquí, en la migración y en los precios. */
+export const CURRENCIES = ['mxn', 'usd'];
+
 /**
  * Catálogo de planes. Los créditos se reinician el día 1 de cada mes (zona horaria APP_TIMEZONE).
  * maxInputChars es el total de caracteres por solicitud.
- * El precio que se cobra lo define Stripe; `priceMxn` solo se usa para mostrarlo y debe coincidir.
+ * El precio que se cobra lo define Stripe; `prices` solo se usa para mostrarlo y debe coincidir
+ * (npm run stripe:setup crea los precios de Stripe con estos montos).
  */
 export function buildPlans(planConfig) {
   const plans = [
     {
       id: 'free',
-      name: 'Gratis',
-      priceMxn: 0,
+      prices: { mxn: 0, usd: 0 },
       monthlyCredits: planConfig.freeCredits,
       maxInputChars: 4000,
       premiumTools: false,
       historyDays: 7,
-      stripeLookupKey: null,
-      highlights: [
-        `${planConfig.freeCredits.toLocaleString('es-MX')} créditos al mes`,
-        'Herramientas esenciales',
-        'Textos de hasta 4,000 caracteres por solicitud',
-        'Historial de 7 días',
+      stripeLookupKeys: {},
+      highlights: (locale) => [
+        t(locale, 'plan.credits', { credits: planConfig.freeCredits }),
+        t(locale, 'plan.essential_tools'),
+        t(locale, 'plan.chars', { chars: 4000 }),
+        t(locale, 'plan.languages'),
+        t(locale, 'plan.history_days', { days: 7 }),
       ],
     },
     {
       id: 'pro',
-      name: 'Pro',
-      priceMxn: planConfig.proPriceMxn,
+      prices: planConfig.prices.pro,
       monthlyCredits: planConfig.proCredits,
       maxInputChars: 12000,
       premiumTools: true,
       historyDays: 365,
-      stripeLookupKey: 'impulsaia_pro_mensual',
-      highlights: [
-        `${planConfig.proCredits.toLocaleString('es-MX')} créditos al mes`,
-        'Todas las herramientas, incluidas cotizaciones, cobranza y análisis de documentos',
-        'Textos de hasta 12,000 caracteres por solicitud',
-        'Historial de 1 año',
+      stripeLookupKeys: { mxn: 'impulsaia_pro_mensual', usd: 'impulsaia_pro_mensual_usd' },
+      highlights: (locale) => [
+        t(locale, 'plan.credits', { credits: planConfig.proCredits }),
+        t(locale, 'plan.all_tools_detail'),
+        t(locale, 'plan.chars', { chars: 12000 }),
+        t(locale, 'plan.languages'),
+        t(locale, 'plan.history_years', { years: 1 }),
       ],
     },
     {
       id: 'negocio',
-      name: 'Negocio',
-      priceMxn: planConfig.negocioPriceMxn,
+      prices: planConfig.prices.negocio,
       monthlyCredits: planConfig.negocioCredits,
       maxInputChars: 32000,
       premiumTools: true,
       historyDays: 730,
-      stripeLookupKey: 'impulsaia_negocio_mensual',
-      highlights: [
-        `${planConfig.negocioCredits.toLocaleString('es-MX')} créditos al mes`,
-        'Todas las herramientas',
-        'Documentos de hasta 30,000 caracteres',
-        'Historial de 2 años',
+      stripeLookupKeys: { mxn: 'impulsaia_negocio_mensual', usd: 'impulsaia_negocio_mensual_usd' },
+      highlights: (locale) => [
+        t(locale, 'plan.credits', { credits: planConfig.negocioCredits }),
+        t(locale, 'plan.all_tools'),
+        t(locale, 'plan.documents', { chars: 30000 }),
+        t(locale, 'plan.languages'),
+        t(locale, 'plan.history_years', { years: 2 }),
       ],
     },
   ];
@@ -59,9 +65,11 @@ export function buildPlans(planConfig) {
     list: plans,
     get: (id) => byId.get(id) ?? byId.get('free'),
     has: (id) => byId.has(id),
-    paid: plans.filter((plan) => plan.priceMxn > 0),
+    paid: plans.filter((plan) => plan.prices.usd > 0),
   };
 }
+
+export const planName = (planId, locale) => t(locale, `plan.${planId}`);
 
 /** Plan vigente: un plan manual vencido regresa a Gratis. */
 export function effectivePlanId(user, now = new Date()) {
@@ -70,7 +78,15 @@ export function effectivePlanId(user, now = new Date()) {
   return user.plan_id;
 }
 
-export function publicPlan(plan) {
-  const { stripeLookupKey, ...rest } = plan;
-  return rest;
+export function publicPlan(plan, locale) {
+  return {
+    id: plan.id,
+    name: planName(plan.id, locale),
+    prices: plan.prices,
+    monthlyCredits: plan.monthlyCredits,
+    maxInputChars: plan.maxInputChars,
+    premiumTools: plan.premiumTools,
+    historyDays: plan.historyDays,
+    highlights: plan.highlights(locale),
+  };
 }

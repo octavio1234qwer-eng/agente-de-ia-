@@ -12,7 +12,7 @@ describe('panel de administración', () => {
     ctx = await setup();
     ({ client: admin, user: adminUser } = await signUp(ctx, { email: 'jefa@ejemplo.mx', name: 'Jefa' }));
     ({ client: member, user: memberUser } = await signUp(ctx, { email: 'socio@ejemplo.mx', name: 'Socio' }));
-    await member.post('/api/tools/resenas/run', { input: { negocio: 'Café', estrellas: '4 estrellas', resena: 'Buen café' } });
+    await member.post('/api/tools/resenas/run', { input: { negocio: 'Café', estrellas: '4', resena: 'Buen café' } });
   });
   after(() => ctx.close());
 
@@ -106,7 +106,7 @@ describe('cuenta del usuario', () => {
 
   it('exporta los datos del usuario', async () => {
     const { client } = await signUp(ctx, { email: 'exporta@ejemplo.mx' });
-    await client.post('/api/tools/resenas/run', { input: { negocio: 'Café', estrellas: '5 estrellas', resena: 'Excelente' } });
+    await client.post('/api/tools/resenas/run', { input: { negocio: 'Café', estrellas: '5', resena: 'Excelente' } });
     const res = await client.get('/api/account/export');
     assert.equal(res.status, 200);
     assert.match(res.headers.get('content-disposition'), /attachment/);

@@ -48,14 +48,16 @@ const schema = z.object({
 
   STRIPE_SECRET_KEY: optionalString,
   STRIPE_WEBHOOK_SECRET: optionalString,
-  STRIPE_PRICE_PRO: optionalString,
-  STRIPE_PRICE_NEGOCIO: optionalString,
+  STRIPE_AUTOMATIC_TAX: bool(false),
 
   PLAN_FREE_CREDITS: z.coerce.number().int().min(0).default(25),
   PLAN_PRO_CREDITS: z.coerce.number().int().min(1).default(500),
   PLAN_NEGOCIO_CREDITS: z.coerce.number().int().min(1).default(2000),
   PLAN_PRO_PRICE_MXN: z.coerce.number().int().min(1).default(199),
   PLAN_NEGOCIO_PRICE_MXN: z.coerce.number().int().min(1).default(499),
+  PLAN_PRO_PRICE_USD: z.coerce.number().int().min(1).default(12),
+  PLAN_NEGOCIO_PRICE_USD: z.coerce.number().int().min(1).default(29),
+  DEFAULT_LOCALE: z.enum(['es', 'en']).default('es'),
 
   MAIL_HOST: optionalString,
   MAIL_PORT: z.coerce.number().int().positive().default(587),
@@ -130,15 +132,18 @@ export function loadConfig(env = process.env) {
       secretKey: e.STRIPE_SECRET_KEY,
       webhookSecret: e.STRIPE_WEBHOOK_SECRET,
       enabled: Boolean(e.STRIPE_SECRET_KEY && e.STRIPE_WEBHOOK_SECRET),
-      priceIds: { pro: e.STRIPE_PRICE_PRO, negocio: e.STRIPE_PRICE_NEGOCIO },
+      automaticTax: e.STRIPE_AUTOMATIC_TAX,
     },
     plans: {
       freeCredits: e.PLAN_FREE_CREDITS,
       proCredits: e.PLAN_PRO_CREDITS,
       negocioCredits: e.PLAN_NEGOCIO_CREDITS,
-      proPriceMxn: e.PLAN_PRO_PRICE_MXN,
-      negocioPriceMxn: e.PLAN_NEGOCIO_PRICE_MXN,
+      prices: {
+        pro: { mxn: e.PLAN_PRO_PRICE_MXN, usd: e.PLAN_PRO_PRICE_USD },
+        negocio: { mxn: e.PLAN_NEGOCIO_PRICE_MXN, usd: e.PLAN_NEGOCIO_PRICE_USD },
+      },
     },
+    defaultLocale: e.DEFAULT_LOCALE,
     mail: {
       host: e.MAIL_HOST,
       port: e.MAIL_PORT,

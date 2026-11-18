@@ -1,10 +1,11 @@
-import { tools } from '../ai/tools.js';
+import { toolName, tools } from '../ai/tools.js';
+import { planName } from '../plans.js';
 
-const toolNames = new Map(tools.map((tool) => [tool.id, tool.name]));
+const toolNames = new Map(tools.map((tool) => [tool.id, toolName(tool, 'es')]));
 
 /** Métricas del negocio para el panel de administración. */
 export async function adminStats(db, { timezone, plans, ai }) {
-  const [users, planRows, subs, revenue, usage, daily, topTools, conversion] = await Promise.all([
+  const [users, planRows, subs, revenue, usage, daily, topTools, conversion, mrrRows, revenueRows, localeRows] = await Promise.all([
     db.query(`SELECT
         COUNT(*)::int AS total,
         COUNT(*) FILTER (WHERE created_at >= now() - interval '7 days')::int AS new7d,
@@ -19,14 +20,9 @@ export async function adminStats(db, { timezone, plans, ai }) {
     db.query(`SELECT
         COUNT(*) FILTER (WHERE status IN ('active', 'trialing'))::int AS active,
         COUNT(*) FILTER (WHERE status = 'past_due')::int AS past_due,
-        COUNT(*) FILTER (WHERE status = 'canceled' AND canceled_at >= now() - interval '30 days')::int AS canceled30d,
-        COALESCE(SUM(amount_cents) FILTER (WHERE status IN ('active', 'trialing', 'past_due')), 0)::bigint AS mrr_cents
+        COUNT(*) FILTER (WHERE status = 'canceled' AND canceled_at >= now() - interval '30 days')::int AS canceled30d
       FROM subscriptions`),
-    db.query(`SELECT
-        COALESCE(SUM(amount_cents) FILTER (WHERE paid_at >= now() - interval '30 days'), 0)::bigint AS paid30d_cents,
-        COALESCE(SUM(amount_cents), 0)::bigint AS paid_total_cents,
-        COUNT(*)::int AS payments
-      FROM payments WHERE status = 'paid'`),
+    db.query(`SELECT COUNT(*)::int AS payments FROM payments WHERE status = 'paid'`),
     db.query(`SELECT
         COUNT(*)::int AS generations,
         COUNT(*) FILTER (WHERE status = 'failed')::int AS failed,
@@ -56,6 +52,14 @@ export async function adminStats(db, { timezone, plans, ai }) {
         COUNT(*)::int AS total,
         COUNT(*) FILTER (WHERE plan_id <> 'free' AND (plan_expires_at IS NULL OR plan_expires_at > now()))::int AS paying
       FROM users WHERE role = 'user'`),
+    // Los importes se agrupan por moneda: no se suman pesos con dólares.
+    db.query(`SELECT currency, COALESCE(SUM(amount_cents), 0)::bigint AS mrr_cents
+      FROM subscriptions WHERE status IN ('active', 'trialing', 'past_due') GROUP BY currency`),
+    db.query(`SELECT currency,
+        COALESCE(SUM(amount_cents) FILTER (WHERE paid_at >= now() - interval '30 days'), 0)::bigint AS paid30d_cents,
+        COALESCE(SUM(amount_cents), 0)::bigint AS paid_total_cents
+      FROM payments WHERE status = 'paid' GROUP BY currency`),
+    db.query(`SELECT locale, COUNT(*)::int AS users FROM users GROUP BY locale ORDER BY users DESC`),
   ]);
 
   const u = usage.rows[0];
@@ -69,18 +73,21 @@ export async function adminStats(db, { timezone, plans, ai }) {
   return {
     generatedAt: new Date().toISOString(),
     users: users.rows[0],
-    plans: plans.list.map((plan) => ({ id: plan.id, name: plan.name, users: planCounts[plan.id] ?? 0 })),
+    plans: plans.list.map((plan) => ({ id: plan.id, name: planName(plan.id, 'es'), users: planCounts[plan.id] ?? 0 })),
     subscriptions: {
       active: subs.rows[0].active,
       pastDue: subs.rows[0].past_due,
       canceled30d: subs.rows[0].canceled30d,
-      mrrCents: Number(subs.rows[0].mrr_cents),
+      mrrByCurrency: Object.fromEntries(mrrRows.rows.map((row) => [row.currency, Number(row.mrr_cents)])),
     },
     revenue: {
-      paid30dCents: Number(revenue.rows[0].paid30d_cents),
-      paidTotalCents: Number(revenue.rows[0].paid_total_cents),
       payments: revenue.rows[0].payments,
+      byCurrency: Object.fromEntries(revenueRows.rows.map((row) => [row.currency, {
+        paid30dCents: Number(row.paid30d_cents),
+        paidTotalCents: Number(row.paid_total_cents),
+      }])),
     },
+    usersByLocale: localeRows.rows,
     usage30d: {
       generations: u.generations,
       failed: u.failed,

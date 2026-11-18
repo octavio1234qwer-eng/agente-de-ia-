@@ -1,7 +1,8 @@
 import express from 'express';
 import { z } from 'zod';
-import { buildPrompt, getTool, publicTool, toolTitle, tools } from '../ai/tools.js';
+import { buildPrompt, getTool, publicTool, toolName, toolTitle, tools } from '../ai/tools.js';
 import { HttpError, notFound, parse } from '../lib/http.js';
+import { formatDay } from '../i18n.js';
 import { errorFields } from '../lib/logger.js';
 import { requireUser, requireVerified } from '../middleware/auth.js';
 import { effectivePlanId } from '../plans.js';
@@ -15,26 +16,27 @@ function inputSchema(tool, plan) {
   const shape = {};
   for (const field of tool.fields) {
     if (field.type === 'select') {
-      const schema = z.enum(field.options, { error: 'Elige una opción de la lista.' });
+      const schema = z.enum(field.options, { error: 'v.option' });
       shape[field.name] = field.required
         ? schema
         : z.union([schema, z.literal('')]).optional().transform((value) => value || undefined);
       continue;
     }
     const max = Math.min(field.maxLength, plan.maxInputChars);
-    const schema = z.string().trim().max(max, `Máximo ${max.toLocaleString('es-MX')} caracteres en tu plan.`);
+    const schema = z.string().trim().max(max, 'v.max_chars_plan');
     shape[field.name] = field.required
-      ? schema.min(1, 'Este campo es obligatorio.')
+      ? schema.min(1, 'v.required')
       : schema.optional().transform((value) => value || undefined);
   }
   return z.object(shape).strict();
 }
 
-function generationListItem(row) {
+function generationListItem(row, locale) {
+  const tool = getTool(row.tool_id);
   return {
     id: row.id,
     toolId: row.tool_id,
-    toolName: getTool(row.tool_id)?.name ?? row.tool_id,
+    toolName: tool ? toolName(tool, locale) : row.tool_id,
     title: row.title,
     credits: row.credits,
     createdAt: row.created_at,
@@ -50,7 +52,7 @@ export function toolsRouter(ctx) {
 
   router.get('/tools', (req, res) => {
     const plan = planOf(req.user);
-    res.json({ tools: tools.map((tool) => publicTool(tool, plan)) });
+    res.json({ tools: tools.map((tool) => publicTool(tool, plan, req.locale)) });
   });
 
   router.post('/tools/:id/run',
@@ -59,31 +61,30 @@ export function toolsRouter(ctx) {
     rateLimit(db, { name: 'run', ...limits.run, keys: (req) => [`user:${req.user.id}`] }),
     async (req, res) => {
       const tool = getTool(req.params.id);
-      if (!tool) throw notFound('Herramienta no encontrada.');
+      if (!tool) throw notFound('tools.not_found');
       const user = req.user;
       const plan = planOf(user);
       if (tool.premium && !plan.premiumTools) {
-        throw new HttpError(403, 'upgrade_required', `"${tool.name}" está disponible en los planes de pago.`);
+        throw new HttpError(403, 'upgrade_required', 'tools.upgrade_required', undefined, { tool: toolName(tool, req.locale) });
       }
       const input = parse(inputSchema(tool, plan), req.body?.input);
       const totalChars = Object.values(input).reduce((sum, value) => sum + (value ? String(value).length : 0), 0);
       if (totalChars > plan.maxInputChars) {
-        throw new HttpError(400, 'input_too_long',
-          `Tu plan permite ${plan.maxInputChars.toLocaleString('es-MX')} caracteres por solicitud. Reduce el texto o mejora tu plan.`);
+        throw new HttpError(400, 'input_too_long', 'tools.input_too_long', undefined, { max: plan.maxInputChars });
       }
 
       // Se reservan los créditos antes de llamar a la IA (atómico) y se devuelven si la IA falla.
       const period = periodFor(new Date(), config.timezone);
       const reserved = await reserveCredits(db, { userId: user.id, period, cost: tool.credits, limit: plan.monthlyCredits });
       if (!reserved) {
-        throw new HttpError(402, 'quota_exceeded',
-          `No te alcanzan los créditos de este mes (esta herramienta usa ${tool.credits}). Se renuevan el ${nextPeriodStartLabel(period)} o puedes mejorar tu plan.`);
+        throw new HttpError(402, 'quota_exceeded', 'tools.quota_exceeded', undefined,
+          { credits: tool.credits, date: formatDay(req.locale, nextPeriodStartLabel(period)) });
       }
 
       const started = Date.now();
       let result;
       try {
-        result = await ai.generate(buildPrompt(tool, input));
+        result = await ai.generate(buildPrompt(tool, input, { locale: user.locale ?? req.locale, currency: user.currency, country: user.country }));
         if (!result.text?.trim()) throw Object.assign(new Error('Respuesta vacía del proveedor de IA'), { code: 'empty_output' });
       } catch (error) {
         await refundCredits(db, { userId: user.id, period, cost: tool.credits });
@@ -93,7 +94,7 @@ export function toolsRouter(ctx) {
           [user.id, tool.id, ai.name, ai.model, Date.now() - started, String(error.status ?? error.code ?? 'error').slice(0, 40)],
         );
         logger.error('falló la generación', { user: user.id, tool: tool.id, requestId: req.id, ...errorFields(error) });
-        throw new HttpError(502, 'ai_unavailable', 'La IA no respondió en este momento. No se descontaron créditos; intenta de nuevo.');
+        throw new HttpError(502, 'ai_unavailable', 'tools.ai_unavailable');
       }
 
       const output = result.text.trim();
@@ -109,7 +110,7 @@ export function toolsRouter(ctx) {
         generation: {
           id: rows[0].id,
           toolId: tool.id,
-          toolName: tool.name,
+          toolName: toolName(tool, req.locale),
           output,
           credits: tool.credits,
           createdAt: rows[0].created_at,
@@ -134,7 +135,7 @@ export function toolsRouter(ctx) {
       [req.user.id, plan.historyDays, pageSize + 1, (query.page - 1) * pageSize, query.tool ?? null],
     );
     res.json({
-      items: rows.slice(0, pageSize).map(generationListItem),
+      items: rows.slice(0, pageSize).map((row) => generationListItem(row, req.locale)),
       page: query.page,
       hasMore: rows.length > pageSize,
       historyDays: plan.historyDays,
@@ -151,8 +152,8 @@ export function toolsRouter(ctx) {
       [req.params.id, req.user.id, plan.historyDays],
     );
     const row = rows[0];
-    if (!row) throw notFound('No encontramos ese resultado.');
-    res.json({ generation: { ...generationListItem(row), input: row.input, output: row.output } });
+    if (!row) throw notFound('gen.not_found');
+    res.json({ generation: { ...generationListItem(row, req.locale), input: row.input, output: row.output } });
   });
 
   // Al borrar se elimina el contenido y se conserva el registro para que las estadísticas cuadren.

@@ -1,8 +1,7 @@
 import path from 'node:path';
 import express from 'express';
-import { z } from 'zod';
 import { rootDir } from './config.js';
-import { errorHandler, notFoundApi } from './middleware/errors.js';
+import { errorHandler, notFoundApi, setLocale } from './middleware/errors.js';
 import { loadSession } from './middleware/auth.js';
 import { csrfProtection, noStore, requestId, securityHeaders } from './middleware/security.js';
 import { effectivePlanId } from './plans.js';
@@ -13,8 +12,6 @@ import { billingRouter, stripeWebhookHandler } from './routes/billing.js';
 import { toolsRouter } from './routes/tools.js';
 import { usageSummary } from './services/usage.js';
 import { getActiveSubscription, userView } from './services/users.js';
-
-z.config(z.locales.es());
 
 /** Límites de peticiones por defecto (se pueden ajustar en pruebas). */
 export const DEFAULT_LIMITS = {
@@ -37,13 +34,13 @@ export function createApp({ config, db, logger, plans, ai, billing, mailer, limi
   const ctx = {
     config, db, logger, plans, ai, billing, mailer,
     limits: { ...DEFAULT_LIMITS, ...limits },
-    async sendUser(res, user) {
+    async sendUser(res, user, locale = res.req?.locale) {
       const plan = plans.get(effectivePlanId(user));
       const [usage, subscription] = await Promise.all([
         usageSummary(db, user.id, plan, config.timezone),
         getActiveSubscription(db, user.id),
       ]);
-      res.json({ user: userView(user, { plans, usage, subscription, billingEnabled: billing.enabled }) });
+      res.json({ user: userView(user, { plans, usage, subscription, billingEnabled: billing.enabled, locale }) });
     },
   };
 
@@ -76,6 +73,7 @@ export function createApp({ config, db, logger, plans, ai, billing, mailer, limi
   api.use(express.json({ limit: '256kb' }));
   api.use(csrfProtection(config));
   api.use(loadSession(ctx));
+  api.use(setLocale);
   api.use('/auth', authRouter(ctx));
   api.use('/account', accountRouter(ctx));
   api.use('/admin', adminRouter(ctx));

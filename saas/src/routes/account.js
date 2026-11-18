@@ -1,13 +1,14 @@
 import express from 'express';
 import { z } from 'zod';
-import { HttpError, parse } from '../lib/http.js';
+import { HttpError, fieldError, parse } from '../lib/http.js';
 import { errorFields } from '../lib/logger.js';
 import { hashPassword, verifyPassword } from '../lib/security.js';
 import { requireUser } from '../middleware/auth.js';
 import { audit } from '../services/audit.js';
 import { emails } from '../services/mailer.js';
 import { clearSessionCookie, deleteUserSessions } from '../services/sessions.js';
-import { passwordSchema } from './auth.js';
+import { countrySchema, currencySchema, localeSchema, passwordSchema } from './auth.js';
+import { getActiveSubscription } from '../services/users.js';
 
 export function accountRouter(ctx) {
   const { db, config, logger, mailer, billing, sendUser } = ctx;
@@ -16,27 +17,37 @@ export function accountRouter(ctx) {
 
   router.patch('/', async (req, res) => {
     const data = parse(z.object({
-      name: z.string().trim().min(2, 'Escribe tu nombre.').max(100).optional(),
+      name: z.string().trim().min(2, 'v.name').max(100).optional(),
       businessName: z.string().trim().max(150).optional(),
+      locale: localeSchema.optional(),
+      currency: currencySchema.optional(),
+      country: countrySchema.optional(),
     }).strict(), req.body);
+    // Stripe cobra a cada cliente en una sola moneda: no se cambia con una suscripción activa.
+    if (data.currency && data.currency !== req.user.currency && await getActiveSubscription(db, req.user.id)) {
+      throw new HttpError(409, 'currency_locked', 'account.currency_locked');
+    }
     const { rows } = await db.query(
       `UPDATE users SET name = COALESCE($2, name),
          business_name = CASE WHEN $3::text IS NULL THEN business_name ELSE NULLIF($3::text, '') END,
+         locale = COALESCE($4, locale),
+         currency = COALESCE($5, currency),
+         country = CASE WHEN $6::text IS NULL THEN country ELSE NULLIF($6::text, '') END,
          updated_at = now()
        WHERE id = $1 RETURNING *`,
-      [req.user.id, data.name ?? null, data.businessName ?? null],
+      [req.user.id, data.name ?? null, data.businessName ?? null, data.locale ?? null, data.currency ?? null, data.country ?? null],
     );
-    await sendUser(res, rows[0]);
+    await sendUser(res, rows[0], data.locale ?? req.locale);
   });
 
   router.post('/password', async (req, res) => {
     const data = parse(z.object({ currentPassword: z.string().max(200), newPassword: passwordSchema }), req.body);
     if (!(await verifyPassword(data.currentPassword, req.user.password_hash))) {
-      throw new HttpError(400, 'bad_request', 'Revisa los datos enviados.', { fields: { currentPassword: 'La contraseña actual no es correcta.' } });
+      throw fieldError('currentPassword', 'v.current_password');
     }
     await db.query('UPDATE users SET password_hash = $2, updated_at = now() WHERE id = $1', [req.user.id, await hashPassword(data.newPassword)]);
     await deleteUserSessions(db, req.user.id, { exceptTokenHash: req.user.session_token_hash });
-    await mailer.send({ to: req.user.email, ...emails.passwordChanged(config.appName, req.user.name) })
+    await mailer.send({ to: req.user.email, ...emails.passwordChanged({ appName: config.appName, locale: req.user.locale, name: req.user.name }) })
       .catch((error) => logger.error('no se envió aviso de cambio', errorFields(error)));
     res.json({ ok: true });
   });
@@ -58,6 +69,7 @@ export function accountRouter(ctx) {
       exportedAt: new Date().toISOString(),
       account: {
         email: u.email, name: u.name, businessName: u.business_name, plan: u.plan_id,
+        locale: u.locale, currency: u.currency, country: u.country,
         emailVerifiedAt: u.email_verified_at, createdAt: u.created_at, lastLoginAt: u.last_login_at,
       },
       subscriptions: subscriptions.rows,
@@ -70,14 +82,14 @@ export function accountRouter(ctx) {
   router.delete('/', async (req, res) => {
     const data = parse(z.object({
       password: z.string().max(200),
-      confirm: z.literal('ELIMINAR', { error: 'Escribe ELIMINAR para confirmar.' }),
+      confirm: z.enum(['ELIMINAR', 'DELETE'], { error: 'v.confirm_delete' }),
     }), req.body);
     if (!(await verifyPassword(data.password, req.user.password_hash))) {
-      throw new HttpError(400, 'bad_request', 'Revisa los datos enviados.', { fields: { password: 'La contraseña no es correcta.' } });
+      throw fieldError('password', 'v.password_wrong');
     }
     if (req.user.role === 'admin') {
       const { rows } = await db.query("SELECT COUNT(*)::int AS n FROM users WHERE role = 'admin' AND status = 'active'");
-      if (rows[0].n <= 1) throw new HttpError(409, 'last_admin', 'Eres el único administrador. Nombra a otro antes de eliminar tu cuenta.');
+      if (rows[0].n <= 1) throw new HttpError(409, 'last_admin', 'account.last_admin');
     }
     await billing.cancelAllForUser(req.user);
     await audit(db, { actor: null, action: 'account.deleted', target: req.user, ip: req.ip });

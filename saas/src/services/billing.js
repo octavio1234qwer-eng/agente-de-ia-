@@ -18,28 +18,24 @@ export function createBilling({ config, db, logger, plans, mailer, stripe }) {
   const priceCache = new Map();
 
   function assertEnabled() {
-    if (!enabled) throw new HttpError(503, 'billing_disabled', 'Los pagos aún no están habilitados en esta plataforma.');
+    if (!enabled) throw new HttpError(503, 'billing_disabled', 'billing.disabled');
   }
 
-  async function resolvePriceId(plan) {
-    const configured = config.stripe.priceIds[plan.id];
-    if (configured) return configured;
-    const cached = priceCache.get(plan.id);
+  /** Precio de Stripe del plan en la moneda del cliente, buscado por lookup_key (npm run stripe:setup los crea). */
+  async function resolvePriceId(plan, currency) {
+    const lookupKey = plan.stripeLookupKeys[currency];
+    const cached = priceCache.get(lookupKey);
     if (cached && cached.expires > Date.now()) return cached.id;
-    const { data } = await stripe.prices.list({ lookup_keys: [plan.stripeLookupKey], active: true, limit: 1 });
-    if (!data[0]) {
-      throw new HttpError(503, 'price_missing', `No existe en Stripe un precio con lookup_key "${plan.stripeLookupKey}". Ejecuta npm run stripe:setup.`);
-    }
-    priceCache.set(plan.id, { id: data[0].id, expires: Date.now() + 10 * 60 * 1000 });
+    const { data } = await stripe.prices.list({ lookup_keys: [lookupKey], active: true, limit: 1 });
+    if (!data[0]) throw new HttpError(503, 'price_missing', 'billing.price_missing', undefined, { key: lookupKey });
+    priceCache.set(lookupKey, { id: data[0].id, expires: Date.now() + 10 * 60 * 1000 });
     return data[0].id;
   }
 
   function planFromSubscription(subscription) {
     const price = subscription.items?.data?.[0]?.price;
     for (const plan of plans.paid) {
-      if (price && (price.id === config.stripe.priceIds[plan.id] || (price.lookup_key && price.lookup_key === plan.stripeLookupKey))) {
-        return plan.id;
-      }
+      if (price?.lookup_key && Object.values(plan.stripeLookupKeys).includes(price.lookup_key)) return plan.id;
     }
     const fromMetadata = subscription.metadata?.plan_id;
     return fromMetadata && plans.has(fromMetadata) && fromMetadata !== 'free' ? fromMetadata : null;
@@ -150,7 +146,7 @@ export function createBilling({ config, db, logger, plans, mailer, stripe }) {
     const customerId = typeof invoice.customer === 'string' ? invoice.customer : invoice.customer?.id;
     const user = await findUserForCustomer(customerId);
     if (!user) return;
-    const message = emails.paymentFailed(config.appName, user.name, `${config.appUrl}/app#/planes`);
+    const message = emails.paymentFailed({ appName: config.appName, locale: user.locale, name: user.name, url: `${config.appUrl}/app#/planes` });
     await mailer.send({ to: user.email, ...message }).catch((error) => logger.error('no se envió aviso de pago fallido', errorFields(error)));
   }
 
@@ -186,40 +182,42 @@ export function createBilling({ config, db, logger, plans, mailer, stripe }) {
   return {
     enabled,
 
-    async createCheckout(user, planId) {
+    async createCheckout(user, planId, locale = user.locale) {
       assertEnabled();
       const plan = plans.get(planId);
-      if (!plans.has(planId) || plan.priceMxn <= 0) throw badRequest('Plan no válido.');
+      if (!plans.has(planId) || plan.id === 'free') throw badRequest('v.plan');
       const { rows } = await db.query(
         'SELECT 1 FROM subscriptions WHERE user_id = $1 AND status = ANY($2::text[]) LIMIT 1',
         [user.id, GRANTING_STATUSES],
       );
       if (rows.length) {
-        throw new HttpError(409, 'already_subscribed', 'Ya tienes una suscripción. Cambia de plan desde "Administrar suscripción".');
+        throw new HttpError(409, 'already_subscribed', 'billing.already_subscribed');
       }
       const customer = await ensureCustomer(user);
       const session = await stripe.checkout.sessions.create({
         mode: 'subscription',
         customer,
         client_reference_id: user.id,
-        line_items: [{ price: await resolvePriceId(plan), quantity: 1 }],
+        line_items: [{ price: await resolvePriceId(plan, user.currency ?? 'mxn'), quantity: 1 }],
         subscription_data: { metadata: { user_id: user.id, plan_id: plan.id } },
         metadata: { user_id: user.id, plan_id: plan.id },
         allow_promotion_codes: true,
-        locale: 'es',
+        locale,
+        // Impuestos automáticos por país (IVA, VAT, sales tax) si activaste Stripe Tax.
+        ...(config.stripe.automaticTax ? { automatic_tax: { enabled: true }, customer_update: { address: 'auto' }, billing_address_collection: 'required' } : {}),
         success_url: `${config.appUrl}/app?pago=ok#/planes`,
         cancel_url: `${config.appUrl}/app?pago=cancelado#/planes`,
       });
       return session.url;
     },
 
-    async createPortal(user) {
+    async createPortal(user, locale = user.locale) {
       assertEnabled();
-      if (!user.stripe_customer_id) throw badRequest('Aún no tienes una suscripción de pago.');
+      if (!user.stripe_customer_id) throw badRequest('billing.no_customer');
       const session = await stripe.billingPortal.sessions.create({
         customer: user.stripe_customer_id,
         return_url: `${config.appUrl}/app#/planes`,
-        locale: 'es',
+        locale,
       });
       return session.url;
     },
@@ -230,7 +228,7 @@ export function createBilling({ config, db, logger, plans, mailer, stripe }) {
       try {
         event = stripe.webhooks.constructEvent(rawBody, signature ?? '', config.stripe.webhookSecret);
       } catch {
-        throw badRequest('Firma de webhook inválida.');
+        throw badRequest('billing.bad_signature');
       }
       const inserted = await db.query(
         'INSERT INTO billing_events (id, type) VALUES ($1, $2) ON CONFLICT (id) DO NOTHING RETURNING id',

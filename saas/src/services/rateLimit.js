@@ -27,7 +27,7 @@ export function rateLimit(db, { name, limit, windowMs, keys }) {
       if (!result.allowed) {
         const retryAfter = Math.max(Math.ceil((result.resetAt.getTime() - Date.now()) / 1000), 1);
         res.set('Retry-After', String(retryAfter));
-        throw new HttpError(429, 'rate_limited', `Demasiados intentos. Intenta de nuevo en ${Math.ceil(retryAfter / 60)} min.`);
+        throw new HttpError(429, 'rate_limited', 'err.rate_limited', undefined, { minutes: Math.ceil(retryAfter / 60) });
       }
     }
     next();

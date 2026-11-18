@@ -1,13 +1,13 @@
 import express from 'express';
 import { z } from 'zod';
-import { HttpError, notFound, parse } from '../lib/http.js';
+import { HttpError, fieldError, notFound, parse } from '../lib/http.js';
 import { requireAdmin, requireUser } from '../middleware/auth.js';
-import { effectivePlanId } from '../plans.js';
+import { effectivePlanId, planName } from '../plans.js';
 import { audit } from '../services/audit.js';
 import { adminStats } from '../services/stats.js';
 import { deleteUserSessions } from '../services/sessions.js';
 import { periodFor, usageSummary } from '../services/usage.js';
-import { getTool } from '../ai/tools.js';
+import { getTool, toolName } from '../ai/tools.js';
 
 const uuid = z.uuid();
 const pageSchema = z.coerce.number().int().min(1).max(10000).default(1);
@@ -23,7 +23,7 @@ function adminUserRow(row, plans) {
     role: row.role,
     status: row.status,
     emailVerified: Boolean(row.email_verified_at),
-    plan: { id: plan.id, name: plan.name, source: plan.id === 'free' ? 'default' : row.plan_source, expiresAt: row.plan_expires_at },
+    plan: { id: plan.id, name: planName(plan.id, 'es'), source: plan.id === 'free' ? 'default' : row.plan_source, expiresAt: row.plan_expires_at },
     createdAt: row.created_at,
     lastLoginAt: row.last_login_at,
     usedThisMonth: row.used ?? 0,
@@ -36,9 +36,9 @@ export function adminRouter(ctx) {
   router.use(requireUser, requireAdmin);
 
   const loadTarget = async (id) => {
-    if (!uuid.safeParse(id).success) throw notFound('Usuario no encontrado.');
+    if (!uuid.safeParse(id).success) throw notFound('admin.user_not_found');
     const { rows } = await db.query('SELECT * FROM users WHERE id = $1', [id]);
-    if (!rows[0]) throw notFound('Usuario no encontrado.');
+    if (!rows[0]) throw notFound('admin.user_not_found');
     return rows[0];
   };
 
@@ -106,7 +106,7 @@ export function adminRouter(ctx) {
       usage,
       subscriptions: subscriptions.rows,
       payments: payments.rows,
-      recentGenerations: generations.rows.map((row) => ({ ...row, toolName: getTool(row.tool_id)?.name ?? row.tool_id })),
+      recentGenerations: generations.rows.map((row) => ({ ...row, toolName: getTool(row.tool_id) ? toolName(getTool(row.tool_id), 'es') : row.tool_id })),
     });
   });
 
@@ -115,11 +115,11 @@ export function adminRouter(ctx) {
     const data = parse(z.object({
       status: z.enum(['active', 'suspended']).optional(),
       role: z.enum(['user', 'admin']).optional(),
-      planId: z.string().max(40).refine((id) => plans.has(id), 'Plan no válido.').optional(),
+      planId: z.string().max(40).refine((id) => plans.has(id), 'v.plan').optional(),
       planExpiresAt: z.union([z.iso.datetime({ offset: true }), z.iso.date(), z.null()]).optional(),
     }).strict(), req.body);
     if (target.id === req.user.id && (data.status === 'suspended' || data.role === 'user')) {
-      throw new HttpError(400, 'self_change', 'No puedes suspenderte ni quitarte el rol de administrador.');
+      throw new HttpError(400, 'self_change', 'admin.self_change');
     }
 
     const changes = {};
@@ -130,7 +130,7 @@ export function adminRouter(ctx) {
       changes.plan_source = data.planId === 'free' ? 'default' : 'manual';
       changes.plan_expires_at = data.planId === 'free' || !data.planExpiresAt ? null : new Date(data.planExpiresAt);
       if (changes.plan_expires_at && changes.plan_expires_at <= new Date()) {
-        throw new HttpError(400, 'bad_request', 'Revisa los datos enviados.', { fields: { planExpiresAt: 'La fecha debe ser futura.' } });
+        throw fieldError('planExpiresAt', 'v.future_date');
       }
     }
     const columns = Object.keys(changes);
