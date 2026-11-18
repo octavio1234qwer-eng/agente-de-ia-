@@ -16,6 +16,7 @@ button{background:#E07A2F;color:#fff;border:0;border-radius:8px;padding:11px 18p
 button.sec{background:#e9e6de;color:#1e1e1e}.res{background:#F4EFE6;border-radius:10px;padding:16px;margin-top:16px}
 .res b{font-size:22px;color:#1F4E5F}.ok{color:#1b7a3a}.bad{color:#b3261e}.cta{display:block;background:#1F4E5F;color:#fff;text-decoration:none;
 border-radius:12px;padding:18px;margin:26px 0;text-align:center}.cta strong{display:block;font-size:19px}.grid12{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:15px}td,th{border:1px solid #e3e0d8;padding:8px;text-align:left;vertical-align:top}th{background:#F4EFE6}
 footer{color:#666;font-size:14px;text-align:center;padding:30px}@media(max-width:560px){.row{grid-template-columns:1fr 1fr}.grid12{grid-template-columns:repeat(2,1fr)}}"""
 
 def page(slug, title, desc, h1, body, faq, script=""):
@@ -26,11 +27,11 @@ def page(slug, title, desc, h1, body, faq, script=""):
     html = f"""<!DOCTYPE html><html lang="es-MX"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{title}</title><meta name="description" content="{desc}"><link rel="canonical" href="{url}">
 <meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:url" content="{url}">
-<style>{CSS}</style><script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script></head><body>
+<link rel="stylesheet" href="/s.css"><script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script></head><body>
 <header><div class="w"><a href="/">Calcula tu Negocio</a><h1>{h1}</h1><p>{desc}</p></div></header>
 <main class="w">{body}<h2>Preguntas frecuentes</h2>{faq_html}</main>
 <footer>Calculadoras gratis para negocios pequeños en México · Resultados orientativos: no sustituyen la asesoría de tu contador.<br>
-<a href="/">Inicio</a> · <a href="/calculadora-food-cost/">Food cost</a> · <a href="/punto-de-reorden-tienda/">Punto de reorden</a> · <a href="/sueldo-ingresos-irregulares/">Sueldo con ingresos irregulares</a></footer>
+<a href="/">Inicio</a> · <a href="/calculadora-food-cost/">Food cost</a> · <a href="/punto-de-reorden-tienda/">Punto de reorden</a> · <a href="/sueldo-ingresos-irregulares/">Sueldo con ingresos irregulares</a> · <a href="/blog/">Guías</a></footer>
 <script>const f=(n,d=2)=>isFinite(n)?n.toLocaleString('es-MX',{{minimumFractionDigits:d,maximumFractionDigits:d}}):'—';const num=id=>parseFloat(document.getElementById(id).value)||0;{script}</script></body></html>"""
     d = OUT / slug if slug else OUT
     d.mkdir(parents=True, exist_ok=True)
@@ -125,6 +126,24 @@ body += cta("shgbyx", "Las 4 plantillas completas", 24, "Costeo de platillos, in
 urls.insert(0, page("", "Calcula tu Negocio: calculadoras gratis para restaurantes, tienditas e independientes",
     "Calculadoras gratis en español: food cost de platillos, punto de reorden para tiendas de abarrotes y sueldo fijo con ingresos irregulares.",
     "Calculadoras gratis para tu negocio", body, [("¿Las calculadoras son gratis?", "Sí. No necesitas registrarte. Si quieres llevar todo tu negocio en una hoja, cada calculadora tiene su plantilla de Excel.")]))
+
+# ---------- Artículos ----------
+INDEXNOW_KEY = "c4a7e1f09b3d4e6a8f2b5c7d9e1a3b5c"
+arts = []
+for f in sorted((Path(__file__).parent / "articulos").glob("*.html")):
+    meta_raw, html = f.read_text(encoding="utf-8").split("\n---\n", 1)
+    m = json.loads(meta_raw)
+    slug = f.stem
+    tool = f'<p><a href="{m["tool"]}">Prueba la calculadora gratis →</a></p>' if m["tool"] != "/" else ""
+    body = html + tool + cta(*m["cta"][:2], m["cta"][2], m["cta"][3])
+    urls.append(page(f"blog/{slug}", m["title"] + " | Calcula tu Negocio", m["desc"], m["h1"], body, m["faq"]))
+    arts.append((slug, m["h1"], m["desc"]))
+listado = "".join(f'<div class="card"><h2 style="margin-top:0"><a href="/blog/{s}/">{t}</a></h2><p>{d}</p></div>' for s, t, d in arts)
+urls.append(page("blog", "Guías prácticas para restaurantes, tienditas e independientes | Calcula tu Negocio",
+    "Guías cortas y prácticas: merma, ingeniería de menú, inventario de tienda, presupuesto con ingresos irregulares y menú semanal.",
+    "Guías prácticas", listado, [("¿Las guías son gratis?", "Sí, todas las guías y calculadoras de este sitio son gratis.")]))
+(OUT / "s.css").write_text(CSS, encoding="utf-8")
+(OUT / f"{INDEXNOW_KEY}.txt").write_text(INDEXNOW_KEY)
 
 (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {BASE}/sitemap.xml\n")
 (OUT / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
