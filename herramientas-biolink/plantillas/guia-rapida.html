@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<title>Guía rápida · La Casa de la Mantarraya</title>
+<style>
+  @font-face { font-family: Fraunces; src: url("{{SITIO}}/assets/fonts/fraunces.woff2"); font-weight: 380 480; }
+  @font-face { font-family: Fraunces; src: url("{{SITIO}}/assets/fonts/fraunces-italic.woff2"); font-style: italic; }
+  @font-face { font-family: Bricolage; src: url("{{SITIO}}/assets/fonts/bricolage.woff2"); font-weight: 400 700; }
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Bricolage, Arial, sans-serif; color: #15281f; font-size: 12pt; line-height: 1.4; }
+  .hoja { width: 210mm; height: 297mm; padding: 11mm 14mm 16mm; position: relative; overflow: hidden; page-break-after: always; background: #f3eadb; }
+  .hoja:last-child { page-break-after: auto; }
+  .cabeza { display: flex; align-items: center; gap: 14px; background: #193f30; color: #f3eadb; border-radius: 16px; padding: 14px 18px; }
+  .cabeza img { width: 58px; height: 58px; background: #f3eadb; border-radius: 50%; padding: 5px; }
+  .cabeza small { display: block; color: #e9b872; font-size: 9pt; letter-spacing: .16em; text-transform: uppercase; font-weight: 700; }
+  .cabeza h1 { margin: 2px 0 0; font-family: Fraunces; font-weight: 430; font-size: 24pt; line-height: 1.05; }
+  .intro { font-size: 12.5pt; margin: 10px 2px 6px; }
+  .paso { display: grid; grid-template-columns: 46px 1fr; gap: 12px; background: #fff9f0; border: 1.5px solid #e2d5bf; border-radius: 14px; padding: 10px 13px; margin-top: 8px; }
+  .num { width: 46px; height: 46px; border-radius: 50%; background: #9a4a24; color: #f3eadb; display: grid; place-items: center; font-family: Fraunces; font-size: 22pt; }
+  .paso h2 { margin: 2px 0 4px; font-family: Fraunces; font-weight: 450; font-size: 16pt; color: #193f30; }
+  .paso p { margin: 0 0 4px; }
+  .enlace { display: inline-block; margin: 4px 0; padding: 8px 14px; border-radius: 10px; background: #193f30; color: #f3eadb; font-weight: 700; font-size: 14pt; text-decoration: none; letter-spacing: .01em; }
+  .fila { display: flex; gap: 14px; align-items: center; }
+  .qr { width: 110px; height: 110px; border-radius: 10px; flex: none; }
+  ol.mini { margin: 4px 0 0; padding-left: 20px; }
+  ol.mini li { margin: 2px 0; }
+  b.ui { background: #e9e0cf; border-radius: 6px; padding: 0 6px; font-weight: 700; }
+  .caja { margin-top: 8px; border-radius: 14px; padding: 9px 14px; }
+  .caja h3 { margin: 0 0 4px; font-family: Fraunces; font-weight: 450; font-size: 14pt; }
+  .caja ul { margin: 2px 0 0; padding-left: 20px; }
+  .caja li { margin: 1px 0; }
+  .verde { background: #193f30; color: #f3eadb; }
+  .verde h3 { color: #e9b872; }
+  .coral { background: #f07a5f; color: #0b2018; }
+  .dos { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .pie { position: absolute; left: 14mm; right: 14mm; bottom: 7mm; font-size: 9pt; color: #4b5b51; text-align: center; }
+  .capturas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 12px; }
+  .capturas figure { margin: 0; }
+  .capturas img { width: 100%; border-radius: 14px; border: 1.5px solid #e2d5bf; display: block; }
+  .capturas figcaption { font-size: 10pt; text-align: center; margin-top: 4px; color: #4b5b51; }
+  .compu img { width: 100%; height: 74mm; object-fit: cover; object-position: center top; border-radius: 12px; border: 1.5px solid #e2d5bf; display: block; margin-top: 8px; }
+  h2.sub { font-family: Fraunces; font-weight: 450; font-size: 18pt; color: #193f30; margin: 14px 0 0; }
+</style></head>
+<body>
+<section class="hoja">
+  <div class="cabeza">
+    <img src="{{SITIO}}/assets/img/logo-mantarraya.png" alt="">
+    <div><small>Guía rápida · 3 pasos</small><h1>Tu nueva página para Instagram</h1></div>
+  </div>
+  <p class="intro">Ya está lista y funcionando. <b>No tienes que instalar ni programar nada.</b> Solo sigue estos 3 pasos.</p>
+
+  <div class="paso">
+    <div class="num">1</div>
+    <div>
+      <h2>Mírala</h2>
+      <div class="fila">
+        <img class="qr" src="{{QR}}" alt="">
+        <div>
+          <p>Abre este enlace en tu celular o en tu computadora:</p>
+          <a class="enlace" href="https://lacasadelamantarraya.vercel.app">lacasadelamantarraya.vercel.app</a>
+          <p>O apunta la cámara de tu celular a este código.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="paso">
+    <div class="num">2</div>
+    <div>
+      <h2>Ponla en tu Instagram</h2>
+      <ol class="mini">
+        <li>Abre Instagram y entra a tu perfil.</li>
+        <li>Toca <b class="ui">Editar perfil</b> y luego <b class="ui">Enlaces</b>.</li>
+        <li>Toca <b class="ui">Agregar enlace externo</b>.</li>
+        <li>En <b>URL</b> escribe: <b>lacasadelamantarraya.vercel.app</b></li>
+        <li>En <b>Título</b> escribe: <b>Reserva y menú</b>. Toca <b class="ui">Listo</b> y ya quedó.</li>
+      </ol>
+      <p style="margin-top:4px">En Facebook y TikTok es igual: pégalo donde dice <b>Sitio web</b>.</p>
+    </div>
+  </div>
+
+  <div class="paso">
+    <div class="num">3</div>
+    <div>
+      <h2>Imprime el QR para las mesas</h2>
+      <p>Imprime el archivo <b>"2 - Tarjetón para las mesas (imprimir).pdf"</b> en cartulina, a tamaño real (100 %). Mide 10 × 15 cm. Tus clientes lo escanean con la cámara y les abre esta misma página.</p>
+    </div>
+  </div>
+
+  <div class="dos">
+    <div class="caja verde">
+      <h3>¿Qué hacen ahí tus clientes?</h3>
+      <ul>
+        <li>Reservan mesa: te llega el mensaje listo a tu WhatsApp.</li>
+        <li>Ven los platillos y precios.</li>
+        <li>Te encuentran en Google Maps.</li>
+        <li>Ven si estás abierto ahora.</li>
+        <li>Se enteran de la salsa, desayunos y Posadas.</li>
+      </ul>
+    </div>
+    <div class="caja coral">
+      <h3>Confírmanos 3 datos</h3>
+      <ul>
+        <li>¿Abren a las <b>8 a. m.</b> o a la <b>1 p. m.</b>?</li>
+        <li>¿La salsa es <b>viernes y sábado</b> o solo sábado?</li>
+        <li>¿El ceviche negro <b>desde $370</b> está bien?</li>
+      </ul>
+      <p style="margin:6px 0 0">Responde el correo y lo ajustamos.</p>
+    </div>
+  </div>
+
+  <div class="caja" style="background:#fff9f0;border:1.5px solid #e2d5bf">
+    <h3 style="color:#193f30">¿Quieres cambiar algo después?</h3>
+    <p style="margin:0">Horario, precios o la promoción del mes: <b>solo avísanos y lo cambiamos.</b> Tú no tienes que tocar nada.</p>
+  </div>
+
+  <p class="pie">La Casa de la Mantarraya · Guía rápida · página 1 de 2</p>
+</section>
+
+<section class="hoja">
+  <div class="cabeza">
+    <img src="{{SITIO}}/assets/img/logo-mantarraya.png" alt="">
+    <div><small>Así se ve</small><h1>En el celular de tus clientes</h1></div>
+  </div>
+  <div class="capturas">
+    <figure><img src="{{CAP}}/1-movil-inicio.jpg" alt=""><figcaption>Inicio: abierto ahora y botón Reservar</figcaption></figure>
+    <figure><img src="{{CAP}}/5-movil-reserva.jpg" alt=""><figcaption>Reservar: personas, día y hora</figcaption></figure>
+    <figure><img src="{{CAP}}/3-movil-antes-de-venir.jpg" alt=""><figcaption>Cómo llegar, salsa, reseñas y desayunos</figcaption></figure>
+  </div>
+  <h2 class="sub">Y en la computadora</h2>
+  <div class="compu"><img src="{{CAP}}/7-escritorio-inicio.jpg" alt=""></div>
+  <p style="margin-top:10px;font-size:10.5pt;color:#4b5b51">La carpeta <b>"5 - Para el programador"</b> es solo por si algún día quieren tener la página en su propio dominio (casadelamantarraya.com/links). No es necesario abrirla.</p>
+  <p class="pie">La Casa de la Mantarraya · Guía rápida · página 2 de 2</p>
+</section>
+</body></html>
