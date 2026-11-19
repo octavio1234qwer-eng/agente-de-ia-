@@ -42,7 +42,7 @@ await p.goto('file://%s', { waitUntil: 'networkidle' }); await p.evaluate(() => 
 await p.pdf({ path: '%s', format: 'A4', printBackground: true, margin: { top: '18mm', bottom: '18mm', left: '16mm', right: '16mm' },
   displayHeaderFooter: true, headerTemplate: '<span></span>',
   footerTemplate: '<div style="font-size:7pt;color:#4b5b51;width:100%%;text-align:center">La Casa de la Mantarraya · bio link · <span class=pageNumber></span>/<span class=totalPages></span></div>' });
-await b.close(); })();""" % (ruta_html, os.path.join(BASE, '../entrega/Guia-de-entrega-bio-link.pdf'))
+await b.close(); })();""" % (ruta_html, os.path.join(BASE, '../entrega/Bio-link-La-Casa-de-la-Mantarraya/LEEME - Guia de entrega.pdf'))
 open(os.path.join(BASE, 'salida/guia.cjs'), 'w').write(js)
 subprocess.run(['node', os.path.join(BASE, 'salida/guia.cjs')], check=True)
 print('PDF listo')
