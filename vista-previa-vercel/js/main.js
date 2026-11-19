@@ -57,14 +57,16 @@ function track(evento, datos) {
   function guarda(tipo, k, v) { try { window[tipo].setItem(k, v); } catch (e) {} }
   function lee(tipo, k) { try { return window[tipo].getItem(k); } catch (e) { return null; } }
 
-  /* ---------- Idioma ---------- */
+  /* ---------- Idioma ----------
+     Siempre abre en español (en celular y en computadora, sin importar el
+     idioma del navegador). El visitante cambia con el botón EN y la página
+     recuerda su elección. ?lang=en abre directo en inglés. */
   var idioma = (function () {
     var p = params.get('lang');
     if (p === 'es' || p === 'en') return p;
     var g = lee('localStorage', 'mm-idioma');
     if (g === 'es' || g === 'en') return g;
-    var langs = navigator.languages || [navigator.language || 'es'];
-    return langs.some(function (l) { return /^es\b/i.test(l); }) ? 'es' : 'en';
+    return 'es';
   })();
   var T = D.textos[idioma] || D.textos.es;
 

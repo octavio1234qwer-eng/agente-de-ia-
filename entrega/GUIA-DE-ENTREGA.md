@@ -17,13 +17,15 @@
 **Vista previa en línea (ya funcionando):** https://lacasadelamantarraya.vercel.app
 Es para revisar la página desde cualquier celular. La dirección definitiva será **https://casadelamantarraya.com/links/** cuando se suba a Hostinger (sección 3); el QR y el tarjetón ya apuntan ahí.
 
+**Para verla en computadora:** abre el mismo enlace en Chrome, Edge, Safari o Firefox. En computadora se ve como una carta de menú centrada sobre la terraza, con la mantarraya nadando detrás. También puedes descargar esta carpeta, abrir `1 - Sitio para subir a Hostinger` y hacer doble clic en `index.html`; se abre sin internet (para reservar por WhatsApp y abrir mapas sí hace falta conexión).
+
 **Qué hace la página:**
 
 - **Reserva por WhatsApp:** el cliente elige personas, día y hora, y el mensaje le llega ya armado al WhatsApp del restaurante.
 - **Estado en vivo:** con la hora de Cancún muestra "Abierto ahora · cierra a las 11 p. m." o "Abrimos mañana a las 8 a. m.". Los viernes y sábados por la noche avisa "Esta noche: salsa en vivo".
 - **Carrusel de platillos:** fotos reales y precios del menú oficial.
 - **Accesos rápidos:** cómo llegar, noches de salsa, desayunos, la promoción del momento (Posadas 2026) y las reseñas de Google.
-- **Dos idiomas:** español e inglés, con un botón para cambiar.
+- **Dos idiomas:** siempre abre en español; con el botón EN cambia a inglés y la página recuerda la elección.
 - **Guardar contacto y compartir:** botón que descarga la tarjeta del restaurante al celular y botón para compartir la página.
 - **Lista para Google y redes:** imagen para cuando se comparte el enlace (WhatsApp, Facebook) y datos de restaurante para Google.
 - **QR para mesas:** con el logo original y los colores de la marca.
