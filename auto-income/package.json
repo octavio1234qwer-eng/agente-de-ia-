@@ -1,0 +1,18 @@
+{
+  "name": "auto-income-ai",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "AUTO-INCOME AI — ecosistema modular para operar negocios digitales (backend sin dependencias de runtime).",
+  "engines": { "node": ">=22.18 <25" },
+  "scripts": {
+    "start": "node --disable-warning=ExperimentalWarning apps/api/src/server.ts",
+    "dev": "node --watch --disable-warning=ExperimentalWarning apps/api/src/server.ts",
+    "test": "node --disable-warning=ExperimentalWarning --test tests/*.test.ts",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "@types/node": "^22.19.0"
+  }
+}
