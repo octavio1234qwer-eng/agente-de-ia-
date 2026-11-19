@@ -16,7 +16,7 @@ window.DATOS = {
   /* Dirección final donde vivirá esta página. El QR de las mesas apunta aquí.
      Si la cambias, cámbiala también en index.html (busca y reemplaza el
      texto completo) y vuelve a imprimir los QR desde qr/index.html. */
-  SITE_URL: "https://casadelamantarraya.com/links/",
+  SITE_URL: "https://lacasadelamantarraya-cancun.vercel.app/",
 
   negocio: {
     nombre: "La Casa de la Mantarraya",
