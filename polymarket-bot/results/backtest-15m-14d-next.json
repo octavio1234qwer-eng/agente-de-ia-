@@ -1,0 +1,225 @@
+{
+  "config": {
+    "window": "15m",
+    "days": 14.0,
+    "end": null,
+    "stake": 100.0,
+    "cooldown": 90,
+    "fill": "next",
+    "max_wait": 10,
+    "slippage": 0.0,
+    "min_price": 0.05,
+    "max_price": 0.95,
+    "min_trade_size": 1.0,
+    "start_after": 0,
+    "stop_before_end": 20,
+    "fee_rate": null,
+    "momentum_secs": 30,
+    "skew_secs": 300,
+    "min_momentum": 0.0,
+    "min_skew": 0.0,
+    "workers": 8,
+    "seed": 7,
+    "out": "/home/user/agente-de-ia-/polymarket-bot/results",
+    "periodo_utc": [
+      "2026-11-05 02:30",
+      "2026-11-19 02:30"
+    ],
+    "mercados": 1344
+  },
+  "resultados": {
+    "senal": {
+      "operaciones": 8539,
+      "ops_por_hora": 26.0,
+      "tasa_acierto": 0.6301,
+      "precio_medio_pagado": 0.6021,
+      "pnl_bruto": 30424.05,
+      "comisiones": 23785.33,
+      "pnl_neto": 6638.72,
+      "pnl_neto_con_fee_0.05": 13434.53,
+      "pnl_medio_por_op": 0.777,
+      "roi_sobre_apostado": 0.0078,
+      "pnl_neto_IC95": [
+        -19611.9,
+        32889.33
+      ],
+      "mercados_operados": 1340
+    },
+    "solo_momentum": {
+      "operaciones": 9560,
+      "ops_por_hora": 29.1,
+      "tasa_acierto": 0.5485,
+      "precio_medio_pagado": 0.541,
+      "pnl_bruto": -32435.0,
+      "comisiones": 30716.88,
+      "pnl_neto": -63151.88,
+      "pnl_neto_con_fee_0.05": -54375.63,
+      "pnl_medio_por_op": -6.606,
+      "roi_sobre_apostado": -0.0661,
+      "pnl_neto_IC95": [
+        -93154.62,
+        -33149.15
+      ],
+      "mercados_operados": 1344
+    },
+    "aleatorio": {
+      "operaciones": 8679,
+      "ops_por_hora": 26.4,
+      "tasa_acierto": 0.5102,
+      "precio_medio_pagado": 0.5082,
+      "pnl_bruto": -41160.69,
+      "comisiones": 29877.85,
+      "pnl_neto": -71038.55,
+      "pnl_neto_con_fee_0.05": -62502.02,
+      "pnl_medio_por_op": -8.185,
+      "roi_sobre_apostado": -0.0819,
+      "pnl_neto_IC95": [
+        -101421.75,
+        -40655.34
+      ],
+      "mercados_operados": 1340
+    },
+    "contraria": {
+      "operaciones": 8566,
+      "ops_por_hora": 26.1,
+      "tasa_acierto": 0.3712,
+      "precio_medio_pagado": 0.3945,
+      "pnl_bruto": -122055.39,
+      "comisiones": 36304.08,
+      "pnl_neto": -158359.47,
+      "pnl_neto_con_fee_0.05": -147986.88,
+      "pnl_medio_por_op": -18.487,
+      "roi_sobre_apostado": -0.1849,
+      "pnl_neto_IC95": [
+        -197389.86,
+        -119329.09
+      ],
+      "mercados_operados": 1340
+    }
+  },
+  "senal_por_precio": [
+    {
+      "rango": "[0.0, 0.2)",
+      "ops": 616,
+      "acierto": 0.117,
+      "precio_medio": 0.11,
+      "pnl_neto": -4119.59
+    },
+    {
+      "rango": "[0.2, 0.35)",
+      "ops": 630,
+      "acierto": 0.27,
+      "precio_medio": 0.275,
+      "pnl_neto": -4342.67
+    },
+    {
+      "rango": "[0.35, 0.45)",
+      "ops": 678,
+      "acierto": 0.383,
+      "precio_medio": 0.4,
+      "pnl_neto": -5476.34
+    },
+    {
+      "rango": "[0.45, 0.55)",
+      "ops": 1353,
+      "acierto": 0.511,
+      "precio_medio": 0.5,
+      "pnl_neto": -1770.52
+    },
+    {
+      "rango": "[0.55, 0.65)",
+      "ops": 1317,
+      "acierto": 0.617,
+      "precio_medio": 0.592,
+      "pnl_neto": 1750.04
+    },
+    {
+      "rango": "[0.65, 0.8)",
+      "ops": 1862,
+      "acierto": 0.781,
+      "precio_medio": 0.72,
+      "pnl_neto": 12381.14
+    },
+    {
+      "rango": "[0.8, 1.01)",
+      "ops": 2083,
+      "acierto": 0.921,
+      "precio_medio": 0.88,
+      "pnl_neto": 8216.65
+    }
+  ],
+  "senal_por_segundo_en_ventana": [
+    {
+      "rango": "[0, 180)",
+      "ops": 2160,
+      "acierto": 0.59,
+      "precio_medio": 0.559,
+      "pnl_neto": 3150.06
+    },
+    {
+      "rango": "[180, 360)",
+      "ops": 2133,
+      "acierto": 0.69,
+      "precio_medio": 0.655,
+      "pnl_neto": 2995.45
+    },
+    {
+      "rango": "[360, 540)",
+      "ops": 1977,
+      "acierto": 0.657,
+      "precio_medio": 0.646,
+      "pnl_neto": -5278.87
+    },
+    {
+      "rango": "[540, 720)",
+      "ops": 1544,
+      "acierto": 0.609,
+      "precio_medio": 0.577,
+      "pnl_neto": 2992.88
+    },
+    {
+      "rango": "[720, 900)",
+      "ops": 725,
+      "acierto": 0.546,
+      "precio_medio": 0.507,
+      "pnl_neto": 2779.19
+    }
+  ],
+  "senal_por_momentum_abs": [
+    {
+      "rango": "[0, 0.005)",
+      "ops": 2433,
+      "acierto": 0.615,
+      "precio_medio": 0.592,
+      "pnl_neto": -4175.89
+    },
+    {
+      "rango": "[0.005, 0.01)",
+      "ops": 1157,
+      "acierto": 0.62,
+      "precio_medio": 0.591,
+      "pnl_neto": 3177.24
+    },
+    {
+      "rango": "[0.01, 0.02)",
+      "ops": 1486,
+      "acierto": 0.609,
+      "precio_medio": 0.591,
+      "pnl_neto": -751.1
+    },
+    {
+      "rango": "[0.02, 0.05)",
+      "ops": 2075,
+      "acierto": 0.644,
+      "precio_medio": 0.611,
+      "pnl_neto": 4360.4
+    },
+    {
+      "rango": "[0.05, 10)",
+      "ops": 1388,
+      "acierto": 0.666,
+      "precio_medio": 0.627,
+      "pnl_neto": 4028.07
+    }
+  ]
+}
