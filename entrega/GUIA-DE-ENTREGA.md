@@ -14,6 +14,9 @@
 | `3 - Capturas` | Cómo se ve en celular (español e inglés) y en computadora. |
 | `4 - Reportes Lighthouse` | Reportes de velocidad y calidad de Google Lighthouse (se abren con el navegador). |
 
+**Vista previa en línea (ya funcionando):** https://lacasadelamantarraya.vercel.app
+Es para revisar la página desde cualquier celular. La dirección definitiva será **https://casadelamantarraya.com/links/** cuando se suba a Hostinger (sección 3); el QR y el tarjetón ya apuntan ahí.
+
 **Qué hace la página:**
 
 - **Reserva por WhatsApp:** el cliente elige personas, día y hora, y el mensaje le llega ya armado al WhatsApp del restaurante.

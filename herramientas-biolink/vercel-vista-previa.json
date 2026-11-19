@@ -1,0 +1,16 @@
+{
+  "_nota": "Configuración usada para publicar la vista previa en https://lacasadelamantarraya.vercel.app. Vercel sirve los archivos de la carpeta vista-previa-vercel/ desde jsDelivr (repositorio público) fijados a un commit. Para actualizar: haz commit y push de vista-previa-vercel/, cambia el SHA de abajo y vuelve a desplegar este archivo como vercel.json en el proyecto 'lacasadelamantarraya'.",
+  "rewrites": [
+    { "source": "/", "destination": "https://cdn.jsdelivr.net/gh/octavio1234qwer-eng/agente-de-ia-@0c562615c9cd3bcabf611e884d0e865292057594/vista-previa-vercel/index.html" },
+    { "source": "/qr", "destination": "https://cdn.jsdelivr.net/gh/octavio1234qwer-eng/agente-de-ia-@0c562615c9cd3bcabf611e884d0e865292057594/vista-previa-vercel/qr/index.html" },
+    { "source": "/qr/", "destination": "https://cdn.jsdelivr.net/gh/octavio1234qwer-eng/agente-de-ia-@0c562615c9cd3bcabf611e884d0e865292057594/vista-previa-vercel/qr/index.html" },
+    { "source": "/:path*", "destination": "https://cdn.jsdelivr.net/gh/octavio1234qwer-eng/agente-de-ia-@0c562615c9cd3bcabf611e884d0e865292057594/vista-previa-vercel/:path*" }
+  ],
+  "headers": [
+    { "source": "/", "headers": [{ "key": "Content-Type", "value": "text/html; charset=utf-8" }] },
+    { "source": "/qr", "headers": [{ "key": "Content-Type", "value": "text/html; charset=utf-8" }] },
+    { "source": "/qr/", "headers": [{ "key": "Content-Type", "value": "text/html; charset=utf-8" }] },
+    { "source": "/(.*)\\.html", "headers": [{ "key": "Content-Type", "value": "text/html; charset=utf-8" }] },
+    { "source": "/(.*)\\.vcf", "headers": [{ "key": "Content-Type", "value": "text/vcard; charset=utf-8" }] }
+  ]
+}
