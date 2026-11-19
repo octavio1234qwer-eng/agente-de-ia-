@@ -1,0 +1,29 @@
+{
+  "nombre": "Café La Esquina",
+  "giro": "Cafetería y repostería",
+  "idioma": "español",
+  "ciudad": "Mérida, Yucatán",
+  "direccion": "Calle 60 #123, Centro, Mérida",
+  "mapa": "https://maps.google.com/?q=Calle+60+123+Merida",
+  "telefono_humano": "+52 999 000 0000",
+  "horario": "Lunes a sábado de 8:00 a 21:00. Domingo de 9:00 a 14:00.",
+  "formas_de_pago": "Efectivo, tarjeta y transferencia.",
+  "entregas": "Entregamos en el centro por $40 MXN. Pedidos con 1 hora de anticipación.",
+  "reservaciones": "Aceptamos reservaciones para grupos de 6 o más personas.",
+  "catalogo": [
+    { "categoria": "Café", "nombre": "Americano", "precio": "$35 MXN" },
+    { "categoria": "Café", "nombre": "Capuchino", "precio": "$55 MXN" },
+    { "categoria": "Repostería", "nombre": "Pastel de chocolate (rebanada)", "precio": "$65 MXN" },
+    { "categoria": "Repostería", "nombre": "Pastel completo para 20 personas", "precio": "Desde $650 MXN, con 3 días de anticipación" },
+    { "categoria": "Desayunos", "nombre": "Chilaquiles con huevo", "precio": "$95 MXN" }
+  ],
+  "preguntas_frecuentes": [
+    { "palabras": ["horario", "abren", "cierran", "hora"], "respuesta": "Abrimos lunes a sábado de 8:00 a 21:00 y domingo de 9:00 a 14:00. ¿Te esperamos hoy?" },
+    { "palabras": ["donde", "ubicacion", "direccion", "llegar"], "respuesta": "Estamos en Calle 60 #123, Centro, Mérida. Mapa: https://maps.google.com/?q=Calle+60+123+Merida" },
+    { "palabras": ["pago", "tarjeta", "transferencia"], "respuesta": "Aceptamos efectivo, tarjeta y transferencia." }
+  ],
+  "reglas_extra": [
+    "Si preguntan por alergias, pide que lo comenten con el equipo; no prometas que algo es libre de alérgenos.",
+    "Para pedidos de pasteles completos, pide fecha, hora de entrega, número de personas y sabor."
+  ]
+}
