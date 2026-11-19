@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Tarjetón de mesa · La Casa de la Mantarraya</title>
+<style>
+  @font-face { font-family: "Fraunces"; src: url("../assets/fonts/fraunces.woff2") format("woff2"); font-weight: 380 480; }
+  @font-face { font-family: "Fraunces"; src: url("../assets/fonts/fraunces-italic.woff2") format("woff2"); font-weight: 300 500; font-style: italic; }
+  @font-face { font-family: "Bricolage"; src: url("../assets/fonts/bricolage.woff2") format("woff2"); font-weight: 400 700; }
+  @page { size: 100mm 150mm; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #d9d2c0; }
+  body { font-family: "Bricolage", system-ui, sans-serif; color: #15281f; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .ayuda { max-width: 100mm; margin: 16px auto; font-size: 13px; line-height: 1.5; color: #15281f; }
+  .ayuda button { font: inherit; font-weight: 650; padding: 10px 16px; border-radius: 10px; border: 0; background: #193f30; color: #f3eadb; cursor: pointer; }
+  .tarjeta {
+    position: relative; width: 100mm; height: 150mm; margin: 0 auto 24px; overflow: hidden;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 9mm 8mm 7mm;
+    background: #f3eadb;
+    box-shadow: 0 10px 30px rgba(0,0,0,.18);
+  }
+  .tarjeta::before {
+    content: ""; position: absolute; inset: 4mm; border: .3mm solid #193f30; border-radius: 3mm;
+    box-shadow: inset 0 0 0 .8mm #f3eadb, inset 0 0 0 1.05mm #193f30;
+  }
+  .logo { width: 22mm; height: 22mm; }
+  .nombre { margin: 2mm 0 0; font-family: "Fraunces", serif; font-size: 7.4mm; line-height: 1; font-weight: 430; text-align: center; letter-spacing: -.01em; }
+  .nombre i { display: block; font-size: 4.4mm; font-weight: 360; color: #4b5b51; margin-bottom: .8mm; }
+  .lema { margin: 5mm 0 0; font-size: 3.1mm; font-weight: 680; letter-spacing: .32em; text-transform: uppercase; color: #9a4a24; text-align: center; }
+  .qr { width: 54mm; height: 54mm; margin-top: 3.4mm; }
+  .qr svg { width: 100%; height: 100%; display: block; }
+  .pasos { display: flex; gap: 2.4mm; margin-top: 4mm; font-family: "Fraunces", serif; font-style: italic; font-size: 4.3mm; color: #193f30; }
+  .pie { margin-top: auto; text-align: center; font-size: 2.7mm; line-height: 1.45; color: #4b5b51; }
+  .pie b { color: #15281f; font-weight: 650; }
+  .en { margin-top: 1mm; font-size: 2.5mm; letter-spacing: .14em; text-transform: uppercase; color: #4b5b51; }
+  @media print { .ayuda { display: none; } html, body { background: #f3eadb; } .tarjeta { margin: 0; box-shadow: none; } }
+</style>
+<script src="../js/data.js"></script>
+<script src="qrcode.js"></script>
+<script src="qr-marca.js"></script>
+</head>
+<body>
+  <div class="ayuda">
+    <p><b>Tarjetón de mesa 10 × 15 cm.</b> Imprime en papel grueso (cartulina) a tamaño real (100 %), sin márgenes. El QR apunta a <span id="url"></span></p>
+    <p><button type="button" onclick="print()">Imprimir</button></p>
+  </div>
+  <article class="tarjeta">
+    <img class="logo" src="../assets/img/logo-mantarraya.png" alt="Logo de La Casa de la Mantarraya">
+    <h1 class="nombre"><i>La Casa de la</i>Mantarraya</h1>
+    <p class="lema">Escanea · Reserva · Síguenos</p>
+    <div class="qr" id="qr" role="img" aria-label="Código QR del bio link"></div>
+    <p class="pasos"><span>Menú</span>·<span>Reservas</span>·<span>Cómo llegar</span></p>
+    <p class="pie">
+      WhatsApp <b id="wa"></b> · Instagram <b>@lacasadelamantarraya</b><br>
+      Cocina de mar · Cancún, Q. Roo
+      <span class="en" style="display:block">Scan · Book · Follow us</span>
+    </p>
+  </article>
+<script>
+  (function () {
+    var D = window.DATOS;
+    var url = D.SITE_URL + (D.SITE_URL.indexOf('?') > -1 ? '&' : '?') + 'src=qr';
+    document.getElementById('url').textContent = url;
+    document.getElementById('wa').textContent = D.negocio.whatsappVisible;
+    document.getElementById('qr').innerHTML = qrMarcaSVG(url, '../assets/img/logo-mantarraya.png');
+  })();
+</script>
+</body>
+</html>

@@ -6,13 +6,13 @@
 
 ## 1. Qué se entrega
 
-| Archivo | Para qué sirve |
+| Carpeta o archivo | Para qué sirve |
 |---|---|
-| `sitio-para-subir.zip` | La página completa. Se sube tal cual al hosting. |
-| `qr/tarjeton-mesa-10x15.pdf` | Tarjetón para mesas de 10 × 15 cm, listo para imprenta. |
-| `qr/qr-mantarraya.svg` y `.png` | El QR suelto, para ventana, tickets, menús o lonas. |
-| `capturas/` | Cómo se ve en celular (español e inglés) y en computadora. |
-| `lighthouse/` | Reportes de velocidad y calidad de Google Lighthouse. |
+| `LEEME - Guia de entrega.pdf` | Esta guía. |
+| `1 - Sitio para subir a Hostinger` | La página completa. Su contenido se sube tal cual al hosting. |
+| `2 - QR y tarjeton para imprimir` | Tarjetón para mesas de 10 × 15 cm (PDF para imprenta) y el QR suelto en PNG y SVG. |
+| `3 - Capturas` | Cómo se ve en celular (español e inglés) y en computadora. |
+| `4 - Reportes Lighthouse` | Reportes de velocidad y calidad de Google Lighthouse (se abren con el navegador). |
 
 **Qué hace la página:**
 
@@ -43,15 +43,16 @@ El sitio del restaurante ya está en Hostinger, así que el bio link queda en su
 
 1. Entra a **hPanel** → **Sitios web** → `casadelamantarraya.com` → **Administrador de archivos**.
 2. Abre la carpeta **`public_html`** y crea una carpeta nueva llamada **`links`** (en minúsculas).
-3. Entra a `links`, sube **`sitio-para-subir.zip`**, haz clic derecho sobre él → **Extraer** (en la carpeta actual). Luego borra el ZIP.
-4. Dentro de `public_html/links/` deben quedar: `index.html`, `.htaccess`, `contacto.vcf`, y las carpetas `assets`, `css`, `js` y `qr`.
+3. Entra a `links` y sube **todo lo que hay dentro** de la carpeta `1 - Sitio para subir a Hostinger` (no la carpeta en sí, sino su contenido). Puedes arrastrarlo a la ventana o usar el botón **Subir** → **Carpeta**/**Archivo**.
+   - Si descargaste esta entrega desde Google Drive y te llegó como un archivo `.zip`, sube ese `.zip` a `links`, haz clic derecho → **Extraer**, y mueve el contenido de `1 - Sitio para subir a Hostinger` directamente a `links`.
+4. Dentro de `public_html/links/` deben quedar: `index.html`, `.htaccess`, `_headers`, `contacto.vcf`, y las carpetas `assets`, `css`, `js` y `qr`.
 5. Abre **https://casadelamantarraya.com/links/** en el celular y prueba: el botón "Reservar mesa", el carrusel, "Cómo llegar" y el cambio de idioma.
 
 > El archivo `.htaccess` comprime la página y guarda las fotos en caché para que cargue más rápido. Si el administrador de archivos no lo muestra, activa "Mostrar archivos ocultos".
 
 ### Alternativa: Netlify (gratis)
 
-1. Entra a **app.netlify.com/drop** y arrastra la carpeta descomprimida.
+1. Entra a **app.netlify.com/drop** y arrastra la carpeta `1 - Sitio para subir a Hostinger`.
 2. Netlify te da una dirección (por ejemplo `mantarraya.netlify.app`).
 3. Como la dirección cambió, abre `js/data.js` y cambia `SITE_URL`. Después abre `index.html` y reemplaza todas las veces que aparece `https://casadelamantarraya.com/links/` por la dirección nueva. Vuelve a arrastrar la carpeta a Netlify.
 4. Abre `https://TU-DIRECCION/qr/` y descarga el QR nuevo. **No imprimas el tarjetón incluido**, porque apunta a la dirección de Hostinger.
@@ -100,8 +101,8 @@ Para un día que cierran: `lunes: null,`. El letrero "Abierto ahora", la lista d
 
 ## 6. QR para las mesas
 
-- **`qr/tarjeton-mesa-10x15.pdf`:** imprímelo en cartulina a tamaño real (100 %), sin márgenes. Dice "Escanea · Reserva · Síguenos".
-- **`qr/qr-mantarraya.png`** (1600 px) o **`.svg`** (para imprenta): para ventana, tickets o lonas. Que mida al menos 2.5 cm.
+- **`tarjeton-mesa-10x15.pdf`** (carpeta 2): imprímelo en cartulina a tamaño real (100 %), sin márgenes. Dice "Escanea · Reserva · Síguenos".
+- **`qr-mantarraya.png`** (1600 px) o **`qr-mantarraya.svg`** (para imprenta): para ventana, tickets o lonas. Que mida al menos 2.5 cm.
 - También puedes abrir `https://casadelamantarraya.com/links/qr/` para descargarlo o imprimir el tarjetón desde el navegador.
 - **Antes de imprimir muchos,** sube la página y escanea un QR de prueba con el celular.
 

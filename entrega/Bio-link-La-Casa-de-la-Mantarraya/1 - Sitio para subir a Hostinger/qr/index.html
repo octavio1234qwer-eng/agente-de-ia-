@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>QR del bio link · La Casa de la Mantarraya</title>
+<style>
+  @font-face { font-family: "Fraunces"; src: url("../assets/fonts/fraunces.woff2") format("woff2"); font-weight: 380 480; }
+  @font-face { font-family: "Bricolage"; src: url("../assets/fonts/bricolage.woff2") format("woff2"); font-weight: 400 700; }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; padding: 32px 20px; background: #193f30; color: #f3eadb; font-family: "Bricolage", system-ui, sans-serif; line-height: 1.5; }
+  main { max-width: 520px; margin: 0 auto; }
+  h1 { font-family: "Fraunces", serif; font-weight: 430; font-size: 2.2rem; line-height: 1.05; margin: 0 0 8px; }
+  p { color: #d9d2c0; }
+  code { background: rgba(0,0,0,.25); padding: 2px 6px; border-radius: 6px; word-break: break-all; }
+  .qr { width: min(100%, 360px); margin: 20px 0; border-radius: 18px; overflow: hidden; }
+  .qr svg { display: block; width: 100%; height: auto; }
+  .botones { display: flex; flex-wrap: wrap; gap: 10px; }
+  .botones a, .botones button { display: inline-flex; align-items: center; min-height: 48px; padding: 0 18px; border-radius: 14px; border: 0; background: #f3eadb; color: #15281f; font: inherit; font-weight: 650; text-decoration: none; cursor: pointer; }
+  .botones .sec { background: transparent; color: #f3eadb; box-shadow: inset 0 0 0 1px rgba(243,234,219,.4); }
+  :focus-visible { outline: 2px solid #e9b872; outline-offset: 3px; }
+</style>
+<script src="../js/data.js"></script>
+<script src="qrcode.js"></script>
+<script src="qr-marca.js"></script>
+</head>
+<body>
+<main>
+  <h1>QR de las mesas</h1>
+  <p>Este QR abre el bio link en <code id="url"></code>. Las visitas que llegan por aquí se marcan como <code>utm_source=qr</code> en los enlaces del sitio.</p>
+  <p>Si cambias <code>SITE_URL</code> en <code>js/data.js</code>, este QR se actualiza solo: vuelve a descargarlo e imprímelo.</p>
+  <div class="qr" id="qr" role="img" aria-label="Código QR del bio link"></div>
+  <div class="botones">
+    <button type="button" id="svg">Descargar SVG</button>
+    <button type="button" id="png">Descargar PNG (2000 px)</button>
+    <a class="sec" href="mesa.html">Tarjetón de mesa 10 × 15 cm</a>
+  </div>
+</main>
+<script>
+  (function () {
+    var D = window.DATOS;
+    var url = D.SITE_URL + (D.SITE_URL.indexOf('?') > -1 ? '&' : '?') + 'src=qr';
+    document.getElementById('url').textContent = url;
+    document.getElementById('qr').innerHTML = qrMarcaSVG(url, '../assets/img/logo-mantarraya.png');
+
+    function descarga(href, nombre) {
+      var a = document.createElement('a'); a.href = href; a.download = nombre;
+      document.body.appendChild(a); a.click(); a.remove();
+    }
+    // Para descargar, el logo se incrusta dentro del SVG (así funciona fuera de esta página).
+    function svgConLogo() {
+      return fetch('../assets/img/logo-mantarraya.png').then(function (r) { return r.blob(); }).then(function (b) {
+        return new Promise(function (ok) { var fr = new FileReader(); fr.onload = function () { ok(fr.result); }; fr.readAsDataURL(b); });
+      }).then(function (dataUrl) { return qrMarcaSVG(url, dataUrl); });
+    }
+    document.getElementById('svg').onclick = function () {
+      svgConLogo().then(function (svg) {
+        descarga(URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' })), 'qr-mantarraya.svg');
+      });
+    };
+    document.getElementById('png').onclick = function () {
+      svgConLogo().then(function (svg) {
+        var img = new Image();
+        img.onload = function () {
+          var c = document.createElement('canvas'); c.width = c.height = 2000;
+          c.getContext('2d').drawImage(img, 0, 0, 2000, 2000);
+          descarga(c.toDataURL('image/png'), 'qr-mantarraya.png');
+        };
+        img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+      });
+    };
+  })();
+</script>
+</body>
+</html>

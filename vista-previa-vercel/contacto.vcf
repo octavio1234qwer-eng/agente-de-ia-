@@ -1,0 +1,14 @@
+BEGIN:VCARD
+VERSION:3.0
+N:;La Casa de la Mantarraya;;;
+FN:La Casa de la Mantarraya
+ORG:La Casa de la Mantarraya
+TEL;TYPE=WORK,VOICE:+529982556502
+item1.TEL;TYPE=CELL:+529984895643
+item1.X-ABLabel:WhatsApp
+EMAIL;TYPE=INTERNET,WORK:casadelamantarraya@gmail.com
+ADR;TYPE=WORK:;;Av. Xpuhil Sur\, Supermanzana 19\, Manzana 2\, Lote 26;Cancún;Q. Roo;77505;México
+URL:https://casadelamantarraya.com/
+X-SOCIALPROFILE;TYPE=instagram:https://www.instagram.com/lacasadelamantarraya/
+X-SOCIALPROFILE;TYPE=facebook:https://www.facebook.com/lacasadelamantarraya
+END:VCARD
