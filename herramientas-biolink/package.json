@@ -1,0 +1,13 @@
+{
+  "name": "herramientas-biolink",
+  "private": true,
+  "type": "module",
+  "description": "Scripts para generar imágenes, QR, OG y verificar el bio link. No se suben al hosting.",
+  "dependencies": {
+    "@fontsource-variable/bricolage-grotesque": "^5.3.0",
+    "@fontsource-variable/fraunces": "^5.3.0",
+    "lighthouse": "^12.8.2",
+    "qrcode-generator": "^2.0.4",
+    "sharp": "^0.35.5"
+  }
+}
