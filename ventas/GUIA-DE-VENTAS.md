@@ -41,3 +41,16 @@ Con una sola venta ganas más que con 20 plantillas de $7.
 - Pide una reseña o testimonio y publícalo en LinkedIn y X.
 - Ofrece mantenimiento mensual (por ejemplo, $499 MXN al mes por cambios de menú y precios). Es ingreso recurrente.
 - Cuando tengas 3 clientes, ofrece ImpulsaIA (la plataforma de `saas/`) como siguiente paso.
+
+## Black Friday (27 de noviembre al 1 de diciembre de 2026)
+
+### Para tu estado de WhatsApp y grupos de familia o amigos
+> 🎄 Para las posadas: Lotería imprimible (54 cartas + 20 tablas), kit para el intercambio de regalos y agenda 2027. Los 3 por $12 USD (antes $19). Lo descargas al momento y lo imprimes en casa:
+> https://octavius724.gumroad.com/l/paquete-fiestas-fin-de-ano
+
+### Para negocios (oferta de instalación)
+> Hola, buen día. Esta semana tengo precio de Black Friday: le instalo un asistente de WhatsApp que contesta solo a sus clientes con su menú, precios y horarios, por $2,000 MXN en lugar de $2,700. Diciembre es el mes con más mensajes y así no pierde pedidos por contestar tarde. ¿Le mando un video de 1 minuto de cómo funciona?
+
+### Para quien quiera instalarlo por su cuenta
+> Código **BLACKFRIDAY**: 40% de descuento en el kit del agente de WhatsApp ($39 → $23.40 USD), hasta el 1 de diciembre:
+> https://octavius724.gumroad.com/l/agente-whatsapp-ia
