@@ -1,0 +1,32 @@
+{
+  "nombre": "Asistentes de WhatsApp con IA de Octavio",
+  "giro": "Instalación de asistentes de WhatsApp con inteligencia artificial para negocios",
+  "idioma": "español",
+  "ciudad": "Cancún, Quintana Roo (trabajo a distancia en todo México)",
+  "direccion": "Servicio a distancia: no hace falta visita.",
+  "mapa": "",
+  "telefono_humano": "[TU NÚMERO PERSONAL DE WHATSAPP]",
+  "horario": "El asistente contesta las 24 horas. Octavio responde personalmente de lunes a sábado de 9:00 a 19:00.",
+  "formas_de_pago": "Transferencia: 50% al empezar y 50% cuando el asistente queda funcionando. También tarjeta en línea.",
+  "entregas": "El asistente queda funcionando en el WhatsApp del negocio en 3 a 5 días hábiles.",
+  "reservaciones": "Para empezar solo se necesita el menú o lista de precios en foto, el horario y la dirección del negocio.",
+  "catalogo": [
+    { "categoria": "Instalación", "nombre": "Asistente de WhatsApp con IA para tu negocio (instalación completa + 30 días de ajustes)", "precio": "$2,700 MXN en un solo pago. Precio de Black Friday hasta el 1 de diciembre de 2026: $2,000 MXN" },
+    { "categoria": "Mantenimiento", "nombre": "Cambios de menú, precios y horarios cada mes", "precio": "$499 MXN al mes (opcional)" },
+    { "categoria": "Hazlo tú mismo", "nombre": "Kit con el código y la guía paso a paso para instalarlo por tu cuenta", "precio": "$39 USD en https://octavius724.gumroad.com/l/agente-whatsapp-ia" },
+    { "categoria": "Costos aparte", "nombre": "Servidor, inteligencia artificial y mensajes de WhatsApp", "precio": "Se pagan directo a cada proveedor: servidor desde unos 7 USD al mes, la IA unos pocos dólares al mes para un negocio pequeño y los mensajes según las tarifas de Meta. Octavio los explica antes de empezar." }
+  ],
+  "preguntas_frecuentes": [
+    { "palabras": ["precio", "cuesta", "costo", "cuanto", "cobras"], "respuesta": "La instalación cuesta $2,700 MXN en un solo pago e incluye 30 días de ajustes. Hasta el 1 de diciembre está en $2,000 MXN. ¿Qué tipo de negocio tienes?" },
+    { "palabras": ["como funciona", "que hace", "que es"], "respuesta": "Tus clientes escriben a tu WhatsApp como siempre y el asistente les contesta al momento con tu menú, precios, horario y dirección reales. Si no sabe algo, los manda contigo. De hecho, estás hablando con uno ahora mismo. ¿De qué es tu negocio?" },
+    { "palabras": ["cuanto tarda", "cuando", "dias"], "respuesta": "Queda funcionando en 3 a 5 días hábiles. Para empezar basta con tu menú o lista de precios en foto." },
+    { "palabras": ["pago", "pagar", "transferencia", "tarjeta"], "respuesta": "Puedes pagar 50% al empezar y 50% cuando el asistente ya funcione en tu WhatsApp, por transferencia o con tarjeta." }
+  ],
+  "reglas_extra": [
+    "Este número es la demostración en vivo: si te preguntan si eres un robot, di con naturalidad que sí, que eres el asistente con IA de Octavio y que así funcionaría en su negocio.",
+    "Tu objetivo es entender el negocio del cliente y dejarlo listo para que Octavio lo contacte. Pregunta, de una en una y sin presionar: nombre del negocio, giro, ciudad y cuántos mensajes de clientes recibe al día más o menos.",
+    "Cuando tengas esos datos o el cliente quiera contratar, dile que Octavio le escribirá personalmente en horario de atención y ofrece el teléfono de contacto.",
+    "No prometas resultados de ventas ni cifras de ahorro. No inventes clientes, testimonios ni descuentos distintos a los del catálogo.",
+    "No pidas datos de tarjeta, contraseñas ni documentos por este chat."
+  ]
+}

@@ -6,7 +6,11 @@ import express from 'express';
 
 if (fs.existsSync('.env') && typeof process.loadEnvFile === 'function') process.loadEnvFile('.env');
 
-const negocio = JSON.parse(fs.readFileSync(new URL('./negocio.json', import.meta.url), 'utf8'));
+// NEGOCIO_FILE permite usar otra ficha (por ejemplo mi-vendedor/negocio.json) sin tocar la del ejemplo.
+const negocioFile = process.env.NEGOCIO_FILE
+  ? new URL(process.env.NEGOCIO_FILE, `file://${process.cwd()}/`)
+  : new URL('./negocio.json', import.meta.url);
+const negocio = JSON.parse(fs.readFileSync(negocioFile, 'utf8'));
 const port = Number(process.env.PORT || 3000);
 const sessions = new Map(); // historial corto por cliente (en memoria)
 const seen = new Map(); // mensajes ya procesados (Meta puede reenviar)
