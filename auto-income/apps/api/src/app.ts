@@ -19,12 +19,15 @@ import { TASK_STATUSES, type AgentId, type TaskStatus } from '../../../packages/
 import { dashboard, financialSummary, periodRange, topProducts, trafficSummary, type PeriodKey } from '../../../packages/analytics/src/metrics.ts';
 import { can, hashPassword, verifyPassword, randomToken, sha256, safeEqual, RateLimiter, type Permission, type Role } from '../../../packages/security/src/index.ts';
 import { DemoPaymentProvider, HmacWebhookProvider, applyPaymentEvent, simulateDemoPayment, startCheckout, type PaymentProvider } from '../../../packages/integrations/src/payments.ts';
+import { syncGumroad } from '../../../packages/integrations/src/gumroad.ts';
 import { Router, HttpError, parseCookies, readBody, sendJson, errorToResponse, SECURITY_HEADERS, type Ctx } from './http.ts';
 
 export interface AppOptions {
   env?: Record<string, string | undefined>;
   clock?: () => number;
   staticDir?: string;
+  /** Inyectable en pruebas para simular APIs externas. */
+  fetcher?: import('../../../packages/integrations/src/gumroad.ts').Fetcher;
 }
 
 const SESSION_COOKIE = 'aia_session';
@@ -531,6 +534,16 @@ export function createApp(db: DB, opts: AppOptions = {}) {
     return { range, finance: financialSummary(db, filter), traffic: trafficSummary(db, filter), topProducts: topProducts(db, filter), infrastructureMonthlyCents: get<{ t: number }>(db, 'SELECT COALESCE(SUM(monthly_cents),0) t FROM service_costs WHERE enabled = 1')!.t, aiCostCents: get<{ t: number }>(db, 'SELECT COALESCE(SUM(actual_cost_cents),0) t FROM tasks')!.t };
   });
   r.get('/api/costs', () => ({ services: all(db, 'SELECT * FROM service_costs ORDER BY category, name') }));
+
+  r.post('/api/businesses/:bid/integrations/gumroad/sync', async (c) => {
+    need(c, 'finance.write');
+    business(c.params.bid);
+    try {
+      return await syncGumroad(db, { businessId: c.params.bid, token: env.GUMROAD_ACCESS_TOKEN || undefined, actor: actor(c), fetcher: opts.fetcher });
+    } catch (e) {
+      throw new HttpError(502, `sincronización con Gumroad falló: ${(e as Error).message}`, 'integration_error');
+    }
+  });
 
   // ---------- Pagos ----------
   r.post('/api/businesses/:bid/checkout', async (c) => {

@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [0.2.0] — 2026-11-22 — Sesión 2: integración Gumroad real
+### Añadido
+- `packages/integrations/src/gumroad.ts`: sincronización de solo lectura (productos paginados + ventas + comisiones + reembolsos), idempotente.
+- Tarea de agente `finance.sync_gumroad` y ruta `POST /api/businesses/:bid/integrations/gumroad/sync`.
+- `tests/gumroad.test.ts` (API simulada). Total: 33 pruebas.
+- Verificado contra la API real: 36 productos importados, 0 ventas (coincide con Gumroad).
+
 ## [0.1.0] — 2026-11-19 — Sesión 1: backend funcional
 ### Añadido
 - `auto-income/` con backend TypeScript sin dependencias de runtime.

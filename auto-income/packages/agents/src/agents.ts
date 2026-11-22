@@ -10,6 +10,7 @@ import { marginPct } from '../../core/src/pricing.ts';
 import { TaskError, tokenize } from './orchestrator.ts';
 import type { AgentDefinition, TaskContext } from './types.ts';
 import { financialSummary } from '../../analytics/src/metrics.ts';
+import { syncGumroad } from '../../integrations/src/gumroad.ts';
 
 const LIMITS = { maxTasksPerHour: 60, maxAttempts: 3, timeoutMs: 30_000 };
 
@@ -417,6 +418,15 @@ const financial: AgentDefinition = {
   forbidden: ['mover dinero', 'pagar', 'comprar servicios'],
   limits: LIMITS,
   handlers: {
+    'finance.sync_gumroad': {
+      description: 'Importar productos y ventas reales de Gumroad (solo lectura)',
+      risk: 'internal_low',
+      idempotent: true,
+      async run(ctx) {
+        requireBusiness(ctx);
+        return syncGumroad(ctx.db, { businessId: ctx.businessId!, token: ctx.env.GUMROAD_ACCESS_TOKEN || undefined, actor: 'agent:financial' });
+      },
+    },
     'finance.report': {
       description: 'Informe financiero y recomendaciones de reinversión',
       risk: 'internal_low',

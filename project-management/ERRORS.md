@@ -12,3 +12,5 @@
 - Rate limiter y sesión de worker en memoria: válidos solo con **una** instancia.
 - El orquestador marca `actual_cost_cents = 0` (no hay LLM ni servicios de pago aún).
 - Raíz del repo: archivos `download`, `download (1)`, `download (2)` (nombres incorrectos de `.dockerignore`, `.gitignore`, `.node-version` del agente Mantarraya). Sin tocar.
+
+| 2026-11-22 | Sync Gumroad: 401 con `fetch` de Node pero 200 con curl | En este entorno las credenciales las inyecta el proxy HTTPS; `fetch` de Node no usa `HTTPS_PROXY` por defecto | Ejecutar con `NODE_USE_ENV_PROXY=1 NODE_EXTRA_CA_CERTS=/root/.ccr/ca-bundle.crt`; en producción usar `GUMROAD_ACCESS_TOKEN` | ✅ resuelto, verificado con API real |

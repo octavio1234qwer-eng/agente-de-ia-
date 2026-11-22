@@ -17,6 +17,8 @@
 - [x] Pagos: PaymentProvider, demo, webhook HMAC idempotente
 - [x] Prueba de humo del servidor real (`npm start`, /health, calculadora)
 
+- [x] Integración Gumroad (solo lectura) verificada con datos reales — 2026-11-22
+
 ## 🔄 En desarrollo
 - (ninguna)
 
@@ -30,4 +32,5 @@
 7. Proveedor de pago real compatible con México (requiere credenciales del propietario).
 8. Growth Engine: embudos, experimentos A/B, atribución por canal.
 9. Endpoint para editar `service_costs` (registro de costes en la app).
-10. Limpieza del repo raíz: archivos `download*` subidos con nombre incorrecto (son `.dockerignore`, `.gitignore`, `.node-version` del agente Mantarraya) — confirmar con el propietario antes de tocar.
+10. Integración de métricas de Buffer (impresiones/interacciones por canal) en Analytics.
+11. Limpieza del repo raíz: archivos `download*` subidos con nombre incorrecto (son `.dockerignore`, `.gitignore`, `.node-version` del agente Mantarraya) — confirmar con el propietario antes de tocar.

@@ -6,7 +6,10 @@ Al recibir **"CONTINUAR AUTO-INCOME AI"**:
    ```bash
    cd auto-income && npm install && npm test && npm run typecheck
    ```
-   Debe dar 31/31. Si algo falla, registrarlo en ERRORS.md y arreglarlo primero.
+   Debe dar 33/33. Si algo falla, registrarlo en ERRORS.md y arreglarlo primero.
+
+1b. Si hay acceso a Gumroad, correr la sincronización real para verificar ventas nuevas:
+   `NODE_USE_ENV_PROXY=1 NODE_EXTRA_CA_CERTS=/root/.ccr/ca-bundle.crt` + tarea `finance.sync_gumroad`.
 
 2. **Siguiente tarea exacta: crear `auto-income/apps/web`** (TASKS.md pendiente #1):
    - `npm create vite@latest` equivalente manual: React + TypeScript + Vite + Tailwind CSS (paquete propio `apps/web/package.json`, no afecta al backend sin dependencias).
