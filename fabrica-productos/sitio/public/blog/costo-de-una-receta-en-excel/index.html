@@ -1,0 +1,23 @@
+<!DOCTYPE html><html lang="es-MX"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cómo sacar el costo de una receta en Excel (paso a paso) | Calcula tu Negocio</title><meta name="description" content="Arma una hoja de Excel para costear recetas: tabla de insumos con merma, receta con BUSCARV, costo por porción y food cost. Fórmulas incluidas."><link rel="canonical" href="https://calculatunegocio.vercel.app/blog/costo-de-una-receta-en-excel/">
+<meta property="og:title" content="Cómo sacar el costo de una receta en Excel (paso a paso) | Calcula tu Negocio"><meta property="og:description" content="Arma una hoja de Excel para costear recetas: tabla de insumos con merma, receta con BUSCARV, costo por porción y food cost. Fórmulas incluidas."><meta property="og:url" content="https://calculatunegocio.vercel.app/blog/costo-de-una-receta-en-excel/">
+<link rel="stylesheet" href="/s.css"><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "¿Funciona igual en Google Sheets?", "acceptedAnswer": {"@type": "Answer", "text": "Sí. BUSCARV, SUMAR.SI y SI.ERROR existen con el mismo nombre en Hojas de cálculo de Google."}}, {"@type": "Question", "name": "¿Qué pasa si escribo mal el nombre de un insumo?", "acceptedAnswer": {"@type": "Answer", "text": "BUSCARV no lo encuentra. Usa una lista desplegable (validación de datos) para elegir el insumo en vez de escribirlo."}}]}</script></head><body>
+<header><div class="w"><a href="/">Calcula tu Negocio</a><h1>Cómo costear una receta en Excel</h1><p>Arma una hoja de Excel para costear recetas: tabla de insumos con merma, receta con BUSCARV, costo por porción y food cost. Fórmulas incluidas.</p></div></header>
+<main class="w"><p>Con tres tablas y cuatro fórmulas puedes saber cuánto te cuesta cada platillo y actualizarlo en segundos cuando cambia un precio.</p>
+<h2>Tabla 1: insumos</h2>
+<p>Columnas: Insumo (A), Precio pagado (B), Cantidad comprada en kg o litros (C), Merma (D). En E, el costo neto por unidad:</p>
+<p><code>=SI.ERROR(B2/C2/(1-D2),"")</code></p>
+<h2>Tabla 2: receta</h2>
+<p>Columnas: Platillo (A), Insumo (B), Cantidad usada (C). En D trae el costo unitario desde la tabla de insumos:</p>
+<p><code>=SI.ERROR(BUSCARV(B2,Insumos!$A:$E,5,FALSO),"")</code></p>
+<p>Y en E el costo de la línea: <code>=SI(D2="","",C2*D2)</code>.</p>
+<h2>Tabla 3: platillos</h2>
+<p>Columnas: Platillo (A), Porciones que rinde (B), Precio en menú (C). El costo de la receta completa suma todas sus líneas:</p>
+<p><code>=SUMAR.SI(Recetas!$A:$A,A2,Recetas!$E:$E)</code></p>
+<p>Costo por porción = costo de la receta ÷ porciones. Food cost = costo por porción ÷ (precio ÷ 1.16) si tu precio incluye IVA.</p>
+<h2>Detalles que evitan errores</h2>
+<ul><li>Usa listas desplegables para elegir insumos y platillos.</li><li>Pinta de un color las celdas que se capturan y de otro las que tienen fórmula.</li><li>Agrega una columna de fecha al precio de cada insumo para saber cuáles están viejos.</li></ul>
+<p><a href="/calculadora-food-cost/">Prueba la calculadora gratis →</a></p><a class="cta" href="https://octavius724.gumroad.com/l/qkcnlf"><strong>Plantilla lista, con 3,500 fórmulas · 12 USD</strong>Ahórrate armarla: insumos, recetas, platillos, ingeniería de menú y resumen del mes ya conectados.</a><h2>Preguntas frecuentes</h2><h3>¿Funciona igual en Google Sheets?</h3><p>Sí. BUSCARV, SUMAR.SI y SI.ERROR existen con el mismo nombre en Hojas de cálculo de Google.</p><h3>¿Qué pasa si escribo mal el nombre de un insumo?</h3><p>BUSCARV no lo encuentra. Usa una lista desplegable (validación de datos) para elegir el insumo en vez de escribirlo.</p></main>
+<footer>Calculadoras gratis para negocios pequeños en México · Resultados orientativos: no sustituyen la asesoría de tu contador.<br>
+<a href="/">Inicio</a> · <a href="/calculadora-food-cost/">Food cost</a> · <a href="/punto-de-reorden-tienda/">Punto de reorden</a> · <a href="/sueldo-ingresos-irregulares/">Sueldo con ingresos irregulares</a> · <a href="/blog/">Guías</a></footer>
+<script>const f=(n,d=2)=>isFinite(n)?n.toLocaleString('es-MX',{minimumFractionDigits:d,maximumFractionDigits:d}):'—';const num=id=>parseFloat(document.getElementById(id).value)||0;</script></body></html>

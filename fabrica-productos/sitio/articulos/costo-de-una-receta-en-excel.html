@@ -1,0 +1,16 @@
+{"title":"Cómo sacar el costo de una receta en Excel (paso a paso)","desc":"Arma una hoja de Excel para costear recetas: tabla de insumos con merma, receta con BUSCARV, costo por porción y food cost. Fórmulas incluidas.","h1":"Cómo costear una receta en Excel","cta":["qkcnlf","Plantilla lista, con 3,500 fórmulas",12,"Ahórrate armarla: insumos, recetas, platillos, ingeniería de menú y resumen del mes ya conectados."],"tool":"/calculadora-food-cost/","faq":[["¿Funciona igual en Google Sheets?","Sí. BUSCARV, SUMAR.SI y SI.ERROR existen con el mismo nombre en Hojas de cálculo de Google."],["¿Qué pasa si escribo mal el nombre de un insumo?","BUSCARV no lo encuentra. Usa una lista desplegable (validación de datos) para elegir el insumo en vez de escribirlo."]]}
+---
+<p>Con tres tablas y cuatro fórmulas puedes saber cuánto te cuesta cada platillo y actualizarlo en segundos cuando cambia un precio.</p>
+<h2>Tabla 1: insumos</h2>
+<p>Columnas: Insumo (A), Precio pagado (B), Cantidad comprada en kg o litros (C), Merma (D). En E, el costo neto por unidad:</p>
+<p><code>=SI.ERROR(B2/C2/(1-D2),"")</code></p>
+<h2>Tabla 2: receta</h2>
+<p>Columnas: Platillo (A), Insumo (B), Cantidad usada (C). En D trae el costo unitario desde la tabla de insumos:</p>
+<p><code>=SI.ERROR(BUSCARV(B2,Insumos!$A:$E,5,FALSO),"")</code></p>
+<p>Y en E el costo de la línea: <code>=SI(D2="","",C2*D2)</code>.</p>
+<h2>Tabla 3: platillos</h2>
+<p>Columnas: Platillo (A), Porciones que rinde (B), Precio en menú (C). El costo de la receta completa suma todas sus líneas:</p>
+<p><code>=SUMAR.SI(Recetas!$A:$A,A2,Recetas!$E:$E)</code></p>
+<p>Costo por porción = costo de la receta ÷ porciones. Food cost = costo por porción ÷ (precio ÷ 1.16) si tu precio incluye IVA.</p>
+<h2>Detalles que evitan errores</h2>
+<ul><li>Usa listas desplegables para elegir insumos y platillos.</li><li>Pinta de un color las celdas que se capturan y de otro las que tienen fórmula.</li><li>Agrega una columna de fecha al precio de cada insumo para saber cuáles están viejos.</li></ul>
