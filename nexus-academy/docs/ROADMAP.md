@@ -58,13 +58,15 @@ saber qué sigue. Marcar `[x]` solo cuando esté construido **y probado**.
 - [x] Rendimiento con Lighthouse (`npm run test:perf`, producción, móvil): portada de 85 → 99-100 (bloqueo del hilo principal 590 → ~100 ms) al reemplazar brillos con `blur(140px)` animados y una tarjeta flotante con `backdrop-filter` por degradados radiales; respeto de «reducir movimiento»; meta descripción y canonical en la página de curso; encabezados en orden (pie de página h2, «Resultados» en el catálogo). 5/5 páginas ≥ 94 en rendimiento y 100 en accesibilidad, buenas prácticas y SEO
   - Nota: Next.js entrega metadatos «en streaming» a navegadores y en el `<head>` a bots (LinkedInBot, Bingbot); el script lo verifica con user agents de bot
 
+- [x] SEO: `robots.txt` (bloquea admin, cuenta, aula, NEXUS AI, API, checkout y autenticación; deja leer certificados para las vistas previas de LinkedIn) y `sitemap.xml` (páginas públicas + cursos y paquetes publicados vía clave pública, se regenera cada hora); JSON-LD de organización y buscador del catálogo en la portada. E2E `e2e/seo.mjs` 22/22 (detectó que `/nexus-ai` exige sesión y se sacó del sitemap)
+
 ## Siguiente (en orden)
-- [ ] SEO: `sitemap.xml` y `robots.txt` generados (cursos y paquetes publicados; excluye cuenta, aula, admin y API) y datos estructurados de la organización
+- [ ] Admin: exportar pedidos y alumnos a CSV (para contabilidad), con filtro de fechas
 - [ ] Despliegue (Vercel + Supabase en la nube) — requiere cuentas/credenciales del usuario
 
 ## Ventas (agente)
-- Gumroad: 25+ productos publicados; 0 ventas desde 2026-10-01 (revisado 2026-11-23 12:55 UTC).
-- Buffer "My organization": LinkedIn 6 y X 7 publicaciones programadas (revisado 2026-11-23 12:55 UTC), cola hasta el 2026-12-01. El código BLACKFRIDAY que mencionan dos publicaciones existe en Gumroad pero hoy está inactivo (se espera que se active para Black Friday).
+- Gumroad: 25+ productos publicados; 0 ventas desde 2026-10-01 (revisado 2026-11-23 13:55 UTC).
+- Buffer "My organization": LinkedIn 6 y X 7 publicaciones programadas (revisado 2026-11-23 13:55 UTC), cola hasta el 2026-12-01. El código BLACKFRIDAY que mencionan dos publicaciones existe en Gumroad pero hoy está inactivo (se espera que se active para Black Friday).
 - Pinterest casi sin uso: oportunidad para imprimibles (lotería, planners, menú) con portada del producto.
 
 ## Bloqueado por el usuario

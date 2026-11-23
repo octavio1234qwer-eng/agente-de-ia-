@@ -69,7 +69,7 @@ export default async function CoursePage({ params }: { params: Promise<Params> }
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
       {/* Encabezado */}
       <section className="relative overflow-hidden border-b border-white/[0.06]">
-        <div className="pointer-events-none absolute -top-32 left-1/3 h-96 w-[700px] rounded-full blur-[140px]" style={{ background: `${course.category?.color ?? "#3b74ff"}40` }} />
+        <div className="pointer-events-none absolute -top-56 left-1/4 h-[36rem] w-[1000px]" style={{ background: `radial-gradient(closest-side, ${course.category?.color ?? "#3b74ff"}40, transparent)` }} />
         <div className="relative mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1fr_380px] lg:px-8 lg:py-16">
           <div>
             <nav className="text-sm text-mist-400" aria-label="Ruta de navegación">

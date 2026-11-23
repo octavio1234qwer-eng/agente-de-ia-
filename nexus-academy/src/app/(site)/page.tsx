@@ -13,6 +13,36 @@ import { Avatar } from "@/components/ui/avatar";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Rating } from "@/components/course/rating";
 
+const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, "");
+
+// Datos estructurados: la organización y el buscador del catálogo (schema.org).
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "EducationalOrganization",
+      "@id": `${siteUrl}/#organization`,
+      name: "NEXUS ACADEMY",
+      url: siteUrl,
+      logo: `${siteUrl}/icon.svg`,
+      description: "Cursos prácticos en línea con aula virtual, tutor de inteligencia artificial y certificados verificables.",
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      name: "NEXUS ACADEMY",
+      url: siteUrl,
+      inLanguage: "es",
+      publisher: { "@id": `${siteUrl}/#organization` },
+      potentialAction: {
+        "@type": "SearchAction",
+        target: { "@type": "EntryPoint", urlTemplate: `${siteUrl}/cursos?q={search_term_string}` },
+        "query-input": "required name=search_term_string",
+      },
+    },
+  ],
+};
+
 export default async function HomePage() {
   const [user, featured, bestSellers, newest, categories, stats, reviews, instructors] = await Promise.all([
     getCurrentUser(),
@@ -30,6 +60,7 @@ export default async function HomePage() {
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
       <Hero signedIn={Boolean(user)} spotlight={featured[0] ?? newest[0] ?? null} />
 
       <AcademyStats stats={stats} />
