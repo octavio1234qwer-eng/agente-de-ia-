@@ -16,7 +16,7 @@ import { Rating } from "@/components/course/rating";
 export default async function HomePage() {
   const [user, featured, bestSellers, newest, categories, stats, reviews, instructors] = await Promise.all([
     getCurrentUser(),
-    getCoursesBy({ featured: true, order: "published_at", limit: 6 }),
+    getCoursesBy({ featured: true, order: "published_at", limit: 8 }),
     getCoursesBy({ order: "students_count", limit: 4 }),
     getCoursesBy({ order: "published_at", limit: 4 }),
     getCategories(),
@@ -63,8 +63,8 @@ export default async function HomePage() {
       {featured.length > 0 && (
         <section className="mx-auto mt-24 max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeading eyebrow="Selección" title="Cursos destacados" description="Elegidos por el equipo académico para empezar con el pie derecho." />
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {featured.map((c) => <CourseCard key={c.id} course={c} />)}
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {featured.slice(0, 8).map((c) => <CourseCard key={c.id} course={c} />)}
           </div>
         </section>
       )}

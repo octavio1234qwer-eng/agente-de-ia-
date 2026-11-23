@@ -175,7 +175,7 @@ create policy "enrollments: propias o admin" on public.enrollments for select to
   using (user_id = (select auth.uid()) or public.is_admin());
 
 grant select on public.lesson_progress to authenticated;
-grant insert (user_id, lesson_id, completed_at, last_position_seconds) on public.lesson_progress to authenticated;
+grant insert (user_id, lesson_id, course_id, completed_at, last_position_seconds) on public.lesson_progress to authenticated;
 grant update (completed_at, last_position_seconds) on public.lesson_progress to authenticated;
 create policy "lesson_progress: propio" on public.lesson_progress for select to authenticated
   using (user_id = (select auth.uid()) or public.is_admin());

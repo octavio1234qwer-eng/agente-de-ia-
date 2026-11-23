@@ -52,9 +52,16 @@ export async function setLessonCompleteAction(lessonId: string, completed: boole
   if (!lesson) return { error: "Lección no encontrada." };
   if (lesson.type === "quiz") return { error: "Aprueba la evaluación para completarla." };
 
-  const { error } = await supabase
+  const completedAt = completed ? new Date().toISOString() : null;
+  const { data: existing } = await supabase
     .from("lesson_progress")
-    .upsert({ user_id: user.id, lesson_id: lessonId, completed_at: completed ? new Date().toISOString() : null }, { onConflict: "user_id,lesson_id" });
+    .select("lesson_id")
+    .eq("user_id", user.id)
+    .eq("lesson_id", lessonId)
+    .maybeSingle();
+  const { error } = existing
+    ? await supabase.from("lesson_progress").update({ completed_at: completedAt }).eq("user_id", user.id).eq("lesson_id", lessonId)
+    : await supabase.from("lesson_progress").insert({ user_id: user.id, lesson_id: lessonId, course_id: lesson.course_id, completed_at: completedAt });
   if (error) return { error: "No tienes acceso a esta lección." };
   if (completed) await maybeSendCertificate(user.id, lesson.course_id);
   revalidatePath("/aprender", "layout");
@@ -70,7 +77,9 @@ export async function saveVideoPositionAction(lessonId: string, seconds: number)
   if (existing) {
     await supabase.from("lesson_progress").update({ last_position_seconds: pos }).eq("user_id", user.id).eq("lesson_id", lessonId);
   } else {
-    await supabase.from("lesson_progress").insert({ user_id: user.id, lesson_id: lessonId, last_position_seconds: pos });
+    const { data: lesson } = await supabase.from("lessons").select("course_id").eq("id", lessonId).maybeSingle();
+    if (!lesson) return;
+    await supabase.from("lesson_progress").insert({ user_id: user.id, lesson_id: lessonId, course_id: lesson.course_id, last_position_seconds: pos });
   }
 }
 

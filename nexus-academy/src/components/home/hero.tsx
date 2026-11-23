@@ -69,7 +69,7 @@ export function Hero({ signedIn, spotlight }: { signedIn: boolean; spotlight: Co
                 <div className="mt-4"><LinkButton href={`/cursos/${spotlight.slug}`} variant="outline" size="sm">Ver curso</LinkButton></div>
               </div>
             </div>
-            <div className="glass-strong absolute -left-6 bottom-24 hidden w-64 rounded-2xl p-4 shadow-2xl animate-float sm:block">
+            <div className="glass-strong absolute -left-8 top-16 hidden w-60 rounded-2xl p-4 shadow-2xl animate-float sm:block">
               <div className="flex items-center gap-2 text-xs font-semibold text-violet-300"><Bot className="size-4" aria-hidden /> NEXUS AI</div>
               <p className="mt-2 text-sm text-mist-200">“Explícame este concepto con un ejemplo y hazme 3 preguntas de práctica.”</p>
             </div>
