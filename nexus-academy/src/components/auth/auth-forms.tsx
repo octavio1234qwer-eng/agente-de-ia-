@@ -24,7 +24,7 @@ export function LoginForm({ next }: { next: string }) {
     <form action={action} className="space-y-5" noValidate>
       <input type="hidden" name="next" value={next} />
       <Field label="Correo electrónico" htmlFor="email" error={state?.fieldErrors?.email}>
-        <Input id="email" name="email" type="email" autoComplete="email" required inputMode="email" aria-invalid={Boolean(state?.fieldErrors?.email) || undefined} />
+        <Input id="email" name="email" type="email" autoComplete="email" required inputMode="email" defaultValue={state?.values?.email} aria-invalid={Boolean(state?.fieldErrors?.email) || undefined} />
       </Field>
       <Field label="Contraseña" htmlFor="password" error={state?.fieldErrors?.password}>
         <PasswordInput id="password" name="password" autoComplete="current-password" />
@@ -47,16 +47,16 @@ export function SignUpForm({ next }: { next: string }) {
     <form action={action} className="space-y-5" noValidate>
       <input type="hidden" name="next" value={next} />
       <Field label="Nombre completo" htmlFor="fullName" error={state?.fieldErrors?.fullName} hint="Aparecerá en tus certificados.">
-        <Input id="fullName" name="fullName" autoComplete="name" required maxLength={120} />
+        <Input id="fullName" name="fullName" autoComplete="name" required maxLength={120} defaultValue={state?.values?.fullName} />
       </Field>
       <Field label="Correo electrónico" htmlFor="email" error={state?.fieldErrors?.email}>
-        <Input id="email" name="email" type="email" autoComplete="email" inputMode="email" required />
+        <Input id="email" name="email" type="email" autoComplete="email" inputMode="email" required defaultValue={state?.values?.email} />
       </Field>
       <Field label="Contraseña" htmlFor="password" error={state?.fieldErrors?.password} hint="Mínimo 8 caracteres, con letras y números.">
         <PasswordInput id="password" name="password" autoComplete="new-password" />
       </Field>
       <label className="flex items-start gap-3 text-sm text-mist-300">
-        <input type="checkbox" name="terms" className="mt-0.5 size-4 accent-electric-500" required />
+        <input type="checkbox" name="terms" className="mt-0.5 size-4 accent-electric-500" required defaultChecked={state?.values?.terms === "on"} />
         <span>
           Acepto los <Link href="/terminos" className="text-electric-300 hover:text-white">términos y condiciones</Link> y el{" "}
           <Link href="/privacidad" className="text-electric-300 hover:text-white">aviso de privacidad</Link>.
@@ -75,7 +75,7 @@ export function RecoverForm() {
   return (
     <form action={action} className="space-y-5" noValidate>
       <Field label="Correo electrónico" htmlFor="email" error={state?.fieldErrors?.email}>
-        <Input id="email" name="email" type="email" autoComplete="email" inputMode="email" required />
+        <Input id="email" name="email" type="email" autoComplete="email" inputMode="email" required defaultValue={state?.values?.email} />
       </Field>
       <FormMessage state={state?.error && !state.fieldErrors ? { error: state.error } : null} />
       <SubmitButton size="lg" className="w-full" pendingLabel="Enviando…">Enviar enlace</SubmitButton>

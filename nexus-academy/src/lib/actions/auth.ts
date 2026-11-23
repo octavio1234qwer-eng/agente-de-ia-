@@ -40,7 +40,12 @@ export async function signUpAction(_prev: ActionState, formData: FormData): Prom
     password: formData.get("password"),
     terms: formData.get("terms"),
   });
-  if (!parsed.success) return { fieldErrors: firstErrors(parsed.error), error: "Revisa los campos marcados." };
+  const values = {
+    fullName: String(formData.get("fullName") ?? ""),
+    email: String(formData.get("email") ?? ""),
+    terms: formData.get("terms") === "on" ? "on" : "",
+  };
+  if (!parsed.success) return { fieldErrors: firstErrors(parsed.error), error: "Revisa los campos marcados.", values };
 
   const next = safeNextPath(String(formData.get("next") ?? ""), "/cuenta");
   const supabase = await createClient();
@@ -54,13 +59,13 @@ export async function signUpAction(_prev: ActionState, formData: FormData): Prom
   });
   if (error) {
     if (/already|registered|exists/i.test(error.message)) {
-      return { error: "Ya existe una cuenta con ese correo. Inicia sesión o recupera tu contraseña." };
+      return { error: "Ya existe una cuenta con ese correo. Inicia sesión o recupera tu contraseña.", values };
     }
     if (/weak|pwned|leaked/i.test(error.message)) {
-      return { error: "Esa contraseña es insegura o aparece en filtraciones conocidas. Elige otra." };
+      return { error: "Esa contraseña es insegura o aparece en filtraciones conocidas. Elige otra.", values };
     }
     console.error("[signUp]", error.message);
-    return { error: "No pudimos crear tu cuenta. Intenta de nuevo en unos minutos." };
+    return { error: "No pudimos crear tu cuenta. Intenta de nuevo en unos minutos.", values };
   }
 
   if (data.session && data.user) {
@@ -80,14 +85,15 @@ export async function signInAction(_prev: ActionState, formData: FormData): Prom
     email: String(formData.get("email") ?? "").trim().toLowerCase(),
     password: formData.get("password"),
   });
-  if (!parsed.success) return { fieldErrors: firstErrors(parsed.error), error: "Revisa los campos marcados." };
+  const values = { email: String(formData.get("email") ?? "") };
+  if (!parsed.success) return { fieldErrors: firstErrors(parsed.error), error: "Revisa los campos marcados.", values };
   const supabase = await createClient();
   const { error } = await supabase.auth.signInWithPassword(parsed.data);
   if (error) {
     if (/not confirmed/i.test(error.message)) {
-      return { error: "Confirma tu correo antes de iniciar sesión. Revisa tu bandeja de entrada." };
+      return { error: "Confirma tu correo antes de iniciar sesión. Revisa tu bandeja de entrada.", values };
     }
-    return { error: "Correo o contraseña incorrectos." };
+    return { error: "Correo o contraseña incorrectos.", values };
   }
   redirect(safeNextPath(String(formData.get("next") ?? ""), "/cuenta"));
 }
@@ -102,7 +108,7 @@ const GENERIC_RESET = "Si existe una cuenta con ese correo, recibirás un enlace
 
 export async function requestPasswordResetAction(_prev: ActionState, formData: FormData): Promise<ActionState> {
   const parsed = z.email().safeParse(String(formData.get("email") ?? "").trim().toLowerCase());
-  if (!parsed.success) return { fieldErrors: { email: "Correo inválido." }, error: "Revisa el correo." };
+  if (!parsed.success) return { fieldErrors: { email: "Correo inválido." }, error: "Revisa el correo.", values: { email: String(formData.get("email") ?? "") } };
   const email = parsed.data;
   const redirectTo = `${siteUrl}/auth/confirm?next=/restablecer`;
 
