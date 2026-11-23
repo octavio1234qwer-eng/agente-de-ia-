@@ -116,6 +116,7 @@ node scripts/create-admin.mjs tu@correo.com UnaClaveSegura123
 | `node e2e/certificate-linkedin.mjs` | «Agregar a LinkedIn» y «Compartir» con datos correctos, metadatos Open Graph, imagen PNG 1200×630, certificados revocados excluidos | 17/17 |
 | `node e2e/video-captions.mjs` | Subtítulos: el admin sube .srt (se convierte a WebVTT, queda auditado), el navegador los carga y muestra, búsqueda por lo que se dice en el video, 404 sin acceso, quitar | 17/17 |
 | `npm run test:a11y` | Accesibilidad automática (axe-core, WCAG 2.1 A/AA): 38 páginas públicas, de alumno, aula y admin + 4 estados móviles (menú, temario, chat) | 42/42 sin infracciones |
+| `npm run test:perf` | Lighthouse móvil sobre la compilación de producción (`npm run build && npx next start -p 3100`): /, /cursos, curso, /paquetes, /login; mínimo 90 rendimiento y 95 en accesibilidad, buenas prácticas y SEO | 5/5 (rend. 94–100, resto 100) |
 | `node e2e/links.mjs` | Enlaces internos rotos | 0 |
 | `npx next build` | Build de producción | ✔ |
 

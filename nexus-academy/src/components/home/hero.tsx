@@ -8,8 +8,9 @@ export function Hero({ signedIn, spotlight }: { signedIn: boolean; spotlight: Co
   return (
     <section className="relative overflow-hidden">
       <div className="bg-grid pointer-events-none absolute inset-0 [mask-image:radial-gradient(ellipse_at_top,black_30%,transparent_75%)]" />
-      <div className="pointer-events-none absolute -top-40 left-1/2 h-[560px] w-[900px] -translate-x-1/2 rounded-full bg-electric-600/25 blur-[140px] animate-pulse-glow" />
-      <div className="pointer-events-none absolute right-[-10%] top-40 h-[380px] w-[380px] rounded-full bg-violet-600/25 blur-[120px]" />
+      {/* Brillos con degradado radial (sin filtro blur): mismo aspecto, sin repintar cada frame. */}
+      <div className="pointer-events-none absolute -top-56 left-1/2 h-[760px] w-[1200px] -translate-x-1/2 bg-[radial-gradient(closest-side,rgb(42_92_240/0.24),rgb(42_92_240/0.08)_55%,transparent)] animate-pulse-glow" />
+      <div className="pointer-events-none absolute right-[-18%] top-24 h-[600px] w-[600px] bg-[radial-gradient(closest-side,rgb(124_58_237/0.22),rgb(124_58_237/0.07)_55%,transparent)]" />
 
       <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-4 pb-20 pt-16 sm:px-6 sm:pt-24 lg:grid-cols-[1.1fr_1fr] lg:px-8 lg:pb-28">
         <div className="animate-fade-up">
@@ -69,7 +70,7 @@ export function Hero({ signedIn, spotlight }: { signedIn: boolean; spotlight: Co
                 <div className="mt-4"><LinkButton href={`/cursos/${spotlight.slug}`} variant="outline" size="sm">Ver curso</LinkButton></div>
               </div>
             </div>
-            <div className="glass-strong absolute -left-8 top-16 hidden w-60 rounded-2xl p-4 shadow-2xl animate-float sm:block">
+            <div className="glass-strong absolute -left-8 top-16 hidden w-60 rounded-2xl p-4 shadow-2xl animate-float [backdrop-filter:none] sm:block">
               <div className="flex items-center gap-2 text-xs font-semibold text-violet-300"><Bot className="size-4" aria-hidden /> NEXUS AI</div>
               <p className="mt-2 text-sm text-mist-200">“Explícame este concepto con un ejemplo y hazme 3 preguntas de práctica.”</p>
             </div>

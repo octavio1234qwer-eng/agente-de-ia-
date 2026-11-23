@@ -21,10 +21,14 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const { slug } = await params;
   const course = await getCourseBySlug(slug);
   if (!course) notFound();
+  // Texto plano para buscadores y redes: subtítulo o, si no hay, el inicio de la descripción sin Markdown.
+  const plain = (course.description ?? "").replace(/[#*_`>\[\]()!-]+/g, " ").replace(/\s+/g, " ").trim();
+  const description = (course.subtitle?.trim() || plain || `Curso de ${course.title} en NEXUS ACADEMY.`).slice(0, 160);
   return {
     title: course.title,
-    description: course.subtitle ?? course.description.slice(0, 160),
-    openGraph: { title: course.title, description: course.subtitle ?? undefined, images: course.cover_url ? [course.cover_url] : undefined },
+    description,
+    alternates: { canonical: `/cursos/${course.slug}` },
+    openGraph: { title: course.title, description, images: course.cover_url ? [course.cover_url] : undefined },
   };
 }
 

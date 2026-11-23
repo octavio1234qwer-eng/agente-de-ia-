@@ -48,7 +48,7 @@ export default async function HomePage() {
               href={`/cursos?categoria=${c.slug}`}
               className="group glass relative overflow-hidden rounded-2xl p-5 transition hover:-translate-y-0.5 hover:bg-white/[0.06] sm:p-6"
             >
-              <div className="pointer-events-none absolute -right-10 -top-10 size-32 rounded-full opacity-25 blur-2xl transition group-hover:opacity-50" style={{ background: c.color }} />
+              <div className="pointer-events-none absolute -right-16 -top-16 size-48 opacity-30 transition group-hover:opacity-60" style={{ background: `radial-gradient(closest-side, ${c.color}, transparent)` }} />
               <span className="grid size-11 place-items-center rounded-xl border border-white/10 bg-white/[0.05]" style={{ color: c.color }}>
                 <CategoryIcon name={c.icon} className="size-5" />
               </span>
@@ -103,7 +103,7 @@ export default async function HomePage() {
       {/* Aula virtual + NEXUS AI */}
       <section className="relative mx-auto mt-28 max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="glass-strong glow-border relative overflow-hidden rounded-[32px] p-8 sm:p-12">
-          <div className="pointer-events-none absolute -right-20 -top-20 size-80 rounded-full bg-violet-600/25 blur-[100px]" />
+          <div className="pointer-events-none absolute -right-40 -top-40 size-[34rem] bg-[radial-gradient(closest-side,rgb(124_58_237/0.22),transparent)]" />
           <div className="relative grid gap-12 lg:grid-cols-2">
             <div>
               <SectionHeading

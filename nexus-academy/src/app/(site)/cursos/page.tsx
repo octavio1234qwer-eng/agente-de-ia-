@@ -82,6 +82,8 @@ export default async function CatalogPage({ searchParams }: { searchParams: Prom
         <CatalogFilters categories={categories.map((c) => ({ value: c.slug, label: c.name }))} />
         <div>
           <CatalogSearch defaultValue={filters.q ?? ""} sort={sortKey} />
+          {/* Encabezado para lectores de pantalla: las tarjetas usan h3. */}
+          <h2 className="sr-only">Resultados</h2>
           <p className="mt-5 text-sm text-mist-400" aria-live="polite">
             {result.total === 1 ? "1 curso" : `${result.total} cursos`}
             {filters.q ? <> para «<span className="text-white">{filters.q}</span>»</> : null}

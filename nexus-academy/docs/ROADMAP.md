@@ -55,13 +55,16 @@ saber qué sigue. Marcar `[x]` solo cuando esté construido **y probado**.
 - [x] Auditoría de accesibilidad con axe-core (`npm run test:a11y`, 42/42 sin infracciones WCAG 2.1 A/AA). Corregido: nombre accesible del logo (y espacio real entre NEXUS y ACADEMY para lectores de pantalla), barras de progreso sin nombre, panel de NEXUS AI cerrado que seguía siendo enfocable (ahora `inert`), tablas del admin desplazables sin teclado (ahora región enfocable), y `text-mist-500` (17 usos) que tomaba un gris de Tailwind con contraste 4.41 → tono propio #7d85aa (≥ 4.5:1)
 - [x] `scripts/dev-up.sh`: reintenta Docker cuando containerd no arranca a tiempo y ya no dice «Entorno listo» si Supabase no responde
 
+- [x] Rendimiento con Lighthouse (`npm run test:perf`, producción, móvil): portada de 85 → 99-100 (bloqueo del hilo principal 590 → ~100 ms) al reemplazar brillos con `blur(140px)` animados y una tarjeta flotante con `backdrop-filter` por degradados radiales; respeto de «reducir movimiento»; meta descripción y canonical en la página de curso; encabezados en orden (pie de página h2, «Resultados» en el catálogo). 5/5 páginas ≥ 94 en rendimiento y 100 en accesibilidad, buenas prácticas y SEO
+  - Nota: Next.js entrega metadatos «en streaming» a navegadores y en el `<head>` a bots (LinkedInBot, Bingbot); el script lo verifica con user agents de bot
+
 ## Siguiente (en orden)
-- [ ] Rendimiento: Lighthouse en las páginas públicas principales (Core Web Vitals) y corrección de lo que encuentre
+- [ ] SEO: `sitemap.xml` y `robots.txt` generados (cursos y paquetes publicados; excluye cuenta, aula, admin y API) y datos estructurados de la organización
 - [ ] Despliegue (Vercel + Supabase en la nube) — requiere cuentas/credenciales del usuario
 
 ## Ventas (agente)
-- Gumroad: 25+ productos publicados; 0 ventas desde 2026-10-01 (revisado 2026-11-23 11:55 UTC).
-- Buffer "My organization": LinkedIn 6 y X 7 publicaciones programadas (revisado 2026-11-23 11:55 UTC), cola hasta el 2026-12-01. El código BLACKFRIDAY que mencionan dos publicaciones existe en Gumroad pero hoy está inactivo (se espera que se active para Black Friday).
+- Gumroad: 25+ productos publicados; 0 ventas desde 2026-10-01 (revisado 2026-11-23 12:55 UTC).
+- Buffer "My organization": LinkedIn 6 y X 7 publicaciones programadas (revisado 2026-11-23 12:55 UTC), cola hasta el 2026-12-01. El código BLACKFRIDAY que mencionan dos publicaciones existe en Gumroad pero hoy está inactivo (se espera que se active para Black Friday).
 - Pinterest casi sin uso: oportunidad para imprimibles (lotería, planners, menú) con portada del producto.
 
 ## Bloqueado por el usuario
