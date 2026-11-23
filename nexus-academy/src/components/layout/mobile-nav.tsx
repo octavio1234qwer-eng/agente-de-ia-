@@ -8,7 +8,12 @@ import { cn } from "@/lib/utils";
 export function MobileNav({ links, signedIn, isAdmin }: { links: { href: string; label: string }[]; signedIn: boolean; isAdmin: boolean }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  useEffect(() => setOpen(false), [pathname]);
+  const [lastPath, setLastPath] = useState(pathname);
+  if (pathname !== lastPath) {
+    // Cierra el menú al cambiar de ruta (ajuste de estado durante el render).
+    setLastPath(pathname);
+    setOpen(false);
+  }
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => {
