@@ -20,7 +20,7 @@ type Params = { slug: string };
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const { slug } = await params;
   const course = await getCourseBySlug(slug);
-  if (!course) return { title: "Curso no encontrado" };
+  if (!course) notFound();
   return {
     title: course.title,
     description: course.subtitle ?? course.description.slice(0, 160),
