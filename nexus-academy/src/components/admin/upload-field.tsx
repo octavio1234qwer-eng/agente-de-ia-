@@ -26,6 +26,7 @@ export function UploadField({ bucket, pathPrefix, accept, maxMb, label, onUpload
   const current = useRef<tus.Upload | null>(null);
   const [busy, setBusy] = useState(false);
   const [progress, setProgress] = useState<number | null>(null);
+  const [canPause, setCanPause] = useState(false);
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
 
   async function resumable(file: File, path: string): Promise<string> {
@@ -47,6 +48,7 @@ export function UploadField({ bucket, pathPrefix, accept, maxMb, label, onUpload
         onSuccess: () => resolve((upload.options.metadata?.objectName as string) ?? path),
       });
       current.current = upload;
+      setCanPause(true);
       // Si este mismo archivo se subió a medias antes, retoma esa subida (y su ruta).
       upload.findPreviousUploads().then((previous) => {
         const match = previous.find((p) => p.metadata?.bucketName === bucket && p.metadata?.objectName?.startsWith(`${pathPrefix}/`));
@@ -85,6 +87,7 @@ export function UploadField({ bucket, pathPrefix, accept, maxMb, label, onUpload
       return setMsg({ ok: false, text: /413|too large|exceeded/i.test(text) ? "El archivo supera el límite de tu plan de almacenamiento." : `No se pudo subir: ${text.slice(0, 160)}` });
     } finally {
       current.current = null;
+      setCanPause(false);
     }
     const publicUrl = bucket === "course-covers" || bucket === "avatars" ? supabase.storage.from(bucket).getPublicUrl(path).data.publicUrl : null;
     await onUploaded({ path, publicUrl, file });
@@ -100,11 +103,12 @@ export function UploadField({ bucket, pathPrefix, accept, maxMb, label, onUpload
         <button type="button" onClick={() => ref.current?.click()} disabled={busy} className="inline-flex h-10 items-center gap-2 rounded-xl border border-white/10 px-4 text-sm text-mist-100 hover:bg-white/[0.06] disabled:opacity-60">
           {busy ? <LoaderCircle className="size-4 animate-spin" /> : <Upload className="size-4" />} {busy ? (progress !== null ? `Subiendo… ${progress}%` : "Subiendo…") : label}
         </button>
-        {busy && current.current && (
+        {busy && canPause && (
           <button
             type="button"
             onClick={() => {
               void current.current?.abort();
+              setCanPause(false);
               setBusy(false);
               setProgress(null);
               setMsg({ ok: false, text: "Subida pausada. Vuelve a elegir el mismo archivo para continuar donde se quedó." });
