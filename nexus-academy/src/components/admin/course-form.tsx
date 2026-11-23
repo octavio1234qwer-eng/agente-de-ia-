@@ -5,6 +5,7 @@ import { Field, FormMessage, Input, Select, Textarea } from "@/components/ui/fie
 import { SubmitButton } from "@/components/ui/submit-button";
 import { CourseCover } from "@/components/course/course-cover";
 import { UploadField } from "./upload-field";
+import { MarkdownEditor } from "./markdown-editor";
 
 type Option = { id: string; name: string };
 type Course = {
@@ -25,7 +26,7 @@ export function CourseForm({ course, categories, instructors }: { course?: Cours
         <Field label="Slug (URL)" htmlFor="slug" hint="Se genera del título si lo dejas vacío."><Input id="slug" name="slug" defaultValue={course?.slug} maxLength={80} /></Field>
       </div>
       <Field label="Subtítulo" htmlFor="subtitle"><Input id="subtitle" name="subtitle" defaultValue={course?.subtitle ?? ""} maxLength={240} /></Field>
-      <Field label="Descripción completa (Markdown)" htmlFor="description"><Textarea id="description" name="description" rows={6} defaultValue={course?.description} /></Field>
+      <MarkdownEditor id="description" name="description" rows={8} defaultValue={course?.description ?? ""} label="Descripción completa" />
       <div className="grid gap-5 md:grid-cols-3">
         <Field label="Categoría" htmlFor="category_id">
           <Select id="category_id" name="category_id" defaultValue={course?.category_id ?? ""}><option value="">Sin categoría</option>{categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}</Select>

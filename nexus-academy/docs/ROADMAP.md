@@ -35,8 +35,10 @@ saber qué sigue. Marcar `[x]` solo cuando esté construido **y probado**.
 
 - [x] Subida de video reanudable (TUS, bloques de 6 MB) con progreso y pausa; E2E `e2e/video-upload.mjs` 7/7 (pausa al 40 %, reanuda, 20 MB íntegros en bucket privado, URL firmada sirve el archivo)
 
+- [x] Editor de Markdown con barra de formato y vista previa (lecciones y descripción de cursos, alterna en móvil); E2E `e2e/markdown-editor.mjs` 8/8 (incluye HTML crudo sin ejecutar)
+
 ## Siguiente (en orden)
-- [ ] Mejoras: editor de Markdown con vista previa; búsqueda de texto completo en lecciones
+- [ ] Mejoras: búsqueda de texto completo dentro de las lecciones (para alumnos inscritos)
 - [ ] Despliegue (Vercel + Supabase en la nube) — requiere cuentas/credenciales del usuario
 
 ## Ventas (agente)

@@ -1,9 +1,10 @@
 "use client";
 import { useActionState, useState } from "react";
 import { saveLessonAction } from "@/lib/actions/admin";
-import { Field, FormMessage, Input, Select, Textarea } from "@/components/ui/field";
+import { Field, FormMessage, Input, Select } from "@/components/ui/field";
 import { SubmitButton } from "@/components/ui/submit-button";
 import { UploadField } from "./upload-field";
+import { MarkdownEditor } from "./markdown-editor";
 
 type Lesson = { id: string; title: string; summary: string | null; type: string; duration_seconds: number; is_preview: boolean; pass_percent: number };
 type Content = { body: string; video_provider: string | null; video_ref: string | null } | null;
@@ -68,9 +69,7 @@ export function LessonEditor({ courseId, lesson, content }: { courseId: string; 
       {type === "quiz" ? (
         <Field label="Porcentaje para aprobar" htmlFor="pass_percent"><Input id="pass_percent" name="pass_percent" type="number" min={0} max={100} defaultValue={lesson.pass_percent} /></Field>
       ) : (
-        <Field label={type === "video" ? "Notas de la lección (Markdown, opcional)" : "Contenido (Markdown)"} htmlFor="body">
-          <Textarea id="body" name="body" rows={14} defaultValue={content?.body ?? ""} className="font-mono text-sm" />
-        </Field>
+        <MarkdownEditor id="body" name="body" rows={16} defaultValue={content?.body ?? ""} label={type === "video" ? "Notas de la lección (opcional)" : "Contenido de la lección"} />
       )}
       <label className="flex items-center gap-3 text-sm text-mist-200"><input type="checkbox" name="is_preview" defaultChecked={lesson.is_preview} className="size-4 accent-electric-500" /> Vista previa gratuita (visible sin comprar)</label>
       <FormMessage state={state} />

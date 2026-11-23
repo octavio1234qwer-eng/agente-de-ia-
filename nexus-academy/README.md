@@ -109,6 +109,7 @@ node scripts/create-admin.mjs tu@correo.com UnaClaveSegura123
 | `node e2e/classroom.mjs` | Lecciones bloqueadas, vista previa, progreso, evaluación, certificado, PDF, IA sin clave | 17/17 |
 | `node e2e/admin.mjs` | Rol, curso + temario + subidas, acceso otorgado, cupón, reembolso, auditoría | 24/24 |
 | `node e2e/video-upload.mjs` | Subida reanudable de video (pausa y reanudación), bucket privado, URL firmada | 7/7 |
+| `node e2e/markdown-editor.mjs` | Editor con barra de formato y vista previa, sin XSS, mismo render en el aula | 8/8 |
 | `node e2e/links.mjs` | Enlaces internos rotos | 0 |
 | `npx next build` | Build de producción | ✔ |
 
