@@ -15,10 +15,12 @@ saber qué sigue. Marcar `[x]` solo cuando esté construido **y probado**.
 - [x] Cuenta: perfil + foto, mis cursos, favoritos, compras, certificados, ajustes
 - [x] E2E `e2e/auth-account.mjs`: registro → inscripción gratis → favoritos → perfil → logout/login → recuperación por correo real (Mailpit) → OK
 
+- [x] Carrito, checkout (cupones, RFC/CFDI opcional, cupón 100 % sin proveedor), éxito/cancelado con verificación vía API del proveedor
+- [x] Webhooks Stripe / Mercado Pago / PayPal + retorno de PayPal (captura en servidor); idempotencia en `payment_events`
+- [x] Pruebas: 17 unitarias (`npm test`), 46 pgTAP (`npm run test:db`), E2E pagos `e2e/payments.mjs` 10/10 (webhook firmado → orden pagada → acceso activado; repetición ignorada; firma falsa 400; importe alterado sin acceso; fallo del proveedor honesto; cupón 100 %)
+
 ## Siguiente (en orden)
 - [ ] Paquetes `/paquetes`, instructores `/instructores`
-- [ ] Carrito y checkout (cupones, RFC opcional), páginas de éxito/cancelado con verificación vía API del proveedor
-- [ ] Webhooks: Stripe, Mercado Pago, PayPal (+ retorno de PayPal) con pruebas de firma
 - [ ] Aula virtual `/aprender/[slug]/[lessonId]`: video, temario, progreso, completar, recursos, cuestionarios, reseña
 - [ ] NEXUS AI: `/api/ai/chat` (streaming, límite diario) + panel en el aula + página `/nexus-ai`
 - [ ] Certificados: `/certificados/[code]`, `/verificar`, PDF con QR

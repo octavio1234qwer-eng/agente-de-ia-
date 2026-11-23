@@ -18,7 +18,16 @@ export async function fulfillOrder(p: { orderId: string; providerPaymentId: stri
     p_amount_cents: p.amountCents,
     p_currency: p.currency,
   });
-  if (error) throw new Error(`fulfill_order: ${error.message}`);
+  if (error) {
+    if (/amount_mismatch/.test(error.message)) {
+      await admin
+        .from("orders")
+        .update({ failure_reason: `amount_mismatch: recibido ${p.amountCents} ${p.currency.toUpperCase()} (pago ${p.providerPaymentId})` })
+        .eq("id", p.orderId)
+        .eq("status", "pending");
+    }
+    throw new Error(`fulfill_order: ${error.message}`);
+  }
   if (newlyPaid) {
     // El correo no debe bloquear ni revertir la confirmación del pago.
     await sendPurchaseEmail(p.orderId).catch((e) => console.error("[fulfillment] correo de compra", e));

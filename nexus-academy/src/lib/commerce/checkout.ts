@@ -116,7 +116,7 @@ export async function startCheckout(params: {
   user: Profile;
   refs: ItemRef[];
   couponCode?: string | null;
-  provider: PaymentProviderId;
+  provider?: PaymentProviderId;
   billingDetails?: Record<string, string> | null;
 }): Promise<StartCheckoutResult> {
   const { user, refs, provider } = params;
@@ -125,7 +125,8 @@ export async function startCheckout(params: {
 
   // Compras cubiertas al 100 % por un cupón: no hay cobro que procesar.
   const effectiveProvider = quote.totalCents === 0 ? "free" : provider;
-  if (effectiveProvider !== "free" && !enabledPaymentProviders().includes(provider)) {
+  if (!effectiveProvider) throw new CheckoutError("Elige un método de pago.");
+  if (effectiveProvider !== "free" && !enabledPaymentProviders().includes(effectiveProvider)) {
     throw new CheckoutError("Ese método de pago no está disponible en este momento.");
   }
 
@@ -178,7 +179,7 @@ export async function startCheckout(params: {
     lines: quote.lines.map((l) => ({ id: l.id, title: l.title, amountCents: l.totalCents })),
     customerEmail: user.email,
     successUrl:
-      provider === "paypal"
+      effectiveProvider === "paypal"
         ? `${siteUrl}/api/payments/paypal/return?order=${order.id}`
         : `${siteUrl}/checkout/exito?order=${order.id}`,
     cancelUrl: `${siteUrl}/checkout/cancelado?order=${order.id}`,
@@ -186,9 +187,9 @@ export async function startCheckout(params: {
 
   try {
     const session =
-      provider === "stripe"
+      effectiveProvider === "stripe"
         ? await createStripeCheckout(request)
-        : provider === "mercadopago"
+        : effectiveProvider === "mercadopago"
           ? await createMercadoPagoCheckout(request)
           : await createPayPalCheckout(request);
     await admin.from("orders").update({ provider_session_id: session.providerSessionId }).eq("id", order.id);
@@ -196,7 +197,7 @@ export async function startCheckout(params: {
   } catch (err) {
     const reason = err instanceof Error ? err.message : String(err);
     await admin.from("orders").update({ status: "failed", failure_reason: reason.slice(0, 500) }).eq("id", order.id);
-    console.error("[checkout] error del proveedor", provider, reason);
+    console.error("[checkout] error del proveedor", effectiveProvider, reason);
     throw new CheckoutError("El proveedor de pagos no respondió. No se realizó ningún cargo; intenta de nuevo.");
   }
 }

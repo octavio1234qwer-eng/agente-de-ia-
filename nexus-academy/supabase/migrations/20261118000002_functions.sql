@@ -577,12 +577,9 @@ begin
     return false;
   end if;
 
+  -- La excepción revierte la transacción: el backend registra el motivo aparte.
   if p_amount_cents is distinct from v_order.total_cents
      or upper(p_currency) is distinct from upper(v_order.currency) then
-    update public.orders set failure_reason = format(
-      'amount_mismatch: esperado %s %s, recibido %s %s',
-      v_order.total_cents, v_order.currency, p_amount_cents, p_currency
-    ) where id = p_order_id;
     raise exception 'amount_mismatch';
   end if;
 

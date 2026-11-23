@@ -68,7 +68,7 @@ export async function applyCouponAction(_prev: QuoteState, formData: FormData): 
 }
 
 const checkoutSchema = z.object({
-  provider: z.enum(["stripe", "mercadopago", "paypal"], { error: "Elige un método de pago." }),
+  provider: z.enum(["stripe", "mercadopago", "paypal"], { error: "Elige un método de pago." }).optional(),
   coupon: z.string().trim().max(40).optional(),
   rfc: z
     .string()
@@ -85,7 +85,7 @@ export async function startCheckoutAction(_prev: ActionState, formData: FormData
   const user = await getCurrentUser();
   if (!user) redirect("/login?next=/checkout");
   const parsed = checkoutSchema.safeParse({
-    provider: formData.get("provider"),
+    provider: formData.get("provider") || undefined,
     coupon: formData.get("coupon") || undefined,
     rfc: formData.get("rfc") || "",
     businessName: formData.get("businessName") || undefined,
