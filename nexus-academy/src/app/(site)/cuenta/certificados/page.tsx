@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Award, Download, ExternalLink } from "lucide-react";
+import { Award, BadgePlus, Download, ExternalLink, Share2 } from "lucide-react";
 import { requireUser } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { EmptyState } from "@/components/ui/empty-state";
 import { LinkButton } from "@/components/ui/button";
 import { formatDate } from "@/lib/utils";
+import { siteUrl } from "@/lib/env";
+import { linkedInAddToProfileUrl, linkedInShareUrl } from "@/lib/certificates/linkedin";
 
 export const metadata: Metadata = { title: "Mis certificados" };
 
@@ -35,6 +37,24 @@ export default async function CertificatesPage() {
           <div className="mt-5 flex flex-wrap gap-2">
             <Link href={`/certificados/${c.code}`} className="inline-flex h-10 items-center gap-2 rounded-xl bg-white/[0.06] px-4 text-sm text-white hover:bg-white/[0.1]"><ExternalLink className="size-4" aria-hidden /> Ver</Link>
             <a href={`/api/certificates/${c.code}/pdf`} className="inline-flex h-10 items-center gap-2 rounded-xl bg-white/[0.06] px-4 text-sm text-white hover:bg-white/[0.1]"><Download className="size-4" aria-hidden /> PDF</a>
+          </div>
+          <div className="mt-2 flex flex-wrap gap-2">
+            <a
+              href={linkedInAddToProfileUrl({ courseTitle: c.course_title, issuedAt: c.issued_at, certUrl: `${siteUrl}/certificados/${c.code}` })}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-10 items-center gap-2 rounded-xl bg-[#0a66c2] px-4 text-sm font-medium text-white hover:bg-[#0958a8]"
+            >
+              <BadgePlus className="size-4" aria-hidden /> Agregar a LinkedIn<span className="sr-only"> (se abre en otra pestaña)</span>
+            </a>
+            <a
+              href={linkedInShareUrl(`${siteUrl}/certificados/${c.code}`)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-10 items-center gap-2 rounded-xl border border-white/10 px-4 text-sm text-mist-100 hover:bg-white/[0.06]"
+            >
+              <Share2 className="size-4" aria-hidden /> Compartir<span className="sr-only"> en LinkedIn (se abre en otra pestaña)</span>
+            </a>
           </div>
         </article>
       ))}

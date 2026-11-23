@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import QRCode from "qrcode";
-import { BadgeCheck, Download, ShieldAlert } from "lucide-react";
+import { BadgeCheck, Download, Share2, ShieldAlert } from "lucide-react";
+import { linkedInShareUrl } from "@/lib/certificates/linkedin";
 import { getPublicCertificate } from "@/lib/data/certificates";
 import { formatDate } from "@/lib/utils";
 import { CopyLink } from "@/components/ui/copy-link";
@@ -14,7 +15,18 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const { code } = await params;
   const cert = await getPublicCertificate(code);
   if (!cert) notFound();
-  return { title: `Certificado de ${cert.student_name} · ${cert.course_title}`, robots: { index: false } };
+  const title = `Certificado de ${cert.student_name} · ${cert.course_title}`;
+  const description = cert.revoked_at
+    ? "Este certificado de NEXUS ACADEMY fue revocado."
+    : `${cert.student_name} completó «${cert.course_title}» en NEXUS ACADEMY. Certificado verificable con ID ${cert.code}.`;
+  return {
+    title,
+    description,
+    robots: { index: false },
+    alternates: { canonical: `/certificados/${cert.code}` },
+    openGraph: { title, description, type: "website", url: `/certificados/${cert.code}`, siteName: "NEXUS ACADEMY" },
+    twitter: { card: "summary_large_image", title, description },
+  };
 }
 
 export default async function CertificatePage({ params }: { params: Promise<Params> }) {
@@ -60,6 +72,11 @@ export default async function CertificatePage({ params }: { params: Promise<Para
       <div className="mt-6 flex flex-wrap gap-3">
         <a href={`/api/certificates/${cert.code}/pdf`} className="inline-flex h-11 items-center gap-2 rounded-xl bg-gradient-to-r from-electric-500 to-violet-600 px-5 text-sm font-medium text-white"><Download className="size-4" /> Descargar PDF</a>
         <CopyLink url={url} />
+        {!revoked && (
+          <a href={linkedInShareUrl(url)} target="_blank" rel="noopener noreferrer" className="inline-flex h-11 items-center gap-2 rounded-xl border border-white/10 px-4 text-sm text-mist-100 hover:bg-white/[0.06]">
+            <Share2 className="size-4" aria-hidden /> Compartir en LinkedIn<span className="sr-only"> (se abre en otra pestaña)</span>
+          </a>
+        )}
         {cert.course_slug && <Link href={`/cursos/${cert.course_slug}`} className="inline-flex h-11 items-center rounded-xl px-4 text-sm text-mist-300 hover:bg-white/[0.06] hover:text-white">Ver el curso</Link>}
       </div>
     </div>

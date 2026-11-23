@@ -46,12 +46,15 @@ saber qué sigue. Marcar `[x]` solo cuando esté construido **y probado**.
 
 - [x] Notas con marca de tiempo en lecciones de video: botón «Marca de tiempo» inserta `[m:ss]` en el cursor, cada marca salta a ese segundo, y en «Mis notas» enlazan a `?t=SEGUNDOS`; E2E `e2e/video-timestamps.mjs` 12/12 con video real (corregida una carrera que perdía teclas tras el clic)
 
+- [x] Certificados en LinkedIn: «Agregar a LinkedIn» (formulario oficial add-to-profile prellenado: curso, NEXUS ACADEMY, año/mes de emisión, URL de verificación) y «Compartir»; página pública con Open Graph y tarjeta PNG 1200×630 generada; revocados excluidos; E2E `e2e/certificate-linkedin.mjs` 17/17
+  - Nota: la página oficial addtoprofile.linkedin.com bloquea lectura automática (403); se usan solo parámetros confirmados por varias fuentes (`certId` se omitió por no estar confirmado; el ID va en la URL de verificación)
+
 ## Siguiente (en orden)
-- [ ] Certificados: botón «Agregar a LinkedIn» (enlace oficial add-to-profile con nombre, emisor, fecha, ID y URL de verificación)
+- [ ] Accesibilidad: subtítulos WebVTT para videos propios (subida en el admin, `<track>` en el aula)
 - [ ] Despliegue (Vercel + Supabase en la nube) — requiere cuentas/credenciales del usuario
 
 ## Ventas (agente)
-- Gumroad: 25+ productos publicados; 0 ventas desde 2026-10-01 (revisado 2026-11-23 08:55 UTC).
+- Gumroad: 25+ productos publicados; 0 ventas desde 2026-10-01 (revisado 2026-11-23 09:55 UTC).
 - Buffer "My organization": LinkedIn, X y Pinterest. Cola programada hasta el 2026-12-01.
 - Pinterest casi sin uso: oportunidad para imprimibles (lotería, planners, menú) con portada del producto.
 
