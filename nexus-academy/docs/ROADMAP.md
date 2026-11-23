@@ -29,10 +29,12 @@ saber qué sigue. Marcar `[x]` solo cuando esté construido **y probado**.
 - [x] Panel admin: dashboard (KPIs reales + 4 gráficas con paleta validada y tabla accesible), cursos (CRUD, portada, temario, lecciones, videos privados, recursos, preguntas), categorías, instructores, paquetes, alumnos (rol, otorgar/revocar), pedidos (detalle, eventos, reembolsos vía API o manuales), cupones, reseñas, correos (registro + campañas con baja); auditoría de acciones; `scripts/create-admin.mjs`
 - [x] E2E `e2e/admin.mjs`: 24/24 (alumno expulsado de /admin, crear curso+temario+lección+recurso, contenido protegido, otorgar acceso, cupón, reembolso retira acceso, archivado en vez de borrado, 10 secciones cargan)
 
+- [x] Automatizaciones: `/api/cron/reminders`, `/api/cron/abandoned-carts`, `/api/cron/expire-orders` protegidas con CRON_SECRET (probadas con datos reales: detectan casos y registran «omitido» sin proveedor) + `vercel.json`
+- [x] ESLint limpio y `next build` de producción exitoso
+- [x] README: arquitectura, pruebas y guía exacta de activación (Supabase, Vercel, Stripe, Mercado Pago, PayPal, Resend, Claude)
+
 ## Siguiente (en orden)
-- [ ] Automatizaciones: `/api/cron/*` (recordatorios, carritos abandonados) + `vercel.json`
-- [ ] Pruebas: unitarias (vitest: precios, firmas de webhooks), E2E (Playwright), build de producción
-- [ ] README con arquitectura y guía exacta de activación de credenciales
+- [ ] Mejoras: subida de video reanudable (TUS) para archivos grandes; editor visual de Markdown; búsqueda de texto completo en lecciones
 - [ ] Despliegue (Vercel + Supabase en la nube) — requiere cuentas/credenciales del usuario
 
 ## Ventas (agente)
