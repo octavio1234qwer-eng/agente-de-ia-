@@ -23,12 +23,12 @@ saber qué sigue. Marcar `[x]` solo cuando esté construido **y probado**.
 - [x] NEXUS AI: `/api/ai/chat` con Claude en streaming, contexto de la lección vía RLS, catálogo real, límite diario, fallback de rechazo; panel en el aula (503 honesto sin clave)
 - [x] Certificados: emisión automática, `/certificados/[code]` con QR, `/verificar`, PDF; E2E `e2e/classroom.mjs` 17/17
 
+- [x] Paquetes (lista y detalle con compra), instructores, `/nexus-ai` con historial, legales (términos, privacidad LFPDPPP, reembolsos), `/baja` firmada
+- [x] Rastreo de enlaces `e2e/links.mjs`: 32 rutas públicas, 0 rotas
+
 ## Siguiente (en orden)
-- [ ] Paquetes `/paquetes`, instructores `/instructores`
-- [ ] Página `/nexus-ai` (chat completo + historial de conversaciones) — el panel del aula ya funciona
 - [ ] Panel admin: dashboard con gráficas, cursos (CRUD + temario + subidas), categorías, instructores, alumnos, pedidos/reembolsos, cupones, paquetes, reseñas, correos
 - [ ] Automatizaciones: `/api/cron/*` (recordatorios, carritos abandonados) + `vercel.json`
-- [ ] Páginas legales: términos, privacidad, reembolsos; `/baja` (darse de baja)
 - [ ] Pruebas: unitarias (vitest: precios, firmas de webhooks), E2E (Playwright), build de producción
 - [ ] README con arquitectura y guía exacta de activación de credenciales
 - [ ] Despliegue (Vercel + Supabase en la nube) — requiere cuentas/credenciales del usuario
