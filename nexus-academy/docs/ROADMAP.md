@@ -44,12 +44,14 @@ saber qué sigue. Marcar `[x]` solo cuando esté construido **y probado**.
 - [x] Notas personales por lección (privadas incluso para el admin, RLS + pgTAP 14/14): editor en cada lección con aviso de cambios sin guardar y Ctrl+Enter, página `/cuenta/notas` agrupada por curso, descarga en Markdown (`/api/notes/export`); E2E `e2e/lesson-notes.mjs` 28/28
 - [x] Menú de la cuenta en móvil: la pestaña activa se desplaza a la vista
 
+- [x] Notas con marca de tiempo en lecciones de video: botón «Marca de tiempo» inserta `[m:ss]` en el cursor, cada marca salta a ese segundo, y en «Mis notas» enlazan a `?t=SEGUNDOS`; E2E `e2e/video-timestamps.mjs` 12/12 con video real (corregida una carrera que perdía teclas tras el clic)
+
 ## Siguiente (en orden)
-- [ ] Mejoras: en lecciones de video, notas con marca de tiempo que saltan a ese segundo del video
+- [ ] Certificados: botón «Agregar a LinkedIn» (enlace oficial add-to-profile con nombre, emisor, fecha, ID y URL de verificación)
 - [ ] Despliegue (Vercel + Supabase en la nube) — requiere cuentas/credenciales del usuario
 
 ## Ventas (agente)
-- Gumroad: 25+ productos publicados; 0 ventas desde 2026-10-01 (revisado 2026-11-23 07:55 UTC).
+- Gumroad: 25+ productos publicados; 0 ventas desde 2026-10-01 (revisado 2026-11-23 08:55 UTC).
 - Buffer "My organization": LinkedIn, X y Pinterest. Cola programada hasta el 2026-12-01.
 - Pinterest casi sin uso: oportunidad para imprimibles (lotería, planners, menú) con portada del producto.
 

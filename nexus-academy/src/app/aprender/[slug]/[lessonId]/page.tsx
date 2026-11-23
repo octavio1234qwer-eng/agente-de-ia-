@@ -30,10 +30,13 @@ function formatBytes(n: number | null) {
   return n > 1_048_576 ? `${(n / 1_048_576).toFixed(1)} MB` : `${Math.ceil(n / 1024)} KB`;
 }
 
-export default async function LessonPage({ params, searchParams }: { params: Promise<Params>; searchParams: Promise<{ resaltar?: string | string[] }> }) {
+export default async function LessonPage({ params, searchParams }: { params: Promise<Params>; searchParams: Promise<{ resaltar?: string | string[]; t?: string | string[] }> }) {
   const { slug, lessonId } = await params;
   const sp = await searchParams;
   const highlightQuery = normalizeQuery(Array.isArray(sp.resaltar) ? sp.resaltar[0] : sp.resaltar);
+  // ?t=SEGUNDOS: abrir el video en ese momento (enlaces de marcas de tiempo).
+  const rawT = Array.isArray(sp.t) ? sp.t[0] : sp.t;
+  const jumpTo = rawT && /^\d{1,5}$/.test(rawT) ? Number(rawT) : null;
   const user = await requireUser(`/aprender/${slug}/${lessonId}`);
   const data = await getClassroom(slug, user.id);
   if (!data) notFound();
@@ -71,7 +74,7 @@ export default async function LessonPage({ params, searchParams }: { params: Pro
   const video = lesson.type === "video" ? await resolveVideoSource(content?.video_provider ?? null, content?.video_ref ?? null) : null;
   const { data: passMeta } = lesson.type === "quiz" ? await supabase.from("lessons").select("pass_percent").eq("id", lessonId).single() : { data: null };
   const questions = (quizRes.data ?? []).map((q) => ({ id: q.id, prompt: q.prompt, options: (q.options as string[]) ?? [] }));
-  const startAt = data.progress.get(lessonId)?.last_position_seconds ?? 0;
+  const startAt = jumpTo ?? data.progress.get(lessonId)?.last_position_seconds ?? 0;
   const isLast = !next;
   const { data: highlightTerms } = highlightQuery.length >= 2 ? await supabase.rpc("lesson_search_terms", { p_q: highlightQuery }) : { data: null };
   const courseDone = data.flat.every((l) => l.completed);
@@ -106,7 +109,7 @@ export default async function LessonPage({ params, searchParams }: { params: Pro
           {lesson.type === "video" && (
             video ? (
               video.kind === "file" ? (
-                <VideoPlayer lessonId={lessonId} src={video.src} startAt={startAt} completed={lesson.completed} canTrack={canTrack} />
+                <VideoPlayer lessonId={lessonId} src={video.src} startAt={startAt} exactStart={jumpTo !== null} completed={lesson.completed} canTrack={canTrack} />
               ) : (
                 <div className="aspect-video overflow-hidden rounded-2xl bg-black">
                   <iframe src={video.src} title={lesson.title} className="size-full" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowFullScreen referrerPolicy="strict-origin-when-cross-origin" />
@@ -150,7 +153,7 @@ export default async function LessonPage({ params, searchParams }: { params: Pro
             </section>
           )}
 
-          <LessonNotes key={lessonId} lessonId={lessonId} initial={myNote.data?.body ?? ""} updatedAt={myNote.data?.updated_at ?? null} />
+          <LessonNotes key={lessonId} lessonId={lessonId} initial={myNote.data?.body ?? ""} updatedAt={myNote.data?.updated_at ?? null} withVideo={video?.kind === "file"} />
 
           <LessonActions
             lessonId={lessonId}

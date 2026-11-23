@@ -6,6 +6,7 @@ import { getMyNotes, type NoteRow } from "@/lib/data/notes";
 import { EmptyState } from "@/components/ui/empty-state";
 import { LinkButton } from "@/components/ui/button";
 import { formatDate } from "@/lib/utils";
+import { splitTimestamps } from "@/lib/notes";
 
 export const metadata: Metadata = { title: "Mis notas", robots: { index: false } };
 
@@ -58,7 +59,19 @@ export default async function MyNotesPage() {
                     <Link href={`/aprender/${g.slug}/${n.lesson.id}#mis-notas`} className="shrink-0 text-sm text-electric-300 underline-offset-4 hover:underline">Ir a la lección</Link>
                   )}
                 </div>
-                <p className="mt-3 whitespace-pre-wrap break-words text-sm leading-relaxed text-mist-200">{n.body}</p>
+                <p className="mt-3 whitespace-pre-wrap break-words text-sm leading-relaxed text-mist-200">
+                  {g.slug && n.lesson?.type === "video"
+                    ? splitTimestamps(n.body).map((part, i) =>
+                        part.kind === "time" ? (
+                          <Link key={i} href={`/aprender/${g.slug}/${n.lesson!.id}?t=${part.seconds}`} className="rounded bg-electric-500/15 px-1 font-mono text-electric-200 hover:bg-electric-500/25" title="Abrir el video en este momento">
+                            {part.text}
+                          </Link>
+                        ) : (
+                          <span key={i}>{part.text}</span>
+                        ),
+                      )
+                    : n.body}
+                </p>
                 <p className="mt-3 text-xs text-mist-500">Actualizada el {formatDate(n.updated_at, { dateStyle: "medium", timeStyle: "short" })}</p>
               </li>
             ))}

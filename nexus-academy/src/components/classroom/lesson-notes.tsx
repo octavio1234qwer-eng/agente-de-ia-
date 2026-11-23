@@ -1,16 +1,49 @@
 "use client";
 import Link from "next/link";
 import { useActionState, useEffect, useRef, useState } from "react";
-import { LoaderCircle, NotebookPen, Trash2 } from "lucide-react";
+import { flushSync } from "react-dom";
+import { Clock, LoaderCircle, NotebookPen, Play, Trash2 } from "lucide-react";
 import { saveLessonNoteAction } from "@/lib/actions/learning";
-import { NOTE_MAX } from "@/lib/notes";
+import { formatTimestamp, NOTE_MAX, parseTimestamps } from "@/lib/notes";
 import { cn, formatDate } from "@/lib/utils";
 
-/** Bloc de notas privado del alumno para una lección. */
-export function LessonNotes({ lessonId, initial, updatedAt }: { lessonId: string; initial: string; updatedAt: string | null }) {
+const lessonVideo = () => document.querySelector<HTMLVideoElement>("video[data-lesson-video]");
+
+/**
+ * Bloc de notas privado del alumno para una lección. En lecciones con video
+ * propio permite insertar marcas de tiempo ([1:15]) que saltan a ese segundo.
+ */
+export function LessonNotes({ lessonId, initial, updatedAt, withVideo = false }: { lessonId: string; initial: string; updatedAt: string | null; withVideo?: boolean }) {
   const [state, formAction, pending] = useActionState(saveLessonNoteAction, null);
   const [value, setValue] = useState(initial);
   const formRef = useRef<HTMLFormElement>(null);
+  const textRef = useRef<HTMLTextAreaElement>(null);
+  const stamps = withVideo ? parseTimestamps(value) : [];
+
+  function insertTimestamp() {
+    const video = lessonVideo();
+    const el = textRef.current;
+    if (!video || !el) return;
+    const stamp = `[${formatTimestamp(video.currentTime)}] `;
+    const start = el.selectionStart ?? value.length;
+    const end = el.selectionEnd ?? start;
+    const prefix = start > 0 && value[start - 1] !== "\n" ? "\n" : "";
+    const next = value.slice(0, start) + prefix + stamp + value.slice(end);
+    // Síncrono: si el alumno sigue escribiendo justo después del clic, ninguna
+    // tecla se pierde ni cae antes de la marca.
+    flushSync(() => setValue(next));
+    const cursor = start + prefix.length + stamp.length;
+    el.focus();
+    el.setSelectionRange(cursor, cursor);
+  }
+
+  function seek(seconds: number) {
+    const video = lessonVideo();
+    if (!video) return;
+    video.currentTime = seconds;
+    video.scrollIntoView({ block: "center", behavior: "smooth" });
+    void video.play().catch(() => {});
+  }
   // Lo último que confirmó el servidor (se ajusta durante el render al llegar una respuesta).
   const [saved, setSaved] = useState(initial);
   const [seen, setSeen] = useState(state);
@@ -49,6 +82,7 @@ export function LessonNotes({ lessonId, initial, updatedAt }: { lessonId: string
         <input type="hidden" name="lesson_id" value={lessonId} />
         <label htmlFor="lesson-note" className="sr-only">Nota sobre esta lección</label>
         <textarea
+          ref={textRef}
           id="lesson-note"
           name="body"
           rows={5}
@@ -61,10 +95,28 @@ export function LessonNotes({ lessonId, initial, updatedAt }: { lessonId: string
             }
           }}
           aria-describedby="lesson-note-status"
-          placeholder="Escribe lo que quieras recordar de esta lección…"
+          placeholder={withVideo ? "Escribe lo que quieras recordar. Con «Marca de tiempo» guardas el segundo exacto del video…" : "Escribe lo que quieras recordar de esta lección…"}
           className="block w-full resize-y rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm leading-relaxed text-white placeholder:text-mist-500 focus:border-electric-400/60 focus:outline-none"
         />
+        {stamps.length > 0 && (
+          <ul aria-label="Marcas de tiempo de tu nota" className="flex flex-wrap gap-2">
+            {stamps.map((t, i) => (
+              <li key={`${t.seconds}-${i}`}>
+                <button type="button" onClick={() => seek(t.seconds)} className="inline-flex max-w-full items-center gap-1.5 rounded-lg bg-white/[0.06] px-2.5 py-1.5 text-xs text-mist-100 hover:bg-white/[0.1]" title={`Ir a ${t.label} del video`}>
+                  <Play className="size-3 shrink-0 text-electric-300" aria-hidden />
+                  <span className="font-mono tabular-nums text-white">{t.label}</span>
+                  {t.text && <span className="max-w-48 truncate text-mist-300">{t.text}</span>}
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
         <div className="flex flex-wrap items-center gap-3">
+          {withVideo && (
+            <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={insertTimestamp} className="inline-flex h-10 items-center gap-1.5 rounded-xl border border-white/10 px-3 text-sm text-mist-100 hover:bg-white/[0.06]">
+              <Clock className="size-4" aria-hidden /> Marca de tiempo
+            </button>
+          )}
           <button
             type="submit"
             disabled={pending || !dirty || tooLong}

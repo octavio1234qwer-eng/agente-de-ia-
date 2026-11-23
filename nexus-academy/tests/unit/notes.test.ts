@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { notesToMarkdown } from "@/lib/notes";
+import { formatTimestamp, notesToMarkdown, parseTimestamps, splitTimestamps } from "@/lib/notes";
 
 const fmt = (d: string | Date) => new Date(d).toISOString().slice(0, 10);
 
@@ -28,5 +28,29 @@ describe("notesToMarkdown", () => {
 
   it("explica cuando no hay notas", () => {
     expect(notesToMarkdown([], new Date(), fmt)).toContain("Todavía no tienes notas.");
+  });
+});
+
+describe("marcas de tiempo", () => {
+  it("formatea segundos como m:ss o h:mm:ss", () => {
+    expect(formatTimestamp(0)).toBe("0:00");
+    expect(formatTimestamp(75)).toBe("1:15");
+    expect(formatTimestamp(3725)).toBe("1:02:05");
+  });
+
+  it("extrae las marcas con el texto de su línea", () => {
+    const body = "Intro\n[0:05] - definición de commit\n[1:02:05] repaso final [2:00]\n[9:99] inválida";
+    expect(parseTimestamps(body)).toEqual([
+      { seconds: 5, label: "0:05", text: "definición de commit" },
+      { seconds: 3725, label: "1:02:05", text: "repaso final" },
+      { seconds: 120, label: "2:00", text: "repaso final" },
+    ]);
+  });
+
+  it("divide el texto conservándolo íntegro", () => {
+    const body = "ver [1:15] y [0:70] luego";
+    const parts = splitTimestamps(body);
+    expect(parts.map((p) => p.text).join("")).toBe(body);
+    expect(parts.filter((p) => p.kind === "time")).toEqual([{ kind: "time", text: "[1:15]", seconds: 75 }]);
   });
 });

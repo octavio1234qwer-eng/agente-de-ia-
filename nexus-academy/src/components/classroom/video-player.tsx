@@ -2,8 +2,12 @@
 import { useEffect, useRef } from "react";
 import { saveVideoPositionAction, setLessonCompleteAction } from "@/lib/actions/learning";
 
-/** Reproductor HTML5: reanuda donde te quedaste, guarda la posición y completa al 90 %. */
-export function VideoPlayer({ lessonId, src, startAt, completed, canTrack }: { lessonId: string; src: string; startAt: number; completed: boolean; canTrack: boolean }) {
+/**
+ * Reproductor HTML5: reanuda donde te quedaste, guarda la posición y completa al 90 %.
+ * Con `exactStart` (enlace con ?t=) empieza exactamente en `startAt`. Lleva
+ * `data-lesson-video` para que las notas con marca de tiempo puedan controlarlo.
+ */
+export function VideoPlayer({ lessonId, src, startAt, completed, canTrack, exactStart = false }: { lessonId: string; src: string; startAt: number; completed: boolean; canTrack: boolean; exactStart?: boolean }) {
   const ref = useRef<HTMLVideoElement>(null);
   const lastSaved = useRef(0);
   const markedDone = useRef(completed);
@@ -12,7 +16,8 @@ export function VideoPlayer({ lessonId, src, startAt, completed, canTrack }: { l
     const v = ref.current;
     if (!v) return;
     const onLoaded = () => {
-      if (startAt > 5 && startAt < v.duration - 5) v.currentTime = startAt;
+      if (exactStart) v.currentTime = Math.min(startAt, Math.max(0, v.duration - 1));
+      else if (startAt > 5 && startAt < v.duration - 5) v.currentTime = startAt;
     };
     const save = () => {
       if (!canTrack) return;
@@ -30,6 +35,8 @@ export function VideoPlayer({ lessonId, src, startAt, completed, canTrack }: { l
       if (canTrack) void saveVideoPositionAction(lessonId, Math.floor(v.currentTime));
     };
     v.addEventListener("loadedmetadata", onLoaded);
+    // Si los metadatos ya estaban cargados (caché), el evento no vuelve a llegar.
+    if (v.readyState >= HTMLMediaElement.HAVE_METADATA) onLoaded();
     v.addEventListener("timeupdate", save);
     v.addEventListener("pause", onPause);
     return () => {
@@ -37,10 +44,10 @@ export function VideoPlayer({ lessonId, src, startAt, completed, canTrack }: { l
       v.removeEventListener("timeupdate", save);
       v.removeEventListener("pause", onPause);
     };
-  }, [lessonId, startAt, canTrack]);
+  }, [lessonId, startAt, canTrack, exactStart]);
 
   return (
-    <video ref={ref} src={src} controls playsInline preload="metadata" controlsList="nodownload" className="aspect-video w-full rounded-2xl bg-black" onContextMenu={(e) => e.preventDefault()}>
+    <video ref={ref} src={src} data-lesson-video controls playsInline preload="metadata" controlsList="nodownload" className="aspect-video w-full rounded-2xl bg-black" onContextMenu={(e) => e.preventDefault()}>
       Tu navegador no puede reproducir este video.
     </video>
   );
