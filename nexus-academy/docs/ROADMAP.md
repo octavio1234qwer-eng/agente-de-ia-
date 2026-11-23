@@ -33,8 +33,10 @@ saber qué sigue. Marcar `[x]` solo cuando esté construido **y probado**.
 - [x] ESLint limpio y `next build` de producción exitoso
 - [x] README: arquitectura, pruebas y guía exacta de activación (Supabase, Vercel, Stripe, Mercado Pago, PayPal, Resend, Claude)
 
+- [x] Subida de video reanudable (TUS, bloques de 6 MB) con progreso y pausa; E2E `e2e/video-upload.mjs` 7/7 (pausa al 40 %, reanuda, 20 MB íntegros en bucket privado, URL firmada sirve el archivo)
+
 ## Siguiente (en orden)
-- [ ] Mejoras: subida de video reanudable (TUS) para archivos grandes; editor visual de Markdown; búsqueda de texto completo en lecciones
+- [ ] Mejoras: editor de Markdown con vista previa; búsqueda de texto completo en lecciones
 - [ ] Despliegue (Vercel + Supabase en la nube) — requiere cuentas/credenciales del usuario
 
 ## Ventas (agente)

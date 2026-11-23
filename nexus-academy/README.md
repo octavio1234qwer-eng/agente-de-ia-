@@ -108,6 +108,7 @@ node scripts/create-admin.mjs tu@correo.com UnaClaveSegura123
 | `node e2e/payments.mjs` | Webhook firmado → pago → acceso; repetición; firma falsa; importe alterado; cupón 100 % | 10/10 |
 | `node e2e/classroom.mjs` | Lecciones bloqueadas, vista previa, progreso, evaluación, certificado, PDF, IA sin clave | 17/17 |
 | `node e2e/admin.mjs` | Rol, curso + temario + subidas, acceso otorgado, cupón, reembolso, auditoría | 24/24 |
+| `node e2e/video-upload.mjs` | Subida reanudable de video (pausa y reanudación), bucket privado, URL firmada | 7/7 |
 | `node e2e/links.mjs` | Enlaces internos rotos | 0 |
 | `npx next build` | Build de producción | ✔ |
 
@@ -133,7 +134,7 @@ node scripts/create-admin.mjs tu@correo.com UnaClaveSegura123
 5. **Authentication → Email Templates**: copia `supabase/templates/confirmation.html` (Confirm signup) y `supabase/templates/recovery.html` (Reset password).
 6. **Authentication → Providers → Email**: activa *Confirm email*.
 7. **Authentication → SMTP**: configura Resend como SMTP (host `smtp.resend.com`, puerto 465, usuario `resend`, contraseña = tu API key) para que los correos de Supabase salgan de tu dominio.
-8. **Storage**: los buckets se crean con la migración. El límite global por archivo del plan gratuito es 50 MB; para videos grandes súbelo en *Storage → Settings* (plan Pro) o usa YouTube no listado / Vimeo desde el editor de lecciones.
+8. **Storage**: los buckets se crean con la migración. Los videos se suben en partes reanudables (TUS), pero el tamaño máximo por archivo lo fija tu plan (50 MB en el gratuito); súbelo en *Storage → Settings* (plan Pro) o usa YouTube no listado / Vimeo desde el editor de lecciones.
 9. Copia de *Project Settings → API*: URL, `anon`/publishable key y `service_role` key.
 
 ### 3.2 Vercel

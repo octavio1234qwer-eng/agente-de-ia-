@@ -47,7 +47,7 @@ export function LessonEditor({ courseId, lesson, content }: { courseId: string; 
               bucket="course-videos"
               pathPrefix={`${courseId}/${lesson.id}`}
               accept="video/mp4,video/webm,video/quicktime"
-              maxMb={50}
+              maxMb={2048}
               label="Subir video"
               onUploaded={({ path, file }) => {
                 setVideoRef(path);
@@ -61,7 +61,7 @@ export function LessonEditor({ courseId, lesson, content }: { courseId: string; 
               }}
             />
           )}
-          <p className="text-xs text-mist-400">Los archivos subidos son privados: solo los alumnos con acceso reciben un enlace firmado temporal. Después de subir, guarda la lección.</p>
+          <p className="text-xs text-mist-400">Los archivos subidos son privados: solo los alumnos con acceso reciben un enlace firmado temporal. Después de subir, guarda la lección. El tamaño máximo real depende del límite de archivo de tu plan de Supabase.</p>
         </div>
       )}
 
