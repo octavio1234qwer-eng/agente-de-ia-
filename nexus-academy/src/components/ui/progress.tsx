@@ -1,9 +1,9 @@
 import { cn } from "@/lib/utils";
 
-export function ProgressBar({ value, className }: { value: number; className?: string }) {
+export function ProgressBar({ value, className, label = "Progreso del curso" }: { value: number; className?: string; label?: string }) {
   const v = Math.max(0, Math.min(100, Math.round(value)));
   return (
-    <div className={cn("h-1.5 w-full overflow-hidden rounded-full bg-white/[0.07]", className)} role="progressbar" aria-valuenow={v} aria-valuemin={0} aria-valuemax={100}>
+    <div className={cn("h-1.5 w-full overflow-hidden rounded-full bg-white/[0.07]", className)} role="progressbar" aria-label={label} aria-valuenow={v} aria-valuemin={0} aria-valuemax={100}>
       <div className="h-full rounded-full bg-gradient-to-r from-electric-500 via-violet-500 to-cyan-400 transition-[width] duration-500" style={{ width: `${v}%` }} />
     </div>
   );

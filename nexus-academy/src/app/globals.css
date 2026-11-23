@@ -16,6 +16,8 @@
   --color-ink-700: #161a2e;
   --color-ink-600: #22284a;
   --color-ink-500: #3a4170;
+  /* Texto terciario: el tono más tenue que aún cumple contraste AA (≥ 4.5:1) sobre los fondos oscuros. */
+  --color-mist-500: #7d85aa;
   --color-mist-400: #8b93b8;
   --color-mist-300: #a9b0d0;
   --color-mist-200: #c9cee6;

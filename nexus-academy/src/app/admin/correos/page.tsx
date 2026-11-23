@@ -35,7 +35,7 @@ export default async function AdminEmails() {
               <Td className="text-xs">{formatDate(e.created_at, { dateStyle: "short", timeStyle: "short" })}</Td>
               <Td>{templateLabel[e.template] ?? e.template}</Td>
               <Td className="text-xs">{e.to_email}</Td>
-              <Td><Badge tone={e.status === "sent" ? "green" : e.status === "failed" ? "red" : "amber"}>{e.status === "sent" ? "Enviado" : e.status === "failed" ? "Falló" : "Omitido"}</Badge>{e.error && <span className="block max-w-56 truncate text-[11px] text-mist-500" title={e.error}>{e.error}</span>}</Td>
+              <Td><Badge tone={e.status === "sent" ? "green" : e.status === "failed" ? "red" : "amber"}>{e.status === "sent" ? "Enviado" : e.status === "failed" ? "Falló" : "Omitido"}</Badge>{e.error && <span className="block max-w-56 truncate text-[11px] text-mist-400" title={e.error}>{e.error}</span>}</Td>
             </tr>
           ))}
         </Table>

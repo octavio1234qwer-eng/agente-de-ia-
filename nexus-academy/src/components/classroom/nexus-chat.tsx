@@ -161,7 +161,7 @@ export function NexusChat({ lessonId, variant = "drawer", initialConversationId,
       >
         <Bot className="size-4.5" aria-hidden /> NEXUS AI
       </button>
-      <div className={cn("fixed inset-0 z-50 transition", open ? "pointer-events-auto" : "pointer-events-none")} aria-hidden={!open}>
+      <div className={cn("fixed inset-0 z-50 transition", open ? "pointer-events-auto" : "pointer-events-none")} inert={!open}>
         <button type="button" tabIndex={-1} className={cn("absolute inset-0 bg-black/50 transition-opacity", open ? "opacity-100" : "opacity-0")} onClick={() => setOpen(false)} aria-label="Cerrar" />
         <aside
           role="dialog"

@@ -52,13 +52,16 @@ saber qué sigue. Marcar `[x]` solo cuando esté construido **y probado**.
 - [x] Subtítulos para videos propios: el admin sube .vtt o .srt (conversión automática, idioma es/en/pt, auditoría), `<track>` en el aula servido desde `/api/captions/[id]` con las mismas reglas RLS que la lección, y lo que se dice en el video entra a la búsqueda; pgTAP 11/11 nuevas, E2E `e2e/video-captions.mjs` 17/17
 - [x] `scripts/dev-up.sh` reintenta el arranque de Supabase (tras reinicios del contenedor el primer intento puede fallar por un puerto ocupado)
 
+- [x] Auditoría de accesibilidad con axe-core (`npm run test:a11y`, 42/42 sin infracciones WCAG 2.1 A/AA). Corregido: nombre accesible del logo (y espacio real entre NEXUS y ACADEMY para lectores de pantalla), barras de progreso sin nombre, panel de NEXUS AI cerrado que seguía siendo enfocable (ahora `inert`), tablas del admin desplazables sin teclado (ahora región enfocable), y `text-mist-500` (17 usos) que tomaba un gris de Tailwind con contraste 4.41 → tono propio #7d85aa (≥ 4.5:1)
+- [x] `scripts/dev-up.sh`: reintenta Docker cuando containerd no arranca a tiempo y ya no dice «Entorno listo» si Supabase no responde
+
 ## Siguiente (en orden)
-- [ ] Accesibilidad: auditoría automática con axe-core (Playwright) en las páginas principales y corrección de lo que encuentre
+- [ ] Rendimiento: Lighthouse en las páginas públicas principales (Core Web Vitals) y corrección de lo que encuentre
 - [ ] Despliegue (Vercel + Supabase en la nube) — requiere cuentas/credenciales del usuario
 
 ## Ventas (agente)
-- Gumroad: 25+ productos publicados; 0 ventas desde 2026-10-01 (revisado 2026-11-23 10:55 UTC).
-- Buffer "My organization": LinkedIn, X y Pinterest. Cola programada hasta el 2026-12-01.
+- Gumroad: 25+ productos publicados; 0 ventas desde 2026-10-01 (revisado 2026-11-23 11:55 UTC).
+- Buffer "My organization": LinkedIn 6 y X 7 publicaciones programadas (revisado 2026-11-23 11:55 UTC), cola hasta el 2026-12-01. El código BLACKFRIDAY que mencionan dos publicaciones existe en Gumroad pero hoy está inactivo (se espera que se active para Black Friday).
 - Pinterest casi sin uso: oportunidad para imprimibles (lotería, planners, menú) con portada del producto.
 
 ## Bloqueado por el usuario

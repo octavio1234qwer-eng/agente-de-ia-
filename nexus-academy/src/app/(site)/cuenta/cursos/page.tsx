@@ -52,7 +52,7 @@ export default async function MyCoursesPage() {
                 {e.last_activity_at ? `Última actividad: ${formatDate(e.last_activity_at, { dateStyle: "medium" })}` : `Inscrito el ${formatDate(e.created_at, { dateStyle: "medium" })}`} · {c.lessons_count} lecciones
               </p>
               <div className="mt-3 flex items-center gap-3">
-                <ProgressBar value={e.progress_percent} className="max-w-sm" />
+                <ProgressBar value={e.progress_percent} className="max-w-sm" label={`Progreso en ${c.title}`} />
                 <span className="text-sm font-medium text-white">{e.progress_percent}%</span>
               </div>
             </div>

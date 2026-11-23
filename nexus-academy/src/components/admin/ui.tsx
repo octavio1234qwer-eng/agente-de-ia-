@@ -30,9 +30,10 @@ export function Panel({ title, subtitle, children, className, actions }: { title
   );
 }
 
-export function Table({ head, children, empty }: { head: ReactNode[]; children: ReactNode; empty?: string }) {
+export function Table({ head, children, empty, label = "Tabla de datos" }: { head: ReactNode[]; children: ReactNode; empty?: string; label?: string }) {
   return (
-    <div className="overflow-x-auto rounded-2xl border border-white/[0.06]">
+    // Enfocable para poder desplazarla con el teclado cuando es más ancha que la pantalla.
+    <div className="overflow-x-auto rounded-2xl border border-white/[0.06] focus-visible:outline-2 focus-visible:outline-electric-400" tabIndex={0} role="region" aria-label={label}>
       <table className="w-full min-w-[640px] text-left text-sm">
         <thead className="bg-white/[0.03] text-xs uppercase tracking-wider text-mist-400">
           <tr>{head.map((h, i) => <th key={i} scope="col" className="px-4 py-3 font-medium">{h}</th>)}</tr>
