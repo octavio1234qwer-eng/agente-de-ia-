@@ -98,7 +98,7 @@ export default async function LessonSearchPage({ searchParams }: { searchParams:
                   const Icon = icons[r.lesson_type];
                   return (
                     <li key={r.lesson_id}>
-                      <Link href={`/aprender/${r.course_slug}/${r.lesson_id}`} className="glass block rounded-2xl p-4 transition hover:ring-1 hover:ring-electric-400/40" data-testid="search-result">
+                      <Link href={`/aprender/${r.course_slug}/${r.lesson_id}?resaltar=${encodeURIComponent(q)}`} className="glass block rounded-2xl p-4 transition hover:ring-1 hover:ring-electric-400/40" data-testid="search-result">
                         <p className="flex items-center gap-2 text-xs text-mist-400">
                           <Icon className="size-3.5" aria-hidden /> {lessonTypeLabel[r.lesson_type]} · {r.module_title}
                         </p>

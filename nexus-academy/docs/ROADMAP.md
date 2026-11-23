@@ -39,13 +39,14 @@ saber qué sigue. Marcar `[x]` solo cuando esté construido **y probado**.
 
 - [x] Búsqueda de texto completo en lecciones (`/cuenta/buscar`, buscador en «Mis cursos» y dentro del aula): índice en español sin acentos en `lesson_contents` (protegida por RLS), `search_lessons()` solo devuelve cursos con acceso; pgTAP 16/16 nuevas, E2E `e2e/lesson-search.mjs` 22/22
 
+- [x] Al abrir una lección desde la búsqueda se resaltan las mismas palabras que encontró el índice (CSS Custom Highlight API, sin tocar el DOM de React), con aviso de coincidencias, «Volver a los resultados» y «Quitar»; E2E 29/29
+
 ## Siguiente (en orden)
-- [ ] Mejoras: al abrir una lección desde la búsqueda, resaltar el término buscado dentro de la lección
 - [ ] Mejoras: notas personales del alumno por lección (privadas, con RLS)
 - [ ] Despliegue (Vercel + Supabase en la nube) — requiere cuentas/credenciales del usuario
 
 ## Ventas (agente)
-- Gumroad: 25+ productos publicados; 0 ventas desde 2026-10-01 (revisado 2026-11-23).
+- Gumroad: 25+ productos publicados; 0 ventas desde 2026-10-01 (revisado 2026-11-23 06:55 UTC).
 - Buffer "My organization": LinkedIn, X y Pinterest. Cola programada hasta el 2026-12-01.
 - Pinterest casi sin uso: oportunidad para imprimibles (lotería, planners, menú) con portada del producto.
 

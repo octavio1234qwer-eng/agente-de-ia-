@@ -80,6 +80,37 @@ check(await page.locator("mark", { hasText: "addEventListener" }).count() >= 1, 
 await page.goto(`${BASE}/cuenta/buscar?q=${encodeURIComponent("api")}`);
 check(await page.locator('[data-testid="search-result"]', { hasText: "Promesas" }).count() >= 1, "encuentra partes de rutas («/api/cursos» → «api»)");
 
+// Al abrir un resultado, la lección resalta lo buscado (mismas raíces que el índice).
+await page.goto(`${BASE}/cuenta/buscar?q=eventos`);
+await page.locator('[data-testid="search-result"]', { hasText: "El DOM y los eventos" }).click();
+await page.waitForURL((u) => u.pathname.startsWith("/aprender/javascript-moderno/") && u.searchParams.get("resaltar") === "eventos", { timeout: 20000 });
+await page.waitForSelector("[data-search-banner]:has-text('coincidencia')", { timeout: 15000 });
+const highlighted = await page.evaluate(() => [...(CSS.highlights.get("nexus-search") ?? [])].map((r) => r.toString()));
+check(highlighted.length >= 2, `la lección resalta las coincidencias (${highlighted.length})`);
+check(highlighted.every((t) => /^event/i.test(t)), `solo resalta palabras de la búsqueda (${[...new Set(highlighted)].join(", ")})`);
+check(await page.isVisible(`[data-search-banner]:has-text("${highlighted.length} coincidencias")`), "el aviso indica cuántas coincidencias hay");
+const styled = await page.evaluate(() => [...document.styleSheets].some((sh) => { try { return [...sh.cssRules].some((r) => r.cssText.includes("highlight(nexus-search)")); } catch { return false; } }));
+check(styled, "la regla de color del resaltado está cargada en la página");
+const lessonUrl = new URL(page.url());
+lessonUrl.searchParams.set("resaltar", "suscribir");
+await page.goto(lessonUrl.toString());
+await page.waitForSelector("[data-search-banner]:has-text('coincidencia')", { timeout: 15000 });
+const variants = await page.evaluate(() => [...(CSS.highlights.get("nexus-search") ?? [])].map((r) => r.toString()));
+check(variants.includes("suscribir") && variants.includes("suscribirte"), `resalta variantes de la palabra (${[...new Set(variants)].join(", ")})`);
+await page.screenshot({ path: process.env.E2E_SHOT_LESSON ?? "/tmp/lesson-highlight.png" });
+lessonUrl.searchParams.set("resaltar", "eventos");
+await page.goto(lessonUrl.toString());
+await page.waitForSelector("[data-search-banner]:has-text('coincidencia')", { timeout: 15000 });
+await page.click("[data-search-banner] >> text=Quitar");
+await page.waitForURL((u) => !u.searchParams.has("resaltar"), { timeout: 15000 });
+await page.waitForTimeout(300);
+check(!(await page.isVisible("[data-search-banner]")) && (await page.evaluate(() => CSS.highlights.has("nexus-search"))) === false, "«Quitar» elimina el resaltado");
+await page.goBack();
+await page.waitForSelector("[data-search-banner]", { timeout: 15000 });
+await page.click("[data-search-banner] >> text=Volver a los resultados");
+await page.waitForURL((u) => u.pathname === "/cuenta/buscar" && u.searchParams.get("q") === "eventos", { timeout: 15000 });
+check(true, "«Volver a los resultados» regresa a la búsqueda");
+
 // Entradas raras no rompen nada.
 await page.goto(`${BASE}/cuenta/buscar?q=${encodeURIComponent("!!! & | :* ()")}`);
 check(await page.isVisible("text=Sin resultados"), "operadores y símbolos sueltos no generan errores");

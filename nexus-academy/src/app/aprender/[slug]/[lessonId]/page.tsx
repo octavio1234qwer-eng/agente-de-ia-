@@ -9,6 +9,8 @@ import { VideoPlayer } from "@/components/classroom/video-player";
 import { LessonActions } from "@/components/classroom/lesson-actions";
 import { QuizRunner } from "@/components/classroom/quiz-runner";
 import { NexusChat } from "@/components/classroom/nexus-chat";
+import { SearchHighlight } from "@/components/classroom/search-highlight";
+import { normalizeQuery } from "@/lib/search";
 import { ReviewForm } from "@/components/course/review-form";
 import { Markdown } from "@/components/ui/markdown";
 import { LinkButton } from "@/components/ui/button";
@@ -27,8 +29,10 @@ function formatBytes(n: number | null) {
   return n > 1_048_576 ? `${(n / 1_048_576).toFixed(1)} MB` : `${Math.ceil(n / 1024)} KB`;
 }
 
-export default async function LessonPage({ params }: { params: Promise<Params> }) {
+export default async function LessonPage({ params, searchParams }: { params: Promise<Params>; searchParams: Promise<{ resaltar?: string | string[] }> }) {
   const { slug, lessonId } = await params;
+  const sp = await searchParams;
+  const highlightQuery = normalizeQuery(Array.isArray(sp.resaltar) ? sp.resaltar[0] : sp.resaltar);
   const user = await requireUser(`/aprender/${slug}/${lessonId}`);
   const data = await getClassroom(slug, user.id);
   if (!data) notFound();
@@ -67,7 +71,30 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
   const questions = (quizRes.data ?? []).map((q) => ({ id: q.id, prompt: q.prompt, options: (q.options as string[]) ?? [] }));
   const startAt = data.progress.get(lessonId)?.last_position_seconds ?? 0;
   const isLast = !next;
+  const { data: highlightTerms } = highlightQuery.length >= 2 ? await supabase.rpc("lesson_search_terms", { p_q: highlightQuery }) : { data: null };
   const courseDone = data.flat.every((l) => l.completed);
+
+  const lessonHeader = (
+    <div>
+      <div className="flex flex-wrap items-center gap-2 text-xs text-mist-400">
+        <span>{moduleOf.title}</span>
+        <span aria-hidden>·</span>
+        <Badge tone={lesson.type === "quiz" ? "violet" : lesson.type === "exercise" ? "amber" : "blue"}>{lessonTypeLabel[lesson.type]}</Badge>
+        <span>{formatSeconds(lesson.duration_seconds)}</span>
+        {lesson.is_preview && !data.hasAccess && <Badge tone="green">Vista previa gratuita</Badge>}
+      </div>
+      <h1 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-3xl">{lesson.title}</h1>
+    </div>
+  );
+  const lessonBody = lesson.type === "quiz" ? (
+    questions.length > 0 ? (
+      <QuizRunner lessonId={lessonId} questions={questions} passPercent={passMeta?.pass_percent ?? 70} alreadyPassed={lesson.completed} canSubmit={canTrack} />
+    ) : (
+      <p className="text-sm text-mist-400">Esta evaluación todavía no tiene preguntas.</p>
+    )
+  ) : content?.body ? (
+    <Markdown>{content.body}</Markdown>
+  ) : null;
 
   return (
     <div className="flex flex-1">
@@ -90,26 +117,17 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
             )
           )}
 
-          <div>
-            <div className="flex flex-wrap items-center gap-2 text-xs text-mist-400">
-              <span>{moduleOf.title}</span>
-              <span aria-hidden>·</span>
-              <Badge tone={lesson.type === "quiz" ? "violet" : lesson.type === "exercise" ? "amber" : "blue"}>{lessonTypeLabel[lesson.type]}</Badge>
-              <span>{formatSeconds(lesson.duration_seconds)}</span>
-              {lesson.is_preview && !data.hasAccess && <Badge tone="green">Vista previa gratuita</Badge>}
-            </div>
-            <h1 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-3xl">{lesson.title}</h1>
-          </div>
-
-          {lesson.type === "quiz" ? (
-            questions.length > 0 ? (
-              <QuizRunner lessonId={lessonId} questions={questions} passPercent={passMeta?.pass_percent ?? 70} alreadyPassed={lesson.completed} canSubmit={canTrack} />
-            ) : (
-              <p className="text-sm text-mist-400">Esta evaluación todavía no tiene preguntas.</p>
-            )
-          ) : content?.body ? (
-            <Markdown>{content.body}</Markdown>
-          ) : null}
+          {highlightTerms && highlightTerms.length > 0 ? (
+            <SearchHighlight key={`${lessonId}:${highlightQuery}`} query={highlightQuery} terms={highlightTerms} clearHref={`/aprender/${slug}/${lessonId}`}>
+              {lessonHeader}
+              {lessonBody}
+            </SearchHighlight>
+          ) : (
+            <>
+              {lessonHeader}
+              {lessonBody}
+            </>
+          )}
 
           {resources.length > 0 && (
             <section className="glass rounded-2xl p-5" aria-labelledby="recursos">

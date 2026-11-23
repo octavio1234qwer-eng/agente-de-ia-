@@ -829,6 +829,9 @@ isOneToOne: false
 "lesson_search_query":
 { Args: { "p_q": string }; Returns: unknown
                            },
+"lesson_search_terms":
+{ Args: { "p_q": string }; Returns: (string)[]
+                           },
 "lesson_search_text":
 { Args: { "p": string }; Returns: string
                            },

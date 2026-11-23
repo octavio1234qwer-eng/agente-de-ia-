@@ -102,15 +102,15 @@ node scripts/create-admin.mjs tu@correo.com UnaClaveSegura123
 |---|---|---|
 | `npm run typecheck` | TypeScript estricto | ✔ |
 | `npx eslint .` | Lint | ✔ |
-| `npm test` | 22 unitarias: precios, cupones, firmas de Stripe y Mercado Pago, fragmentos de búsqueda | 22/22 |
-| `npm run test:db` | 62 pgTAP: RLS, roles, pagos idempotentes, reembolsos, certificados, búsqueda solo en cursos con acceso | 62/62 |
+| `npm test` | 26 unitarias: precios, cupones, firmas de Stripe y Mercado Pago, fragmentos y resaltado de búsqueda | 26/26 |
+| `npm run test:db` | 65 pgTAP: RLS, roles, pagos idempotentes, reembolsos, certificados, búsqueda solo en cursos con acceso | 65/65 |
 | `node e2e/auth-account.mjs` | Registro, inscripción, favoritos, perfil, sesión, recuperación por correo | ✔ |
 | `node e2e/payments.mjs` | Webhook firmado → pago → acceso; repetición; firma falsa; importe alterado; cupón 100 % | 10/10 |
 | `node e2e/classroom.mjs` | Lecciones bloqueadas, vista previa, progreso, evaluación, certificado, PDF, IA sin clave | 17/17 |
 | `node e2e/admin.mjs` | Rol, curso + temario + subidas, acceso otorgado, cupón, reembolso, auditoría | 24/24 |
 | `node e2e/video-upload.mjs` | Subida reanudable de video (pausa y reanudación), bucket privado, URL firmada | 7/7 |
 | `node e2e/markdown-editor.mjs` | Editor con barra de formato y vista previa, sin XSS, mismo render en el aula | 8/8 |
-| `node e2e/lesson-search.mjs` | Búsqueda en lecciones: raíz en español, sin acentos, por prefijo, identificadores de código, nada de cursos no comprados, móvil | 22/22 |
+| `node e2e/lesson-search.mjs` | Búsqueda en lecciones: raíz en español, sin acentos, por prefijo, identificadores de código, nada de cursos no comprados, resaltado dentro de la lección, móvil | 29/29 |
 | `node e2e/links.mjs` | Enlaces internos rotos | 0 |
 | `npx next build` | Build de producción | ✔ |
 

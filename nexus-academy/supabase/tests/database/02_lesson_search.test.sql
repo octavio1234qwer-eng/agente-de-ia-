@@ -2,7 +2,7 @@
 -- los que el alumno tiene acceso. Ejecutar: npx supabase test db
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(16);
+select plan(19);
 
 insert into auth.users (id, email, raw_user_meta_data, aud, role)
 values
@@ -29,10 +29,15 @@ select is(public.lesson_search_query('!!! & | :* ()'), null::tsquery,
 select is(public.lesson_search_query('Función'), 'funcion:*'::tsquery,
   'La consulta ignora acentos y busca por prefijo');
 
+select is(public.lesson_search_terms('Los eventos del DOM'), array['dom', 'event'],
+  'Las raíces para resaltar salen del mismo analizador que el índice');
+select is(public.lesson_search_terms('de la'), '{}'::text[], 'Solo palabras vacías: nada que resaltar');
+
 -- Anónimo ----------------------------------------------------------------------
 set local role anon;
 set local request.jwt.claims to '{"role":"anon"}';
 select throws_ok($$select * from public.search_lessons('git')$$, '42501', null, 'Un visitante anónimo no puede buscar');
+select throws_ok($$select public.lesson_search_terms('git')$$, '42501', null, 'Un visitante anónimo no usa el resaltado');
 reset role;
 
 -- Carla sin cursos ---------------------------------------------------------------

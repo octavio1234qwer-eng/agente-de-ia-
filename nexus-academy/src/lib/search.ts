@@ -56,3 +56,24 @@ export function parseSnippet(raw: string): SnippetPart[] {
 export function normalizeQuery(q: unknown): string {
   return typeof q === "string" ? q.replace(/\s+/g, " ").trim().slice(0, 120) : "";
 }
+
+/** Minúsculas y sin acentos (equivale a lower + unaccent de la base de datos). */
+export function foldText(s: string): string {
+  return s.normalize("NFD").replace(/\p{M}+/gu, "").toLowerCase();
+}
+
+/**
+ * Posiciones [inicio, fin) de las palabras de `text` que empiezan con alguna de
+ * las raíces de búsqueda (ya sin acentos y en minúsculas). Las palabras se
+ * separan igual que en Postgres: cualquier carácter que no sea letra o número.
+ */
+export function matchWords(text: string, terms: string[]): Array<[number, number]> {
+  const stems = terms.map(foldText).filter((t) => t.length >= 2);
+  if (stems.length === 0) return [];
+  const out: Array<[number, number]> = [];
+  for (const m of text.matchAll(/[\p{L}\p{N}]+/gu)) {
+    const word = foldText(m[0]);
+    if (stems.some((s) => word.startsWith(s))) out.push([m.index, m.index + m[0].length]);
+  }
+  return out;
+}

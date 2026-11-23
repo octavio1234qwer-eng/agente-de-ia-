@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { normalizeQuery, parseSnippet } from "@/lib/search";
+import { matchWords, normalizeQuery, parseSnippet } from "@/lib/search";
 
 describe("parseSnippet", () => {
   it("separa las coincidencias resaltadas del resto del texto", () => {
@@ -38,5 +38,27 @@ describe("normalizeQuery", () => {
     expect(normalizeQuery("x".repeat(300))).toHaveLength(120);
     expect(normalizeQuery(undefined)).toBe("");
     expect(normalizeQuery(["a"])).toBe("");
+  });
+});
+
+describe("matchWords", () => {
+  it("resalta palabras completas que empiezan con la raíz, sin importar acentos ni mayúsculas", () => {
+    const text = "Los Eventos del DOM: un evento dispara la función. boton.addEventListener(\"click\")";
+    const hits = matchWords(text, ["event", "funcion", "addeventlisten"]).map(([a, b]) => text.slice(a, b));
+    expect(hits).toEqual(["Eventos", "evento", "función", "addEventListener"]);
+  });
+
+  it("separa por cualquier símbolo, como el índice (rutas y guiones)", () => {
+    const text = "fetch(\"/api/cursos\") en mejora-navegacion";
+    expect(matchWords(text, ["api", "naveg"]).map(([a, b]) => text.slice(a, b))).toEqual(["api", "navegacion"]);
+  });
+
+  it("ignora raíces de una letra y listas vacías", () => {
+    expect(matchWords("a b c", ["a"])).toEqual([]);
+    expect(matchWords("algo", [])).toEqual([]);
+  });
+
+  it("la ñ equivale a n, como unaccent", () => {
+    expect(matchWords("El año del ñandú", ["nandu", "ano"]).length).toBe(2);
   });
 });
