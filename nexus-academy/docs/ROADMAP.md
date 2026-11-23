@@ -60,13 +60,15 @@ saber qué sigue. Marcar `[x]` solo cuando esté construido **y probado**.
 
 - [x] SEO: `robots.txt` (bloquea admin, cuenta, aula, NEXUS AI, API, checkout y autenticación; deja leer certificados para las vistas previas de LinkedIn) y `sitemap.xml` (páginas públicas + cursos y paquetes publicados vía clave pública, se regenera cada hora); JSON-LD de organización y buscador del catálogo en la portada. E2E `e2e/seo.mjs` 22/22 (detectó que `/nexus-ai` exige sesión y se sacó del sitemap)
 
+- [x] Admin: exportar pedidos (con RFC/razón social, artículos, importes, neto y referencia de pago) y alumnos (inscripciones, completados, certificados, total pagado) a CSV, con filtros de fecha (hora CDMX, inclusivos) y estado; BOM UTF-8 para Excel, protección contra inyección de fórmulas, solo admin y cada descarga auditada. E2E `e2e/admin-export.mjs` 19/19
+
 ## Siguiente (en orden)
-- [ ] Admin: exportar pedidos y alumnos a CSV (para contabilidad), con filtro de fechas
+- [ ] Admin: reporte de ingresos por curso (unidades, bruto, descuentos, reembolsos, neto) con filtro de fechas y exportación CSV
 - [ ] Despliegue (Vercel + Supabase en la nube) — requiere cuentas/credenciales del usuario
 
 ## Ventas (agente)
-- Gumroad: 25+ productos publicados; 0 ventas desde 2026-10-01 (revisado 2026-11-23 13:55 UTC).
-- Buffer "My organization": LinkedIn 6 y X 7 publicaciones programadas (revisado 2026-11-23 13:55 UTC), cola hasta el 2026-12-01. El código BLACKFRIDAY que mencionan dos publicaciones existe en Gumroad pero hoy está inactivo (se espera que se active para Black Friday).
+- Gumroad: 25+ productos publicados; 0 ventas desde 2026-10-01 (revisado 2026-11-23 14:55 UTC).
+- Buffer "My organization": LinkedIn 6 y X 7 publicaciones programadas (revisado 2026-11-23 14:55 UTC), cola hasta el 2026-12-01. El código BLACKFRIDAY que mencionan dos publicaciones existe en Gumroad pero hoy está inactivo (se espera que se active para Black Friday).
 - Pinterest casi sin uso: oportunidad para imprimibles (lotería, planners, menú) con portada del producto.
 
 ## Bloqueado por el usuario

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ExportForm } from "@/components/admin/export-form";
 import Link from "next/link";
 import { requireAdmin } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
@@ -23,6 +24,7 @@ export default async function AdminOrders({ searchParams }: { searchParams: Prom
   return (
     <>
       <AdminHeader title="Pedidos" description="Compras, estado de pago y reembolsos. Los importes se confirman solo por webhooks verificados." />
+      <ExportForm kind="pedidos" statuses={statuses} />
       <form className="mb-4 flex flex-wrap gap-2" role="search">
         <input name="q" defaultValue={term} placeholder="Número de pedido o correo" aria-label="Buscar pedidos" className="h-10 w-full max-w-xs rounded-xl border border-white/10 bg-white/[0.03] px-3 text-sm text-white placeholder:text-mist-500 focus:outline-none" />
         <select name="estado" defaultValue={status ?? ""} aria-label="Estado" className="h-10 rounded-xl border border-white/10 bg-ink-850 px-3 text-sm text-white">

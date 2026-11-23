@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ExportForm } from "@/components/admin/export-form";
 import Link from "next/link";
 import { requireAdmin } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
@@ -22,6 +23,7 @@ export default async function AdminStudents({ searchParams }: { searchParams: Pr
   return (
     <>
       <AdminHeader title="Alumnos" description={`${count ?? 0} usuarios registrados`} />
+      <ExportForm kind="alumnos" />
       <form className="mb-4 flex gap-2" role="search">
         <input name="q" defaultValue={term} placeholder="Buscar por nombre o correo" aria-label="Buscar alumnos" className="h-10 w-full max-w-sm rounded-xl border border-white/10 bg-white/[0.03] px-3 text-sm text-white placeholder:text-mist-500 focus:outline-none" />
         <button className="h-10 rounded-xl bg-white/[0.06] px-4 text-sm text-white hover:bg-white/[0.1]">Buscar</button>
