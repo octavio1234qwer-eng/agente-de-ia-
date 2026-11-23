@@ -7,6 +7,7 @@ import { createClient } from "@/lib/supabase/server";
 import { AdminHeader, Panel } from "@/components/admin/ui";
 import { LessonEditor } from "@/components/admin/lesson-editor";
 import { ResourceUploader } from "@/components/admin/resource-uploader";
+import { CaptionsForm } from "@/components/admin/captions-form";
 import { ActionForm } from "@/components/admin/action-form";
 import { ConfirmButton } from "@/components/admin/confirm-button";
 import { deleteLessonAction, deleteQuestionAction, deleteResourceAction, saveQuestionAction, toggleResourceDownloadAction } from "@/lib/actions/admin";
@@ -20,7 +21,7 @@ export default async function EditLesson({ params }: { params: Promise<{ id: str
   const supabase = await createClient();
   const [{ data: lesson }, { data: content }, { data: resources }, { data: questions }, { data: course }] = await Promise.all([
     supabase.from("lessons").select("*").eq("id", lessonId).eq("course_id", id).maybeSingle(),
-    supabase.from("lesson_contents").select("body, video_provider, video_ref").eq("lesson_id", lessonId).maybeSingle(),
+    supabase.from("lesson_contents").select("body, video_provider, video_ref, has_captions, captions_lang").eq("lesson_id", lessonId).maybeSingle(),
     supabase.from("lesson_resources").select("*").eq("lesson_id", lessonId).order("created_at"),
     supabase.from("quiz_questions").select("*").eq("lesson_id", lessonId).order("position"),
     supabase.from("courses").select("title, slug").eq("id", id).single(),
@@ -54,6 +55,12 @@ export default async function EditLesson({ params }: { params: Promise<{ id: str
             </ul>
             <ResourceUploader courseId={id} lessonId={lessonId} />
           </Panel>
+
+          {lesson.type === "video" && (
+            <Panel title="Subtítulos" subtitle="Se muestran en el reproductor y lo que se dice en el video se puede buscar. Mismo acceso que la lección.">
+              <CaptionsForm lessonId={lessonId} hasCaptions={Boolean(content?.has_captions)} lang={content?.captions_lang ?? "es"} provider={content?.video_provider ?? null} />
+            </Panel>
+          )}
 
           {lesson.type === "quiz" && (
             <Panel title="Preguntas de la evaluación" subtitle="Las respuestas correctas nunca se envían al navegador del alumno.">

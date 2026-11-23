@@ -7,7 +7,7 @@ import { saveVideoPositionAction, setLessonCompleteAction } from "@/lib/actions/
  * Con `exactStart` (enlace con ?t=) empieza exactamente en `startAt`. Lleva
  * `data-lesson-video` para que las notas con marca de tiempo puedan controlarlo.
  */
-export function VideoPlayer({ lessonId, src, startAt, completed, canTrack, exactStart = false }: { lessonId: string; src: string; startAt: number; completed: boolean; canTrack: boolean; exactStart?: boolean }) {
+export function VideoPlayer({ lessonId, src, startAt, completed, canTrack, exactStart = false, captions }: { lessonId: string; src: string; startAt: number; completed: boolean; canTrack: boolean; exactStart?: boolean; captions?: { src: string; lang: string; label: string } | null }) {
   const ref = useRef<HTMLVideoElement>(null);
   const lastSaved = useRef(0);
   const markedDone = useRef(completed);
@@ -48,6 +48,7 @@ export function VideoPlayer({ lessonId, src, startAt, completed, canTrack, exact
 
   return (
     <video ref={ref} src={src} data-lesson-video controls playsInline preload="metadata" controlsList="nodownload" className="aspect-video w-full rounded-2xl bg-black" onContextMenu={(e) => e.preventDefault()}>
+      {captions && <track kind="subtitles" src={captions.src} srcLang={captions.lang} label={captions.label} default />}
       Tu navegador no puede reproducir este video.
     </video>
   );

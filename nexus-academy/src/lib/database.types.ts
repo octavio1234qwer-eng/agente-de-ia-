@@ -411,14 +411,14 @@ isOneToOne: true
                   ]
                 },"lesson_contents": {
                   Row: {
-                    "body": string,"course_id": string,"lesson_id": string,"search_vector": unknown,"updated_at": string,"video_provider": Database["public"]['Enums']["video_provider"] | null,"video_ref": string | null
+                    "body": string,"captions_lang": string,"captions_vtt": string | null,"course_id": string,"has_captions": boolean | null,"lesson_id": string,"search_vector": unknown,"updated_at": string,"video_provider": Database["public"]['Enums']["video_provider"] | null,"video_ref": string | null
                   }
                   ComputedFields: never
                   Insert: {
-                    "body"?: string,"course_id": string,"lesson_id": string,"search_vector"?: unknown,"updated_at"?: string,"video_provider"?: Database["public"]['Enums']["video_provider"] | null,"video_ref"?: string | null
+                    "body"?: string,"captions_lang"?: string,"captions_vtt"?: string | null,"course_id": string,"has_captions"?: never,"lesson_id": string,"search_vector"?: unknown,"updated_at"?: string,"video_provider"?: Database["public"]['Enums']["video_provider"] | null,"video_ref"?: string | null
                   }
                   Update: {
-                    "body"?: string,"course_id"?: string,"lesson_id"?: string,"search_vector"?: unknown,"updated_at"?: string,"video_provider"?: Database["public"]['Enums']["video_provider"] | null,"video_ref"?: string | null
+                    "body"?: string,"captions_lang"?: string,"captions_vtt"?: string | null,"course_id"?: string,"has_captions"?: never,"lesson_id"?: string,"search_vector"?: unknown,"updated_at"?: string,"video_provider"?: Database["public"]['Enums']["video_provider"] | null,"video_ref"?: string | null
                   }
                   Relationships: [
                     {
@@ -855,8 +855,11 @@ isOneToOne: false
 "issue_certificate":
 { Args: { "p_completed_at": string,"p_course_id": string,"p_user_id": string }; Returns: undefined
                            },
+"lesson_captions_text":
+{ Args: { "p_vtt": string }; Returns: string
+                           },
 "lesson_search_document":
-{ Args: { "p_body": string,"p_summary": string,"p_title": string }; Returns: unknown
+{ Args: { "p_body": string,"p_captions": string,"p_summary": string,"p_title": string }; Returns: unknown
                            },
 "lesson_search_query":
 { Args: { "p_q": string }; Returns: unknown

@@ -49,12 +49,15 @@ saber qué sigue. Marcar `[x]` solo cuando esté construido **y probado**.
 - [x] Certificados en LinkedIn: «Agregar a LinkedIn» (formulario oficial add-to-profile prellenado: curso, NEXUS ACADEMY, año/mes de emisión, URL de verificación) y «Compartir»; página pública con Open Graph y tarjeta PNG 1200×630 generada; revocados excluidos; E2E `e2e/certificate-linkedin.mjs` 17/17
   - Nota: la página oficial addtoprofile.linkedin.com bloquea lectura automática (403); se usan solo parámetros confirmados por varias fuentes (`certId` se omitió por no estar confirmado; el ID va en la URL de verificación)
 
+- [x] Subtítulos para videos propios: el admin sube .vtt o .srt (conversión automática, idioma es/en/pt, auditoría), `<track>` en el aula servido desde `/api/captions/[id]` con las mismas reglas RLS que la lección, y lo que se dice en el video entra a la búsqueda; pgTAP 11/11 nuevas, E2E `e2e/video-captions.mjs` 17/17
+- [x] `scripts/dev-up.sh` reintenta el arranque de Supabase (tras reinicios del contenedor el primer intento puede fallar por un puerto ocupado)
+
 ## Siguiente (en orden)
-- [ ] Accesibilidad: subtítulos WebVTT para videos propios (subida en el admin, `<track>` en el aula)
+- [ ] Accesibilidad: auditoría automática con axe-core (Playwright) en las páginas principales y corrección de lo que encuentre
 - [ ] Despliegue (Vercel + Supabase en la nube) — requiere cuentas/credenciales del usuario
 
 ## Ventas (agente)
-- Gumroad: 25+ productos publicados; 0 ventas desde 2026-10-01 (revisado 2026-11-23 09:55 UTC).
+- Gumroad: 25+ productos publicados; 0 ventas desde 2026-10-01 (revisado 2026-11-23 10:55 UTC).
 - Buffer "My organization": LinkedIn, X y Pinterest. Cola programada hasta el 2026-12-01.
 - Pinterest casi sin uso: oportunidad para imprimibles (lotería, planners, menú) con portada del producto.
 

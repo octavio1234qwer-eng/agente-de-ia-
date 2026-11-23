@@ -52,7 +52,7 @@ export const getClassroom = cache(async (slug: string, userId: string | null) =>
 export async function getLessonContent(lessonId: string) {
   const supabase = await createClient();
   const [{ data: content }, { data: resources }] = await Promise.all([
-    supabase.from("lesson_contents").select("body, video_provider, video_ref").eq("lesson_id", lessonId).maybeSingle(),
+    supabase.from("lesson_contents").select("body, video_provider, video_ref, has_captions, captions_lang").eq("lesson_id", lessonId).maybeSingle(),
     supabase.from("lesson_resources").select("id, title, mime_type, size_bytes, is_downloadable").eq("lesson_id", lessonId).order("created_at"),
   ]);
   return { content, resources: resources ?? [] };

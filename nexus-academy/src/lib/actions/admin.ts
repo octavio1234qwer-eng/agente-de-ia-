@@ -13,6 +13,7 @@ import { refundMercadoPagoPayment } from "@/lib/payments/mercadopago";
 import { refundPayPalCapture } from "@/lib/payments/paypal";
 import { recordRefund } from "@/lib/commerce/fulfillment";
 import type { ActionState } from "./types";
+import { CAPTION_LANGS, CAPTIONS_MAX_CHARS, normalizeCaptions, type CaptionLang } from "@/lib/captions";
 import type { Json } from "@/lib/database.types";
 
 const uuid = z.uuid();
@@ -598,4 +599,42 @@ export async function sendCampaignAction(_prev: ActionState, formData: FormData)
   await audit(actor.id, "send_campaign", "email", id, { subject: parsed.data.subject, ...r });
   revalidatePath("/admin/correos");
   return { success: `Campaña enviada: ${r.sent} enviados, ${r.failed} fallidos, ${r.duplicate} duplicados omitidos.` };
+}
+
+
+/* ------------------------------ Subtítulos ------------------------------ */
+
+/** Carga (convierte .srt → WebVTT) o quita los subtítulos de una lección de video. */
+export async function saveLessonCaptionsAction(_prev: ActionState, formData: FormData): Promise<ActionState> {
+  const actor = await assertAdmin();
+  const lessonId = String(formData.get("lesson_id") ?? "");
+  if (!uuid.safeParse(lessonId).success) return { error: "Lección inválida." };
+  const supabase = await createClient();
+  const { data: lesson } = await supabase.from("lessons").select("course_id, type").eq("id", lessonId).maybeSingle();
+  if (!lesson) return { error: "Lección no encontrada." };
+  if (lesson.type !== "video") return { error: "Los subtítulos solo aplican a lecciones de video." };
+
+  if (formData.get("intent") === "delete") {
+    const { error } = await supabase.from("lesson_contents").update({ captions_vtt: null }).eq("lesson_id", lessonId);
+    if (error) return { error: friendly(error, "No se pudieron quitar los subtítulos") };
+    await audit(actor.id, "delete", "lesson_captions", lessonId);
+    revalidatePath(`/admin/cursos/${lesson.course_id}/lecciones/${lessonId}`);
+    return { success: "Subtítulos quitados." };
+  }
+
+  const file = formData.get("file");
+  if (!(file instanceof File) || file.size === 0) return { error: "Elige un archivo .vtt o .srt." };
+  if (file.size > CAPTIONS_MAX_CHARS * 2) return { error: "El archivo de subtítulos es demasiado grande (máximo 500 KB)." };
+  const lang = String(formData.get("lang") ?? "es");
+  if (!(lang in CAPTION_LANGS)) return { error: "Idioma no válido." };
+  const result = normalizeCaptions(await file.text());
+  if ("error" in result) return { error: result.error };
+  const { error } = await supabase
+    .from("lesson_contents")
+    .update({ captions_vtt: result.vtt, captions_lang: lang as CaptionLang })
+    .eq("lesson_id", lessonId);
+  if (error) return { error: friendly(error, "No se pudieron guardar los subtítulos") };
+  await audit(actor.id, "update", "lesson_captions", lessonId, { cues: result.cues, lang });
+  revalidatePath(`/admin/cursos/${lesson.course_id}/lecciones/${lessonId}`);
+  return { success: `Subtítulos guardados (${result.cues} ${result.cues === 1 ? "fragmento" : "fragmentos"}).` };
 }

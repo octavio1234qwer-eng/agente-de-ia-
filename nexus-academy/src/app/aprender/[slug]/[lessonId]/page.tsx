@@ -12,6 +12,7 @@ import { NexusChat } from "@/components/classroom/nexus-chat";
 import { SearchHighlight } from "@/components/classroom/search-highlight";
 import { LessonNotes } from "@/components/classroom/lesson-notes";
 import { normalizeQuery } from "@/lib/search";
+import { CAPTION_LANGS } from "@/lib/captions";
 import { ReviewForm } from "@/components/course/review-form";
 import { Markdown } from "@/components/ui/markdown";
 import { LinkButton } from "@/components/ui/button";
@@ -109,7 +110,7 @@ export default async function LessonPage({ params, searchParams }: { params: Pro
           {lesson.type === "video" && (
             video ? (
               video.kind === "file" ? (
-                <VideoPlayer lessonId={lessonId} src={video.src} startAt={startAt} exactStart={jumpTo !== null} completed={lesson.completed} canTrack={canTrack} />
+                <VideoPlayer lessonId={lessonId} src={video.src} startAt={startAt} exactStart={jumpTo !== null} completed={lesson.completed} canTrack={canTrack} captions={content?.has_captions ? { src: `/api/captions/${lessonId}`, lang: content.captions_lang, label: CAPTION_LANGS[content.captions_lang as keyof typeof CAPTION_LANGS] ?? content.captions_lang } : null} />
               ) : (
                 <div className="aspect-video overflow-hidden rounded-2xl bg-black">
                   <iframe src={video.src} title={lesson.title} className="size-full" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowFullScreen referrerPolicy="strict-origin-when-cross-origin" />

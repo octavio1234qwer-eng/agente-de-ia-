@@ -9,7 +9,15 @@ if ! docker info >/dev/null 2>&1; then
   for _ in $(seq 1 30); do docker info >/dev/null 2>&1 && break; sleep 1; done
 fi
 
-npx supabase start -x studio,edge-runtime,logflare,vector,realtime,imgproxy,postgres-meta,supavisor >/tmp/supabase-start.log 2>&1 || true
+# Tras reiniciar el contenedor, el primer arranque puede fallar porque un puerto
+# aún no se libera; se reintenta unas veces.
+for attempt in 1 2 3; do
+  if npx supabase start -x studio,edge-runtime,logflare,vector,realtime,imgproxy,postgres-meta,supavisor >/tmp/supabase-start.log 2>&1; then
+    break
+  fi
+  echo "supabase start falló (intento $attempt); reintentando…" >&2
+  sleep 5
+done
 for _ in $(seq 1 60); do
   code=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:54321/rest/v1/ -H "apikey: x" || true)
   [[ "$code" == "200" || "$code" == "401" ]] && break

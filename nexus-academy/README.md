@@ -102,8 +102,8 @@ node scripts/create-admin.mjs tu@correo.com UnaClaveSegura123
 |---|---|---|
 | `npm run typecheck` | TypeScript estricto | ✔ |
 | `npx eslint .` | Lint | ✔ |
-| `npm test` | 35 unitarias: precios, cupones, firmas de Stripe y Mercado Pago, búsqueda, notas, marcas de tiempo, enlaces de LinkedIn | 35/35 |
-| `npm run test:db` | 79 pgTAP: RLS, roles, pagos idempotentes, reembolsos, certificados, búsqueda solo en cursos con acceso, notas privadas | 79/79 |
+| `npm test` | 38 unitarias: precios, cupones, firmas de Stripe y Mercado Pago, búsqueda, notas, marcas de tiempo, LinkedIn, subtítulos SRT→VTT | 38/38 |
+| `npm run test:db` | 90 pgTAP: RLS, roles, pagos idempotentes, reembolsos, certificados, búsqueda solo en cursos con acceso, notas privadas, subtítulos | 90/90 |
 | `node e2e/auth-account.mjs` | Registro, inscripción, favoritos, perfil, sesión, recuperación por correo | ✔ |
 | `node e2e/payments.mjs` | Webhook firmado → pago → acceso; repetición; firma falsa; importe alterado; cupón 100 % | 10/10 |
 | `node e2e/classroom.mjs` | Lecciones bloqueadas, vista previa, progreso, evaluación, certificado, PDF, IA sin clave | 17/17 |
@@ -114,6 +114,7 @@ node scripts/create-admin.mjs tu@correo.com UnaClaveSegura123
 | `node e2e/lesson-notes.mjs` | Notas privadas por lección: guardar, Ctrl+Enter, límite, «Mis notas», descarga .md, privacidad (otro alumno y sin sesión), borrar, móvil | 28/28 |
 | `node e2e/video-timestamps.mjs` | Notas con marca de tiempo sobre un video WebM real: insertar, saltar al segundo, enlaces `?t=` desde «Mis notas», entradas inválidas | 12/12 |
 | `node e2e/certificate-linkedin.mjs` | «Agregar a LinkedIn» y «Compartir» con datos correctos, metadatos Open Graph, imagen PNG 1200×630, certificados revocados excluidos | 17/17 |
+| `node e2e/video-captions.mjs` | Subtítulos: el admin sube .srt (se convierte a WebVTT, queda auditado), el navegador los carga y muestra, búsqueda por lo que se dice en el video, 404 sin acceso, quitar | 17/17 |
 | `node e2e/links.mjs` | Enlaces internos rotos | 0 |
 | `npx next build` | Build de producción | ✔ |
 
