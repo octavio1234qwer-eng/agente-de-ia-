@@ -41,12 +41,15 @@ saber qué sigue. Marcar `[x]` solo cuando esté construido **y probado**.
 
 - [x] Al abrir una lección desde la búsqueda se resaltan las mismas palabras que encontró el índice (CSS Custom Highlight API, sin tocar el DOM de React), con aviso de coincidencias, «Volver a los resultados» y «Quitar»; E2E 29/29
 
+- [x] Notas personales por lección (privadas incluso para el admin, RLS + pgTAP 14/14): editor en cada lección con aviso de cambios sin guardar y Ctrl+Enter, página `/cuenta/notas` agrupada por curso, descarga en Markdown (`/api/notes/export`); E2E `e2e/lesson-notes.mjs` 28/28
+- [x] Menú de la cuenta en móvil: la pestaña activa se desplaza a la vista
+
 ## Siguiente (en orden)
-- [ ] Mejoras: notas personales del alumno por lección (privadas, con RLS)
+- [ ] Mejoras: en lecciones de video, notas con marca de tiempo que saltan a ese segundo del video
 - [ ] Despliegue (Vercel + Supabase en la nube) — requiere cuentas/credenciales del usuario
 
 ## Ventas (agente)
-- Gumroad: 25+ productos publicados; 0 ventas desde 2026-10-01 (revisado 2026-11-23 06:55 UTC).
+- Gumroad: 25+ productos publicados; 0 ventas desde 2026-10-01 (revisado 2026-11-23 07:55 UTC).
 - Buffer "My organization": LinkedIn, X y Pinterest. Cola programada hasta el 2026-12-01.
 - Pinterest casi sin uso: oportunidad para imprimibles (lotería, planners, menú) con portada del producto.
 

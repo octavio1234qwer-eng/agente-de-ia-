@@ -7,6 +7,7 @@ import { getCurrentUser } from "@/lib/auth";
 import { integrations } from "@/lib/env";
 import { sendCertificateEmail } from "@/lib/email/automations";
 import type { ActionState } from "./types";
+import { NOTE_MAX } from "@/lib/notes";
 
 const uuid = z.uuid();
 
@@ -129,4 +130,34 @@ export async function submitReviewAction(courseId: string, slug: string, _prev: 
   if (error) return { error: "Solo los alumnos inscritos pueden opinar sobre este curso." };
   revalidatePath(`/cursos/${slug}`);
   return { success: existing ? "Actualizamos tu reseña." : "¡Gracias por tu reseña!" };
+}
+
+
+/** Guarda (o borra, si queda vacía) la nota personal del alumno en una lección. */
+export async function saveLessonNoteAction(_prev: ActionState, formData: FormData): Promise<ActionState> {
+  const user = await getCurrentUser();
+  if (!user) return { error: "Inicia sesión para guardar notas." };
+  const lessonId = String(formData.get("lesson_id") ?? "");
+  const remove = formData.get("intent") === "delete";
+  const body = remove ? "" : String(formData.get("body") ?? "").replace(/\r\n/g, "\n").trim();
+  if (!uuid.safeParse(lessonId).success) return { error: "Lección inválida." };
+  if (body.length > NOTE_MAX) return { error: `La nota supera ${NOTE_MAX} caracteres.`, values: { body } };
+  const supabase = await createClient();
+
+  if (!body) {
+    const { error } = await supabase.from("lesson_notes").delete().eq("user_id", user.id).eq("lesson_id", lessonId);
+    if (error) return { error: "No se pudo borrar la nota." };
+    revalidatePath("/cuenta/notas");
+    return { success: "Nota borrada.", values: { body: "" } };
+  }
+
+  const { data: lesson } = await supabase.from("lessons").select("course_id").eq("id", lessonId).maybeSingle();
+  if (!lesson) return { error: "Lección no encontrada.", values: { body } };
+  const { data: existing } = await supabase.from("lesson_notes").select("lesson_id").eq("user_id", user.id).eq("lesson_id", lessonId).maybeSingle();
+  const { error } = existing
+    ? await supabase.from("lesson_notes").update({ body }).eq("user_id", user.id).eq("lesson_id", lessonId)
+    : await supabase.from("lesson_notes").insert({ user_id: user.id, lesson_id: lessonId, course_id: lesson.course_id, body });
+  if (error) return { error: error.code === "42501" ? "No tienes acceso a esta lección." : "No se pudo guardar la nota.", values: { body } };
+  revalidatePath("/cuenta/notas");
+  return { success: "Nota guardada.", values: { body } };
 }

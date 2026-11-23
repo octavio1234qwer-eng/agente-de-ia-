@@ -10,6 +10,7 @@ import { LessonActions } from "@/components/classroom/lesson-actions";
 import { QuizRunner } from "@/components/classroom/quiz-runner";
 import { NexusChat } from "@/components/classroom/nexus-chat";
 import { SearchHighlight } from "@/components/classroom/search-highlight";
+import { LessonNotes } from "@/components/classroom/lesson-notes";
 import { normalizeQuery } from "@/lib/search";
 import { ReviewForm } from "@/components/course/review-form";
 import { Markdown } from "@/components/ui/markdown";
@@ -61,10 +62,11 @@ export default async function LessonPage({ params, searchParams }: { params: Pro
   }
 
   const supabase = await createClient();
-  const [{ content, resources }, quizRes, myReview] = await Promise.all([
+  const [{ content, resources }, quizRes, myReview, myNote] = await Promise.all([
     getLessonContent(lessonId),
     lesson.type === "quiz" ? supabase.rpc("get_quiz", { p_lesson_id: lessonId }) : Promise.resolve({ data: null }),
     supabase.from("reviews").select("rating, comment").eq("course_id", data.course.id).eq("user_id", user.id).maybeSingle(),
+    supabase.from("lesson_notes").select("body, updated_at").eq("lesson_id", lessonId).eq("user_id", user.id).maybeSingle(),
   ]);
   const video = lesson.type === "video" ? await resolveVideoSource(content?.video_provider ?? null, content?.video_ref ?? null) : null;
   const { data: passMeta } = lesson.type === "quiz" ? await supabase.from("lessons").select("pass_percent").eq("id", lessonId).single() : { data: null };
@@ -147,6 +149,8 @@ export default async function LessonPage({ params, searchParams }: { params: Pro
               </ul>
             </section>
           )}
+
+          <LessonNotes key={lessonId} lessonId={lessonId} initial={myNote.data?.body ?? ""} updatedAt={myNote.data?.updated_at ?? null} />
 
           <LessonActions
             lessonId={lessonId}

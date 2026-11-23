@@ -435,6 +435,38 @@ isOneToOne: true
       referencedColumns: ["id"]
     }
                   ]
+                },"lesson_notes": {
+                  Row: {
+                    "body": string,"course_id": string,"created_at": string,"lesson_id": string,"updated_at": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "body": string,"course_id": string,"created_at"?: string,"lesson_id": string,"updated_at"?: string,"user_id": string
+                  }
+                  Update: {
+                    "body"?: string,"course_id"?: string,"created_at"?: string,"lesson_id"?: string,"updated_at"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "lesson_notes_course_id_fkey"
+      columns: ["course_id"]
+isOneToOne: false
+      referencedRelation: "courses"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lesson_notes_lesson_id_fkey"
+      columns: ["lesson_id"]
+isOneToOne: false
+      referencedRelation: "lessons"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lesson_notes_user_id_fkey"
+      columns: ["user_id"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"lesson_progress": {
                   Row: {
                     "completed_at": string | null,"course_id": string,"last_position_seconds": number,"lesson_id": string,"updated_at": string,"user_id": string

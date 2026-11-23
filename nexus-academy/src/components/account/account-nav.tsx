@@ -1,12 +1,14 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Award, BookOpen, Heart, Receipt, Search, Settings, User } from "lucide-react";
+import { useEffect, useRef } from "react";
+import { Award, BookOpen, Heart, NotebookPen, Receipt, Search, Settings, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const items = [
   { href: "/cuenta/cursos", label: "Mis cursos", icon: BookOpen },
   { href: "/cuenta/buscar", label: "Buscar en mis cursos", icon: Search },
+  { href: "/cuenta/notas", label: "Mis notas", icon: NotebookPen },
   { href: "/cuenta", label: "Perfil", icon: User },
   { href: "/cuenta/favoritos", label: "Favoritos", icon: Heart },
   { href: "/cuenta/certificados", label: "Certificados", icon: Award },
@@ -16,8 +18,17 @@ const items = [
 
 export function AccountNav() {
   const pathname = usePathname();
+  const navRef = useRef<HTMLElement>(null);
+  // En móvil el menú se desplaza en horizontal: deja visible la sección activa.
+  useEffect(() => {
+    const nav = navRef.current;
+    const active = nav?.querySelector<HTMLElement>('[aria-current="page"]');
+    if (!nav || !active || nav.scrollWidth <= nav.clientWidth) return;
+    const offset = active.getBoundingClientRect().left - nav.getBoundingClientRect().left + nav.scrollLeft;
+    nav.scrollTo({ left: offset - (nav.clientWidth - active.offsetWidth) / 2 });
+  }, [pathname]);
   return (
-    <nav aria-label="Mi cuenta" className="-mx-4 overflow-x-auto px-4 lg:mx-0 lg:px-0">
+    <nav ref={navRef} aria-label="Mi cuenta" className="-mx-4 overflow-x-auto px-4 lg:mx-0 lg:px-0">
       <ul className="flex gap-2 lg:flex-col">
         {items.map(({ href, label, icon: Icon }) => {
           const active = pathname === href;
