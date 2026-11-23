@@ -13,9 +13,10 @@ import { formatDate, formatMoney, orderStatusLabel, providerLabel } from "@/lib/
 
 export const metadata: Metadata = { title: "Pedido" };
 
-export default async function AdminOrder({ params }: { params: Promise<{ id: string }> }) {
+export default async function AdminOrder({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ reembolso?: string }> }) {
   await requireAdmin();
   const { id } = await params;
+  const { reembolso } = await searchParams;
   const supabase = await createClient();
   const [{ data: o }, { data: events }, { data: refunds }] = await Promise.all([
     supabase.from("orders").select("*, order_items(*), profiles(id, full_name, email)").eq("id", id).maybeSingle(),
@@ -30,6 +31,11 @@ export default async function AdminOrder({ params }: { params: Promise<{ id: str
     <>
       <Link href="/admin/pedidos" className="mb-3 inline-flex items-center gap-1 text-sm text-mist-400 hover:text-white"><ArrowLeft className="size-4" /> Pedidos</Link>
       <AdminHeader title={`Pedido ${o.order_number}`} description={`${formatDate(o.created_at, { dateStyle: "long", timeStyle: "short" })} · ${providerLabel[o.provider]}`} actions={<Badge tone={o.status === "paid" ? "green" : o.status === "pending" ? "amber" : "neutral"}>{orderStatusLabel[o.status]}</Badge>} />
+      {reembolso && (
+        <p role="status" className="mb-4 rounded-xl border border-emerald-400/25 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">
+          {reembolso === "total" ? "Reembolso total registrado. El acceso a los cursos comprados en este pedido fue retirado." : "Reembolso parcial registrado. El alumno conserva el acceso."}
+        </p>
+      )}
       <div className="grid gap-4 xl:grid-cols-[1fr_380px]">
         <div className="space-y-4">
           <Panel title="Detalle">

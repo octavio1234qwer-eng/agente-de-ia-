@@ -556,6 +556,7 @@ export async function refundOrderAction(_prev: ActionState, formData: FormData):
   if (cents > order.total_cents - order.refunded_cents) return { error: "El monto supera lo que queda por reembolsar." };
 
   let providerRefundId: string | null = null;
+  let status: string | null = null;
   try {
     if (!manual && order.provider !== "free") {
       if (!order.provider_payment_id) return { error: "El pedido no tiene identificador de pago del proveedor." };
@@ -570,13 +571,13 @@ export async function refundOrderAction(_prev: ActionState, formData: FormData):
         providerRefundId = (await refundPayPalCapture(order.provider_payment_id, cents, order.currency, order.id)).id;
       }
     }
-    const status = await recordRefund({ orderId, amountCents: cents, providerRefundId, reason: reason || (manual ? "Reembolso manual" : "Reembolso desde el panel"), actorId: actor.id });
+    status = await recordRefund({ orderId, amountCents: cents, providerRefundId, reason: reason || (manual ? "Reembolso manual" : "Reembolso desde el panel"), actorId: actor.id });
     await audit(actor.id, "refund", "order", orderId, { cents, manual, providerRefundId });
-    revalidatePath(`/admin/pedidos/${orderId}`);
-    return { success: status === "refunded" ? "Reembolso total registrado. El acceso a los cursos fue retirado." : "Reembolso parcial registrado." };
   } catch (e) {
     return { error: `El proveedor rechazó el reembolso: ${e instanceof Error ? e.message : String(e)}` };
   }
+  revalidatePath(`/admin/pedidos/${orderId}`);
+  redirect(`/admin/pedidos/${orderId}?reembolso=${status === "refunded" ? "total" : "parcial"}`);
 }
 
 /* ------------------------------ Correos --------------------------------- */

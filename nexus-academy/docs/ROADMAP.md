@@ -26,8 +26,10 @@ saber qué sigue. Marcar `[x]` solo cuando esté construido **y probado**.
 - [x] Paquetes (lista y detalle con compra), instructores, `/nexus-ai` con historial, legales (términos, privacidad LFPDPPP, reembolsos), `/baja` firmada
 - [x] Rastreo de enlaces `e2e/links.mjs`: 32 rutas públicas, 0 rotas
 
+- [x] Panel admin: dashboard (KPIs reales + 4 gráficas con paleta validada y tabla accesible), cursos (CRUD, portada, temario, lecciones, videos privados, recursos, preguntas), categorías, instructores, paquetes, alumnos (rol, otorgar/revocar), pedidos (detalle, eventos, reembolsos vía API o manuales), cupones, reseñas, correos (registro + campañas con baja); auditoría de acciones; `scripts/create-admin.mjs`
+- [x] E2E `e2e/admin.mjs`: 24/24 (alumno expulsado de /admin, crear curso+temario+lección+recurso, contenido protegido, otorgar acceso, cupón, reembolso retira acceso, archivado en vez de borrado, 10 secciones cargan)
+
 ## Siguiente (en orden)
-- [ ] Panel admin: dashboard con gráficas, cursos (CRUD + temario + subidas), categorías, instructores, alumnos, pedidos/reembolsos, cupones, paquetes, reseñas, correos
 - [ ] Automatizaciones: `/api/cron/*` (recordatorios, carritos abandonados) + `vercel.json`
 - [ ] Pruebas: unitarias (vitest: precios, firmas de webhooks), E2E (Playwright), build de producción
 - [ ] README con arquitectura y guía exacta de activación de credenciales
