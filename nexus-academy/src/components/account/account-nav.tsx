@@ -1,11 +1,12 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Award, BookOpen, Heart, Receipt, Settings, User } from "lucide-react";
+import { Award, BookOpen, Heart, Receipt, Search, Settings, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const items = [
   { href: "/cuenta/cursos", label: "Mis cursos", icon: BookOpen },
+  { href: "/cuenta/buscar", label: "Buscar en mis cursos", icon: Search },
   { href: "/cuenta", label: "Perfil", icon: User },
   { href: "/cuenta/favoritos", label: "Favoritos", icon: Heart },
   { href: "/cuenta/certificados", label: "Certificados", icon: Award },

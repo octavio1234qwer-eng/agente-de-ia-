@@ -37,8 +37,11 @@ saber qué sigue. Marcar `[x]` solo cuando esté construido **y probado**.
 
 - [x] Editor de Markdown con barra de formato y vista previa (lecciones y descripción de cursos, alterna en móvil); E2E `e2e/markdown-editor.mjs` 8/8 (incluye HTML crudo sin ejecutar)
 
+- [x] Búsqueda de texto completo en lecciones (`/cuenta/buscar`, buscador en «Mis cursos» y dentro del aula): índice en español sin acentos en `lesson_contents` (protegida por RLS), `search_lessons()` solo devuelve cursos con acceso; pgTAP 16/16 nuevas, E2E `e2e/lesson-search.mjs` 22/22
+
 ## Siguiente (en orden)
-- [ ] Mejoras: búsqueda de texto completo dentro de las lecciones (para alumnos inscritos)
+- [ ] Mejoras: al abrir una lección desde la búsqueda, resaltar el término buscado dentro de la lección
+- [ ] Mejoras: notas personales del alumno por lección (privadas, con RLS)
 - [ ] Despliegue (Vercel + Supabase en la nube) — requiere cuentas/credenciales del usuario
 
 ## Ventas (agente)

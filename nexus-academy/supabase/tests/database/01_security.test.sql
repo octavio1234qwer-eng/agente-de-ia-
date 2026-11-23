@@ -23,7 +23,8 @@ select
   (select l.id from public.lessons l join public.courses c on c.id = l.course_id
     where c.slug = 'javascript-moderno' and l.is_preview limit 1) as preview_lesson,
   (select l.id from public.lessons l join public.courses c on c.id = l.course_id
-    where c.slug = 'git-github-esencial' and l.type = 'quiz' limit 1) as free_quiz;
+    where c.slug = 'git-github-esencial' and l.type = 'quiz' limit 1) as free_quiz,
+  (select count(*) from public.courses where status = 'published') as published_count;
 grant select on ctx to anon, authenticated, service_role;
 
 select ok(exists (select 1 from public.profiles where email = 'ana@test.dev' and full_name = 'Ana Pruebas'),
@@ -35,7 +36,8 @@ select ok(exists (select 1 from public.profiles where email = 'ana@test.dev' and
 set local role anon;
 set local request.jwt.claims to '{"role":"anon"}';
 
-select ok((select count(*) from public.courses) = 10, 'anon ve los cursos publicados');
+select ok((select count(*) from public.courses) = (select published_count from ctx) and (select published_count from ctx) >= 10,
+  'anon ve exactamente los cursos publicados');
 select is((select count(*)::int from public.lesson_contents where lesson_id = (select paid_lesson from ctx)), 0,
   'anon NO ve el contenido de una lección de pago');
 select is((select count(*)::int from public.lesson_contents where lesson_id = (select preview_lesson from ctx)), 1,

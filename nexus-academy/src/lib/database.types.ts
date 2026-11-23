@@ -411,14 +411,14 @@ isOneToOne: true
                   ]
                 },"lesson_contents": {
                   Row: {
-                    "body": string,"course_id": string,"lesson_id": string,"updated_at": string,"video_provider": Database["public"]['Enums']["video_provider"] | null,"video_ref": string | null
+                    "body": string,"course_id": string,"lesson_id": string,"search_vector": unknown,"updated_at": string,"video_provider": Database["public"]['Enums']["video_provider"] | null,"video_ref": string | null
                   }
                   ComputedFields: never
                   Insert: {
-                    "body"?: string,"course_id": string,"lesson_id": string,"updated_at"?: string,"video_provider"?: Database["public"]['Enums']["video_provider"] | null,"video_ref"?: string | null
+                    "body"?: string,"course_id": string,"lesson_id": string,"search_vector"?: unknown,"updated_at"?: string,"video_provider"?: Database["public"]['Enums']["video_provider"] | null,"video_ref"?: string | null
                   }
                   Update: {
-                    "body"?: string,"course_id"?: string,"lesson_id"?: string,"updated_at"?: string,"video_provider"?: Database["public"]['Enums']["video_provider"] | null,"video_ref"?: string | null
+                    "body"?: string,"course_id"?: string,"lesson_id"?: string,"search_vector"?: unknown,"updated_at"?: string,"video_provider"?: Database["public"]['Enums']["video_provider"] | null,"video_ref"?: string | null
                   }
                   Relationships: [
                     {
@@ -823,6 +823,15 @@ isOneToOne: false
 "issue_certificate":
 { Args: { "p_completed_at": string,"p_course_id": string,"p_user_id": string }; Returns: undefined
                            },
+"lesson_search_document":
+{ Args: { "p_body": string,"p_summary": string,"p_title": string }; Returns: unknown
+                           },
+"lesson_search_query":
+{ Args: { "p_q": string }; Returns: unknown
+                           },
+"lesson_search_text":
+{ Args: { "p": string }; Returns: string
+                           },
 "record_refund":
 { Args: { "p_actor": string,"p_amount_cents": number,"p_order_id": string,"p_provider_refund_id": string,"p_reason": string }; Returns: Database["public"]['Enums']["order_status"]
                            },
@@ -866,6 +875,11 @@ isOneToOne: false
         isOneToOne: false
         isSetofReturn: true
       } },
+"search_lessons":
+{ Args: { "p_course_id"?: string,"p_limit"?: number,"q": string }; Returns: {
+              "course_id": string,"course_slug": string,"course_title": string,"lesson_id": string,"lesson_title": string,"lesson_type": Database["public"]['Enums']["lesson_type"],"module_title": string,"rank": number,"snippet": string
+            }[]
+                           },
 "submit_quiz_attempt":
 { Args: { "p_answers": Json,"p_lesson_id": string }; Returns: Json
                            }

@@ -9,6 +9,7 @@ import { EmptyState } from "@/components/ui/empty-state";
 import { LinkButton } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { formatDate } from "@/lib/utils";
+import { LessonSearchForm } from "@/components/search/lesson-search-form";
 
 export const metadata: Metadata = { title: "Mis cursos" };
 
@@ -36,6 +37,7 @@ export default async function MyCoursesPage() {
 
   return (
     <div className="space-y-4">
+      <LessonSearchForm courses={enrollments.map((e) => ({ slug: e.course!.slug, title: e.course!.title }))} className="mb-2" />
       {enrollments.map((e) => {
         const c = e.course!;
         return (

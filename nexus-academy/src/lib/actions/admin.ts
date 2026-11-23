@@ -201,7 +201,7 @@ export async function addLessonAction(formData: FormData) {
   const { count } = await supabase.from("lessons").select("id", { count: "exact", head: true }).eq("module_id", moduleId);
   const { data } = await supabase.from("lessons").insert({ module_id: moduleId, course_id: courseId, title, type, position: count ?? 0 }).select("id").single();
   if (data) {
-    await supabase.from("lesson_contents").insert({ lesson_id: data.id, course_id: courseId, body: "" });
+    // La fila de contenido (indexable para la búsqueda) la crea el trigger lessons_ensure_content.
     await audit(actor.id, "create", "lesson", data.id, { title, type });
     redirect(`/admin/cursos/${courseId}/lecciones/${data.id}`);
   }

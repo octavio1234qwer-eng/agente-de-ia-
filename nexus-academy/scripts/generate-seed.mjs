@@ -80,7 +80,7 @@ for (const c of courses) {
       );
       if (l.body) {
         out.push(
-          `insert into public.lesson_contents (lesson_id, course_id, body) values (${q(lessonId)}, ${q(courseId)}, ${q(l.body)}) on conflict (lesson_id) do nothing;`,
+          `insert into public.lesson_contents (lesson_id, course_id, body) values (${q(lessonId)}, ${q(courseId)}, ${q(l.body)}) on conflict (lesson_id) do update set body = excluded.body;`,
         );
       }
       (l.questions ?? []).forEach((question, qi) => {

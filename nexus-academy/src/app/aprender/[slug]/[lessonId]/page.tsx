@@ -43,7 +43,7 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
   if (!lesson.canView) {
     return (
       <div className="flex flex-1">
-        <Outline slug={slug} modules={data.modules} currentId={lessonId} />
+        <Outline slug={slug} modules={data.modules} currentId={lessonId} searchable={data.hasAccess} />
         <main className="grid flex-1 place-items-center px-4 py-20 text-center">
           <div className="max-w-md">
             <span className="mx-auto grid size-16 place-items-center rounded-2xl bg-white/[0.05]"><Lock className="size-7 text-mist-300" /></span>
@@ -71,7 +71,7 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
 
   return (
     <div className="flex flex-1">
-      <Outline slug={slug} modules={data.modules} currentId={lessonId} />
+      <Outline slug={slug} modules={data.modules} currentId={lessonId} searchable={data.hasAccess} />
       <main className="min-w-0 flex-1 px-4 pb-28 pt-6 sm:px-8 lg:pb-12">
         <div className="mx-auto max-w-4xl space-y-6">
           {lesson.type === "video" && (

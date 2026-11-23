@@ -4,13 +4,15 @@ import { useState } from "react";
 import { CheckCircle2, Circle, Dumbbell, FileText, ListChecks, Lock, PlayCircle, PanelLeft, X } from "lucide-react";
 import type { OutlineModule } from "@/lib/data/classroom";
 import { cn, formatSeconds } from "@/lib/utils";
+import { LessonSearchForm } from "@/components/search/lesson-search-form";
 
 const icons = { video: PlayCircle, article: FileText, quiz: ListChecks, exercise: Dumbbell } as const;
 
-export function Outline({ slug, modules, currentId }: { slug: string; modules: OutlineModule[]; currentId: string }) {
+export function Outline({ slug, modules, currentId, searchable = false }: { slug: string; modules: OutlineModule[]; currentId: string; searchable?: boolean }) {
   const [open, setOpen] = useState(false);
   const list = (
     <nav aria-label="Contenido del curso" className="space-y-5 p-4">
+      {searchable && <LessonSearchForm course={slug} compact />}
       {modules.map((m, mi) => (
         <div key={m.id}>
           <p className="px-2 text-[11px] font-semibold uppercase tracking-wider text-mist-400">Módulo {mi + 1}</p>
