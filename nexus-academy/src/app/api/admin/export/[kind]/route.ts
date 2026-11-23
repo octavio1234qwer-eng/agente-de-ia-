@@ -20,7 +20,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ kind: st
   const user = await getCurrentUser();
   if (!user) return new Response("Inicia sesión.", { status: 401 });
   if (user.role !== "admin") return new Response("Solo administradores.", { status: 403 });
-  if (kind !== "pedidos" && kind !== "alumnos") return new Response("Exportación no encontrada.", { status: 404 });
+  if (kind !== "pedidos" && kind !== "alumnos" && kind !== "ingresos") return new Response("Exportación no encontrada.", { status: 404 });
 
   const sp = new URL(req.url).searchParams;
   const range = dateRange(sp.get("desde"), sp.get("hasta"));
@@ -32,7 +32,23 @@ export async function GET(req: Request, { params }: { params: Promise<{ kind: st
   let csv: string;
   let count: number;
 
-  if (kind === "pedidos") {
+  if (kind === "ingresos") {
+    const { data, error } = await supabase.rpc("admin_revenue_by_product", { p_from: range.from ?? undefined, p_to: range.to ?? undefined });
+    if (error) return new Response("No se pudo calcular el reporte.", { status: 500 });
+    const rows = data ?? [];
+    csv = toCsv(rows, [
+      { header: "Producto", value: (r) => r.title },
+      { header: "Tipo", value: (r) => (r.item_type === "course" ? "Curso" : "Paquete") },
+      { header: "Moneda", value: (r) => r.currency },
+      { header: "Pedidos", value: (r) => r.orders },
+      { header: "Unidades", value: (r) => r.units },
+      { header: "Bruto", value: (r) => centsToDecimal(Number(r.gross_cents)) },
+      { header: "Descuentos", value: (r) => centsToDecimal(Number(r.discount_cents)) },
+      { header: "Reembolsos", value: (r) => centsToDecimal(Number(r.refunded_cents)) },
+      { header: "Neto", value: (r) => centsToDecimal(Number(r.net_cents)) },
+    ]);
+    count = rows.length;
+  } else if (kind === "pedidos") {
     type Row = { order_number: string; status: string; provider: string; currency: string; subtotal_cents: number; discount_cents: number; total_cents: number; refunded_cents: number; coupon_code: string | null; provider_payment_id: string | null; customer_email: string; customer_name: string | null; billing_details: unknown; paid_at: string | null; created_at: string; order_items: { title: string }[] };
     const rows: Row[] = [];
     for (let from = 0; from < MAX_ROWS; from += PAGE) {
@@ -104,7 +120,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ kind: st
   await createAdminClient().from("admin_audit_log").insert({
     actor_id: user.id,
     action: "export",
-    entity: kind === "pedidos" ? "orders" : "students",
+    entity: kind === "pedidos" ? "orders" : kind === "ingresos" ? "revenue" : "students",
     entity_id: null,
     details: { rows: count, desde: sp.get("desde") || null, hasta: sp.get("hasta") || null, estado },
   });

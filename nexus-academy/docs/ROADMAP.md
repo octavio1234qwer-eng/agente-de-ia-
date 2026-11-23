@@ -62,13 +62,15 @@ saber qué sigue. Marcar `[x]` solo cuando esté construido **y probado**.
 
 - [x] Admin: exportar pedidos (con RFC/razón social, artículos, importes, neto y referencia de pago) y alumnos (inscripciones, completados, certificados, total pagado) a CSV, con filtros de fecha (hora CDMX, inclusivos) y estado; BOM UTF-8 para Excel, protección contra inyección de fórmulas, solo admin y cada descarga auditada. E2E `e2e/admin-export.mjs` 19/19
 
+- [x] Admin «Ingresos»: reporte por producto (pedidos, unidades, bruto, descuentos, reembolsos y neto) por fecha de pago, con atajos de periodo, totales y CSV. La función SQL `admin_revenue_by_product` (solo admin) reparte los reembolsos de cada pedido entre sus artículos al centavo exacto; pgTAP 9/9 nuevas, E2E `e2e/admin-revenue.mjs` 14/14
+
 ## Siguiente (en orden)
-- [ ] Admin: reporte de ingresos por curso (unidades, bruto, descuentos, reembolsos, neto) con filtro de fechas y exportación CSV
+- [ ] Alumno: racha de días con actividad y meta semanal de lecciones en «Mi cuenta», calculadas con el progreso real
 - [ ] Despliegue (Vercel + Supabase en la nube) — requiere cuentas/credenciales del usuario
 
 ## Ventas (agente)
-- Gumroad: 25+ productos publicados; 0 ventas desde 2026-10-01 (revisado 2026-11-23 14:55 UTC).
-- Buffer "My organization": LinkedIn 6 y X 7 publicaciones programadas (revisado 2026-11-23 14:55 UTC), cola hasta el 2026-12-01. El código BLACKFRIDAY que mencionan dos publicaciones existe en Gumroad pero hoy está inactivo (se espera que se active para Black Friday).
+- Gumroad: 25+ productos publicados; 0 ventas desde 2026-10-01 (revisado 2026-11-23 15:55 UTC).
+- Buffer "My organization": LinkedIn 6 y X 7 publicaciones programadas (revisado 2026-11-23 15:55 UTC), cola hasta el 2026-12-01. El código BLACKFRIDAY que mencionan dos publicaciones existe en Gumroad pero hoy está inactivo (se espera que se active para Black Friday).
 - Pinterest casi sin uso: oportunidad para imprimibles (lotería, planners, menú) con portada del producto.
 
 ## Bloqueado por el usuario

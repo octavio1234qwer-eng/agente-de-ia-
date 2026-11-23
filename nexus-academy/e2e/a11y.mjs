@@ -31,7 +31,7 @@ const { data: anyOrder } = await admin.from("orders").select("id").limit(1).mayb
 const pages = {
   public: ["/", "/cursos", "/cursos/javascript-moderno", "/paquetes", "/instructores", "/nexus-ai", "/login", "/registro", "/recuperar", "/verificar", `/certificados/${cert.code}`, "/terminos", "/privacidad", "/reembolsos", "/carrito"],
   student: ["/cuenta", "/cuenta/cursos", "/cuenta/buscar?q=commit", "/cuenta/notas", "/cuenta/certificados", "/cuenta/compras", "/cuenta/favoritos", "/cuenta/ajustes", `/aprender/git-github-esencial/${lesson.id}`, `/aprender/git-github-esencial/${quiz.id}`],
-  admin: ["/admin", "/admin/cursos", `/admin/cursos/${git.id}`, `/admin/cursos/${git.id}/lecciones/${lesson.id}`, "/admin/categorias", "/admin/instructores", "/admin/paquetes", "/admin/alumnos", "/admin/pedidos", ...(anyOrder ? [`/admin/pedidos/${anyOrder.id}`] : []), "/admin/cupones", "/admin/resenas", "/admin/correos"],
+  admin: ["/admin", "/admin/cursos", `/admin/cursos/${git.id}`, `/admin/cursos/${git.id}/lecciones/${lesson.id}`, "/admin/categorias", "/admin/instructores", "/admin/paquetes", "/admin/alumnos", "/admin/pedidos", "/admin/ingresos", ...(anyOrder ? [`/admin/pedidos/${anyOrder.id}`] : []), "/admin/cupones", "/admin/resenas", "/admin/correos"],
 };
 
 const browser = await pw.chromium.launch();

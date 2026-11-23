@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookOpen, FolderTree, GraduationCap, LayoutDashboard, Layers, Mail, MessageSquare, Receipt, Ticket, Users } from "lucide-react";
+import { BookOpen, FolderTree, GraduationCap, LayoutDashboard, Layers, Mail, MessageSquare, Receipt, Ticket, TrendingUp, Users } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const items = [
@@ -12,6 +12,7 @@ const items = [
   { href: "/admin/paquetes", label: "Paquetes", icon: Layers },
   { href: "/admin/alumnos", label: "Alumnos", icon: Users },
   { href: "/admin/pedidos", label: "Pedidos", icon: Receipt },
+  { href: "/admin/ingresos", label: "Ingresos", icon: TrendingUp },
   { href: "/admin/cupones", label: "Cupones", icon: Ticket },
   { href: "/admin/resenas", label: "Reseñas", icon: MessageSquare },
   { href: "/admin/correos", label: "Correos", icon: Mail },
