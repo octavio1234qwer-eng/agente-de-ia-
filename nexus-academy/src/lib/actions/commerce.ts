@@ -46,9 +46,9 @@ async function cartRefs(userId: string): Promise<ItemRef[]> {
   return (data ?? []).map((i) => ({ type: i.item_type, id: (i.course_id ?? i.bundle_id)! }));
 }
 
-export type QuoteState = ActionState & {
+export type QuoteState = (NonNullable<ActionState> & {
   quote?: { subtotalCents: number; discountCents: number; totalCents: number; currency: string; coupon: string | null };
-};
+}) | null;
 
 export async function applyCouponAction(_prev: QuoteState, formData: FormData): Promise<QuoteState> {
   const user = await getCurrentUser();
