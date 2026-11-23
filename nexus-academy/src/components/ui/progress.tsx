@@ -25,7 +25,7 @@ export function ProgressRing({ value, size = 64, stroke = 6, label }: { value: n
         <circle cx={size / 2} cy={size / 2} r={r} stroke="rgb(255 255 255 / 0.08)" strokeWidth={stroke} fill="none" />
         <circle cx={size / 2} cy={size / 2} r={r} stroke="url(#ring-grad)" strokeWidth={stroke} fill="none" strokeLinecap="round" strokeDasharray={c} strokeDashoffset={c - (v / 100) * c} />
       </svg>
-      <span className="absolute text-sm font-semibold text-white">{label ?? `${Math.round(v)}%`}</span>
+      <span className="absolute font-semibold text-white" style={{ fontSize: Math.max(9, Math.round(size * 0.24)) }}>{label ?? `${Math.round(v)}%`}</span>
     </div>
   );
 }

@@ -19,11 +19,13 @@ saber qué sigue. Marcar `[x]` solo cuando esté construido **y probado**.
 - [x] Webhooks Stripe / Mercado Pago / PayPal + retorno de PayPal (captura en servidor); idempotencia en `payment_events`
 - [x] Pruebas: 17 unitarias (`npm test`), 46 pgTAP (`npm run test:db`), E2E pagos `e2e/payments.mjs` 10/10 (webhook firmado → orden pagada → acceso activado; repetición ignorada; firma falsa 400; importe alterado sin acceso; fallo del proveedor honesto; cupón 100 %)
 
+- [x] Aula virtual: video (almacenamiento privado con URL firmada / YouTube / Vimeo), temario con progreso, completar, recursos con descarga firmada, evaluaciones, reseña, móvil
+- [x] NEXUS AI: `/api/ai/chat` con Claude en streaming, contexto de la lección vía RLS, catálogo real, límite diario, fallback de rechazo; panel en el aula (503 honesto sin clave)
+- [x] Certificados: emisión automática, `/certificados/[code]` con QR, `/verificar`, PDF; E2E `e2e/classroom.mjs` 17/17
+
 ## Siguiente (en orden)
 - [ ] Paquetes `/paquetes`, instructores `/instructores`
-- [ ] Aula virtual `/aprender/[slug]/[lessonId]`: video, temario, progreso, completar, recursos, cuestionarios, reseña
-- [ ] NEXUS AI: `/api/ai/chat` (streaming, límite diario) + panel en el aula + página `/nexus-ai`
-- [ ] Certificados: `/certificados/[code]`, `/verificar`, PDF con QR
+- [ ] Página `/nexus-ai` (chat completo + historial de conversaciones) — el panel del aula ya funciona
 - [ ] Panel admin: dashboard con gráficas, cursos (CRUD + temario + subidas), categorías, instructores, alumnos, pedidos/reembolsos, cupones, paquetes, reseñas, correos
 - [ ] Automatizaciones: `/api/cron/*` (recordatorios, carritos abandonados) + `vercel.json`
 - [ ] Páginas legales: términos, privacidad, reembolsos; `/baja` (darse de baja)
