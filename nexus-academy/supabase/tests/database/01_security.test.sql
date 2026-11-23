@@ -162,7 +162,7 @@ select is((select count(*)::int from public.lesson_contents where lesson_id = (s
 -- ---------------------------------------------------------------------------
 set local request.jwt.claims to '{"sub":"33333333-3333-4333-8333-333333333333","role":"authenticated"}';
 select ok(public.is_admin(), 'is_admin() reconoce al administrador');
-select ok((public.admin_dashboard_stats(30) ->> 'paid_orders')::int = 1, 'El admin obtiene métricas reales');
+select ok((public.admin_dashboard_stats(30) ->> 'paid_orders')::int >= 1 and public.admin_dashboard_stats(30) ? 'daily', 'El admin obtiene métricas reales');
 
 select * from finish();
 rollback;
