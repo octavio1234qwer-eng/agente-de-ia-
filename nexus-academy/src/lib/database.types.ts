@@ -409,6 +409,26 @@ isOneToOne: true
       referencedColumns: ["id"]
     }
                   ]
+                },"learning_activity": {
+                  Row: {
+                    "at_hour": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "at_hour": string,"user_id": string
+                  }
+                  Update: {
+                    "at_hour"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "learning_activity_user_id_fkey"
+      columns: ["user_id"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"lesson_contents": {
                   Row: {
                     "body": string,"captions_lang": string,"captions_vtt": string | null,"course_id": string,"has_captions": boolean | null,"lesson_id": string,"search_vector": unknown,"updated_at": string,"video_provider": Database["public"]['Enums']["video_provider"] | null,"video_ref": string | null
@@ -665,14 +685,14 @@ isOneToOne: false
                   ]
                 },"profiles": {
                   Row: {
-                    "avatar_url": string | null,"bio": string | null,"created_at": string,"email": string,"full_name": string,"headline": string | null,"id": string,"last_seen_at": string | null,"marketing_opt_in": boolean,"reminder_opt_in": boolean,"role": Database["public"]['Enums']["user_role"],"updated_at": string
+                    "avatar_url": string | null,"bio": string | null,"created_at": string,"email": string,"full_name": string,"headline": string | null,"id": string,"last_seen_at": string | null,"marketing_opt_in": boolean,"reminder_opt_in": boolean,"role": Database["public"]['Enums']["user_role"],"time_zone": string,"updated_at": string,"weekly_lesson_goal": number
                   }
                   ComputedFields: never
                   Insert: {
-                    "avatar_url"?: string | null,"bio"?: string | null,"created_at"?: string,"email": string,"full_name"?: string,"headline"?: string | null,"id": string,"last_seen_at"?: string | null,"marketing_opt_in"?: boolean,"reminder_opt_in"?: boolean,"role"?: Database["public"]['Enums']["user_role"],"updated_at"?: string
+                    "avatar_url"?: string | null,"bio"?: string | null,"created_at"?: string,"email": string,"full_name"?: string,"headline"?: string | null,"id": string,"last_seen_at"?: string | null,"marketing_opt_in"?: boolean,"reminder_opt_in"?: boolean,"role"?: Database["public"]['Enums']["user_role"],"time_zone"?: string,"updated_at"?: string,"weekly_lesson_goal"?: number
                   }
                   Update: {
-                    "avatar_url"?: string | null,"bio"?: string | null,"created_at"?: string,"email"?: string,"full_name"?: string,"headline"?: string | null,"id"?: string,"last_seen_at"?: string | null,"marketing_opt_in"?: boolean,"reminder_opt_in"?: boolean,"role"?: Database["public"]['Enums']["user_role"],"updated_at"?: string
+                    "avatar_url"?: string | null,"bio"?: string | null,"created_at"?: string,"email"?: string,"full_name"?: string,"headline"?: string | null,"id"?: string,"last_seen_at"?: string | null,"marketing_opt_in"?: boolean,"reminder_opt_in"?: boolean,"role"?: Database["public"]['Enums']["user_role"],"time_zone"?: string,"updated_at"?: string,"weekly_lesson_goal"?: number
                   }
                   Relationships: [
                     
@@ -842,6 +862,9 @@ isOneToOne: false
 { Args: { "p_code": string }; Returns: {
               "code": string,"completed_at": string,"course_slug": string,"course_title": string,"instructor_name": string,"issued_at": string,"revoked_at": string,"student_name": string
             }[]
+                           },
+"get_learning_stats":
+{ Args: Record<PropertyKey, never>; Returns: Json
                            },
 "get_quiz":
 { Args: { "p_lesson_id": string }; Returns: {
