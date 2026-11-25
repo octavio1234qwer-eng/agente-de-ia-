@@ -11,6 +11,7 @@ import {
   promotionEmail,
   purchaseEmail,
   reminderEmail,
+  streakReminderEmail,
   welcomeEmail,
 } from "./templates";
 
@@ -128,6 +129,39 @@ export async function runLearningReminders(limit = 200) {
       await admin.from("enrollments").update({ reminder_sent_at: new Date().toISOString() }).eq("id", row.id);
     } else if (res.status === "failed") results.failed++;
     else results.skipped++;
+  }
+  return results;
+}
+
+/**
+ * Aviso de racha por perderse: la base elige a los alumnos (recordatorios
+ * activados, racha de 2+ días hasta ayer, sin actividad hoy, tarde-noche en su
+ * zona horaria, máximo uno cada 3 días). Un solo intento por alumno y día local.
+ */
+export async function runStreakReminders(limit = 500) {
+  const admin = createAdminClient();
+  const { data: rows, error } = await admin.rpc("streak_reminder_candidates", { p_limit: limit });
+  if (error) throw error;
+
+  const results = { candidates: rows?.length ?? 0, sent: 0, skipped: 0, failed: 0, duplicate: 0 };
+  for (const row of rows ?? []) {
+    const unsubscribe = unsubscribeUrl(row.email);
+    const res = await sendEmail({
+      to: row.email,
+      userId: row.user_id,
+      template: "streak_reminder",
+      dedupeKey: `streak:${row.user_id}:${row.local_date}`,
+      unsubscribeUrl: unsubscribe,
+      content: streakReminderEmail({
+        name: row.full_name,
+        streak: row.streak,
+        courseTitle: row.course_title,
+        courseSlug: row.course_slug,
+        siteUrl,
+        unsubscribe,
+      }),
+    });
+    results[res.status]++;
   }
   return results;
 }

@@ -12,7 +12,7 @@ import { formatDate } from "@/lib/utils";
 export const metadata: Metadata = { title: "Correos" };
 
 const templateLabel: Record<string, string> = {
-  welcome: "Bienvenida", purchase_confirmation: "Compra confirmada", password_reset: "Recuperar contraseña", learning_reminder: "Recordatorio",
+  welcome: "Bienvenida", purchase_confirmation: "Compra confirmada", password_reset: "Recuperar contraseña", learning_reminder: "Recordatorio", streak_reminder: "Racha por perderse",
   abandoned_cart: "Carrito abandonado", new_course: "Nuevo curso", promotion: "Promoción", certificate_issued: "Certificado",
 };
 

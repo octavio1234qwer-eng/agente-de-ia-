@@ -67,14 +67,15 @@ saber qué sigue. Marcar `[x]` solo cuando esté construido **y probado**.
 - [x] Alumno: «Tu ritmo de estudio» en «Mis cursos»: racha actual y mejor racha (días consecutivos con actividad real: avanzar un video, marcar una lección, presentar una evaluación o guardar una nota, registrada por triggers de la base y nunca a mano), meta semanal de lecciones (1-50, lunes a domingo) con barra y mensaje, semana con días estudiados y lecciones por día, zona horaria del alumno en «Configuración» (detecta la del dispositivo; la base rechaza zonas inexistentes). pgTAP 22/22 nuevas (121 en total), 9 unitarias nuevas (52), E2E `e2e/learning-streaks.mjs` 22/22, axe sin infracciones
 - [x] Pie de página: en pantallas de 360 px el formulario del boletín desbordaba 9 px en todas las páginas; corregido
 
+- [x] Aviso por correo «Tu racha de N días sigue viva hoy» (`/api/cron/streak-reminders`, protegido con CRON_SECRET): la función `streak_reminder_candidates` (solo clave de servicio) elige a quien tiene recordatorios activados, racha de 2+ días hasta ayer, nada hoy, y está entre las 16 y 22 h de su zona; máximo un aviso cada 3 días y uno por día local. Con Resend sin configurar queda como «omitido» (nunca se finge). Programado 00:00 UTC (América) y 18:00 UTC (España). pgTAP 12/12 nuevas (133), 3 unitarias (55), E2E `e2e/streak-reminder.mjs` 10/10
+
 ## Siguiente (en orden)
-- [ ] Alumno: recordatorio por correo cuando la racha está por perderse (respetando «Recordatorios de aprendizaje» y la zona horaria) — se envía solo con Resend configurado
 - [ ] Admin: actividad de estudio agregada (alumnos activos por día/semana) en el dashboard, con los mismos datos reales
 - [ ] Despliegue (Vercel + Supabase en la nube) — requiere cuentas/credenciales del usuario
 
 ## Ventas (agente)
 - Gumroad: 25+ productos publicados; 0 ventas en noviembre (revisado 2026-11-25 19:55 UTC).
-- Buffer "My organization": LinkedIn 3 y X 4 publicaciones programadas (revisado 2026-11-25 19:55 UTC), cola hasta el 2026-12-01; no hizo falta programar más. Verificado: el Paquete Fiestas cuesta $12 (los productos por separado suman $19), así que esa publicación es correcta. La de LinkedIn del 27-nov (16:17 UTC) anuncia 40 % con el código BLACKFRIDAY, que la última vez estaba inactivo; no hay herramienta para listar códigos, así que el usuario debe confirmar que esté activo.
+- Buffer "My organization": LinkedIn 5 y X 6 publicaciones programadas (revisado 2026-11-25 20:15 UTC), cola hasta el 2026-12-01; no hizo falta programar más. Entre 19:51 y 19:53 UTC aparecieron 4 publicaciones nuevas (guía gratis de precios y blog calculatunegocio) que no programó este agente. Verificado: el Paquete Fiestas cuesta $12 (los productos por separado suman $19), así que esa publicación es correcta. La de LinkedIn del 27-nov (16:17 UTC) anuncia 40 % con el código BLACKFRIDAY, que la última vez estaba inactivo; no hay herramienta para listar códigos, así que el usuario debe confirmar que esté activo.
 - Pinterest casi sin uso: oportunidad para imprimibles (lotería, planners, menú) con portada del producto.
 
 ## Bloqueado por el usuario

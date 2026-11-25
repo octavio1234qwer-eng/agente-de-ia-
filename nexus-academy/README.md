@@ -21,7 +21,7 @@ Navegador ──► Next.js 16 (App Router, Server Components, Server Actions)
                 ├─► PayPal Orders ───┘
                 ├─► Resend (correos transaccionales y de marketing con baja firmada)
                 └─► Claude (NEXUS AI, streaming, contexto de la lección vía RLS)
-Vercel Cron ──► /api/cron/* (recordatorios, carritos abandonados, pedidos vencidos)
+Vercel Cron ──► /api/cron/* (recordatorios, racha por perderse, carritos abandonados, pedidos vencidos)
 ```
 
 Principios:
@@ -102,8 +102,8 @@ node scripts/create-admin.mjs tu@correo.com UnaClaveSegura123
 |---|---|---|
 | `npm run typecheck` | TypeScript estricto | ✔ |
 | `npx eslint .` | Lint | ✔ |
-| `npm test` | 52 unitarias: precios, cupones, firmas de Stripe y Mercado Pago, búsqueda, notas, marcas de tiempo, LinkedIn, subtítulos SRT→VTT, CSV, racha y meta semanal | 52/52 |
-| `npm run test:db` | 121 pgTAP: RLS, roles, pagos idempotentes, reembolsos, certificados, búsqueda solo en cursos con acceso, notas privadas, subtítulos, reporte de ingresos, racha de estudio (solo actividad real y propia) | 121/121 |
+| `npm test` | 55 unitarias: precios, cupones, firmas de Stripe y Mercado Pago, búsqueda, notas, marcas de tiempo, LinkedIn, subtítulos SRT→VTT, CSV, racha y meta semanal, correo de racha | 55/55 |
+| `npm run test:db` | 133 pgTAP: RLS, roles, pagos idempotentes, reembolsos, certificados, búsqueda solo en cursos con acceso, notas privadas, subtítulos, reporte de ingresos, racha de estudio (solo actividad real y propia), candidatos al aviso de racha | 133/133 |
 | `node e2e/auth-account.mjs` | Registro, inscripción, favoritos, perfil, sesión, recuperación por correo | ✔ |
 | `node e2e/payments.mjs` | Webhook firmado → pago → acceso; repetición; firma falsa; importe alterado; cupón 100 % | 10/10 |
 | `node e2e/classroom.mjs` | Lecciones bloqueadas, vista previa, progreso, evaluación, certificado, PDF, IA sin clave | 17/17 |
@@ -120,6 +120,7 @@ node scripts/create-admin.mjs tu@correo.com UnaClaveSegura123
 | `node e2e/seo.mjs` | robots.txt (bloquea áreas privadas, no certificados), sitemap.xml (solo cursos/paquetes publicados, todas las URLs responden 200), JSON-LD de organización, buscador y curso | 22/22 |
 | `node e2e/admin-export.mjs` | CSV de pedidos y alumnos: BOM, encabezados, RFC/razón social, importes, fórmulas neutralizadas, filtros de fecha y estado, 400/403/401/404, auditoría | 19/19 |
 | `node e2e/admin-revenue.mjs` | Ingresos por producto: bruto, descuento, reembolso repartido al centavo, neto, totales, periodos, CSV idéntico a la página, permisos | 14/14 |
+| `node e2e/streak-reminder.mjs` | Aviso de racha por perderse: cron protegido (401), solo a quien estudió hasta ayer y hoy no, respeta la baja de recordatorios, un aviso por día de su zona, «omitido» honesto sin Resend, coincide con la tarjeta | 10/10 |
 | `node e2e/learning-streaks.mjs` | Racha y meta semanal en «Mis cursos»: completar una lección la inicia, historial de días, mejor racha, meta (validada en servidor), zona horaria detectada del dispositivo y validada en la base, móvil 360 px, privacidad | 22/22 |
 | `node e2e/links.mjs` | Enlaces internos rotos | 0 |
 | `npx next build` | Build de producción | ✔ |
@@ -154,7 +155,7 @@ node scripts/create-admin.mjs tu@correo.com UnaClaveSegura123
 1. Importa el repositorio y define **Root Directory = `nexus-academy`**.
 2. Variables de entorno (Production): todas las de `.env.example`. Como mínimo:
    `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `CRON_SECRET`, `UNSUBSCRIBE_SECRET` (genera los dos últimos con `openssl rand -hex 32`).
-3. Despliega. `vercel.json` programa las tareas diarias (Vercel envía `Authorization: Bearer CRON_SECRET`). En el plan Pro puedes cambiar `abandoned-carts` a cada hora.
+3. Despliega. `vercel.json` programa las tareas diarias (Vercel envía `Authorization: Bearer CRON_SECRET`). En el plan Pro puedes cambiar `abandoned-carts` a cada hora. El aviso de racha (`streak-reminders`) corre a las 00:00 UTC (tarde-noche en América) y a las 18:00 UTC (tarde en España); en el plan Pro conviene una sola entrada cada hora (`0 * * * *`) para cubrir todas las zonas: la base solo elige a quien está entre las 16 y 22 h de su zona y el envío se deduplica por alumno y día.
 4. Conecta tu dominio y actualiza `NEXT_PUBLIC_SITE_URL`.
 5. Crea tu administrador: `NEXT_PUBLIC_SUPABASE_URL=… SUPABASE_SERVICE_ROLE_KEY=… node scripts/create-admin.mjs tu@correo.com`.
 

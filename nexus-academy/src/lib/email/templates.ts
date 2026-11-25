@@ -193,3 +193,24 @@ export function certificateEmail(o: { name: string; courseTitle: string; code: s
     text: `Completaste ${o.courseTitle}. Certificado ${o.code}: ${o.siteUrl}/certificados/${o.code}`,
   };
 }
+
+/** Aviso de racha por perderse: estudió hasta ayer y hoy aún no. */
+export function streakReminderEmail(o: { name: string; streak: number; courseTitle: string | null; courseSlug: string | null; siteUrl: string; unsubscribe: string }): EmailContent {
+  const first = (o.name || "").trim().split(/\s+/)[0] || "Hola";
+  const href = o.courseSlug ? `${o.siteUrl}/aprender/${o.courseSlug}` : `${o.siteUrl}/cuenta/cursos`;
+  const label = o.courseTitle ? `Continuar «${o.courseTitle}»` : "Ir a mis cursos";
+  return {
+    subject: `Tu racha de ${o.streak} días sigue viva hoy`,
+    html: layout({
+      siteUrl: o.siteUrl,
+      unsubscribe: o.unsubscribe,
+      preheader: `Estudia hoy y llega a ${o.streak + 1} días seguidos.`,
+      body:
+        h1(`${first}, no pierdas tu racha de ${o.streak} días`) +
+        p(`Llevas <strong style="color:#fff">${o.streak} días seguidos</strong> estudiando y hoy todavía no has avanzado. Basta con ver parte de un video, marcar una lección, presentar una evaluación o guardar una nota para llegar a <strong style="color:#fff">${o.streak + 1}</strong>.`) +
+        button(label, href) +
+        p(`<span style="font-size:13px;color:#8b93b8;">Te escribimos porque tienes activados los recordatorios de aprendizaje. Puedes desactivarlos en <a href="${o.siteUrl}/cuenta/ajustes" style="color:#8b93b8;">Configuración</a>.</span>`),
+    }),
+    text: `${first}, llevas ${o.streak} días seguidos estudiando y hoy todavía no has avanzado. Estudia hoy para llegar a ${o.streak + 1}: ${href}\n\nPuedes desactivar estos recordatorios en ${o.siteUrl}/cuenta/ajustes o aquí: ${o.unsubscribe}`,
+  };
+}
