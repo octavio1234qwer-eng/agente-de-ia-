@@ -64,16 +64,21 @@ saber qué sigue. Marcar `[x]` solo cuando esté construido **y probado**.
 
 - [x] Admin «Ingresos»: reporte por producto (pedidos, unidades, bruto, descuentos, reembolsos y neto) por fecha de pago, con atajos de periodo, totales y CSV. La función SQL `admin_revenue_by_product` (solo admin) reparte los reembolsos de cada pedido entre sus artículos al centavo exacto; pgTAP 9/9 nuevas, E2E `e2e/admin-revenue.mjs` 14/14
 
+- [x] Alumno: «Tu ritmo de estudio» en «Mis cursos»: racha actual y mejor racha (días consecutivos con actividad real: avanzar un video, marcar una lección, presentar una evaluación o guardar una nota, registrada por triggers de la base y nunca a mano), meta semanal de lecciones (1-50, lunes a domingo) con barra y mensaje, semana con días estudiados y lecciones por día, zona horaria del alumno en «Configuración» (detecta la del dispositivo; la base rechaza zonas inexistentes). pgTAP 22/22 nuevas (121 en total), 9 unitarias nuevas (52), E2E `e2e/learning-streaks.mjs` 22/22, axe sin infracciones
+- [x] Pie de página: en pantallas de 360 px el formulario del boletín desbordaba 9 px en todas las páginas; corregido
+
 ## Siguiente (en orden)
-- [ ] Alumno: racha de días con actividad y meta semanal de lecciones en «Mi cuenta», calculadas con el progreso real
+- [ ] Alumno: recordatorio por correo cuando la racha está por perderse (respetando «Recordatorios de aprendizaje» y la zona horaria) — se envía solo con Resend configurado
+- [ ] Admin: actividad de estudio agregada (alumnos activos por día/semana) en el dashboard, con los mismos datos reales
 - [ ] Despliegue (Vercel + Supabase en la nube) — requiere cuentas/credenciales del usuario
 
 ## Ventas (agente)
-- Gumroad: 25+ productos publicados; 0 ventas desde 2026-10-01 (revisado 2026-11-23 15:55 UTC).
-- Buffer "My organization": LinkedIn 6 y X 7 publicaciones programadas (revisado 2026-11-23 15:55 UTC), cola hasta el 2026-12-01. El código BLACKFRIDAY que mencionan dos publicaciones existe en Gumroad pero hoy está inactivo (se espera que se active para Black Friday).
+- Gumroad: 25+ productos publicados; 0 ventas en noviembre (revisado 2026-11-25 19:55 UTC).
+- Buffer "My organization": LinkedIn 3 y X 4 publicaciones programadas (revisado 2026-11-25 19:55 UTC), cola hasta el 2026-12-01; no hizo falta programar más. Verificado: el Paquete Fiestas cuesta $12 (los productos por separado suman $19), así que esa publicación es correcta. La de LinkedIn del 27-nov (16:17 UTC) anuncia 40 % con el código BLACKFRIDAY, que la última vez estaba inactivo; no hay herramienta para listar códigos, así que el usuario debe confirmar que esté activo.
 - Pinterest casi sin uso: oportunidad para imprimibles (lotería, planners, menú) con portada del producto.
 
 ## Bloqueado por el usuario
+- Confirmar antes del 27-nov 16:17 UTC que el código BLACKFRIDAY (40 % en el Kit de WhatsApp) está activo; si no, pausar o editar esa publicación de LinkedIn.
 - Pinterest: la cuenta conectada en Buffer no tiene tableros. Crea al menos un tablero (p. ej. "Imprimibles para fiestas") para poder programar pines.
 - Credenciales de producción: Supabase (proyecto en la nube), Stripe, Mercado Pago, PayPal, Resend, Anthropic.
 - Dominio y cuenta de hosting para desplegar.

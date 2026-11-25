@@ -4,6 +4,7 @@ import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { getCurrentUser } from "@/lib/auth";
+import { isTimeZoneName, parseGoal, GOAL_MAX, GOAL_MIN } from "@/lib/learning-stats";
 import type { ActionState } from "./types";
 
 const profileSchema = z.object({
@@ -42,6 +43,30 @@ export async function updatePreferencesAction(_prev: ActionState, formData: Form
   if (error) return { error: "No se pudieron guardar tus preferencias." };
   revalidatePath("/cuenta/ajustes");
   return { success: "Preferencias guardadas." };
+}
+
+export async function updateWeeklyGoalAction(_prev: ActionState, formData: FormData): Promise<ActionState> {
+  const user = await getCurrentUser();
+  if (!user) return { error: "Inicia sesión." };
+  const goal = parseGoal(formData.get("goal"));
+  if (goal === null) return { error: `Elige una meta entre ${GOAL_MIN} y ${GOAL_MAX} lecciones por semana.` };
+  const supabase = await createClient();
+  const { error } = await supabase.from("profiles").update({ weekly_lesson_goal: goal }).eq("id", user.id);
+  if (error) return { error: "No se pudo guardar tu meta." };
+  revalidatePath("/cuenta", "layout");
+  return { success: "Meta guardada." };
+}
+
+export async function updateTimeZoneAction(_prev: ActionState, formData: FormData): Promise<ActionState> {
+  const user = await getCurrentUser();
+  if (!user) return { error: "Inicia sesión." };
+  const tz = formData.get("timeZone");
+  if (!isTimeZoneName(tz)) return { error: "Elige una zona horaria de la lista." };
+  const supabase = await createClient();
+  const { error } = await supabase.from("profiles").update({ time_zone: tz }).eq("id", user.id);
+  if (error) return { error: error.code === "22023" ? "Esa zona horaria no existe." : "No se pudo guardar tu zona horaria." };
+  revalidatePath("/cuenta", "layout");
+  return { success: "Zona horaria guardada." };
 }
 
 /** Guarda la URL del avatar ya subido por el navegador a avatars/{uid}/. */

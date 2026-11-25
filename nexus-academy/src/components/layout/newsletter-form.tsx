@@ -16,7 +16,7 @@ export function NewsletterForm() {
           required
           autoComplete="email"
           placeholder="tu@correo.com"
-          className="h-11 min-w-0 flex-1 rounded-xl border border-white/10 bg-white/[0.04] px-3.5 text-sm text-white placeholder:text-mist-400/70 focus:border-electric-400/70 focus:outline-none"
+          className="h-11 w-0 min-w-0 flex-1 rounded-xl border border-white/10 bg-white/[0.04] px-3.5 text-sm text-white placeholder:text-mist-400/70 focus:border-electric-400/70 focus:outline-none"
         />
         <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden />
         <SubmitButton size="md" className="h-11">Suscribirme</SubmitButton>

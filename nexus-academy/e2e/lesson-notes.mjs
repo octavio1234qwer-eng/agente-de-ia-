@@ -126,7 +126,10 @@ await mobile.waitForSelector("#lesson-note-status:has-text('Nota guardada')", { 
 await mobile.goto(`${BASE}/cuenta/notas`);
 const overflow = await mobile.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
 check(!overflow && (await mobile.isVisible("text=Nota desde el celular")), "funciona en móvil sin desbordarse");
-const activeTab = await mobile.evaluate(() => { const a = document.querySelector('nav[aria-label="Mi cuenta"] [aria-current="page"]'); const r = a.getBoundingClientRect(); return r.left >= 0 && r.right <= window.innerWidth; });
+// El menú se desplaza al hidratar la página: se espera a que la pestaña activa quede a la vista.
+const activeTab = await mobile
+  .waitForFunction(() => { const a = document.querySelector('nav[aria-label="Mi cuenta"] [aria-current="page"]'); const r = a?.getBoundingClientRect(); return r && r.left >= 0 && r.right <= window.innerWidth; }, null, { timeout: 8000 })
+  .then(() => true, () => false);
 check(activeTab, "en móvil la pestaña activa del menú queda visible");
 await mobile.screenshot({ path: process.env.E2E_SHOT ?? "/tmp/lesson-notes-mobile.png", fullPage: true });
 

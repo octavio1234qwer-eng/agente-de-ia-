@@ -10,12 +10,15 @@ import { LinkButton } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { formatDate } from "@/lib/utils";
 import { LessonSearchForm } from "@/components/search/lesson-search-form";
+import { LearningStatsCard } from "@/components/account/learning-stats";
+import { getLearningStats } from "@/lib/data/learning-stats";
 
 export const metadata: Metadata = { title: "Mis cursos" };
 
 export default async function MyCoursesPage() {
   const user = await requireUser("/cuenta/cursos");
   const supabase = await createClient();
+  const statsPromise = getLearningStats();
   const { data } = await supabase
     .from("enrollments")
     .select("id, progress_percent, completed_at, last_activity_at, created_at, course:courses(id, slug, title, cover_url, lessons_count, category:categories(color, icon))")
@@ -35,8 +38,10 @@ export default async function MyCoursesPage() {
     );
   }
 
+  const stats = await statsPromise;
   return (
     <div className="space-y-4">
+      {stats && <LearningStatsCard stats={stats} />}
       <LessonSearchForm courses={enrollments.map((e) => ({ slug: e.course!.slug, title: e.course!.title }))} className="mb-2" />
       {enrollments.map((e) => {
         const c = e.course!;

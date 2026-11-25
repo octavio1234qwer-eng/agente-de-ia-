@@ -37,7 +37,7 @@ export function Footer() {
   return (
     <footer className="relative mt-24 border-t border-white/[0.06] bg-ink-950">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-electric-500/40 to-transparent" />
-      <div className="mx-auto grid max-w-7xl gap-12 px-4 py-14 sm:px-6 lg:grid-cols-[1.3fr_2fr] lg:px-8">
+      <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] gap-12 px-4 py-14 sm:px-6 lg:grid-cols-[1.3fr_2fr] lg:px-8">
         <div className="space-y-5">
           <Logo />
           <p className="max-w-sm text-sm leading-relaxed text-mist-400">

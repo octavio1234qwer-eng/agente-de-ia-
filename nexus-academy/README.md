@@ -102,8 +102,8 @@ node scripts/create-admin.mjs tu@correo.com UnaClaveSegura123
 |---|---|---|
 | `npm run typecheck` | TypeScript estricto | ✔ |
 | `npx eslint .` | Lint | ✔ |
-| `npm test` | 43 unitarias: precios, cupones, firmas de Stripe y Mercado Pago, búsqueda, notas, marcas de tiempo, LinkedIn, subtítulos SRT→VTT, CSV | 43/43 |
-| `npm run test:db` | 99 pgTAP: RLS, roles, pagos idempotentes, reembolsos, certificados, búsqueda solo en cursos con acceso, notas privadas, subtítulos, reporte de ingresos | 99/99 |
+| `npm test` | 52 unitarias: precios, cupones, firmas de Stripe y Mercado Pago, búsqueda, notas, marcas de tiempo, LinkedIn, subtítulos SRT→VTT, CSV, racha y meta semanal | 52/52 |
+| `npm run test:db` | 121 pgTAP: RLS, roles, pagos idempotentes, reembolsos, certificados, búsqueda solo en cursos con acceso, notas privadas, subtítulos, reporte de ingresos, racha de estudio (solo actividad real y propia) | 121/121 |
 | `node e2e/auth-account.mjs` | Registro, inscripción, favoritos, perfil, sesión, recuperación por correo | ✔ |
 | `node e2e/payments.mjs` | Webhook firmado → pago → acceso; repetición; firma falsa; importe alterado; cupón 100 % | 10/10 |
 | `node e2e/classroom.mjs` | Lecciones bloqueadas, vista previa, progreso, evaluación, certificado, PDF, IA sin clave | 17/17 |
@@ -120,6 +120,7 @@ node scripts/create-admin.mjs tu@correo.com UnaClaveSegura123
 | `node e2e/seo.mjs` | robots.txt (bloquea áreas privadas, no certificados), sitemap.xml (solo cursos/paquetes publicados, todas las URLs responden 200), JSON-LD de organización, buscador y curso | 22/22 |
 | `node e2e/admin-export.mjs` | CSV de pedidos y alumnos: BOM, encabezados, RFC/razón social, importes, fórmulas neutralizadas, filtros de fecha y estado, 400/403/401/404, auditoría | 19/19 |
 | `node e2e/admin-revenue.mjs` | Ingresos por producto: bruto, descuento, reembolso repartido al centavo, neto, totales, periodos, CSV idéntico a la página, permisos | 14/14 |
+| `node e2e/learning-streaks.mjs` | Racha y meta semanal en «Mis cursos»: completar una lección la inicia, historial de días, mejor racha, meta (validada en servidor), zona horaria detectada del dispositivo y validada en la base, móvil 360 px, privacidad | 22/22 |
 | `node e2e/links.mjs` | Enlaces internos rotos | 0 |
 | `npx next build` | Build de producción | ✔ |
 
