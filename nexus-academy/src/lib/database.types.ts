@@ -946,6 +946,11 @@ isOneToOne: false
               "course_id": string,"course_slug": string,"course_title": string,"lesson_id": string,"lesson_title": string,"lesson_type": Database["public"]['Enums']["lesson_type"],"module_title": string,"rank": number,"snippet": string
             }[]
                            },
+"streak_reminder_candidates":
+{ Args: { "p_from_hour"?: number,"p_limit"?: number,"p_min_streak"?: number,"p_now"?: string,"p_to_hour"?: number }; Returns: {
+              "course_slug": string,"course_title": string,"email": string,"full_name": string,"local_date": string,"streak": number,"time_zone": string,"user_id": string
+            }[]
+                           },
 "submit_quiz_attempt":
 { Args: { "p_answers": Json,"p_lesson_id": string }; Returns: Json
                            }
