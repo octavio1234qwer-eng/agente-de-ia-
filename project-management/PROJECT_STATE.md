@@ -19,6 +19,11 @@
 - Conclusión: el cuello de botella es la distribución/audiencia, no la cantidad de productos.
 - Ya existen 2 tareas programadas de ventas (2 h y 6 h) en otras sesiones; la de 2 h estaba bloqueada esperando aprobación de un despliegue de Vercel.
 
+## Ventas y canales (2026-11-25)
+- Embudo activo: https://octavius724.gumroad.com/l/bhbdx → cupón GRACIAS20 → Paquete Negocio y Hogar. Detalles en CANALES_VENTA.md.
+- Product Hunt: borrador listo para el 2-dic, falta la confirmación del dueño.
+- El dueño mantiene activas las 2 tareas programadas de ventas (2 h y 6 h).
+
 ## Qué falta
 - **Interfaz web** (Command Center, CotizaFácil UI, PDF, página comercial). Hoy solo hay API.
 - Despliegue real (no está publicado en ninguna URL).

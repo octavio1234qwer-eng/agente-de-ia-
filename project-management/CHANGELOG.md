@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [0.2.1] — 2026-11-25 — Canales de venta y embudo
+- Embudo Gumroad: regalo gratis `bhbdx` (guía de precios + calculadora) publicado y verificado; cupón `GRACIAS20` (20 % en el Paquete Negocio y Hogar, vence 31-dic); recibo automático con la oferta.
+- 2 publicaciones del regalo programadas (LinkedIn y X, 26-nov).
+- Product Hunt: borrador de *The One Ad* para el 2-dic-2026 con miniatura y capturas (pendiente de confirmación del dueño).
+- `project-management/CANALES_VENTA.md`: embudo, canales nuevos, kit de venta del servicio de agente de WhatsApp.
+
 ## [0.2.0] — 2026-11-22 — Sesión 2: integración Gumroad real
 ### Añadido
 - `packages/integrations/src/gumroad.ts`: sincronización de solo lectura (productos paginados + ventas + comisiones + reembolsos), idempotente.

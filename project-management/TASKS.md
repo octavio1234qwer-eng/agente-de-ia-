@@ -19,7 +19,11 @@
 
 - [x] Integración Gumroad (solo lectura) verificada con datos reales — 2026-11-22
 
+- [x] Embudo Gumroad (regalo gratis + cupón + recibo) publicado y verificado — 2026-11-25
+- [x] Borrador Product Hunt de The One Ad listo — 2026-11-25
+
 ## 🔄 En desarrollo
+- Lanzamiento Product Hunt: espera confirmación del dueño para enviarse.
 - (ninguna)
 
 ## ⏳ Pendientes (por prioridad)
@@ -33,4 +37,6 @@
 8. Growth Engine: embudos, experimentos A/B, atribución por canal.
 9. Endpoint para editar `service_costs` (registro de costes en la app).
 10. Integración de métricas de Buffer (impresiones/interacciones por canal) en Analytics.
-11. Limpieza del repo raíz: archivos `download*` subidos con nombre incorrecto (son `.dockerignore`, `.gitignore`, `.node-version` del agente Mantarraya) — confirmar con el propietario antes de tocar.
+11. Reporte de embudo en Analytics (descargas del regalo → ventas con GRACIAS20).
+12. Pinterest: cuando el dueño cree tableros, programar pines de imprimibles con las portadas de Gumroad.
+13. Limpieza del repo raíz: archivos `download*` subidos con nombre incorrecto (son `.dockerignore`, `.gitignore`, `.node-version` del agente Mantarraya) — confirmar con el propietario antes de tocar.
