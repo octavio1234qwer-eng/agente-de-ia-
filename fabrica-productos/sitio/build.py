@@ -41,6 +41,14 @@ def page(slug, title, desc, h1, body, faq, script=""):
 def cta(perm, title, price, text):
     return f'<a class="cta" href="{G}{perm}"><strong>{title} · {price} USD</strong>{text}</a>'
 
+def regalo():
+    return ('<div class="card"><strong>Regalo gratis:</strong> guía corta de precios (margen vs. recargo, punto de equilibrio e IVA) '
+            'con calculadora para Excel o Google Sheets. <a href="https://octavius724.gumroad.com/l/bhbdx">Descárgala gratis →</a></div>')
+
+REGALO = {"como-calcular-la-merma", "costo-de-una-receta-en-excel", "cuanto-cobrar-por-un-platillo", "ingenieria-de-menu",
+          "margen-de-ganancia-tienda-abarrotes", "punto-de-equilibrio-restaurante", "cuanto-cobrar-por-tamales",
+          "cuanto-cobrar-por-vaso-de-ponche", "anticipo-freelancer-clientes-que-no-pagan"}
+
 urls = []
 # ---------- Food cost ----------
 body = """<div class="card"><p>Agrega cada ingrediente de la receta con lo que pagas, la cantidad que compras y su merma.
@@ -53,6 +61,7 @@ La cantidad que usa la receta va en la misma unidad (por ejemplo kg).</p>
 <label>¿El precio del menú incluye IVA (16 %)?</label><select id="iva"><option value="1">Sí</option><option value="0">No</option></select>
 <label>Food cost objetivo (%)</label><input id="obj" type="number" value="30">
 <p><button onclick="calc()">Calcular</button></p><div class="res" id="out">Llena los datos y presiona Calcular.</div></div>"""
+body += regalo()
 body += cta("qkcnlf", "¿Tienes más de 3 platillos?", 12, "La plantilla de Excel costea todo tu menú, guarda tus insumos y clasifica cada platillo en estrella, caballo de batalla, rompecabezas o perro.")
 body += """<h2>Cómo se calcula el food cost</h2><p>El <strong>food cost</strong> es el porcentaje del precio de venta que se va en materia prima.
 Se calcula así: <em>costo por porción ÷ precio de venta sin IVA × 100</em>. Si tu platillo cuesta $40 de ingredientes y lo vendes en $135 con IVA
@@ -135,7 +144,7 @@ for f in sorted((Path(__file__).parent / "articulos").glob("*.html")):
     m = json.loads(meta_raw)
     slug = f.stem
     tool = f'<p><a href="{m["tool"]}">Prueba la calculadora gratis →</a></p>' if m["tool"] != "/" else ""
-    body = html + tool + cta(*m["cta"][:2], m["cta"][2], m["cta"][3])
+    body = html + tool + (regalo() if slug in REGALO else "") + cta(*m["cta"][:2], m["cta"][2], m["cta"][3])
     urls.append(page(f"blog/{slug}", m["title"] + " | Calcula tu Negocio", m["desc"], m["h1"], body, m["faq"]))
     arts.append((slug, m["h1"], m["desc"]))
 listado = "".join(f'<div class="card"><h2 style="margin-top:0"><a href="/blog/{s}/">{t}</a></h2><p>{d}</p></div>' for s, t, d in arts)
