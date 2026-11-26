@@ -822,6 +822,9 @@ isOneToOne: false
 "admin_grant_course":
 { Args: { "p_course_id": string,"p_user_id": string }; Returns: undefined
                            },
+"admin_learning_activity":
+{ Args: { "p_days"?: number,"p_now"?: string,"p_tz"?: string }; Returns: Json
+                           },
 "admin_revenue_by_product":
 { Args: { "p_from"?: string,"p_to"?: string }; Returns: {
               "currency": string,"discount_cents": number,"gross_cents": number,"item_type": string,"net_cents": number,"orders": number,"product_id": string,"refunded_cents": number,"slug": string,"title": string,"units": number
