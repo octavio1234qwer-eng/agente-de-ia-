@@ -71,12 +71,14 @@ saber qué sigue. Marcar `[x]` solo cuando esté construido **y probado**.
 
 - [x] Admin: panel «Actividad de estudio» en el dashboard (alumnos que estudiaron hoy, en 7 días y en el periodo; lecciones completadas; días de estudio promedio por alumno; gráfica por día y por 12 semanas con tabla accesible). Solo conteos, nunca qué estudió cada alumno; el admin no cuenta como alumno; el KPI «Aprendiendo activamente» ahora usa esta actividad real. pgTAP 11/11 nuevas (144), E2E `e2e/admin-activity.mjs` 14/14, axe sin infracciones, `e2e/admin.mjs` sigue pasando
 
+- [x] Admin: «Embudo de alumnos» por curso (`/admin/cursos/[id]/embudo`): inscritos, empezaron, sin empezar, terminaron y tasa de finalización; por lección, en el orden del temario, cuántos la completaron y cuántos están detenidos en ella (primera lección pendiente de quien empezó y no terminó), con las 3 lecciones donde más se detienen. Solo alumnos con acceso vigente y solo conteos. pgTAP 9/9 nuevas (153), 3 unitarias (58), E2E `e2e/course-funnel.mjs` 10/10 (incluye avanzar una lección en el aula y ver cómo cambia), axe sin infracciones
+
 ## Siguiente (en orden)
-- [ ] Admin: embudo por curso — en qué lección se detienen los alumnos (progreso real) y tasa de finalización, para mejorar el contenido
+- [ ] Alumno: «Descargar mis datos» en Configuración (perfil, inscripciones, progreso, notas, certificados, compras y actividad en JSON) para atender derechos ARCO (LFPDPPP) sin intervención manual
 - [ ] Despliegue (Vercel + Supabase en la nube) — requiere cuentas/credenciales del usuario
 
 ## Ventas (agente)
-- Gumroad: 25+ productos publicados; 0 ventas en noviembre (revisado 2026-11-25 19:55 UTC).
+- Gumroad: 25+ productos publicados; 0 ventas en noviembre (revisado 2026-11-26 01:00 UTC).
 - Buffer "My organization": LinkedIn 5 y X 6 publicaciones programadas (revisado 2026-11-25 20:15 UTC), cola hasta el 2026-12-01; no hizo falta programar más. Entre 19:51 y 19:53 UTC aparecieron 4 publicaciones nuevas (guía gratis de precios y blog calculatunegocio) que no programó este agente. Verificado: el Paquete Fiestas cuesta $12 (los productos por separado suman $19), así que esa publicación es correcta. La de LinkedIn del 27-nov (16:17 UTC) anuncia 40 % con el código BLACKFRIDAY, que la última vez estaba inactivo; no hay herramienta para listar códigos, así que el usuario debe confirmar que esté activo.
 - Pinterest casi sin uso: oportunidad para imprimibles (lotería, planners, menú) con portada del producto.
 

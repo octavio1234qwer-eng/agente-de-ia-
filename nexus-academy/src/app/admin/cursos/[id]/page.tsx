@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowDown, ArrowUp, ExternalLink, Pencil, Plus } from "lucide-react";
+import { ArrowDown, ArrowUp, ExternalLink, Filter, Pencil, Plus } from "lucide-react";
 import { requireAdmin } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { AdminHeader, Panel } from "@/components/admin/ui";
@@ -33,7 +33,12 @@ export default async function EditCourse({ params, searchParams }: { params: Pro
       <AdminHeader
         title={course.title}
         description={`${course.lessons_count} lecciones · ${course.students_count} alumnos`}
-        actions={<Link href={`/cursos/${course.slug}`} target="_blank" className="inline-flex h-9 items-center gap-2 rounded-xl border border-white/10 px-3 text-sm text-mist-200 hover:bg-white/[0.06]"><ExternalLink className="size-4" /> Ver página pública</Link>}
+        actions={
+          <>
+            <Link href={`/admin/cursos/${course.id}/embudo`} className="inline-flex h-9 items-center gap-2 rounded-xl border border-white/10 px-3 text-sm text-mist-200 hover:bg-white/[0.06]"><Filter className="size-4" aria-hidden /> Embudo de alumnos</Link>
+            <Link href={`/cursos/${course.slug}`} target="_blank" className="inline-flex h-9 items-center gap-2 rounded-xl border border-white/10 px-3 text-sm text-mist-200 hover:bg-white/[0.06]"><ExternalLink className="size-4" /> Ver página pública</Link>
+          </>
+        }
       />
       {creado && <p role="status" className="mb-4 rounded-xl border border-emerald-400/25 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">Curso creado. Ahora arma el temario.</p>}
       {archivado && <p role="status" className="mb-4 rounded-xl border border-amber-400/25 bg-amber-500/10 px-4 py-3 text-sm text-amber-200">El curso tiene alumnos inscritos, así que se archivó en lugar de eliminarse para no quitarles el acceso.</p>}
