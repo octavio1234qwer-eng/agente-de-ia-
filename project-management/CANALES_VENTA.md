@@ -26,7 +26,7 @@ Cliente
 
 | Canal | Estado | Qué falta | Quién |
 |---|---|---|---|
-| **Product Hunt** (cuenta octavio1) | Borrador listo de *The One Ad* para el 2-dic-2026, con miniatura y 2 capturas | Confirmar el envío (vista previa mostrada al dueño) | Dueño confirma |
+| **Product Hunt** (cuenta octavio1) | **Enviado y programado** (launch id 1331091), público el 2-dic-2026 00:00 PT. Publicaciones de apoyo en LinkedIn (09:15) y X (10:05) ese día | El dueño debería responder comentarios en Product Hunt ese día | Dueño |
 | **Pinterest** (conectado en Buffer) | Sin tableros: Buffer no puede publicar | Crear 2 tableros en la app de Pinterest: "Imprimibles para fiestas" y "Plantillas para negocio". Ideal para lotería, planner XV, intercambio, agenda | Dueño (2 min) |
 | **Afiliados de Gumroad** | No activado | Activar afiliados en Gumroad (Settings → Affiliates) con 30 % de comisión: contadores pueden vender el Kit RESICO, organizadores de eventos el planner | Dueño (UI) |
 | **Gumroad Discover** | Etiquetas y categoría en el producto nuevo | Revisar etiquetas de los demás productos | Agente |

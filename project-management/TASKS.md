@@ -23,7 +23,7 @@
 - [x] Borrador Product Hunt de The One Ad listo — 2026-11-25
 
 ## 🔄 En desarrollo
-- Lanzamiento Product Hunt: espera confirmación del dueño para enviarse.
+- Lanzamiento Product Hunt de The One Ad: programado para el 2-dic-2026 (id 1331091). Revisar comentarios y resultados ese día.
 - (ninguna)
 
 ## ⏳ Pendientes (por prioridad)
