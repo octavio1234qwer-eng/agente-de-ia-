@@ -1,4 +1,5 @@
 import { escapeHtml, formatMoney, formatDate } from "@/lib/utils";
+import { BRAND } from "@/lib/brand";
 
 /**
  * Plantillas HTML de correo. Estilos en línea (los clientes de correo no
@@ -11,7 +12,7 @@ type LayoutOptions = { preheader: string; body: string; unsubscribe?: string; si
 
 function layout({ preheader, body, unsubscribe, siteUrl }: LayoutOptions) {
   return `<!doctype html>
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark"><title>NEXUS ACADEMY</title></head>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark"><title>${BRAND.name}</title></head>
 <body style="margin:0;padding:0;background:#05060b;font-family:Segoe UI,Helvetica,Arial,sans-serif;color:#e5e7f0;">
 <span style="display:none;max-height:0;overflow:hidden;opacity:0">${escapeHtml(preheader)}</span>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#05060b;padding:32px 12px;">
@@ -19,13 +20,13 @@ function layout({ preheader, body, unsubscribe, siteUrl }: LayoutOptions) {
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;">
 <tr><td style="padding:0 8px 20px 8px;">
 <a href="${siteUrl}" style="text-decoration:none;color:#fff;font-weight:700;letter-spacing:4px;font-size:14px;">
-<span style="display:inline-block;width:10px;height:10px;border-radius:3px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);margin-right:8px;"></span>NEXUS ACADEMY</a>
+<span style="display:inline-block;width:10px;height:10px;border-radius:3px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);margin-right:8px;"></span>${BRAND.name}</a>
 </td></tr>
 <tr><td style="background:#0b0e1a;border:1px solid #1d2340;border-radius:20px;padding:32px 28px;">
 ${body}
 </td></tr>
 <tr><td style="padding:20px 8px;color:#6b7290;font-size:12px;line-height:18px;">
-Recibes este correo por tu cuenta en NEXUS ACADEMY.${unsubscribe ? ` <a href="${unsubscribe}" style="color:#8b93b8;">Dejar de recibir estos correos</a>.` : ""}
+Recibes este correo por tu cuenta en ${BRAND.name}.${unsubscribe ? ` <a href="${unsubscribe}" style="color:#8b93b8;">Dejar de recibir estos correos</a>.` : ""}
 </td></tr>
 </table></td></tr></table></body></html>`;
 }
@@ -39,17 +40,17 @@ const button = (label: string, href: string) =>
 export function welcomeEmail(o: { name: string; siteUrl: string }): EmailContent {
   const name = o.name || "estudiante";
   return {
-    subject: "Bienvenido a NEXUS ACADEMY",
+    subject: `Bienvenido a ${BRAND.name}`,
     html: layout({
       siteUrl: o.siteUrl,
       preheader: "Tu cuenta está lista. Empieza a aprender hoy.",
       body:
         h1(`Hola, ${name}`) +
-        p("Tu cuenta en <strong style=\"color:#fff\">NEXUS ACADEMY</strong> está lista. Aprende hoy. Domina el mañana.") +
-        p("Explora el catálogo, inscríbete a los cursos gratuitos y usa NEXUS AI para resolver dudas mientras estudias.") +
+        p(`Tu cuenta en <strong style="color:#fff">${BRAND.name}</strong> está lista. ${BRAND.tagline}`) +
+        p(`Explora el catálogo, inscríbete a los cursos gratuitos y usa ${BRAND.aiName} para resolver dudas mientras estudias.`) +
         button("Explorar cursos", `${o.siteUrl}/cursos`),
     }),
-    text: `Hola, ${name}. Tu cuenta en NEXUS ACADEMY está lista. Explora los cursos: ${o.siteUrl}/cursos`,
+    text: `Hola, ${name}. Tu cuenta en ${BRAND.name} está lista. Explora los cursos: ${o.siteUrl}/cursos`,
   };
 }
 
@@ -100,7 +101,7 @@ ${o.discountCents > 0 ? `<tr><td style="padding:4px 0;color:#8b93b8;font-size:13
 
 export function passwordResetEmail(o: { link: string; siteUrl: string }): EmailContent {
   return {
-    subject: "Restablece tu contraseña de NEXUS ACADEMY",
+    subject: `Restablece tu contraseña de ${BRAND.name}`,
     html: layout({
       siteUrl: o.siteUrl,
       preheader: "Usa este enlace para crear una nueva contraseña.",
@@ -154,7 +155,7 @@ export function newCourseEmail(o: { courseTitle: string; subtitle: string | null
     html: layout({
       siteUrl: o.siteUrl,
       unsubscribe: o.unsubscribe,
-      preheader: o.subtitle ?? "Nuevo lanzamiento en NEXUS ACADEMY",
+      preheader: o.subtitle ?? `Nuevo lanzamiento en ${BRAND.name}`,
       body:
         h1("Nuevo lanzamiento") +
         p(`<strong style="color:#fff">${escapeHtml(o.courseTitle)}</strong>`) +

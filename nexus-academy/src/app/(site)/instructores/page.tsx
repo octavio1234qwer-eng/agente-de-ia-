@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { Avatar } from "@/components/ui/avatar";
+import { BRAND } from "@/lib/brand";
 
 export const metadata: Metadata = { title: "Instructores" };
 
@@ -15,7 +16,7 @@ export default async function InstructorsPage() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
       <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl">Instructores</h1>
-      <p className="mt-3 max-w-2xl text-mist-300">Los equipos que diseñan los programas de NEXUS ACADEMY.</p>
+      <p className="mt-3 max-w-2xl text-mist-300">Los equipos que diseñan los programas de {BRAND.name}.</p>
       <div className="mt-10 grid gap-6 md:grid-cols-2">
         {(data ?? []).map((i) => {
           const courses = (i.courses ?? []).filter((c) => c.status === "published");

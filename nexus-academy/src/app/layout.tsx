@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { BRAND } from "@/lib/brand";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
@@ -9,11 +10,11 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: { default: "NEXUS ACADEMY · Aprende hoy. Domina el mañana.", template: "%s · NEXUS ACADEMY" },
+  title: { default: `${BRAND.name} · ${BRAND.tagline}`, template: `%s · ${BRAND.name}` },
   description:
     "Plataforma educativa con cursos de desarrollo, IA, datos, diseño y negocios. Aula virtual, tutor con inteligencia artificial y certificados verificables.",
-  applicationName: "NEXUS ACADEMY",
-  openGraph: { type: "website", locale: "es_MX", siteName: "NEXUS ACADEMY" },
+  applicationName: BRAND.name,
+  openGraph: { type: "website", locale: "es_MX", siteName: BRAND.name },
   robots: { index: true, follow: true },
 };
 

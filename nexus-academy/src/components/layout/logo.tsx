@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { BRAND, brandWords } from "@/lib/brand";
 
 export function Logo({ className }: { className?: string }) {
+  const [first, rest] = brandWords(BRAND.name);
   return (
     <Link href="/" className={cn("group inline-flex items-center gap-2.5", className)}>
       <span className="relative grid size-8 place-items-center rounded-[10px] bg-gradient-to-br from-electric-500 to-violet-600 shadow-[0_0_24px_-4px_rgb(107_149_255_/_0.8)]">
@@ -10,7 +12,8 @@ export function Logo({ className }: { className?: string }) {
         </svg>
       </span>
       <span className="text-[15px] font-semibold tracking-[0.18em] text-white">
-        NEXUS <span className="font-normal text-mist-300">ACADEMY</span>
+        {first}
+        {rest && <> <span className="font-normal text-mist-300">{rest}</span></>}
       </span>
       <span className="sr-only">, inicio</span>
     </Link>

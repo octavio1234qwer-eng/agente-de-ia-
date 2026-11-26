@@ -12,6 +12,7 @@ import { CategoryIcon } from "@/components/ui/icon";
 import { Avatar } from "@/components/ui/avatar";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Rating } from "@/components/course/rating";
+import { BRAND } from "@/lib/brand";
 
 const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, "");
 
@@ -22,7 +23,7 @@ const jsonLd = {
     {
       "@type": "EducationalOrganization",
       "@id": `${siteUrl}/#organization`,
-      name: "NEXUS ACADEMY",
+      name: BRAND.name,
       url: siteUrl,
       logo: `${siteUrl}/icon.svg`,
       description: "Cursos prácticos en línea con aula virtual, tutor de inteligencia artificial y certificados verificables.",
@@ -30,7 +31,7 @@ const jsonLd = {
     {
       "@type": "WebSite",
       "@id": `${siteUrl}/#website`,
-      name: "NEXUS ACADEMY",
+      name: BRAND.name,
       url: siteUrl,
       inLanguage: "es",
       publisher: { "@id": `${siteUrl}/#organization` },
@@ -162,7 +163,7 @@ export default async function HomePage() {
                 <div className="flex items-center gap-3 border-b border-white/[0.06] pb-4">
                   <span className="grid size-10 place-items-center rounded-xl bg-gradient-to-br from-electric-500 to-violet-600"><Bot className="size-5 text-white" aria-hidden /></span>
                   <div>
-                    <p className="font-semibold text-white">NEXUS AI</p>
+                    <p className="font-semibold text-white">{BRAND.aiName}</p>
                     <p className="text-xs text-mist-400">Tu tutor personal, dentro de cada lección</p>
                   </div>
                 </div>
@@ -178,7 +179,7 @@ export default async function HomePage() {
                     </li>
                   ))}
                 </ul>
-                <div className="mt-5"><LinkButton href="/nexus-ai" variant="secondary" className="w-full">Probar NEXUS AI</LinkButton></div>
+                <div className="mt-5"><LinkButton href="/nexus-ai" variant="secondary" className="w-full">Probar {BRAND.aiName}</LinkButton></div>
               </div>
             </div>
           </div>

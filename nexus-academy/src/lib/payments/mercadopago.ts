@@ -2,6 +2,10 @@ import "server-only";
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { requireEnv, siteUrl } from "@/lib/env";
 import { centsToDecimal, type CheckoutRedirect, type CheckoutRequest } from "./types";
+import { BRAND } from "@/lib/brand";
+
+/** Texto del estado de cuenta: letras y números de la marca (máx. 22). */
+const statementDescriptor = () => BRAND.name.normalize("NFD").replace(/[^A-Za-z0-9]/g, "").toUpperCase().slice(0, 22) || "ACADEMIA";
 
 const API = "https://api.mercadopago.com";
 
@@ -42,7 +46,7 @@ export async function createMercadoPagoCheckout(req: CheckoutRequest): Promise<C
       back_urls: { success: req.successUrl, failure: req.cancelUrl, pending: req.successUrl },
       auto_return: "approved",
       notification_url: `${siteUrl}/api/webhooks/mercadopago`,
-      statement_descriptor: "NEXUSACADEMY",
+      statement_descriptor: statementDescriptor(),
       binary_mode: false,
     }),
   });

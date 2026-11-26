@@ -7,6 +7,7 @@ import { linkedInShareUrl } from "@/lib/certificates/linkedin";
 import { getPublicCertificate } from "@/lib/data/certificates";
 import { formatDate } from "@/lib/utils";
 import { CopyLink } from "@/components/ui/copy-link";
+import { BRAND } from "@/lib/brand";
 
 type Params = { code: string };
 const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, "");
@@ -17,14 +18,14 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   if (!cert) notFound();
   const title = `Certificado de ${cert.student_name} · ${cert.course_title}`;
   const description = cert.revoked_at
-    ? "Este certificado de NEXUS ACADEMY fue revocado."
-    : `${cert.student_name} completó «${cert.course_title}» en NEXUS ACADEMY. Certificado verificable con ID ${cert.code}.`;
+    ? `Este certificado de ${BRAND.name} fue revocado.`
+    : `${cert.student_name} completó «${cert.course_title}» en ${BRAND.name}. Certificado verificable con ID ${cert.code}.`;
   return {
     title,
     description,
     robots: { index: false },
     alternates: { canonical: `/certificados/${cert.code}` },
-    openGraph: { title, description, type: "website", url: `/certificados/${cert.code}`, siteName: "NEXUS ACADEMY" },
+    openGraph: { title, description, type: "website", url: `/certificados/${cert.code}`, siteName: BRAND.name },
     twitter: { card: "summary_large_image", title, description },
   };
 }
@@ -41,14 +42,14 @@ export default async function CertificatePage({ params }: { params: Promise<Para
     <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
       <div className={`mb-6 flex items-center gap-3 rounded-2xl border px-5 py-4 text-sm ${revoked ? "border-red-400/30 bg-red-500/10 text-red-200" : "border-emerald-400/30 bg-emerald-500/10 text-emerald-200"}`}>
         {revoked ? <ShieldAlert className="size-5" /> : <BadgeCheck className="size-5" />}
-        {revoked ? "Este certificado fue revocado y ya no es válido." : "Certificado auténtico emitido por NEXUS ACADEMY."}
+        {revoked ? "Este certificado fue revocado y ya no es válido." : `Certificado auténtico emitido por ${BRAND.name}.`}
       </div>
 
       <article className="glass-strong glow-border relative overflow-hidden rounded-[28px] p-8 sm:p-14" aria-label="Certificado">
         <div className="pointer-events-none absolute -left-20 -top-20 size-72 rounded-full bg-electric-600/25 blur-[100px]" />
         <div className="pointer-events-none absolute -bottom-24 -right-16 size-72 rounded-full bg-violet-600/25 blur-[100px]" />
         <div className="relative text-center">
-          <p className="text-xs font-semibold tracking-[0.5em] text-electric-300">NEXUS ACADEMY</p>
+          <p className="text-xs font-semibold tracking-[0.5em] text-electric-300">{BRAND.name}</p>
           <h1 className="mt-6 text-2xl font-semibold tracking-[0.18em] text-white sm:text-3xl">CERTIFICADO DE FINALIZACIÓN</h1>
           <p className="mt-8 text-mist-300">Se otorga el presente certificado a</p>
           <p className="mt-3 text-4xl font-semibold tracking-tight text-gradient sm:text-5xl">{cert.student_name}</p>

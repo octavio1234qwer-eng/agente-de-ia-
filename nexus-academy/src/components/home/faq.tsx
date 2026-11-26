@@ -1,12 +1,13 @@
 import { ChevronDown } from "lucide-react";
+import { BRAND } from "@/lib/brand";
 
 const faqs = [
   { q: "¿Cómo accedo a un curso después de pagar?", a: "En cuanto el proveedor de pagos confirma la transacción, el acceso se activa automáticamente y recibes un correo de confirmación. El curso aparece en «Mis cursos» y puedes empezar de inmediato." },
-  { q: "¿Qué métodos de pago aceptan?", a: "Tarjetas de crédito y débito mediante Stripe, Mercado Pago (tarjetas y otros medios disponibles en México) y PayPal. Los pagos se procesan en las páginas seguras de cada proveedor: NEXUS ACADEMY nunca almacena los datos de tu tarjeta." },
+  { q: "¿Qué métodos de pago aceptan?", a: `Tarjetas de crédito y débito mediante Stripe, Mercado Pago (tarjetas y otros medios disponibles en México) y PayPal. Los pagos se procesan en las páginas seguras de cada proveedor: ${BRAND.name} nunca almacena los datos de tu tarjeta.` },
   { q: "¿El acceso a los cursos caduca?", a: "No. Los cursos que compras quedan disponibles en tu cuenta sin fecha de vencimiento, incluidas las actualizaciones de contenido." },
   { q: "¿Puedo pedir un reembolso?", a: "Sí. Consulta nuestra política de reembolsos: puedes solicitarlo dentro de los 14 días posteriores a la compra si no has completado más del 30 % del curso." },
-  { q: "¿Los certificados tienen validez?", a: "Cada certificado incluye un identificador único y un código QR. Cualquier persona puede verificar su autenticidad en la página de verificación de NEXUS ACADEMY." },
-  { q: "¿Qué es NEXUS AI?", a: "Es el tutor con inteligencia artificial integrado en el aula. Responde preguntas sobre la lección que estás viendo, explica conceptos, crea resúmenes, genera preguntas de práctica y te ayuda a armar tu ruta de aprendizaje." },
+  { q: "¿Los certificados tienen validez?", a: `Cada certificado incluye un identificador único y un código QR. Cualquier persona puede verificar su autenticidad en la página de verificación de ${BRAND.name}.` },
+  { q: `¿Qué es ${BRAND.aiName}?`, a: "Es el tutor con inteligencia artificial integrado en el aula. Responde preguntas sobre la lección que estás viendo, explica conceptos, crea resúmenes, genera preguntas de práctica y te ayuda a armar tu ruta de aprendizaje." },
   { q: "¿Puedo solicitar factura?", a: "Sí. Durante el checkout puedes registrar tu RFC y razón social; quedan asociados a tu pedido para emitir el comprobante fiscal correspondiente." },
 ];
 

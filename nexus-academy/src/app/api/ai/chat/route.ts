@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { config, integrations } from "@/lib/env";
 import { catalogContext, lessonContext, streamTutorReply, type ChatTurn } from "@/lib/ai/nexus";
+import { BRAND } from "@/lib/brand";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -19,9 +20,9 @@ const json = (status: number, error: string) => Response.json({ error }, { statu
 
 export async function POST(request: Request) {
   const user = await getCurrentUser();
-  if (!user) return json(401, "Inicia sesión para usar NEXUS AI.");
+  if (!user) return json(401, `Inicia sesión para usar ${BRAND.aiName}.`);
   if (!integrations.ai()) {
-    return json(503, "NEXUS AI aún no está activado en esta instalación (falta la clave del modelo de IA en el servidor).");
+    return json(503, `${BRAND.aiName} aún no está activado en esta instalación (falta la clave del modelo de IA en el servidor).`);
   }
   const parsed = schema.safeParse(await request.json().catch(() => ({})));
   if (!parsed.success) return json(400, parsed.error.issues[0].message);
@@ -117,7 +118,7 @@ export async function POST(request: Request) {
         await admin.from("ai_conversations").update({ updated_at: new Date().toISOString() }).eq("id", convId);
       } catch (err) {
         console.error("[nexus-ai]", err);
-        controller.enqueue(encoder.encode(`${text ? "\n\n" : ""}⚠️ NEXUS AI no pudo completar la respuesta. Intenta de nuevo en un momento.`));
+        controller.enqueue(encoder.encode(`${text ? "\n\n" : ""}⚠️ ${BRAND.aiName} no pudo completar la respuesta. Intenta de nuevo en un momento.`));
       } finally {
         controller.close();
       }

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Logo } from "./logo";
 import { NewsletterForm } from "./newsletter-form";
+import { BRAND } from "@/lib/brand";
 
 const columns = [
   {
@@ -10,7 +11,7 @@ const columns = [
       { href: "/cursos?precio=gratis", label: "Cursos gratuitos" },
       { href: "/paquetes", label: "Paquetes" },
       { href: "/instructores", label: "Instructores" },
-      { href: "/nexus-ai", label: "NEXUS AI" },
+      { href: "/nexus-ai", label: BRAND.aiName },
     ],
   },
   {
@@ -62,7 +63,7 @@ export function Footer() {
       </div>
       <div className="border-t border-white/[0.06]">
         <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-6 text-xs text-mist-400 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
-          <p>© {new Date().getFullYear()} NEXUS ACADEMY. Todos los derechos reservados.</p>
+          <p>© {new Date().getFullYear()} {BRAND.name}. Todos los derechos reservados.</p>
           <p>Pagos seguros con Stripe, Mercado Pago y PayPal. Nunca almacenamos datos de tarjetas.</p>
         </div>
       </div>

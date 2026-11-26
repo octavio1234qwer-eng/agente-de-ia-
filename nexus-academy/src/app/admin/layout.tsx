@@ -5,8 +5,9 @@ import { AdminNav } from "@/components/admin/admin-nav";
 import { Logo } from "@/components/layout/logo";
 import { Avatar } from "@/components/ui/avatar";
 import { integrations } from "@/lib/env";
+import { BRAND } from "@/lib/brand";
 
-export const metadata: Metadata = { title: { default: "Administración", template: "%s · Admin NEXUS" }, robots: { index: false } };
+export const metadata: Metadata = { title: { default: "Administración", template: `%s · Admin ${BRAND.name}` }, robots: { index: false } };
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const admin = await requireAdmin();
@@ -15,7 +16,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     { label: "Mercado Pago", ok: integrations.mercadopago() },
     { label: "PayPal", ok: integrations.paypal() },
     { label: "Correo (Resend)", ok: integrations.email() },
-    { label: "NEXUS AI", ok: integrations.ai() },
+    { label: BRAND.aiName, ok: integrations.ai() },
   ];
   return (
     <div className="min-h-dvh">

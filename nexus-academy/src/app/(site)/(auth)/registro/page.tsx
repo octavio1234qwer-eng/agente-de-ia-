@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { getCurrentUser, safeNextPath } from "@/lib/auth";
 import { SignUpForm } from "@/components/auth/auth-forms";
 import { AuthCard } from "../auth-card";
+import { BRAND } from "@/lib/brand";
 
 export const metadata: Metadata = { title: "Crear cuenta" };
 
@@ -14,7 +15,7 @@ export default async function SignUpPage({ searchParams }: { searchParams: Promi
   return (
     <AuthCard
       title="Crea tu cuenta"
-      subtitle="Gratis. Accede a cursos sin costo, NEXUS AI y tu progreso en cualquier dispositivo."
+      subtitle={`Gratis. Accede a cursos sin costo, ${BRAND.aiName} y tu progreso en cualquier dispositivo.`}
       footer={<>¿Ya tienes cuenta? <Link href={`/login${next ? `?next=${encodeURIComponent(nextPath)}` : ""}`} className="font-medium text-electric-300 hover:text-white">Inicia sesión</Link></>}
     >
       <SignUpForm next={nextPath} />

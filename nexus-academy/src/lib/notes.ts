@@ -1,3 +1,4 @@
+import { BRAND } from "@/lib/brand";
 /** Longitud máxima de una nota (la base de datos aplica el mismo límite). */
 export const NOTE_MAX = 5000;
 
@@ -15,7 +16,7 @@ export type ExportNote = {
  */
 export function notesToMarkdown(notes: ExportNote[], exportedAt: Date, formatDate: (d: string | Date) => string): string {
   const esc = (s: string) => s.replace(/([\\`*_[\]#])/g, "\\$1").replace(/\s+/g, " ").trim();
-  const out = ["# Mis notas · NEXUS ACADEMY", "", `Exportado el ${formatDate(exportedAt)}.`, ""];
+  const out = [`# Mis notas · ${BRAND.name}`, "", `Exportado el ${formatDate(exportedAt)}.`, ""];
   if (notes.length === 0) {
     out.push("Todavía no tienes notas.", "");
     return out.join("\n");

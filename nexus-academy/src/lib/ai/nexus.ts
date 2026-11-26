@@ -2,6 +2,7 @@ import "server-only";
 import Anthropic from "@anthropic-ai/sdk";
 import { config, requireEnv } from "@/lib/env";
 import { formatPrice, levelLabel } from "@/lib/utils";
+import { BRAND } from "@/lib/brand";
 
 let client: Anthropic | null = null;
 export function getAnthropic() {
@@ -10,7 +11,7 @@ export function getAnthropic() {
 }
 
 /** Instrucciones estables (primer bloque, cacheable). */
-export const NEXUS_SYSTEM_PROMPT = `Eres NEXUS AI, el tutor educativo de NEXUS ACADEMY, una academia digital en español.
+export const NEXUS_SYSTEM_PROMPT = `Eres ${BRAND.aiName}, el tutor educativo de ${BRAND.name}, una academia digital en español.
 
 Tu objetivo es que el alumno aprenda de verdad, no solo darle respuestas.
 
@@ -31,7 +32,7 @@ export type CatalogEntry = { title: string; slug: string; level: string; priceCe
 export function catalogContext(courses: CatalogEntry[]) {
   if (courses.length === 0) return "Catálogo: no hay cursos publicados.";
   return (
-    "Catálogo publicado de NEXUS ACADEMY (usa solo estos cursos al recomendar):\n" +
+    `Catálogo publicado de ${BRAND.name} (usa solo estos cursos al recomendar):\n` +
     courses
       .map((c) => `- ${c.title} | /cursos/${c.slug} | ${levelLabel[c.level] ?? c.level} | ${c.category ?? "General"} | ${formatPrice(c.priceCents, c.currency)}`)
       .join("\n")

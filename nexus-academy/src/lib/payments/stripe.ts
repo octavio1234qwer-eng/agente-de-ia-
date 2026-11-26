@@ -2,13 +2,14 @@ import "server-only";
 import Stripe from "stripe";
 import { requireEnv } from "@/lib/env";
 import type { CheckoutRedirect, CheckoutRequest } from "./types";
+import { BRAND } from "@/lib/brand";
 
 let client: Stripe | null = null;
 
 export function getStripe() {
   if (!client) {
     client = new Stripe(requireEnv("STRIPE_SECRET_KEY"), {
-      appInfo: { name: "NEXUS ACADEMY" },
+      appInfo: { name: BRAND.name },
       maxNetworkRetries: 2,
     });
   }

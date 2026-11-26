@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Bot, LoaderCircle, Send, Sparkles, X } from "lucide-react";
 import { Markdown } from "@/components/ui/markdown";
 import { cn } from "@/lib/utils";
+import { BRAND } from "@/lib/brand";
 
 type Msg = { role: "user" | "assistant"; content: string };
 
@@ -50,7 +51,7 @@ export function NexusChat({ lessonId, variant = "drawer", initialConversationId,
         body: JSON.stringify({ message, lessonId, conversationId: conversationId.current ?? undefined }),
       });
       if (!res.ok || !res.body) {
-        const data = await res.json().catch(() => ({ error: "No se pudo conectar con NEXUS AI." }));
+        const data = await res.json().catch(() => ({ error: `No se pudo conectar con ${BRAND.aiName}.` }));
         setMessages((m) => m.slice(0, -1));
         setError(data.error);
         return;
@@ -83,11 +84,11 @@ export function NexusChat({ lessonId, variant = "drawer", initialConversationId,
       <div className="flex items-center gap-3 border-b border-white/[0.06] px-5 py-4">
         <span className="grid size-9 place-items-center rounded-xl bg-gradient-to-br from-electric-500 to-violet-600"><Bot className="size-4.5 text-white" aria-hidden /></span>
         <div className="min-w-0 flex-1">
-          <p className="font-semibold text-white">NEXUS AI</p>
+          <p className="font-semibold text-white">{BRAND.aiName}</p>
           <p className="text-xs text-mist-400">{lessonId ? "Conoce el contenido de esta lección" : "Tu tutor de aprendizaje"}</p>
         </div>
         {variant === "drawer" && (
-          <button type="button" onClick={() => setOpen(false)} className="grid size-10 place-items-center rounded-xl text-mist-300 hover:bg-white/[0.06]" aria-label="Cerrar NEXUS AI"><X className="size-5" /></button>
+          <button type="button" onClick={() => setOpen(false)} className="grid size-10 place-items-center rounded-xl text-mist-300 hover:bg-white/[0.06]" aria-label={`Cerrar ${BRAND.aiName}`}><X className="size-5" /></button>
         )}
       </div>
       <div ref={scroller} className="flex-1 space-y-4 overflow-y-auto px-5 py-5" aria-live="polite">
@@ -144,7 +145,7 @@ export function NexusChat({ lessonId, variant = "drawer", initialConversationId,
             {busy ? <LoaderCircle className="size-4 animate-spin" /> : <Send className="size-4" />}
           </button>
         </div>
-        <p className="mt-2 px-1 text-[11px] text-mist-500">NEXUS AI puede equivocarse. Verifica la información importante.</p>
+        <p className="mt-2 px-1 text-[11px] text-mist-500">{BRAND.aiName} puede equivocarse. Verifica la información importante.</p>
       </form>
     </div>
   );
@@ -159,13 +160,13 @@ export function NexusChat({ lessonId, variant = "drawer", initialConversationId,
         className="fixed bottom-4 right-4 z-30 flex h-12 items-center gap-2 rounded-2xl bg-gradient-to-r from-electric-500 to-violet-600 px-4 text-sm font-medium text-white shadow-[0_10px_40px_-10px_rgb(139_92_246_/_0.8)]"
         aria-expanded={open}
       >
-        <Bot className="size-4.5" aria-hidden /> NEXUS AI
+        <Bot className="size-4.5" aria-hidden /> {BRAND.aiName}
       </button>
       <div className={cn("fixed inset-0 z-50 transition", open ? "pointer-events-auto" : "pointer-events-none")} inert={!open}>
         <button type="button" tabIndex={-1} className={cn("absolute inset-0 bg-black/50 transition-opacity", open ? "opacity-100" : "opacity-0")} onClick={() => setOpen(false)} aria-label="Cerrar" />
         <aside
           role="dialog"
-          aria-label="NEXUS AI"
+          aria-label={BRAND.aiName}
           className={cn("absolute inset-y-0 right-0 flex w-full max-w-md flex-col bg-ink-900 shadow-2xl transition-transform duration-300 sm:border-l sm:border-white/[0.06]", open ? "translate-x-0" : "translate-x-full")}
         >
           {panel}

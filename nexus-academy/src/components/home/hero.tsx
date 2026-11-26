@@ -3,6 +3,7 @@ import { LinkButton } from "@/components/ui/button";
 import type { CourseCard } from "@/lib/data/catalog";
 import { CourseCover } from "@/components/course/course-cover";
 import { formatDuration, levelLabel } from "@/lib/utils";
+import { BRAND } from "@/lib/brand";
 
 export function Hero({ signedIn, spotlight }: { signedIn: boolean; spotlight: CourseCard | null }) {
   return (
@@ -24,7 +25,7 @@ export function Hero({ signedIn, spotlight }: { signedIn: boolean; spotlight: Co
             <span className="text-gradient-accent">Domina el mañana.</span>
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-mist-300">
-            Cursos prácticos de desarrollo, inteligencia artificial, datos, diseño y negocios. Aprende a tu ritmo, resuelve dudas con NEXUS AI y obtén certificados verificables.
+            Cursos prácticos de desarrollo, inteligencia artificial, datos, diseño y negocios. Aprende a tu ritmo, resuelve dudas con {BRAND.aiName} y obtén certificados verificables.
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <LinkButton href="/cursos" size="lg">
@@ -71,7 +72,7 @@ export function Hero({ signedIn, spotlight }: { signedIn: boolean; spotlight: Co
               </div>
             </div>
             <div className="glass-strong absolute -left-8 top-16 hidden w-60 rounded-2xl p-4 shadow-2xl animate-float [backdrop-filter:none] sm:block">
-              <div className="flex items-center gap-2 text-xs font-semibold text-violet-300"><Bot className="size-4" aria-hidden /> NEXUS AI</div>
+              <div className="flex items-center gap-2 text-xs font-semibold text-violet-300"><Bot className="size-4" aria-hidden /> {BRAND.aiName}</div>
               <p className="mt-2 text-sm text-mist-200">“Explícame este concepto con un ejemplo y hazme 3 preguntas de práctica.”</p>
             </div>
           </div>

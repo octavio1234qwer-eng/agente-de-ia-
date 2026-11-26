@@ -6,12 +6,13 @@ import { LinkButton } from "@/components/ui/button";
 import { Logo } from "./logo";
 import { MobileNav } from "./mobile-nav";
 import { UserMenu } from "./user-menu";
+import { BRAND } from "@/lib/brand";
 
 export const navLinks = [
   { href: "/cursos", label: "Cursos" },
   { href: "/paquetes", label: "Paquetes" },
   { href: "/instructores", label: "Instructores" },
-  { href: "/nexus-ai", label: "NEXUS AI" },
+  { href: "/nexus-ai", label: BRAND.aiName },
 ];
 
 export async function Navbar() {

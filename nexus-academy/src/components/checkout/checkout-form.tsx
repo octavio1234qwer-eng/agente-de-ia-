@@ -5,6 +5,7 @@ import { applyCouponAction, startCheckoutAction, type QuoteState } from "@/lib/a
 import { SubmitButton } from "@/components/ui/submit-button";
 import { FormMessage, Input } from "@/components/ui/field";
 import { cn, formatMoney } from "@/lib/utils";
+import { BRAND } from "@/lib/brand";
 
 type Provider = { id: "stripe" | "mercadopago" | "paypal"; label: string; description: string };
 
@@ -94,7 +95,7 @@ export function CheckoutForm({ providers, initial }: { providers: Provider[]; in
           <SubmitButton size="lg" className="mt-4 w-full" disabled={!provider && total > 0} pendingLabel="Conectando con el pago seguro…">
             <Lock className="size-4" aria-hidden /> {total === 0 ? "Obtener acceso" : `Pagar ${formatMoney(total, currency)}`}
           </SubmitButton>
-          <p className="mt-3 text-center text-xs text-mist-400">Serás redirigido a la página segura del proveedor. NEXUS ACADEMY no ve ni guarda los datos de tu tarjeta.</p>
+          <p className="mt-3 text-center text-xs text-mist-400">Serás redirigido a la página segura del proveedor. {BRAND.name} no ve ni guarda los datos de tu tarjeta.</p>
         </div>
       </form>
     </div>

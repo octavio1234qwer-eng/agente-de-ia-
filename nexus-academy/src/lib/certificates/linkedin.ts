@@ -1,3 +1,4 @@
+import { BRAND } from "@/lib/brand";
 /**
  * Enlaces oficiales de LinkedIn para certificados (sin API ni credenciales):
  * - «Agregar al perfil»: abre el formulario de Licencias y certificaciones con
@@ -6,7 +7,7 @@
  * Solo se usan parámetros documentados (name, organizationName, issueYear,
  * issueMonth, certUrl); el ID del certificado va dentro de certUrl.
  */
-const ACADEMY = "NEXUS ACADEMY";
+const ACADEMY = BRAND.name;
 
 /** Año y mes de emisión en la zona horaria de la academia. */
 function issueParts(issuedAt: string | Date): { year: string; month: string } {

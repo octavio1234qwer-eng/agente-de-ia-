@@ -1,6 +1,7 @@
 import "server-only";
 import { PDFDocument, StandardFonts, rgb, type PDFFont, type PDFPage } from "pdf-lib";
 import QRCode from "qrcode";
+import { BRAND } from "@/lib/brand";
 
 export type CertificateData = {
   code: string;
@@ -35,8 +36,8 @@ function fitSize(font: PDFFont, text: string, maxWidth: number, start: number, m
 
 export async function renderCertificatePdf(data: CertificateData): Promise<Uint8Array> {
   const pdf = await PDFDocument.create();
-  pdf.setTitle(`Certificado ${data.code} · NEXUS ACADEMY`);
-  pdf.setAuthor("NEXUS ACADEMY");
+  pdf.setTitle(`Certificado ${data.code} · ${BRAND.name}`);
+  pdf.setAuthor(BRAND.name);
   pdf.setSubject(safe(data.courseTitle));
   const page = pdf.addPage([842, 595]); // A4 horizontal
   const W = page.getWidth();

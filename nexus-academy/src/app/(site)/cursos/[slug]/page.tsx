@@ -14,6 +14,7 @@ import { Markdown } from "@/components/ui/markdown";
 import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { formatDate, formatDuration, formatSeconds, levelLabel, lessonTypeLabel } from "@/lib/utils";
+import { BRAND } from "@/lib/brand";
 
 type Params = { slug: string };
 
@@ -23,7 +24,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   if (!course) notFound();
   // Texto plano para buscadores y redes: subtítulo o, si no hay, el inicio de la descripción sin Markdown.
   const plain = (course.description ?? "").replace(/[#*_`>\[\]()!-]+/g, " ").replace(/\s+/g, " ").trim();
-  const description = (course.subtitle?.trim() || plain || `Curso de ${course.title} en NEXUS ACADEMY.`).slice(0, 160);
+  const description = (course.subtitle?.trim() || plain || `Curso de ${course.title} en ${BRAND.name}.`).slice(0, 160);
   return {
     title: course.title,
     description,
@@ -58,7 +59,7 @@ export default async function CoursePage({ params }: { params: Promise<Params> }
     "@type": "Course",
     name: course.title,
     description: course.subtitle ?? course.description,
-    provider: { "@type": "Organization", name: "NEXUS ACADEMY" },
+    provider: { "@type": "Organization", name: BRAND.name },
     inLanguage: "es",
     offers: { "@type": "Offer", price: (course.price_cents / 100).toFixed(2), priceCurrency: course.currency, category: course.price_cents === 0 ? "Free" : "Paid" },
     ...(course.rating_count > 0 ? { aggregateRating: { "@type": "AggregateRating", ratingValue: Number(course.rating_avg), reviewCount: course.rating_count } } : {}),
@@ -122,7 +123,7 @@ export default async function CoursePage({ params }: { params: Promise<Params> }
                 <ul className="space-y-2.5 border-t border-white/[0.06] pt-5 text-sm text-mist-300">
                   <li className="flex items-center gap-2.5"><InfinityIcon className="size-4 text-electric-300" aria-hidden />Acceso de por vida</li>
                   <li className="flex items-center gap-2.5"><Award className="size-4 text-electric-300" aria-hidden />Certificado verificable al completar</li>
-                  <li className="flex items-center gap-2.5"><Bot className="size-4 text-electric-300" aria-hidden />Tutor NEXUS AI en cada lección</li>
+                  <li className="flex items-center gap-2.5"><Bot className="size-4 text-electric-300" aria-hidden />Tutor {BRAND.aiName} en cada lección</li>
                   <li className="flex items-center gap-2.5"><Smartphone className="size-4 text-electric-300" aria-hidden />Aprende desde el móvil o la computadora</li>
                 </ul>
               </div>

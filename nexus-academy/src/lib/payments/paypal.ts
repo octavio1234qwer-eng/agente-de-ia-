@@ -1,6 +1,7 @@
 import "server-only";
 import { config, requireEnv } from "@/lib/env";
 import { centsToDecimal, type CheckoutRedirect, type CheckoutRequest } from "./types";
+import { BRAND } from "@/lib/brand";
 
 let token: { value: string; expiresAt: number } | null = null;
 
@@ -59,14 +60,14 @@ export async function createPayPalCheckout(req: CheckoutRequest): Promise<Checko
           reference_id: req.orderId,
           custom_id: req.orderId,
           invoice_id: req.orderNumber,
-          description: `NEXUS ACADEMY · ${req.orderNumber}`.slice(0, 127),
+          description: `${BRAND.name} · ${req.orderNumber}`.slice(0, 127),
           amount: { currency_code: req.currency.toUpperCase(), value: centsToDecimal(req.totalCents) },
         },
       ],
       payment_source: {
         paypal: {
           experience_context: {
-            brand_name: "NEXUS ACADEMY",
+            brand_name: BRAND.name,
             locale: "es-MX",
             user_action: "PAY_NOW",
             shipping_preference: "NO_SHIPPING",

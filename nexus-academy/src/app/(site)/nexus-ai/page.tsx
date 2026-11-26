@@ -5,8 +5,9 @@ import { requireUser } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { NexusChat } from "@/components/classroom/nexus-chat";
 import { formatDate } from "@/lib/utils";
+import { BRAND } from "@/lib/brand";
 
-export const metadata: Metadata = { title: "NEXUS AI" };
+export const metadata: Metadata = { title: BRAND.aiName };
 
 export default async function NexusAiPage({ searchParams }: { searchParams: Promise<{ c?: string }> }) {
   const user = await requireUser("/nexus-ai");
@@ -23,7 +24,7 @@ export default async function NexusAiPage({ searchParams }: { searchParams: Prom
       <div className="flex items-center gap-3">
         <span className="grid size-11 place-items-center rounded-2xl bg-gradient-to-br from-electric-500 to-violet-600"><Bot className="size-5 text-white" /></span>
         <div>
-          <h1 className="text-2xl font-semibold text-white">NEXUS AI</h1>
+          <h1 className="text-2xl font-semibold text-white">{BRAND.aiName}</h1>
           <p className="text-sm text-mist-400">Explicaciones, resúmenes, práctica y tu ruta de aprendizaje con cursos reales del catálogo.</p>
         </div>
       </div>
