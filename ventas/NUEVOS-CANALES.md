@@ -23,7 +23,7 @@ Etsy cobra 0.20 USD por publicar cada producto y una comisión cuando vendes. Po
 
 ### Ficha 1: Lotería
 - **Precio:** 6.50 USD
-- **Título:** Loteria Mexicana Printable, 54 Cards 20 Boards Caller Sheet, Mexican Bingo Game, Fiesta Party Game, Spanish Class Activity, Instant Download PDF
+- **Título:** Loteria Mexicana Printable, 54 Cards 20 Boards Caller Sheet, Mexican Bingo Game, Fiesta Party Game, Spanish Class Game, Instant Download PDF
 - **Etiquetas (13):** loteria printable, mexican bingo, loteria cards, fiesta party game, mexican party, cinco de mayo, spanish class game, loteria boards, posada game, baby shower game, mexican games, latino party, spanish vocabulary
 - **Descripción:**
   > Original Mexican Loteria ready to print and play. 100% original artwork.
