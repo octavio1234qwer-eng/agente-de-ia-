@@ -13,7 +13,7 @@ Una tarea programada abre una sesión nueva cada 6 horas y ejecuta esta ronda. O
 
 1. **Medir.** Gumroad `get_analytics` y `get_sales_totals` de los últimos 7 días (por producto y por referrer), incluidas las descargas del regalo gratis `bhbdx` y las ventas del paquete `shgbyx` (embudo con cupón GRACIAS20, creado por otra sesión; no crear ni cambiar cupones). Anota el resultado en `marketing/bitacora.md` (fecha, visitas, ventas, ingresos, qué hiciste).
 2. **Redes.** `list_posts` con estado `scheduled`. Si hay menos de 10, programa con `addToQueue` UNA publicación nueva por canal libre (X o LinkedIn) sobre una guía o calculadora del sitio o sobre un producto propio. Texto útil primero, enlace al final, sin repetir textos ya publicados (revisa `sent`). Nunca borres ni edites publicaciones de otros productos.
-3. **Contenido (si no hubo ventas en la semana).** Escribe 2 o 3 guías nuevas en `sitio/articulos/` que respondan búsquedas reales de compradores (restaurantes, tienditas, independientes, cocina familiar en México) y enlacen a la calculadora y al producto correctos. Antes de publicar:
+3. **Contenido (si no hubo ventas en la semana y no se publicaron guías en las últimas 24 h, para no llenar el sitio de páginas delgadas).** Escribe 2 o 3 guías nuevas en `sitio/articulos/` que respondan búsquedas reales de compradores (restaurantes, tienditas, independientes, cocina familiar en México) y enlacen a la calculadora y al producto correctos. Antes de publicar:
    - Verifica toda cifra y cálculo de los ejemplos.
    - Originalidad: similitud con las demás guías < 8 % (`factory.originality.similarity`) y búsqueda web entre comillas de 2 frases distintivas sin coincidencias.
    - No prometas resultados garantizados ni des asesoría fiscal/legal.
