@@ -47,7 +47,7 @@ def regalo():
 
 REGALO = {"como-calcular-la-merma", "costo-de-una-receta-en-excel", "cuanto-cobrar-por-un-platillo", "ingenieria-de-menu",
           "margen-de-ganancia-tienda-abarrotes", "punto-de-equilibrio-restaurante", "cuanto-cobrar-por-tamales",
-          "cuanto-cobrar-por-vaso-de-ponche", "anticipo-freelancer-clientes-que-no-pagan"}
+          "cuanto-cobrar-por-vaso-de-ponche", "cuanto-cobrar-por-una-rosca-de-reyes", "cena-de-navidad-por-encargo-precio-por-persona", "anticipo-freelancer-clientes-que-no-pagan"}
 
 urls = []
 # ---------- Food cost ----------
