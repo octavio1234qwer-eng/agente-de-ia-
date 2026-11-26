@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { releaseAfterLabel } from "@/lib/drip";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Award, BookOpen, Bot, Check, ChevronDown, Clock, FileText, Globe, Infinity as InfinityIcon, ListChecks, PlayCircle, Smartphone, Users, Dumbbell } from "lucide-react";
@@ -157,6 +158,7 @@ export default async function CoursePage({ params }: { params: Promise<Params> }
                     <span>
                       <span className="text-xs text-mist-400">Módulo {mi + 1}</span>
                       <span className="block font-medium text-white">{m.title}</span>
+                      {releaseAfterLabel(m.release_after_days) && <span className="mt-0.5 block text-xs text-amber-200">{releaseAfterLabel(m.release_after_days)}</span>}
                     </span>
                     <span className="flex items-center gap-3 text-xs text-mist-400">
                       {m.lessons.length} lecciones

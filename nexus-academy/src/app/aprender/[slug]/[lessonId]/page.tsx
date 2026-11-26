@@ -20,7 +20,7 @@ import { ReviewForm } from "@/components/course/review-form";
 import { Markdown } from "@/components/ui/markdown";
 import { LinkButton } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { formatSeconds, lessonTypeLabel } from "@/lib/utils";
+import { formatDate, formatSeconds, lessonTypeLabel } from "@/lib/utils";
 
 type Params = { slug: string; lessonId: string };
 
@@ -53,15 +53,28 @@ export default async function LessonPage({ params, searchParams }: { params: Pro
   const canTrack = data.hasAccess;
 
   if (!lesson.canView) {
+    // Con acceso al curso, la única razón es que su módulo aún no se libera.
+    const scheduled = data.hasAccess && moduleOf.releaseAt;
+    const firstAvailable = data.flat.find((l) => l.canView && !l.completed) ?? data.flat.find((l) => l.canView);
     return (
       <div className="flex flex-1">
         <Outline slug={slug} modules={data.modules} currentId={lessonId} searchable={data.hasAccess} />
         <main className="grid flex-1 place-items-center px-4 py-20 text-center">
           <div className="max-w-md">
             <span className="mx-auto grid size-16 place-items-center rounded-2xl bg-white/[0.05]"><Lock className="size-7 text-mist-300" /></span>
-            <h1 className="mt-6 text-2xl font-semibold text-white">Lección bloqueada</h1>
-            <p className="mt-2 text-mist-300">Esta lección es parte del curso completo. Obtén acceso para continuar aprendiendo.</p>
-            <LinkButton href={`/cursos/${slug}`} className="mt-6">Ver opciones de acceso</LinkButton>
+            {scheduled ? (
+              <>
+                <h1 className="mt-6 text-2xl font-semibold text-white">Esta lección se libera el {formatDate(moduleOf.releaseAt!, { dateStyle: "long" })}</h1>
+                <p className="mt-2 text-mist-300">El módulo «{moduleOf.title}» se abre por etapas para que avances a buen ritmo. Mientras tanto, sigue con lo que ya está disponible.</p>
+                {firstAvailable && <LinkButton href={`/aprender/${slug}/${firstAvailable.id}`} className="mt-6">Continuar con lo disponible</LinkButton>}
+              </>
+            ) : (
+              <>
+                <h1 className="mt-6 text-2xl font-semibold text-white">Lección bloqueada</h1>
+                <p className="mt-2 text-mist-300">Esta lección es parte del curso completo. Obtén acceso para continuar aprendiendo.</p>
+                <LinkButton href={`/cursos/${slug}`} className="mt-6">Ver opciones de acceso</LinkButton>
+              </>
+            )}
           </div>
         </main>
       </div>

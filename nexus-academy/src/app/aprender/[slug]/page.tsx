@@ -12,10 +12,13 @@ export default async function CourseEntry({ params }: { params: Promise<{ slug: 
     const preview = data.flat.find((l) => l.is_preview);
     redirect(preview ? `/aprender/${slug}/${preview.id}` : `/cursos/${slug}`);
   }
+  // Solo lecciones ya disponibles (los módulos programados aún no liberados se saltan).
+  const open = data.flat.filter((l) => l.canView);
   const target =
-    data.flat.find((l) => l.id === data.enrollment?.last_lesson_id && !l.completed) ??
-    data.flat.find((l) => !l.completed) ??
-    data.flat.find((l) => l.id === data.enrollment?.last_lesson_id) ??
+    open.find((l) => l.id === data.enrollment?.last_lesson_id && !l.completed) ??
+    open.find((l) => !l.completed) ??
+    open.find((l) => l.id === data.enrollment?.last_lesson_id) ??
+    open[0] ??
     data.flat[0];
   if (!target) redirect(`/cursos/${slug}`);
   redirect(`/aprender/${slug}/${target.id}`);

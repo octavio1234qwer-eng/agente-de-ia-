@@ -8,7 +8,7 @@ import { AdminHeader, Panel } from "@/components/admin/ui";
 import { CourseForm } from "@/components/admin/course-form";
 import { ConfirmButton, IconSubmit } from "@/components/admin/confirm-button";
 import { ActionForm } from "@/components/admin/action-form";
-import { addLessonAction, addModuleAction, announceCourseAction, deleteCourseAction, deleteModuleAction, moveLessonAction, moveModuleAction, renameModuleAction } from "@/lib/actions/admin";
+import { addLessonAction, addModuleAction, announceCourseAction, deleteCourseAction, deleteModuleAction, moveLessonAction, moveModuleAction, renameModuleAction, setModuleReleaseAction } from "@/lib/actions/admin";
 import { Badge } from "@/components/ui/badge";
 import { formatSeconds, lessonTypeLabel } from "@/lib/utils";
 
@@ -23,7 +23,7 @@ export default async function EditCourse({ params, searchParams }: { params: Pro
     supabase.from("courses").select("*").eq("id", id).maybeSingle(),
     supabase.from("categories").select("id, name").order("sort_order"),
     supabase.from("instructors").select("id, name").order("name"),
-    supabase.from("modules").select("id, title, position, lessons(id, title, type, duration_seconds, position, is_preview)").eq("course_id", id).order("position"),
+    supabase.from("modules").select("id, title, position, release_after_days, lessons(id, title, type, duration_seconds, position, is_preview)").eq("course_id", id).order("position"),
   ]);
   if (!course) notFound();
   const sorted = (modules ?? []).map((m) => ({ ...m, lessons: [...m.lessons].sort((a, b) => a.position - b.position) }));
@@ -65,6 +65,14 @@ export default async function EditCourse({ params, searchParams }: { params: Pro
                     <form action={moveModuleAction}><input type="hidden" name="id" value={m.id} /><input type="hidden" name="course_id" value={id} /><input type="hidden" name="dir" value="down" /><IconSubmit label="Bajar módulo"><ArrowDown className="size-3.5" /></IconSubmit></form>
                     <form action={deleteModuleAction}><input type="hidden" name="id" value={m.id} /><ConfirmButton message={`¿Eliminar el módulo «${m.title}» y todas sus lecciones?`}>Eliminar</ConfirmButton></form>
                   </div>
+                  <form action={setModuleReleaseAction} className="flex flex-wrap items-center gap-2 border-b border-white/[0.06] px-3 py-2 text-xs text-mist-300">
+                    <input type="hidden" name="id" value={m.id} />
+                    <label htmlFor={`release-${m.id}`}>Liberar</label>
+                    <input id={`release-${m.id}`} name="release_after_days" type="number" min={0} max={730} step={1} inputMode="numeric" defaultValue={m.release_after_days ?? 0} className="h-8 w-20 rounded-lg border border-white/10 bg-white/[0.03] px-2 text-sm text-white focus:border-electric-400/60 focus:outline-none" />
+                    <span>días después de la inscripción</span>
+                    <button type="submit" className="rounded-lg px-2.5 py-1.5 text-xs text-electric-300 hover:bg-white/[0.06]">Guardar</button>
+                    <span className="w-full text-mist-500 sm:w-auto">{m.release_after_days ? `Programado: se abre a los ${m.release_after_days} días.` : "0 = disponible desde el primer día."}</span>
+                  </form>
                   <ul className="divide-y divide-white/[0.04]">
                     {m.lessons.map((l) => (
                       <li key={l.id} className="flex items-center gap-2 px-3 py-2 text-sm">

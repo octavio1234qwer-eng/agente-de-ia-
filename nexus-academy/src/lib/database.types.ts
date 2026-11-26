@@ -663,14 +663,14 @@ isOneToOne: false
                   ]
                 },"modules": {
                   Row: {
-                    "course_id": string,"created_at": string,"description": string | null,"id": string,"position": number,"title": string
+                    "course_id": string,"created_at": string,"description": string | null,"id": string,"position": number,"release_after_days": number | null,"title": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "course_id": string,"created_at"?: string,"description"?: string | null,"id"?: string,"position"?: number,"title": string
+                    "course_id": string,"created_at"?: string,"description"?: string | null,"id"?: string,"position"?: number,"release_after_days"?: number | null,"title": string
                   }
                   Update: {
-                    "course_id"?: string,"created_at"?: string,"description"?: string | null,"id"?: string,"position"?: number,"title"?: string
+                    "course_id"?: string,"created_at"?: string,"description"?: string | null,"id"?: string,"position"?: number,"release_after_days"?: number | null,"title"?: string
                   }
                   Relationships: [
                     {
@@ -1012,6 +1012,12 @@ isOneToOne: false
                            },
 "mark_announcements_seen":
 { Args: { "p_course_id": string }; Returns: undefined
+                           },
+"module_release_at":
+{ Args: { "p_module_id": string }; Returns: string
+                           },
+"module_released":
+{ Args: { "p_module_id": string }; Returns: boolean
                            },
 "public_display_name":
 { Args: { "p_full_name": string }; Returns: string

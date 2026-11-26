@@ -13,6 +13,7 @@ import { refundMercadoPagoPayment } from "@/lib/payments/mercadopago";
 import { refundPayPalCapture } from "@/lib/payments/paypal";
 import { recordRefund } from "@/lib/commerce/fulfillment";
 import type { ActionState } from "./types";
+import { parseReleaseDays } from "@/lib/drip";
 import { CAPTION_LANGS, CAPTIONS_MAX_CHARS, normalizeCaptions, type CaptionLang } from "@/lib/captions";
 import type { Json } from "@/lib/database.types";
 
@@ -143,6 +144,20 @@ export async function renameModuleAction(formData: FormData) {
   const supabase = await createClient();
   const { data } = await supabase.from("modules").update({ title }).eq("id", id).select("course_id").single();
   if (data) revalidatePath(`/admin/cursos/${data.course_id}`);
+}
+
+/** Liberación programada: el módulo se abre N días después de la inscripción (vacío o 0 = de inmediato). */
+export async function setModuleReleaseAction(formData: FormData) {
+  const actor = await assertAdmin();
+  const id = String(formData.get("id"));
+  const parsed = parseReleaseDays(formData.get("release_after_days"));
+  if (!uuid.safeParse(id).success || !parsed.ok) return;
+  const supabase = await createClient();
+  const { data } = await supabase.from("modules").update({ release_after_days: parsed.value }).eq("id", id).select("course_id").single();
+  if (data) {
+    await audit(actor.id, "set_release", "module", id, { release_after_days: parsed.value });
+    revalidatePath(`/admin/cursos/${data.course_id}`);
+  }
 }
 
 export async function deleteModuleAction(formData: FormData) {

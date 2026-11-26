@@ -65,7 +65,7 @@ export async function getCourseBySlug(slug: string) {
   const { data } = await supabase
     .from("courses")
     .select(
-      `${COURSE_CARD_SELECT}, instructor_full:instructors(*), modules(id, title, description, position, lessons(id, title, type, duration_seconds, position, is_preview))`,
+      `${COURSE_CARD_SELECT}, instructor_full:instructors(*), modules(id, title, description, position, release_after_days, lessons(id, title, type, duration_seconds, position, is_preview))`,
     )
     .eq("slug", slug)
     .order("position", { referencedTable: "modules" })
@@ -78,6 +78,7 @@ export async function getCourseBySlug(slug: string) {
       title: string;
       description: string | null;
       position: number;
+      release_after_days: number | null;
       lessons: { id: string; title: string; type: Database["public"]["Enums"]["lesson_type"]; duration_seconds: number; position: number; is_preview: boolean }[];
     }[];
   };

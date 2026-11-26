@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { CheckCircle2, Circle, Dumbbell, FileText, ListChecks, Lock, Megaphone, PlayCircle, PanelLeft, X } from "lucide-react";
 import type { OutlineModule } from "@/lib/data/classroom";
-import { cn, formatSeconds } from "@/lib/utils";
+import { cn, formatDate, formatSeconds } from "@/lib/utils";
 import { LessonSearchForm } from "@/components/search/lesson-search-form";
 
 const icons = { video: PlayCircle, article: FileText, quiz: ListChecks, exercise: Dumbbell } as const;
@@ -34,6 +34,11 @@ export function Outline({ slug, modules, currentId, searchable = false, unseenAn
         <div key={m.id}>
           <p className="px-2 text-[11px] font-semibold uppercase tracking-wider text-mist-400">Módulo {mi + 1}</p>
           <p className="px-2 pb-2 text-sm font-medium text-white">{m.title}</p>
+          {m.releaseAt && (
+            <p className="mx-2 mb-2 inline-flex items-center gap-1.5 rounded-lg bg-amber-500/10 px-2 py-1 text-[11px] text-amber-200">
+              <Lock className="size-3" aria-hidden /> Se libera el {formatDate(m.releaseAt, { dateStyle: "medium" })}
+            </p>
+          )}
           <ul className="space-y-1">
             {m.lessons.map((l) => {
               const Icon = icons[l.type];
