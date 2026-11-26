@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Download, FileText, Lock } from "lucide-react";
+import { Download, FileText, Lock, Megaphone } from "lucide-react";
+import Link from "next/link";
 import { requireUser } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { getClassroom, getLessonContent, resolveVideoSource } from "@/lib/data/classroom";
@@ -75,6 +76,8 @@ export default async function LessonPage({ params, searchParams }: { params: Pro
     supabase.from("lesson_notes").select("body, updated_at").eq("lesson_id", lessonId).eq("user_id", user.id).maybeSingle(),
     data.hasAccess ? supabase.rpc("lesson_qa", { p_lesson_id: lessonId }) : Promise.resolve({ data: null }),
   ]);
+  const { data: unseenRows } = data.hasAccess ? await supabase.rpc("course_announcements_unseen") : { data: null };
+  const unseen = unseenRows?.find((r) => r.course_id === data.course.id) ?? null;
   const qaThread = data.hasAccess ? parseQaThread(qaRes.data) : null;
   const video = lesson.type === "video" ? await resolveVideoSource(content?.video_provider ?? null, content?.video_ref ?? null) : null;
   const { data: passMeta } = lesson.type === "quiz" ? await supabase.from("lessons").select("pass_percent").eq("id", lessonId).single() : { data: null };
@@ -108,9 +111,19 @@ export default async function LessonPage({ params, searchParams }: { params: Pro
 
   return (
     <div className="flex flex-1">
-      <Outline slug={slug} modules={data.modules} currentId={lessonId} searchable={data.hasAccess} />
+      <Outline slug={slug} modules={data.modules} currentId={lessonId} searchable={data.hasAccess} unseenAnnouncements={data.hasAccess ? (unseen?.unseen ?? 0) : undefined} />
       <main className="min-w-0 flex-1 px-4 pb-28 pt-6 sm:px-8 lg:pb-12">
         <div className="mx-auto max-w-4xl space-y-6">
+          {unseen && unseen.unseen > 0 && (
+            <Link href={`/aprender/${slug}/avisos`} className="flex items-center gap-3 rounded-2xl border border-electric-400/25 bg-electric-500/10 px-4 py-3 text-sm text-mist-100 hover:bg-electric-500/15">
+              <Megaphone className="size-5 shrink-0 text-electric-300" aria-hidden />
+              <span className="min-w-0 flex-1">
+                <span className="font-medium text-white">{unseen.unseen === 1 ? "Nuevo aviso del curso" : `${unseen.unseen} avisos nuevos del curso`}:</span>{" "}
+                <span className="break-words">{unseen.latest_title}</span>
+              </span>
+              <span className="shrink-0 font-medium text-electric-300">Leer</span>
+            </Link>
+          )}
           {lesson.type === "video" && (
             video ? (
               video.kind === "file" ? (

@@ -1,18 +1,35 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
-import { CheckCircle2, Circle, Dumbbell, FileText, ListChecks, Lock, PlayCircle, PanelLeft, X } from "lucide-react";
+import { CheckCircle2, Circle, Dumbbell, FileText, ListChecks, Lock, Megaphone, PlayCircle, PanelLeft, X } from "lucide-react";
 import type { OutlineModule } from "@/lib/data/classroom";
 import { cn, formatSeconds } from "@/lib/utils";
 import { LessonSearchForm } from "@/components/search/lesson-search-form";
 
 const icons = { video: PlayCircle, article: FileText, quiz: ListChecks, exercise: Dumbbell } as const;
 
-export function Outline({ slug, modules, currentId, searchable = false }: { slug: string; modules: OutlineModule[]; currentId: string; searchable?: boolean }) {
+export function Outline({ slug, modules, currentId, searchable = false, unseenAnnouncements }: { slug: string; modules: OutlineModule[]; currentId: string; searchable?: boolean; unseenAnnouncements?: number }) {
   const [open, setOpen] = useState(false);
+  const avisosActive = currentId === "avisos";
   const list = (
     <nav aria-label="Contenido del curso" className="space-y-5 p-4">
       {searchable && <LessonSearchForm course={slug} compact />}
+      {unseenAnnouncements !== undefined && (
+        <Link
+          href={`/aprender/${slug}/avisos`}
+          onClick={() => setOpen(false)}
+          aria-current={avisosActive ? "page" : undefined}
+          className={cn("flex min-h-11 items-center gap-3 rounded-xl px-2.5 py-2 text-sm transition", avisosActive ? "bg-electric-500/15 text-white ring-1 ring-electric-400/30" : "text-mist-200 hover:bg-white/[0.04]")}
+        >
+          <Megaphone className="size-4 shrink-0 text-electric-300" aria-hidden />
+          <span className="flex-1">Avisos del curso</span>
+          {unseenAnnouncements > 0 && (
+            <span className="rounded-full bg-electric-500 px-2 py-0.5 text-[11px] font-semibold text-white">
+              {unseenAnnouncements}<span className="sr-only"> {unseenAnnouncements === 1 ? "nuevo" : "nuevos"}</span>
+            </span>
+          )}
+        </Link>
+      )}
       {modules.map((m, mi) => (
         <div key={m.id}>
           <p className="px-2 text-[11px] font-semibold uppercase tracking-wider text-mist-400">Módulo {mi + 1}</p>

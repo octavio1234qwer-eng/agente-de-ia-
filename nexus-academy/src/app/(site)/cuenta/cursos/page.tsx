@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { BookOpen, PlayCircle } from "lucide-react";
+import { BookOpen, Megaphone, PlayCircle } from "lucide-react";
 import { requireUser } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { CourseCover } from "@/components/course/course-cover";
@@ -26,6 +26,8 @@ export default async function MyCoursesPage() {
     .is("revoked_at", null)
     .order("last_activity_at", { ascending: false, nullsFirst: false });
   const enrollments = (data ?? []).filter((e) => e.course);
+  const { data: unseenRows } = enrollments.length ? await supabase.rpc("course_announcements_unseen") : { data: null };
+  const unseen = new Map((unseenRows ?? []).map((r) => [r.course_id, r]));
 
   if (enrollments.length === 0) {
     return (
@@ -56,6 +58,12 @@ export default async function MyCoursesPage() {
               <p className="mt-1 text-xs text-mist-400">
                 {e.last_activity_at ? `Última actividad: ${formatDate(e.last_activity_at, { dateStyle: "medium" })}` : `Inscrito el ${formatDate(e.created_at, { dateStyle: "medium" })}`} · {c.lessons_count} lecciones
               </p>
+              {unseen.get(c.id) && (
+                <Link href={`/aprender/${c.slug}/avisos`} className="mt-2 inline-flex max-w-full items-center gap-1.5 rounded-lg bg-electric-500/10 px-2.5 py-1 text-xs text-electric-200 hover:bg-electric-500/15">
+                  <Megaphone className="size-3.5 shrink-0" aria-hidden />
+                  <span className="truncate">{unseen.get(c.id)!.unseen === 1 ? "Nuevo aviso" : `${unseen.get(c.id)!.unseen} avisos nuevos`}: {unseen.get(c.id)!.latest_title}</span>
+                </Link>
+              )}
               <div className="mt-3 flex items-center gap-3">
                 <ProgressBar value={e.progress_percent} className="max-w-sm" label={`Progreso en ${c.title}`} />
                 <span className="text-sm font-medium text-white">{e.progress_percent}%</span>

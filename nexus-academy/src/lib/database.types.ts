@@ -279,6 +279,32 @@ isOneToOne: false
                   Relationships: [
                     
                   ]
+                },"course_announcements": {
+                  Row: {
+                    "author_id": string | null,"body": string,"course_id": string,"created_at": string,"email_failed": number,"email_sent": number,"email_skipped": number,"emailed_at": string | null,"id": string,"title": string,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "author_id"?: string | null,"body": string,"course_id": string,"created_at"?: string,"email_failed"?: number,"email_sent"?: number,"email_skipped"?: number,"emailed_at"?: string | null,"id"?: string,"title": string,"updated_at"?: string
+                  }
+                  Update: {
+                    "author_id"?: string | null,"body"?: string,"course_id"?: string,"created_at"?: string,"email_failed"?: number,"email_sent"?: number,"email_skipped"?: number,"emailed_at"?: string | null,"id"?: string,"title"?: string,"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "course_announcements_author_id_fkey"
+      columns: ["author_id"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "course_announcements_course_id_fkey"
+      columns: ["course_id"]
+isOneToOne: false
+      referencedRelation: "courses"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"courses": {
                   Row: {
                     "category_id": string | null,"compare_at_price_cents": number | null,"cover_url": string | null,"created_at": string,"currency": string,"description": string,"duration_minutes": number,"id": string,"instructor_id": string | null,"is_featured": boolean,"is_free": boolean | null,"language": string,"lessons_count": number,"level": Database["public"]['Enums']["course_level"],"price_cents": number,"promo_video_url": string | null,"published_at": string | null,"rating_avg": number,"rating_count": number,"requirements": (string)[],"slug": string,"status": Database["public"]['Enums']["publish_status"],"students_count": number,"subtitle": string | null,"target_audience": (string)[],"title": string,"updated_at": string,"what_you_will_learn": (string)[]
@@ -327,14 +353,14 @@ isOneToOne: false
                   ]
                 },"enrollments": {
                   Row: {
-                    "completed_at": string | null,"course_id": string,"created_at": string,"id": string,"last_activity_at": string | null,"last_lesson_id": string | null,"order_id": string | null,"progress_percent": number,"reminder_sent_at": string | null,"revoked_at": string | null,"source": Database["public"]['Enums']["enrollment_source"],"user_id": string
+                    "announcements_seen_at": string | null,"completed_at": string | null,"course_id": string,"created_at": string,"id": string,"last_activity_at": string | null,"last_lesson_id": string | null,"order_id": string | null,"progress_percent": number,"reminder_sent_at": string | null,"revoked_at": string | null,"source": Database["public"]['Enums']["enrollment_source"],"user_id": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "completed_at"?: string | null,"course_id": string,"created_at"?: string,"id"?: string,"last_activity_at"?: string | null,"last_lesson_id"?: string | null,"order_id"?: string | null,"progress_percent"?: number,"reminder_sent_at"?: string | null,"revoked_at"?: string | null,"source": Database["public"]['Enums']["enrollment_source"],"user_id": string
+                    "announcements_seen_at"?: string | null,"completed_at"?: string | null,"course_id": string,"created_at"?: string,"id"?: string,"last_activity_at"?: string | null,"last_lesson_id"?: string | null,"order_id"?: string | null,"progress_percent"?: number,"reminder_sent_at"?: string | null,"revoked_at"?: string | null,"source": Database["public"]['Enums']["enrollment_source"],"user_id": string
                   }
                   Update: {
-                    "completed_at"?: string | null,"course_id"?: string,"created_at"?: string,"id"?: string,"last_activity_at"?: string | null,"last_lesson_id"?: string | null,"order_id"?: string | null,"progress_percent"?: number,"reminder_sent_at"?: string | null,"revoked_at"?: string | null,"source"?: Database["public"]['Enums']["enrollment_source"],"user_id"?: string
+                    "announcements_seen_at"?: string | null,"completed_at"?: string | null,"course_id"?: string,"created_at"?: string,"id"?: string,"last_activity_at"?: string | null,"last_lesson_id"?: string | null,"order_id"?: string | null,"progress_percent"?: number,"reminder_sent_at"?: string | null,"revoked_at"?: string | null,"source"?: Database["public"]['Enums']["enrollment_source"],"user_id"?: string
                   }
                   Relationships: [
                     {
@@ -914,6 +940,11 @@ isOneToOne: false
 "can_view_lesson":
 { Args: { "p_lesson_id": string }; Returns: boolean
                            },
+"course_announcements_unseen":
+{ Args: Record<PropertyKey, never>; Returns: {
+              "course_id": string,"latest_at": string,"latest_title": string,"unseen": number
+            }[]
+                           },
 "course_reviews":
 { Args: { "p_course_id": string,"p_limit"?: number,"p_offset"?: number }; Returns: {
               "author_avatar": string,"author_name": string,"comment": string,"created_at": string,"id": string,"rating": number
@@ -978,6 +1009,9 @@ isOneToOne: false
                            },
 "lesson_search_text":
 { Args: { "p": string }; Returns: string
+                           },
+"mark_announcements_seen":
+{ Args: { "p_course_id": string }; Returns: undefined
                            },
 "public_display_name":
 { Args: { "p_full_name": string }; Returns: string

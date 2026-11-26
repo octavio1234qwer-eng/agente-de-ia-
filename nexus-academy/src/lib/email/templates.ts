@@ -241,3 +241,26 @@ export function questionAnsweredEmail(o: { name: string; courseTitle: string; le
     text: `${first}, el equipo respondió tu pregunta en ${o.courseTitle} · ${o.lessonTitle}.\n\nTu pregunta: ${question}\n\nRespuesta: ${answer}\n\nVer la conversación: ${o.href}`,
   };
 }
+
+/** Aviso que el equipo publica para los alumnos de un curso. */
+export function courseAnnouncementEmail(o: { name: string; courseTitle: string; courseSlug: string; title: string; body: string; siteUrl: string; unsubscribe: string }): EmailContent {
+  const first = (o.name || "").trim().split(/\s+/)[0] || "Hola";
+  const body = o.body.trim().length > 2000 ? `${o.body.trim().slice(0, 1999).trimEnd()}…` : o.body.trim();
+  const href = `${o.siteUrl}/aprender/${o.courseSlug}/avisos`;
+  return {
+    subject: `${o.courseTitle}: ${o.title}`,
+    html: layout({
+      siteUrl: o.siteUrl,
+      unsubscribe: o.unsubscribe,
+      preheader: `Nuevo aviso en ${o.courseTitle}`,
+      body:
+        p(`<span style="font-size:13px;color:#8b93b8;">Aviso del curso · ${escapeHtml(o.courseTitle)}</span>`) +
+        h1(o.title) +
+        p(`${escapeHtml(first)}:`) +
+        `<div style="margin:0 0 16px;font-size:15px;line-height:24px;color:#c3c8dc;white-space:pre-wrap;">${escapeHtml(body)}</div>` +
+        button("Ver en el aula", href) +
+        p(`<span style="font-size:13px;color:#8b93b8;">Te escribimos porque estás inscrito en este curso y tienes activados los recordatorios y avisos. Puedes desactivarlos en <a href="${o.siteUrl}/cuenta/ajustes" style="color:#8b93b8;">Configuración</a>.</span>`),
+    }),
+    text: `Aviso del curso ${o.courseTitle}\n\n${o.title}\n\n${body}\n\nVer en el aula: ${href}\n\nDesactivar estos correos: ${o.unsubscribe}`,
+  };
+}

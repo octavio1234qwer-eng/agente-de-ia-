@@ -17,7 +17,7 @@ export async function collectMyData(userId: string) {
   const own = <T extends string>(table: T, cols = "*") => db.from(table as never).select(cols).eq("user_id", userId);
   const [profile, enrollments, progress, quizzes, notes, certificates, orders, favorites, reviews, cart, conversations, activity, redemptions] = await Promise.all([
     db.from("profiles").select("id, email, full_name, headline, bio, avatar_url, role, marketing_opt_in, reminder_opt_in, time_zone, weekly_lesson_goal, created_at, last_seen_at").eq("id", userId).maybeSingle(),
-    own("enrollments", "source, progress_percent, completed_at, revoked_at, last_activity_at, created_at, course:courses(slug, title)"),
+    own("enrollments", "source, progress_percent, completed_at, revoked_at, last_activity_at, announcements_seen_at, created_at, course:courses(slug, title)"),
     own("lesson_progress", "completed_at, last_position_seconds, updated_at, lesson:lessons(title), course:courses(slug, title)"),
     own("quiz_attempts", "score, total, passed, answers, created_at, lesson:lessons(title)"),
     own("lesson_notes", "body, created_at, updated_at, lesson:lessons(title), course:courses(slug, title)"),

@@ -7,6 +7,7 @@ import { unsubscribeUrl } from "./tokens";
 import {
   abandonedCartEmail,
   certificateEmail,
+  courseAnnouncementEmail,
   newCourseEmail,
   promotionEmail,
   purchaseEmail,
@@ -115,6 +116,70 @@ export async function sendQuestionAnsweredEmail(answerId: string) {
       siteUrl,
     }),
   });
+}
+
+/**
+ * Envía un aviso del curso por correo a los alumnos con acceso vigente que
+ * tienen activados los recordatorios y avisos. Un correo por alumno y aviso
+ * (dedupe), en lotes pequeños. Guarda en el aviso solo los conteos.
+ */
+export async function sendCourseAnnouncement(announcementId: string, maxRecipients = 2000) {
+  const admin = createAdminClient();
+  const { data: a } = await admin
+    .from("course_announcements")
+    .select("id, title, body, course_id, courses!inner(title, slug)")
+    .eq("id", announcementId)
+    .maybeSingle();
+  if (!a) return null;
+  const { data: rows } = await admin
+    .from("enrollments")
+    .select("user_id, profiles!inner(email, full_name, reminder_opt_in)")
+    .eq("course_id", a.course_id)
+    .is("revoked_at", null)
+    .eq("profiles.reminder_opt_in", true)
+    .limit(maxRecipients);
+  const tally = { sent: 0, skipped: 0, failed: 0 };
+  const list = rows ?? [];
+  for (let i = 0; i < list.length; i += 5) {
+    const batch = list.slice(i, i + 5);
+    const results = await Promise.all(
+      batch.map(async (r) => {
+        const email = r.profiles.email;
+        let unsubscribe = `${siteUrl}/cuenta/ajustes`;
+        try {
+          unsubscribe = unsubscribeUrl(email);
+        } catch {
+          /* sin UNSUBSCRIBE_SECRET: se enlaza a Configuración */
+        }
+        return sendEmail({
+          to: email,
+          userId: r.user_id,
+          template: "course_announcement",
+          dedupeKey: `announcement:${a.id}:${r.user_id}`,
+          unsubscribeUrl: unsubscribe,
+          content: courseAnnouncementEmail({
+            name: r.profiles.full_name,
+            courseTitle: a.courses.title,
+            courseSlug: a.courses.slug,
+            title: a.title,
+            body: a.body,
+            siteUrl,
+            unsubscribe,
+          }),
+        });
+      }),
+    );
+    for (const res of results) {
+      if (res.status === "sent" || res.status === "duplicate") tally.sent++;
+      else if (res.status === "skipped") tally.skipped++;
+      else tally.failed++;
+    }
+  }
+  await admin
+    .from("course_announcements")
+    .update({ emailed_at: new Date().toISOString(), email_sent: tally.sent, email_skipped: tally.skipped, email_failed: tally.failed })
+    .eq("id", a.id);
+  return { ...tally, recipients: list.length };
 }
 
 /**

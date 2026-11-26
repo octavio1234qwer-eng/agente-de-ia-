@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowDown, ArrowUp, ExternalLink, Filter, Pencil, Plus } from "lucide-react";
+import { ArrowDown, ArrowUp, ExternalLink, Filter, Megaphone, Pencil, Plus } from "lucide-react";
 import { requireAdmin } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { AdminHeader, Panel } from "@/components/admin/ui";
@@ -35,6 +35,7 @@ export default async function EditCourse({ params, searchParams }: { params: Pro
         description={`${course.lessons_count} lecciones · ${course.students_count} alumnos`}
         actions={
           <>
+            <Link href={`/admin/cursos/${course.id}/avisos`} className="inline-flex h-9 items-center gap-2 rounded-xl border border-white/10 px-3 text-sm text-mist-200 hover:bg-white/[0.06]"><Megaphone className="size-4" aria-hidden /> Avisos</Link>
             <Link href={`/admin/cursos/${course.id}/embudo`} className="inline-flex h-9 items-center gap-2 rounded-xl border border-white/10 px-3 text-sm text-mist-200 hover:bg-white/[0.06]"><Filter className="size-4" aria-hidden /> Embudo de alumnos</Link>
             <Link href={`/cursos/${course.slug}`} target="_blank" className="inline-flex h-9 items-center gap-2 rounded-xl border border-white/10 px-3 text-sm text-mist-200 hover:bg-white/[0.06]"><ExternalLink className="size-4" /> Ver página pública</Link>
           </>
