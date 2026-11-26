@@ -21,10 +21,11 @@ Gracias por tu compra. Este kit es una academia online completa: tienda de curso
 **Para ti (panel `/admin`)**
 - Cursos, módulos, lecciones (editor Markdown), videos con subida reanudable, recursos y evaluaciones.
 - Bandeja de preguntas de alumnos (sin responder, todas, ocultas) con moderación.
+- Avisos por curso (novedades, sesiones en vivo, material nuevo) que tus alumnos ven en el aula y, si quieres, reciben por correo.
 - Categorías, instructores, paquetes de cursos, cupones, reseñas y alumnos (otorgar o quitar acceso).
 - Pedidos con reembolsos, reporte de ingresos por producto, exportación a CSV.
 - Dashboard con ventas, conversión, alumnos y actividad de estudio; embudo por curso (en qué lección se detienen).
-- Correos automáticos (bienvenida, compra, certificado, recordatorios, carritos abandonados, aviso de racha) y campañas con baja de un clic.
+- Correos automáticos (bienvenida, compra, certificado, recordatorios, carritos abandonados, aviso de racha, respuestas a preguntas, avisos del curso) y campañas con baja de un clic.
 
 **Calidad**: pruebas de base de datos (pgTAP), unitarias y de navegador incluidas (`README.md`, sección «Pruebas»), auditoría de accesibilidad WCAG 2.1 y seguridad por filas (RLS) en todas las tablas.
 
