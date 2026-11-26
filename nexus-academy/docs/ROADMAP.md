@@ -76,17 +76,24 @@ saber qué sigue. Marcar `[x]` solo cuando esté construido **y probado**.
 - [x] Marca configurable: nombre de la academia, del tutor de IA y lema por variables de entorno (`NEXT_PUBLIC_SITE_NAME`, `NEXT_PUBLIC_AI_NAME`, `NEXT_PUBLIC_SITE_TAGLINE`) en interfaz, correos, certificados (PDF, LinkedIn, Open Graph), pagos (Stripe, PayPal, estado de cuenta de Mercado Pago) y el prompt del tutor; probado con una compilación de producción con otra marca
 - [x] Alumno: «Descargar mis datos (JSON)» en Configuración (derecho de acceso ARCO al instante): perfil, inscripciones, progreso, evaluaciones, notas, certificados, compras con facturación, cupones, favoritos, reseñas, carrito, conversaciones con el tutor, actividad y correos enviados; siempre filtrado por el propio usuario. E2E `e2e/my-data-export.mjs` 12/12
 
+- [x] Kit vendible: ZIP sin notas internas (`academia-online-kit.zip`, 713 KB) verificado desde cero (npm ci, tsc, 60 unitarias, build), con `GUIA-INSTALACION.md` y `LICENCIA.md` (carpeta `kit/`); capturas reales y portada en `marketing/`
+- [x] Gumroad: producto en BORRADOR «Kit Academia Online» ($79 USD, permalink `kit-academia-online`, id `KzIYBhcz1W4KXhOE0eILpA==`) con descripción honesta, 6 portadas, guía y licencia adjuntas. Falta el ZIP (Google Drive no permitió compartirlo por enlace público; el usuario lo sube en el editor)
+
 ## Siguiente (en orden)
-- [ ] Vender la plataforma como kit en Gumroad ($79 USD, aprobado por el usuario) con guía de instalación y promoción en Buffer
+- [ ] En cuanto el producto esté publicado (comprobar con get_product: published = true y que tenga el ZIP en list_files), programar en Buffer estas publicaciones y luego alternar con los demás productos:
+  - LinkedIn: «¿Quieres vender tus cursos con tu propia marca y cobrar en México sin pagar comisión a una plataforma? Armé un kit con el código completo de una academia online: tienda con Stripe, Mercado Pago y PayPal, aula virtual con video, evaluaciones y notas, certificados con QR verificables, tutor con IA y panel de administración con ventas y embudo por curso. Incluye guía de instalación en español; si prefieres, te la dejo funcionando con tu dominio. 👇 https://octavius724.gumroad.com/l/kit-academia-online #Emprendedores #CursosOnline #Nextjs»
+  - X: «Kit de código: tu academia online con tu marca. Pagos con Stripe, Mercado Pago y PayPal, aula virtual, certificados con QR, tutor IA y panel admin. Next.js + Supabase, guía en español 👇 https://octavius724.gumroad.com/l/kit-academia-online»
+- [ ] Demo en vivo (aumentaría ventas): requiere un proyecto de Supabase en la nube del usuario para desplegar en Vercel
 - [ ] Despliegue (Vercel + Supabase en la nube) — requiere cuentas/credenciales del usuario
 
 ## Ventas (agente)
-- Gumroad: 25+ productos publicados; 0 ventas en noviembre (revisado 2026-11-26 01:00 UTC).
+- Gumroad: 25+ productos publicados; 0 ventas en noviembre (revisado 2026-11-26 06:10 UTC). BLACKFRIDAY activado por aprobación del usuario: 40 % solo en el Kit de WhatsApp, del 26-nov al 1-dic 23:59 CDMX.
 - Buffer "My organization": LinkedIn 5 y X 6 publicaciones programadas (revisado 2026-11-25 20:15 UTC), cola hasta el 2026-12-01; no hizo falta programar más. Entre 19:51 y 19:53 UTC aparecieron 4 publicaciones nuevas (guía gratis de precios y blog calculatunegocio) que no programó este agente. Verificado: el Paquete Fiestas cuesta $12 (los productos por separado suman $19), así que esa publicación es correcta. La de LinkedIn del 27-nov (16:17 UTC) anuncia 40 % con el código BLACKFRIDAY, que la última vez estaba inactivo; no hay herramienta para listar códigos, así que el usuario debe confirmar que esté activo.
 - Pinterest casi sin uso: oportunidad para imprimibles (lotería, planners, menú) con portada del producto.
 
 ## Bloqueado por el usuario
-- Confirmar antes del 27-nov 16:17 UTC que el código BLACKFRIDAY (40 % en el Kit de WhatsApp) está activo; si no, pausar o editar esa publicación de LinkedIn.
+- Subir `academia-online-kit.zip` al producto «Kit Academia Online» en Gumroad (Contenido → Subir archivo) y publicarlo (o avisar para que el agente lo publique).
+- El repositorio de GitHub `agente-de-ia-` es PÚBLICO: cualquiera puede ver el código del kit gratis. Recomendado hacerlo privado antes de vender (Settings → General → Danger Zone → Change visibility). Las portadas de Gumroad ya quedaron copiadas en Gumroad.
 - Pinterest: la cuenta conectada en Buffer no tiene tableros. Crea al menos un tablero (p. ej. "Imprimibles para fiestas") para poder programar pines.
 - Credenciales de producción: Supabase (proyecto en la nube), Stripe, Mercado Pago, PayPal, Resend, Anthropic.
 - Dominio y cuenta de hosting para desplegar.
