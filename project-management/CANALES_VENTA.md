@@ -51,3 +51,13 @@ Cobro sugerido (decide el dueño): instalación + mensualidad que cubra los cost
 - Sin spam, sin mensajes masivos, sin reseñas falsas, sin comprar tráfico.
 - No se promete ningún resultado de ventas.
 - Cualquier gasto (anuncios, Etsy, dominios) requiere aprobación expresa.
+
+## Reparto de trabajo entre sesiones (2026-11-26)
+El dueño pidió no recibir tareas: todo lo hacen las sesiones de código.
+- **Sesión "Investigación de mercado para micronegocios"** (session_01BhCR59vw8HvmQioN2REFog, ronda cada 2 h): portada de `bhbdx`, enlaces al regalo desde los sitios SEO (precios/costeo/cotizaciones/IVA), regalo en BANCO-POSTS desde el 28-nov (máx. 1/semana por red), sitio de The One Ad en línea el 2-dic.
+- **Sesión "Fábrica automatizada de productos digitales"** (session_01BhCR57yJhBdoE6qKsdgj3W, ronda cada 6 h): venta cruzada en recibos de productos de pago, guías que enlacen al regalo, medición del embudo (`bhbdx` → `shgbyx` con GRACIAS20).
+- **Esta sesión (AUTO-INCOME AI):** embudo, Product Hunt, integración de datos reales y coordinación.
+- Corrección aplicada: la descripción de `bhbdx` ahora indica que las celdas a editar son B2 y B3.
+
+### Sin vía automática (ni API ni conector disponible)
+Crear tableros de Pinterest, activar afiliados de Gumroad y crear workflows de correo en Gumroad solo se pueden hacer en sus aplicaciones con la sesión del dueño iniciada. Quedan anotados; ninguna sesión los puede ejecutar hoy.
