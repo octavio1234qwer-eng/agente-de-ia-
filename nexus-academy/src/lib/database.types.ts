@@ -816,6 +816,9 @@ isOneToOne: false
             "academy_public_stats":
 { Args: Record<PropertyKey, never>; Returns: Json
                            },
+"admin_course_funnel":
+{ Args: { "p_course_id": string }; Returns: Json
+                           },
 "admin_dashboard_stats":
 { Args: { "p_days"?: number,"p_tz"?: string }; Returns: Json
                            },
