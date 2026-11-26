@@ -264,3 +264,22 @@ export function courseAnnouncementEmail(o: { name: string; courseTitle: string; 
     text: `Aviso del curso ${o.courseTitle}\n\n${o.title}\n\n${body}\n\nVer en el aula: ${href}\n\nDesactivar estos correos: ${o.unsubscribe}`,
   };
 }
+
+/** Se liberó un módulo programado del curso. */
+export function moduleUnlockedEmail(o: { name: string; courseTitle: string; moduleTitle: string; href: string; siteUrl: string; unsubscribe: string }): EmailContent {
+  const first = (o.name || "").trim().split(/\s+/)[0] || "Hola";
+  return {
+    subject: `Ya puedes ver «${o.moduleTitle}» en ${o.courseTitle}`,
+    html: layout({
+      siteUrl: o.siteUrl,
+      unsubscribe: o.unsubscribe,
+      preheader: `Se liberó un nuevo módulo de ${o.courseTitle}.`,
+      body:
+        h1(`${first}, se liberó un nuevo módulo`) +
+        p(`En <strong style="color:#fff">${escapeHtml(o.courseTitle)}</strong> ya está disponible <strong style="color:#fff">${escapeHtml(o.moduleTitle)}</strong>.`) +
+        button("Empezar el módulo", o.href) +
+        p(`<span style="font-size:13px;color:#8b93b8;">Te escribimos porque estás inscrito en este curso y tienes activados los recordatorios y avisos. Puedes desactivarlos en <a href="${o.siteUrl}/cuenta/ajustes" style="color:#8b93b8;">Configuración</a>.</span>`),
+    }),
+    text: `${first}, en ${o.courseTitle} ya está disponible «${o.moduleTitle}»: ${o.href}\n\nDesactivar estos correos: ${o.unsubscribe}`,
+  };
+}

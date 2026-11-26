@@ -8,6 +8,7 @@ import {
   abandonedCartEmail,
   certificateEmail,
   courseAnnouncementEmail,
+  moduleUnlockedEmail,
   newCourseEmail,
   promotionEmail,
   purchaseEmail,
@@ -257,6 +258,32 @@ export async function runStreakReminders(limit = 500) {
         siteUrl,
         unsubscribe,
       }),
+    });
+    results[res.status]++;
+  }
+  return results;
+}
+
+/**
+ * Avisa que se liberó un módulo programado. Seguro de llamar varias veces al
+ * día: la base elige los módulos liberados en las últimas 48 h y el envío se
+ * deduplica por alumno y módulo.
+ */
+export async function runModuleUnlockEmails(limit = 500) {
+  const admin = createAdminClient();
+  const { data: rows, error } = await admin.rpc("module_unlock_candidates", { p_limit: limit });
+  if (error) throw error;
+  const results = { candidates: rows?.length ?? 0, sent: 0, skipped: 0, failed: 0, duplicate: 0 };
+  for (const row of rows ?? []) {
+    const unsubscribe = unsubscribeUrl(row.email);
+    const href = `${siteUrl}/aprender/${row.course_slug}/${row.first_lesson_id}`;
+    const res = await sendEmail({
+      to: row.email,
+      userId: row.user_id,
+      template: "module_unlocked",
+      dedupeKey: `unlock:${row.module_id}:${row.user_id}`,
+      unsubscribeUrl: unsubscribe,
+      content: moduleUnlockedEmail({ name: row.full_name, courseTitle: row.course_title, moduleTitle: row.module_title, href, siteUrl, unsubscribe }),
     });
     results[res.status]++;
   }

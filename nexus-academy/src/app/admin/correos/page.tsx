@@ -60,6 +60,7 @@ export default async function AdminEmails() {
               <li>• Carritos abandonados: cada hora (más de 3 h sin completar).</li>
               <li>• Bienvenida, compra, acceso, certificado y recuperación: al instante.</li>
               <li>• Respuesta del equipo a una pregunta en una lección: al instante, a quien preguntó.</li>
+              <li>• Módulo liberado (liberación programada): diario, a quien se le acaba de abrir un módulo.</li>
               <li>• Avisos del curso: al publicarlos, si eliges enviarlos (Cursos → Avisos), solo a alumnos con recordatorios y avisos activados.</li>
             </ul>
           </Panel>

@@ -20,7 +20,7 @@ Gracias por tu compra. Este kit es una academia online completa: tienda de curso
 
 **Para ti (panel `/admin`)**
 - Cursos, módulos, lecciones (editor Markdown), videos con subida reanudable, recursos y evaluaciones.
-- Liberación programada: cada módulo puede abrirse N días después de que el alumno se inscribe (por ejemplo, una semana por módulo).
+- Liberación programada: cada módulo puede abrirse N días después de que el alumno se inscribe (por ejemplo, una semana por módulo), con aviso por correo cuando se libera.
 - Bandeja de preguntas de alumnos (sin responder, todas, ocultas) con moderación.
 - Avisos por curso (novedades, sesiones en vivo, material nuevo) que tus alumnos ven en el aula y, si quieres, reciben por correo.
 - Categorías, instructores, paquetes de cursos, cupones, reseñas y alumnos (otorgar o quitar acceso).

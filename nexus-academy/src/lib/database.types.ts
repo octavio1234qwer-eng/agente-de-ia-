@@ -1024,6 +1024,11 @@ isOneToOne: false
 "module_released":
 { Args: { "p_module_id": string }; Returns: boolean
                            },
+"module_unlock_candidates":
+{ Args: { "p_limit"?: number,"p_now"?: string,"p_window_hours"?: number }; Returns: {
+              "course_slug": string,"course_title": string,"email": string,"first_lesson_id": string,"full_name": string,"module_id": string,"module_title": string,"released_at": string,"user_id": string
+            }[]
+                           },
 "public_display_name":
 { Args: { "p_full_name": string }; Returns: string
                            },
