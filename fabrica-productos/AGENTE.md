@@ -11,12 +11,13 @@ Una tarea programada abre una sesión nueva cada 6 horas y ejecuta esta ronda. O
 
 ## Ronda (en este orden)
 
-1. **Medir.** Gumroad `get_analytics` y `get_sales_totals` de los últimos 7 días (por producto y por referrer). Anota el resultado en `marketing/bitacora.md` (fecha, visitas, ventas, ingresos, qué hiciste).
+1. **Medir.** Gumroad `get_analytics` y `get_sales_totals` de los últimos 7 días (por producto y por referrer), incluidas las descargas del regalo gratis `bhbdx` y las ventas del paquete `shgbyx` (embudo con cupón GRACIAS20, creado por otra sesión; no crear ni cambiar cupones). Anota el resultado en `marketing/bitacora.md` (fecha, visitas, ventas, ingresos, qué hiciste).
 2. **Redes.** `list_posts` con estado `scheduled`. Si hay menos de 10, programa con `addToQueue` UNA publicación nueva por canal libre (X o LinkedIn) sobre una guía o calculadora del sitio o sobre un producto propio. Texto útil primero, enlace al final, sin repetir textos ya publicados (revisa `sent`). Nunca borres ni edites publicaciones de otros productos.
 3. **Contenido (si no hubo ventas en la semana).** Escribe 2 o 3 guías nuevas en `sitio/articulos/` que respondan búsquedas reales de compradores (restaurantes, tienditas, independientes, cocina familiar en México) y enlacen a la calculadora y al producto correctos. Antes de publicar:
    - Verifica toda cifra y cálculo de los ejemplos.
    - Originalidad: similitud con las demás guías < 8 % (`factory.originality.similarity`) y búsqueda web entre comillas de 2 frases distintivas sin coincidencias.
    - No prometas resultados garantizados ni des asesoría fiscal/legal.
+   - Si el tema es precios, costeo, cotizaciones o márgenes, enlaza también al regalo gratis https://octavius724.gumroad.com/l/bhbdx dentro del texto.
 4. **Publicar.** `python3 sitio/build.py`; despliega con `mcp__Vercel__create_deployment` (files): los archivos sin cambio por `sha` (sha1) y `size`, los nuevos/modificados en línea (utf-8). Luego compara cada URL en línea contra su archivo local (sha256) y corre `python3 sitio/indexnow.py`.
 5. **Mejorar.** Si un producto tiene visitas pero 0 ventas en 14 días, propón (no apliques) un cambio de portada, título o precio en la bitácora para que el usuario decida.
 6. **Guardar.** Commit y push a la rama. Termina con un resumen de 3 a 5 líneas.
@@ -26,5 +27,6 @@ Una tarea programada abre una sesión nueva cada 6 horas y ejecuta esta ronda. O
 - No gastar dinero (anuncios, planes, compras) ni crear códigos de descuento sin aprobación del usuario.
 - No publicar productos nuevos en Gumroad sin pasar el control de calidad de la fábrica (`python -m factory qa`) y sin aprobación registrada.
 - No hacer spam: máximo 1 publicación por canal por ronda; nada de mensajes directos no solicitados.
-- No tocar los sitios ni proyectos de otros productos del usuario.
+- No tocar los sitios ni proyectos de otros productos del usuario (ni sus recibos en Gumroad).
+- Coordinación (26-nov): la sesión "AUTO-INCOME AI" reparte tareas; ya hay en Buffer publicaciones del regalo (26-nov) y del lanzamiento en Product Hunt (2-dic): no duplicarlas. Los recibos de los 4 productos de esta fábrica ya recomiendan un producto relacionado.
 - Si algo falla (límite, credencial, red), anótalo en la bitácora y sigue con el siguiente paso.
