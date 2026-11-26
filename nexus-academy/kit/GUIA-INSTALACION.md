@@ -24,6 +24,7 @@ Gracias por tu compra. Este kit es una academia online completa: tienda de curso
 - Bandeja de preguntas de alumnos (sin responder, todas, ocultas) con moderación.
 - Avisos por curso (novedades, sesiones en vivo, material nuevo) que tus alumnos ven en el aula y, si quieres, reciben por correo.
 - Categorías, instructores, paquetes de cursos, cupones, reseñas y alumnos (otorgar o quitar acceso).
+- Inscripción masiva para empresas y escuelas: pegas la lista de correos y les das acceso a un curso; a quien no tiene cuenta le llega una invitación para crear su contraseña.
 - Pedidos con reembolsos, reporte de ingresos por producto, exportación a CSV.
 - Dashboard con ventas, conversión, alumnos y actividad de estudio; embudo por curso (en qué lección se detienen).
 - Correos automáticos (bienvenida, compra, certificado, recordatorios, carritos abandonados, aviso de racha, respuestas a preguntas, avisos del curso) y campañas con baja de un clic.
@@ -71,7 +72,7 @@ Abre http://localhost:3000 (sitio) y http://localhost:3000/admin (panel). Viene 
    npx supabase link --project-ref TU_PROJECT_REF
    npx supabase db push
    ```
-   Luego sigue el `README.md`, sección **3.1** (URL del sitio, plantillas de correo, confirmación de correo y SMTP).
+   Luego sigue el `README.md`, sección **3.1** (URL del sitio, plantillas de correo —confirmación, recuperación e invitación—, confirmación de correo y SMTP).
 3. **Vercel**: importa el repositorio. Si el proyecto está en una subcarpeta, indícala en *Root Directory*. Copia las variables de `.env.example` en *Environment Variables* (mínimo: URL del sitio, claves de Supabase, `CRON_SECRET` y `UNSUBSCRIBE_SECRET`). Despliega.
 4. **Crea tu administrador** con `scripts/create-admin.mjs` (README, sección 3.2, paso 5).
 5. **Pagos**: activa los proveedores que vayas a usar (README, sección 4). Cada uno tiene su webhook ya programado y verificado; solo pegas la URL y la clave. Haz una compra de prueba en modo sandbox antes de cobrar de verdad.
