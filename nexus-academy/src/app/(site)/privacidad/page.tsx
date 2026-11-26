@@ -11,7 +11,8 @@ export default function PrivacyPage() {
       <h2>Datos que recabamos</h2>
       <ul>
         <li>Identificación y contacto: nombre, correo electrónico y fotografía de perfil (opcional).</li>
-        <li>Datos académicos: cursos inscritos, progreso, evaluaciones, certificados y reseñas.</li>
+        <li>Datos académicos: cursos inscritos, progreso, evaluaciones, notas personales (solo tú las ves), certificados y reseñas.</li>
+        <li>Preguntas y respuestas que publicas en las lecciones: las ven los demás alumnos del curso con tu nombre y la inicial de tu apellido (nunca tu correo).</li>
         <li>Datos de compra: productos, importes, método de pago utilizado y, si lo solicitas, RFC y razón social para facturación. No almacenamos números de tarjeta.</li>
         <li>Conversaciones con {BRAND.aiName}, para darte continuidad y controlar el uso.</li>
       </ul>

@@ -215,3 +215,29 @@ export function streakReminderEmail(o: { name: string; streak: number; courseTit
     text: `${first}, llevas ${o.streak} días seguidos estudiando y hoy todavía no has avanzado. Estudia hoy para llegar a ${o.streak + 1}: ${href}\n\nPuedes desactivar estos recordatorios en ${o.siteUrl}/cuenta/ajustes o aquí: ${o.unsubscribe}`,
   };
 }
+
+/** El equipo respondió una pregunta que el alumno hizo en una lección. */
+export function questionAnsweredEmail(o: { name: string; courseTitle: string; lessonTitle: string; question: string; answer: string; href: string; siteUrl: string }): EmailContent {
+  const first = (o.name || "").trim().split(/\s+/)[0] || "Hola";
+  const clip = (t: string, n: number) => (t.length > n ? `${t.slice(0, n - 1).trimEnd()}…` : t);
+  const question = clip(o.question.trim(), 300);
+  const answer = clip(o.answer.trim(), 1200);
+  const quote = (t: string) =>
+    `<div style="margin:0 0 16px;padding:12px 16px;border-left:3px solid #3b82f6;background:#11152a;border-radius:8px;font-size:14px;line-height:22px;color:#c3c8dc;white-space:pre-wrap;">${escapeHtml(t)}</div>`;
+  return {
+    subject: `Respondieron tu pregunta en «${o.lessonTitle}»`,
+    html: layout({
+      siteUrl: o.siteUrl,
+      preheader: `El equipo de ${BRAND.name} respondió tu pregunta.`,
+      body:
+        h1(`${first}, ya tienes respuesta`) +
+        p(`En <strong style="color:#fff">${escapeHtml(o.courseTitle)}</strong> · ${escapeHtml(o.lessonTitle)} preguntaste:`) +
+        quote(question) +
+        p("Respuesta del equipo:") +
+        quote(answer) +
+        button("Ver la conversación", o.href) +
+        p(`<span style="font-size:13px;color:#8b93b8;">Te escribimos porque hiciste esta pregunta en la lección.</span>`),
+    }),
+    text: `${first}, el equipo respondió tu pregunta en ${o.courseTitle} · ${o.lessonTitle}.\n\nTu pregunta: ${question}\n\nRespuesta: ${answer}\n\nVer la conversación: ${o.href}`,
+  };
+}

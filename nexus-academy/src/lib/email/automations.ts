@@ -10,6 +10,7 @@ import {
   newCourseEmail,
   promotionEmail,
   purchaseEmail,
+  questionAnsweredEmail,
   reminderEmail,
   streakReminderEmail,
   welcomeEmail,
@@ -82,6 +83,37 @@ export async function sendCertificateEmail(userId: string, courseId: string) {
     template: "certificate_issued",
     dedupeKey: `certificate:${cert.id}`,
     content: certificateEmail({ name: cert.student_name, courseTitle: cert.course_title, code: cert.code, siteUrl }),
+  });
+}
+
+/**
+ * Avisa al autor de una pregunta que el equipo la respondió. Solo para
+ * respuestas del equipo (is_staff), visibles, y nunca al propio autor de la
+ * respuesta. Un correo por respuesta (dedupe).
+ */
+export async function sendQuestionAnsweredEmail(answerId: string) {
+  const admin = createAdminClient();
+  const { data: a } = await admin
+    .from("lesson_answers")
+    .select("id, body, is_staff, hidden_at, user_id, lesson_questions!inner(id, body, user_id, hidden_at, lesson_id, lessons!inner(title), courses!inner(title, slug), profiles!inner(email, full_name))")
+    .eq("id", answerId)
+    .maybeSingle();
+  const q = a?.lesson_questions;
+  if (!a || !q || !a.is_staff || a.hidden_at || q.hidden_at || q.user_id === a.user_id || !q.profiles?.email) return null;
+  return sendEmail({
+    to: q.profiles.email,
+    userId: q.user_id,
+    template: "question_answered",
+    dedupeKey: `answer:${a.id}`,
+    content: questionAnsweredEmail({
+      name: q.profiles.full_name,
+      courseTitle: q.courses.title,
+      lessonTitle: q.lessons.title,
+      question: q.body,
+      answer: a.body,
+      href: `${siteUrl}/aprender/${q.courses.slug}/${q.lesson_id}#pregunta-${q.id}`,
+      siteUrl,
+    }),
   });
 }
 

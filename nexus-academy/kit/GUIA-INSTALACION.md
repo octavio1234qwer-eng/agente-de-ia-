@@ -13,12 +13,14 @@ Gracias por tu compra. Este kit es una academia online completa: tienda de curso
 - Registro e inicio de sesión con correo (confirmación y recuperación de contraseña).
 - Carrito, cupones y pago con **Stripe**, **Mercado Pago** y **PayPal** (datos de facturación RFC opcionales). La tarjeta nunca toca tu servidor.
 - Aula virtual: video (archivo propio, YouTube o Vimeo), lecturas, evaluaciones, recursos descargables, progreso, subtítulos, notas personales con marcas de tiempo y búsqueda dentro de sus cursos.
+- Preguntas y respuestas en cada lección: los alumnos preguntan y se ayudan entre sí, tus respuestas se destacan como «Equipo» y el alumno recibe un aviso por correo.
 - Tutor con IA (Claude de Anthropic) que responde sobre la lección que el alumno está viendo.
 - Certificados en PDF con QR, página pública de verificación y botón para agregarlos a LinkedIn.
 - Racha de estudio, meta semanal y descarga de sus datos personales (derechos ARCO).
 
 **Para ti (panel `/admin`)**
 - Cursos, módulos, lecciones (editor Markdown), videos con subida reanudable, recursos y evaluaciones.
+- Bandeja de preguntas de alumnos (sin responder, todas, ocultas) con moderación.
 - Categorías, instructores, paquetes de cursos, cupones, reseñas y alumnos (otorgar o quitar acceso).
 - Pedidos con reembolsos, reporte de ingresos por producto, exportación a CSV.
 - Dashboard con ventas, conversión, alumnos y actividad de estudio; embudo por curso (en qué lección se detienen).

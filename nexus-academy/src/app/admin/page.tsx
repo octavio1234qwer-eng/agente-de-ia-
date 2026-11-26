@@ -64,10 +64,12 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
   const { dias } = await searchParams;
   const days = periods.find((p) => String(p) === dias) ?? 30;
   const supabase = await createClient();
-  const [{ data, error }, { data: activityData, error: activityError }] = await Promise.all([
+  const [{ data, error }, { data: activityData, error: activityError }, { data: pendingQuestions }] = await Promise.all([
     supabase.rpc("admin_dashboard_stats", { p_days: days }),
     supabase.rpc("admin_learning_activity", { p_days: days }),
+    supabase.rpc("admin_lesson_questions", { p_filter: "unanswered", p_limit: 500 }),
   ]);
+  const unanswered = pendingQuestions?.length ?? 0;
   if (error || !data || activityError || !activityData) return <p className="text-red-300">No se pudieron cargar las métricas.</p>;
   const s = data as unknown as Stats;
   const act = activityData as unknown as Activity;
@@ -100,6 +102,12 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
           </div>
         }
       />
+      {unanswered > 0 && (
+        <Link href="/admin/preguntas" className="mb-4 flex items-center justify-between gap-3 rounded-2xl border border-amber-400/25 bg-amber-500/10 px-5 py-3 text-sm text-amber-100 hover:bg-amber-500/15">
+          <span>{unanswered === 1 ? "1 pregunta de alumno espera respuesta" : `${unanswered >= 500 ? "500+" : unanswered} preguntas de alumnos esperan respuesta`}</span>
+          <span className="font-medium text-white">Responder →</span>
+        </Link>
+      )}
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         {kpis.map(({ label, value, icon: Icon, hint }) => (
           <div key={label} className="glass rounded-2xl p-5">

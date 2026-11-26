@@ -11,6 +11,8 @@ import { QuizRunner } from "@/components/classroom/quiz-runner";
 import { NexusChat } from "@/components/classroom/nexus-chat";
 import { SearchHighlight } from "@/components/classroom/search-highlight";
 import { LessonNotes } from "@/components/classroom/lesson-notes";
+import { LessonQA } from "@/components/classroom/lesson-qa";
+import { parseQaThread } from "@/lib/qa";
 import { normalizeQuery } from "@/lib/search";
 import { CAPTION_LANGS } from "@/lib/captions";
 import { ReviewForm } from "@/components/course/review-form";
@@ -66,12 +68,14 @@ export default async function LessonPage({ params, searchParams }: { params: Pro
   }
 
   const supabase = await createClient();
-  const [{ content, resources }, quizRes, myReview, myNote] = await Promise.all([
+  const [{ content, resources }, quizRes, myReview, myNote, qaRes] = await Promise.all([
     getLessonContent(lessonId),
     lesson.type === "quiz" ? supabase.rpc("get_quiz", { p_lesson_id: lessonId }) : Promise.resolve({ data: null }),
     supabase.from("reviews").select("rating, comment").eq("course_id", data.course.id).eq("user_id", user.id).maybeSingle(),
     supabase.from("lesson_notes").select("body, updated_at").eq("lesson_id", lessonId).eq("user_id", user.id).maybeSingle(),
+    data.hasAccess ? supabase.rpc("lesson_qa", { p_lesson_id: lessonId }) : Promise.resolve({ data: null }),
   ]);
+  const qaThread = data.hasAccess ? parseQaThread(qaRes.data) : null;
   const video = lesson.type === "video" ? await resolveVideoSource(content?.video_provider ?? null, content?.video_ref ?? null) : null;
   const { data: passMeta } = lesson.type === "quiz" ? await supabase.from("lessons").select("pass_percent").eq("id", lessonId).single() : { data: null };
   const questions = (quizRes.data ?? []).map((q) => ({ id: q.id, prompt: q.prompt, options: (q.options as string[]) ?? [] }));
@@ -155,6 +159,8 @@ export default async function LessonPage({ params, searchParams }: { params: Pro
           )}
 
           <LessonNotes key={lessonId} lessonId={lessonId} initial={myNote.data?.body ?? ""} updatedAt={myNote.data?.updated_at ?? null} withVideo={video?.kind === "file"} />
+
+          {qaThread && <LessonQA lessonId={lessonId} questions={qaThread} isAdmin={user.role === "admin"} canPost={data.hasAccess} />}
 
           <LessonActions
             lessonId={lessonId}

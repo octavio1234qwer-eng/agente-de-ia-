@@ -102,8 +102,8 @@ node scripts/create-admin.mjs tu@correo.com UnaClaveSegura123
 |---|---|---|
 | `npm run typecheck` | TypeScript estricto | ✔ |
 | `npx eslint .` | Lint | ✔ |
-| `npm test` | 60 unitarias: precios, cupones, firmas de Stripe y Mercado Pago, búsqueda, notas, marcas de tiempo, LinkedIn, subtítulos SRT→VTT, CSV, racha y meta semanal, correo de racha, embudo, marca configurable | 60/60 |
-| `npm run test:db` | 153 pgTAP: RLS, roles, pagos idempotentes, reembolsos, certificados, búsqueda solo en cursos con acceso, notas privadas, subtítulos, reporte de ingresos, racha de estudio (solo actividad real y propia), candidatos al aviso de racha, actividad agregada y embudo por curso solo para admin | 153/153 |
+| `npm test` | 65 unitarias: precios, cupones, firmas de Stripe y Mercado Pago, búsqueda, notas, marcas de tiempo, LinkedIn, subtítulos SRT→VTT, CSV, racha y meta semanal, correo de racha, embudo, marca configurable, preguntas y respuestas (hilo, errores y correo de respuesta) | 65/65 |
+| `npm run test:db` | 184 pgTAP: RLS, roles, pagos idempotentes, reembolsos, certificados, búsqueda solo en cursos con acceso, notas privadas, subtítulos, reporte de ingresos, racha de estudio (solo actividad real y propia), candidatos al aviso de racha, actividad agregada y embudo por curso solo para admin, preguntas y respuestas (solo con acceso al curso, nombre público abreviado, equipo según el rol, moderación) | 184/184 |
 | `node e2e/auth-account.mjs` | Registro, inscripción, favoritos, perfil, sesión, recuperación por correo | ✔ |
 | `node e2e/payments.mjs` | Webhook firmado → pago → acceso; repetición; firma falsa; importe alterado; cupón 100 % | 10/10 |
 | `node e2e/classroom.mjs` | Lecciones bloqueadas, vista previa, progreso, evaluación, certificado, PDF, IA sin clave | 17/17 |
@@ -125,6 +125,7 @@ node scripts/create-admin.mjs tu@correo.com UnaClaveSegura123
 | `node e2e/admin-activity.mjs` | Dashboard «Actividad de estudio»: hoy / 7 días / periodo, lecciones completadas, días promedio, gráficas por día y semana con tabla; cifras idénticas a la base, el admin no cuenta como alumno, alumnos sin acceso, sin datos personales | 14/14 |
 | `node e2e/streak-reminder.mjs` | Aviso de racha por perderse: cron protegido (401), solo a quien estudió hasta ayer y hoy no, respeta la baja de recordatorios, un aviso por día de su zona, «omitido» honesto sin Resend, coincide con la tarjeta | 10/10 |
 | `node e2e/learning-streaks.mjs` | Racha y meta semanal en «Mis cursos»: completar una lección la inicia, historial de días, mejor racha, meta (validada en servidor), zona horaria detectada del dispositivo y validada en la base, móvil 360 px, privacidad | 22/22 |
+| `node e2e/lesson-qa.mjs` | Preguntas y respuestas por lección: preguntar, HTML como texto, otro alumno ve «Ana G.» sin correo, responder, bandeja del admin y aviso en el dashboard, respuesta del equipo con aviso por correo «omitido» sin Resend, editar, sin inscripción no se ve, ocultar y eliminar con auditoría, «Descargar mis datos», móvil 360 px, axe | 30/30 |
 | `node e2e/links.mjs` | Enlaces internos rotos | 0 |
 | `npx next build` | Build de producción | ✔ |
 

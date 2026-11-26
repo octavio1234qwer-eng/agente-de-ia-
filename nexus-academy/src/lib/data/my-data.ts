@@ -9,6 +9,8 @@ import { BRAND } from "@/lib/brand";
  * Se leen con SU sesión y siempre filtrados por su propio id: aunque sea
  * administrador, aquí solo obtiene lo suyo. El registro de correos y el
  * boletín solo los lee el servidor, también filtrados por su id / correo.
+ * Sus preguntas y respuestas en lecciones también: así las recibe aunque ya
+ * no tenga acceso al curso (la RLS solo las muestra con acceso vigente).
  */
 export async function collectMyData(userId: string) {
   const db = await createClient();
@@ -34,6 +36,13 @@ export async function collectMyData(userId: string) {
 
   let emails: unknown[] = [];
   let newsletter: unknown = null;
+  const qaDb = integrations.serviceRole() ? createAdminClient() : db;
+  const qaCols = "body, hidden_at, created_at, updated_at, course:courses(slug, title)";
+  const [questions, answers] = await Promise.all([
+    qaDb.from("lesson_questions").select(`${qaCols}, lesson:lessons(title)`).eq("user_id", userId).order("created_at"),
+    qaDb.from("lesson_answers").select(`${qaCols}, is_staff, question:lesson_questions(body)`).eq("user_id", userId).order("created_at"),
+  ]);
+  if (questions.error || answers.error) throw new Error((questions.error ?? answers.error)!.message);
   if (integrations.serviceRole()) {
     const admin = createAdminClient();
     const [log, subs] = await Promise.all([
@@ -52,6 +61,8 @@ export async function collectMyData(userId: string) {
     progreso_por_leccion: progress.data,
     evaluaciones: quizzes.data,
     notas: notes.data,
+    preguntas_en_lecciones: questions.data,
+    respuestas_en_lecciones: answers.data,
     certificados: certificates.data,
     compras: orders.data,
     cupones_usados: redemptions.data,

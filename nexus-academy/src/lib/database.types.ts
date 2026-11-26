@@ -429,6 +429,38 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"lesson_answers": {
+                  Row: {
+                    "body": string,"course_id": string,"created_at": string,"hidden_at": string | null,"id": string,"is_staff": boolean,"question_id": string,"updated_at": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "body": string,"course_id": string,"created_at"?: string,"hidden_at"?: string | null,"id"?: string,"is_staff"?: boolean,"question_id": string,"updated_at"?: string,"user_id": string
+                  }
+                  Update: {
+                    "body"?: string,"course_id"?: string,"created_at"?: string,"hidden_at"?: string | null,"id"?: string,"is_staff"?: boolean,"question_id"?: string,"updated_at"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "lesson_answers_course_id_fkey"
+      columns: ["course_id"]
+isOneToOne: false
+      referencedRelation: "courses"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lesson_answers_question_id_fkey"
+      columns: ["question_id"]
+isOneToOne: false
+      referencedRelation: "lesson_questions"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lesson_answers_user_id_fkey"
+      columns: ["user_id"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"lesson_contents": {
                   Row: {
                     "body": string,"captions_lang": string,"captions_vtt": string | null,"course_id": string,"has_captions": boolean | null,"lesson_id": string,"search_vector": unknown,"updated_at": string,"video_provider": Database["public"]['Enums']["video_provider"] | null,"video_ref": string | null
@@ -513,6 +545,38 @@ isOneToOne: false
       referencedColumns: ["id"]
     },{
       foreignKeyName: "lesson_progress_user_id_fkey"
+      columns: ["user_id"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"lesson_questions": {
+                  Row: {
+                    "body": string,"course_id": string,"created_at": string,"hidden_at": string | null,"id": string,"lesson_id": string,"updated_at": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "body": string,"course_id": string,"created_at"?: string,"hidden_at"?: string | null,"id"?: string,"lesson_id": string,"updated_at"?: string,"user_id": string
+                  }
+                  Update: {
+                    "body"?: string,"course_id"?: string,"created_at"?: string,"hidden_at"?: string | null,"id"?: string,"lesson_id"?: string,"updated_at"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "lesson_questions_course_id_fkey"
+      columns: ["course_id"]
+isOneToOne: false
+      referencedRelation: "courses"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lesson_questions_lesson_id_fkey"
+      columns: ["lesson_id"]
+isOneToOne: false
+      referencedRelation: "lessons"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lesson_questions_user_id_fkey"
       columns: ["user_id"]
 isOneToOne: false
       referencedRelation: "profiles"
@@ -828,6 +892,14 @@ isOneToOne: false
 "admin_learning_activity":
 { Args: { "p_days"?: number,"p_now"?: string,"p_tz"?: string }; Returns: Json
                            },
+"admin_lesson_questions":
+{ Args: { "p_filter"?: string,"p_limit"?: number }; Returns: {
+              "answered": boolean,"answers": number,"author_email": string,"author_name": string,"body": string,"course_id": string,"course_slug": string,"course_title": string,"created_at": string,"hidden": boolean,"id": string,"lesson_id": string,"lesson_title": string
+            }[]
+                           },
+"admin_moderate_qa":
+{ Args: { "p_hidden": boolean,"p_id": string,"p_kind": string }; Returns: undefined
+                           },
 "admin_revenue_by_product":
 { Args: { "p_from"?: string,"p_to"?: string }; Returns: {
               "currency": string,"discount_cents": number,"gross_cents": number,"item_type": string,"net_cents": number,"orders": number,"product_id": string,"refunded_cents": number,"slug": string,"title": string,"units": number
@@ -892,6 +964,9 @@ isOneToOne: false
 "lesson_captions_text":
 { Args: { "p_vtt": string }; Returns: string
                            },
+"lesson_qa":
+{ Args: { "p_lesson_id": string }; Returns: Json
+                           },
 "lesson_search_document":
 { Args: { "p_body": string,"p_captions": string,"p_summary": string,"p_title": string }; Returns: unknown
                            },
@@ -903,6 +978,9 @@ isOneToOne: false
                            },
 "lesson_search_text":
 { Args: { "p": string }; Returns: string
+                           },
+"public_display_name":
+{ Args: { "p_full_name": string }; Returns: string
                            },
 "record_refund":
 { Args: { "p_actor": string,"p_amount_cents": number,"p_order_id": string,"p_provider_refund_id": string,"p_reason": string }; Returns: Database["public"]['Enums']["order_status"]
