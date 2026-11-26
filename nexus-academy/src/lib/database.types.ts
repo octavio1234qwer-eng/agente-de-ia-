@@ -906,6 +906,11 @@ isOneToOne: false
             "academy_public_stats":
 { Args: Record<PropertyKey, never>; Returns: Json
                            },
+"admin_bulk_enroll":
+{ Args: { "p_course_id": string,"p_emails": (string)[] }; Returns: {
+              "email": string,"status": string,"user_id": string
+            }[]
+                           },
 "admin_course_funnel":
 { Args: { "p_course_id": string }; Returns: Json
                            },
