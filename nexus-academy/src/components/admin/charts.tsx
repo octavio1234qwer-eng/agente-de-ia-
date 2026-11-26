@@ -98,3 +98,42 @@ export function TopCoursesBars({ data, currency }: { data: { title: string; cent
     </div>
   );
 }
+
+export function ActivityBars({ data }: { data: { label: string; students: number; lessons: number }[] }) {
+  return (
+    <div className="h-56" role="img" aria-label="Alumnos que estudiaron por día">
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
+          <CartesianGrid stroke={GRID} vertical={false} />
+          <XAxis dataKey="label" tick={{ fill: AXIS, fontSize: 11 }} tickLine={false} axisLine={{ stroke: GRID }} interval="preserveStartEnd" minTickGap={16} />
+          <YAxis tick={{ fill: AXIS, fontSize: 11 }} tickLine={false} axisLine={false} width={36} allowDecimals={false} />
+          <Tooltip
+            cursor={{ fill: "rgb(255 255 255 / 0.04)" }}
+            content={({ active, payload, label }) => {
+              if (!active || !payload?.length) return null;
+              const d = payload[0].payload as { students: number; lessons: number };
+              return <TooltipBox title={String(label)} value={`${d.students} ${d.students === 1 ? "alumno" : "alumnos"} · ${d.lessons} ${d.lessons === 1 ? "lección completada" : "lecciones completadas"}`} />;
+            }}
+          />
+          <Bar dataKey="students" fill={SERIES} radius={[4, 4, 0, 0]} maxBarSize={24} />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
+
+export function WeeklyActiveLine({ data }: { data: { label: string; students: number }[] }) {
+  return (
+    <div className="h-56" role="img" aria-label="Alumnos activos por semana">
+      <ResponsiveContainer width="100%" height="100%">
+        <LineChart data={data} margin={{ top: 8, right: 12, left: 0, bottom: 0 }}>
+          <CartesianGrid stroke={GRID} vertical={false} />
+          <XAxis dataKey="label" tick={{ fill: AXIS, fontSize: 11 }} tickLine={false} axisLine={{ stroke: GRID }} interval="preserveStartEnd" minTickGap={16} />
+          <YAxis tick={{ fill: AXIS, fontSize: 11 }} tickLine={false} axisLine={false} width={36} allowDecimals={false} />
+          <Tooltip cursor={{ stroke: AXIS, strokeWidth: 1 }} content={({ active, payload, label }) => (active && payload?.length ? <TooltipBox title={`Semana del ${label}`} value={`${payload[0].value} alumnos activos`} /> : null)} />
+          <Line type="linear" dataKey="students" stroke={SERIES_ALT} strokeWidth={2} dot={{ r: 4, fill: SERIES_ALT, stroke: "#0a0c16", strokeWidth: 2 }} activeDot={{ r: 6, stroke: "#0a0c16", strokeWidth: 2 }} />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}

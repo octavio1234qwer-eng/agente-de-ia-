@@ -69,8 +69,10 @@ saber qué sigue. Marcar `[x]` solo cuando esté construido **y probado**.
 
 - [x] Aviso por correo «Tu racha de N días sigue viva hoy» (`/api/cron/streak-reminders`, protegido con CRON_SECRET): la función `streak_reminder_candidates` (solo clave de servicio) elige a quien tiene recordatorios activados, racha de 2+ días hasta ayer, nada hoy, y está entre las 16 y 22 h de su zona; máximo un aviso cada 3 días y uno por día local. Con Resend sin configurar queda como «omitido» (nunca se finge). Programado 00:00 UTC (América) y 18:00 UTC (España). pgTAP 12/12 nuevas (133), 3 unitarias (55), E2E `e2e/streak-reminder.mjs` 10/10
 
+- [x] Admin: panel «Actividad de estudio» en el dashboard (alumnos que estudiaron hoy, en 7 días y en el periodo; lecciones completadas; días de estudio promedio por alumno; gráfica por día y por 12 semanas con tabla accesible). Solo conteos, nunca qué estudió cada alumno; el admin no cuenta como alumno; el KPI «Aprendiendo activamente» ahora usa esta actividad real. pgTAP 11/11 nuevas (144), E2E `e2e/admin-activity.mjs` 14/14, axe sin infracciones, `e2e/admin.mjs` sigue pasando
+
 ## Siguiente (en orden)
-- [ ] Admin: actividad de estudio agregada (alumnos activos por día/semana) en el dashboard, con los mismos datos reales
+- [ ] Admin: embudo por curso — en qué lección se detienen los alumnos (progreso real) y tasa de finalización, para mejorar el contenido
 - [ ] Despliegue (Vercel + Supabase en la nube) — requiere cuentas/credenciales del usuario
 
 ## Ventas (agente)

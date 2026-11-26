@@ -4,7 +4,7 @@ import { Award, CreditCard, Percent, ShoppingBag, TrendingUp, UserPlus, Users, W
 import { requireAdmin } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { AdminHeader, Panel } from "@/components/admin/ui";
-import { PROVIDER_COLOR, MonthlyBars, RevenueArea, StudentsLine, TopCoursesBars } from "@/components/admin/charts";
+import { PROVIDER_COLOR, ActivityBars, MonthlyBars, RevenueArea, StudentsLine, TopCoursesBars, WeeklyActiveLine } from "@/components/admin/charts";
 import { cn, formatMoney, providerLabel } from "@/lib/utils";
 
 export const metadata: Metadata = { title: "Dashboard" };
@@ -30,6 +30,17 @@ type Stats = {
   providers: { provider: string; orders: number; revenue_cents: number }[];
 };
 
+type Activity = {
+  today: string;
+  active_today: number;
+  active_7d: number;
+  active_period: number;
+  lessons_period: number;
+  avg_days: number;
+  daily: { day: string; students: number; lessons: number }[];
+  weekly: { week: string; students: number }[];
+};
+
 const periods = [7, 30, 90] as const;
 const dayLabel = (d: string) => new Intl.DateTimeFormat("es-MX", { day: "numeric", month: "short", timeZone: "UTC" }).format(new Date(d));
 const monthLabel = (d: string) => new Intl.DateTimeFormat("es-MX", { month: "short", year: "2-digit", timeZone: "UTC" }).format(new Date(d));
@@ -53,9 +64,13 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
   const { dias } = await searchParams;
   const days = periods.find((p) => String(p) === dias) ?? 30;
   const supabase = await createClient();
-  const { data, error } = await supabase.rpc("admin_dashboard_stats", { p_days: days });
-  if (error || !data) return <p className="text-red-300">No se pudieron cargar las métricas.</p>;
+  const [{ data, error }, { data: activityData, error: activityError }] = await Promise.all([
+    supabase.rpc("admin_dashboard_stats", { p_days: days }),
+    supabase.rpc("admin_learning_activity", { p_days: days }),
+  ]);
+  if (error || !data || activityError || !activityData) return <p className="text-red-300">No se pudieron cargar las métricas.</p>;
   const s = data as unknown as Stats;
+  const act = activityData as unknown as Activity;
   const cur = s.currency || "MXN";
 
   const kpis = [
@@ -64,7 +79,7 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
     { label: "Pedidos pagados", value: s.paid_orders.toLocaleString("es-MX"), icon: ShoppingBag, hint: "Histórico" },
     { label: "Tasa de conversión", value: `${s.conversion_rate}%`, icon: Percent, hint: `${s.period_paid_orders} de ${s.period_checkouts} checkouts (${days} días)` },
     { label: "Alumnos", value: s.students_total.toLocaleString("es-MX"), icon: Users, hint: `+${s.students_new} en ${days} días` },
-    { label: "Aprendiendo activamente", value: s.active_learners.toLocaleString("es-MX"), icon: UserPlus, hint: `Con actividad en ${days} días` },
+    { label: "Aprendiendo activamente", value: act.active_period.toLocaleString("es-MX"), icon: UserPlus, hint: `Estudiaron en los últimos ${days} días` },
     { label: "Inscripciones activas", value: s.enrollments_total.toLocaleString("es-MX"), icon: CreditCard, hint: "Gratis + pagadas" },
     { label: "Certificados emitidos", value: s.certificates_total.toLocaleString("es-MX"), icon: Award, hint: "Histórico" },
   ];
@@ -119,6 +134,36 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
           )}
         </Panel>
       </div>
+
+      <Panel className="mt-4" title="Actividad de estudio" subtitle={`Alumnos que avanzaron un video, marcaron una lección, presentaron una evaluación o guardaron una nota · hora de CDMX`}>
+        <dl className="grid grid-cols-2 gap-3 sm:grid-cols-5" data-testid="activity-summary">
+          {[
+            ["Hoy", act.active_today.toLocaleString("es-MX")],
+            ["Últimos 7 días", act.active_7d.toLocaleString("es-MX")],
+            [`Últimos ${days} días`, act.active_period.toLocaleString("es-MX")],
+            ["Lecciones completadas", act.lessons_period.toLocaleString("es-MX")],
+            ["Días de estudio por alumno", Number(act.avg_days).toLocaleString("es-MX", { maximumFractionDigits: 1 })],
+          ].map(([k, v]) => (
+            <div key={k} className="rounded-xl bg-white/[0.03] px-4 py-3">
+              <dt className="text-xs text-mist-400">{k}</dt>
+              <dd className="mt-1 text-xl font-semibold text-white">{v}</dd>
+            </div>
+          ))}
+        </dl>
+        {act.active_period === 0 && <p className="mt-4 text-sm text-mist-400">Aún no hay actividad de estudio en este periodo.</p>}
+        <div className="mt-5 grid gap-6 xl:grid-cols-2">
+          <div>
+            <h3 className="text-sm font-medium text-white">Alumnos que estudiaron por día</h3>
+            <ActivityBars data={act.daily.map((d) => ({ label: dayLabel(d.day), students: d.students, lessons: d.lessons }))} />
+            <DataTable head={["Día", "Alumnos", "Lecciones completadas"]} rows={act.daily.map((d) => [dayLabel(d.day), d.students, d.lessons])} />
+          </div>
+          <div>
+            <h3 className="text-sm font-medium text-white">Alumnos activos por semana</h3>
+            <WeeklyActiveLine data={act.weekly.map((w) => ({ label: dayLabel(w.week), students: w.students }))} />
+            <DataTable head={["Semana (desde el lunes)", "Alumnos activos"]} rows={act.weekly.map((w) => [dayLabel(w.week), w.students])} />
+          </div>
+        </div>
+      </Panel>
 
       <Panel className="mt-4" title="Ingresos por método de pago" subtitle="Histórico, netos de reembolsos">
         {s.providers.length ? (
