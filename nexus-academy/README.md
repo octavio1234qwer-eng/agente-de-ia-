@@ -102,7 +102,7 @@ node scripts/create-admin.mjs tu@correo.com UnaClaveSegura123
 |---|---|---|
 | `npm run typecheck` | TypeScript estricto | ✔ |
 | `npx eslint .` | Lint | ✔ |
-| `npm test` | 58 unitarias: precios, cupones, firmas de Stripe y Mercado Pago, búsqueda, notas, marcas de tiempo, LinkedIn, subtítulos SRT→VTT, CSV, racha y meta semanal, correo de racha, embudo | 58/58 |
+| `npm test` | 60 unitarias: precios, cupones, firmas de Stripe y Mercado Pago, búsqueda, notas, marcas de tiempo, LinkedIn, subtítulos SRT→VTT, CSV, racha y meta semanal, correo de racha, embudo, marca configurable | 60/60 |
 | `npm run test:db` | 153 pgTAP: RLS, roles, pagos idempotentes, reembolsos, certificados, búsqueda solo en cursos con acceso, notas privadas, subtítulos, reporte de ingresos, racha de estudio (solo actividad real y propia), candidatos al aviso de racha, actividad agregada y embudo por curso solo para admin | 153/153 |
 | `node e2e/auth-account.mjs` | Registro, inscripción, favoritos, perfil, sesión, recuperación por correo | ✔ |
 | `node e2e/payments.mjs` | Webhook firmado → pago → acceso; repetición; firma falsa; importe alterado; cupón 100 % | 10/10 |
@@ -120,6 +120,7 @@ node scripts/create-admin.mjs tu@correo.com UnaClaveSegura123
 | `node e2e/seo.mjs` | robots.txt (bloquea áreas privadas, no certificados), sitemap.xml (solo cursos/paquetes publicados, todas las URLs responden 200), JSON-LD de organización, buscador y curso | 22/22 |
 | `node e2e/admin-export.mjs` | CSV de pedidos y alumnos: BOM, encabezados, RFC/razón social, importes, fórmulas neutralizadas, filtros de fecha y estado, 400/403/401/404, auditoría | 19/19 |
 | `node e2e/admin-revenue.mjs` | Ingresos por producto: bruto, descuento, reembolso repartido al centavo, neto, totales, periodos, CSV idéntico a la página, permisos | 14/14 |
+| `node e2e/my-data-export.mjs` | «Descargar mis datos» (ARCO): JSON con perfil, inscripciones, progreso, notas, compras con facturación, favoritos, actividad y más; nada de otros alumnos (ni siendo admin), 401 sin sesión, sin caché | 12/12 |
 | `node e2e/course-funnel.mjs` | Embudo por curso: resumen sin revocados, orden del temario, completaron y detenidos por lección, cambia al completar una lección en el aula, alumno sin acceso, 404, curso sin alumnos, sin datos personales | 10/10 |
 | `node e2e/admin-activity.mjs` | Dashboard «Actividad de estudio»: hoy / 7 días / periodo, lecciones completadas, días promedio, gráficas por día y semana con tabla; cifras idénticas a la base, el admin no cuenta como alumno, alumnos sin acceso, sin datos personales | 14/14 |
 | `node e2e/streak-reminder.mjs` | Aviso de racha por perderse: cron protegido (401), solo a quien estudió hasta ayer y hoy no, respeta la baja de recordatorios, un aviso por día de su zona, «omitido» honesto sin Resend, coincide con la tarjeta | 10/10 |

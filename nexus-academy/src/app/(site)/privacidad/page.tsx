@@ -23,7 +23,7 @@ export default function PrivacyPage() {
       <h2>Transferencias y encargados</h2>
       <p>Compartimos los datos estrictamente necesarios con proveedores que actúan como encargados: Supabase (base de datos y autenticación), Stripe, Mercado Pago y PayPal (pagos), Resend (correo) y Anthropic (procesamiento de las consultas a {BRAND.aiName}).</p>
       <h2>Derechos ARCO</h2>
-      <p>Puedes ejercer tus derechos de acceso, rectificación, cancelación y oposición, así como revocar tu consentimiento, escribiendo al correo de contacto del responsable. Responderemos en los plazos que marca la ley.</p>
+      <p>Puedes ejercer tus derechos de acceso, rectificación, cancelación y oposición, así como revocar tu consentimiento, escribiendo al correo de contacto del responsable. Responderemos en los plazos que marca la ley. Para el derecho de acceso también puedes descargar al instante una copia de tus datos desde <a href="/cuenta/ajustes">Configuración</a> en tu cuenta.</p>
       <h2>Seguridad</h2>
       <p>Aplicamos controles de acceso por usuario en la base de datos, cifrado en tránsito, verificación de firmas en los pagos y principio de mínimo privilegio.</p>
     </LegalPage>

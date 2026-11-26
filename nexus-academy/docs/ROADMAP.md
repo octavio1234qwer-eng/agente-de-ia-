@@ -73,8 +73,11 @@ saber qué sigue. Marcar `[x]` solo cuando esté construido **y probado**.
 
 - [x] Admin: «Embudo de alumnos» por curso (`/admin/cursos/[id]/embudo`): inscritos, empezaron, sin empezar, terminaron y tasa de finalización; por lección, en el orden del temario, cuántos la completaron y cuántos están detenidos en ella (primera lección pendiente de quien empezó y no terminó), con las 3 lecciones donde más se detienen. Solo alumnos con acceso vigente y solo conteos. pgTAP 9/9 nuevas (153), 3 unitarias (58), E2E `e2e/course-funnel.mjs` 10/10 (incluye avanzar una lección en el aula y ver cómo cambia), axe sin infracciones
 
+- [x] Marca configurable: nombre de la academia, del tutor de IA y lema por variables de entorno (`NEXT_PUBLIC_SITE_NAME`, `NEXT_PUBLIC_AI_NAME`, `NEXT_PUBLIC_SITE_TAGLINE`) en interfaz, correos, certificados (PDF, LinkedIn, Open Graph), pagos (Stripe, PayPal, estado de cuenta de Mercado Pago) y el prompt del tutor; probado con una compilación de producción con otra marca
+- [x] Alumno: «Descargar mis datos (JSON)» en Configuración (derecho de acceso ARCO al instante): perfil, inscripciones, progreso, evaluaciones, notas, certificados, compras con facturación, cupones, favoritos, reseñas, carrito, conversaciones con el tutor, actividad y correos enviados; siempre filtrado por el propio usuario. E2E `e2e/my-data-export.mjs` 12/12
+
 ## Siguiente (en orden)
-- [ ] Alumno: «Descargar mis datos» en Configuración (perfil, inscripciones, progreso, notas, certificados, compras y actividad en JSON) para atender derechos ARCO (LFPDPPP) sin intervención manual
+- [ ] Vender la plataforma como kit en Gumroad ($79 USD, aprobado por el usuario) con guía de instalación y promoción en Buffer
 - [ ] Despliegue (Vercel + Supabase en la nube) — requiere cuentas/credenciales del usuario
 
 ## Ventas (agente)

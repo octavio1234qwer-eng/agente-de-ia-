@@ -30,6 +30,10 @@ export default async function SettingsPage() {
         <p className="mt-2 text-sm leading-relaxed text-mist-300">
           Puedes solicitar acceso, rectificación, cancelación u oposición al tratamiento de tus datos personales (derechos ARCO) escribiendo al correo de contacto indicado en el <a className="text-electric-300 underline" href="/privacidad">aviso de privacidad</a>.
         </p>
+        <p className="mt-4 text-sm leading-relaxed text-mist-300">
+          Para ejercer tu derecho de acceso al instante, descarga una copia de todo lo que guardamos de ti: perfil, inscripciones, progreso, evaluaciones, notas, certificados, compras, favoritos, reseñas, carrito, conversaciones con el tutor de IA, actividad de estudio y correos que te enviamos.
+        </p>
+        <a href="/api/account/export" download className="mt-4 inline-flex h-11 items-center gap-2 rounded-xl border border-white/10 px-4 text-sm font-medium text-white hover:bg-white/[0.06]">Descargar mis datos (JSON)</a>
       </Card>
     </div>
   );
