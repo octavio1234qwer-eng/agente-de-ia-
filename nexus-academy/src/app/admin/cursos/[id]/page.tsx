@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowDown, ArrowUp, ExternalLink, Filter, Megaphone, Pencil, Plus } from "lucide-react";
+import { ArrowDown, ArrowUp, ExternalLink, Filter, Megaphone, Pencil, Plus, UserPlus } from "lucide-react";
 import { requireAdmin } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { AdminHeader, Panel } from "@/components/admin/ui";
@@ -35,6 +35,7 @@ export default async function EditCourse({ params, searchParams }: { params: Pro
         description={`${course.lessons_count} lecciones · ${course.students_count} alumnos`}
         actions={
           <>
+            <Link href={`/admin/cursos/${course.id}/inscribir`} className="inline-flex h-9 items-center gap-2 rounded-xl border border-white/10 px-3 text-sm text-mist-200 hover:bg-white/[0.06]"><UserPlus className="size-4" aria-hidden /> Inscribir alumnos</Link>
             <Link href={`/admin/cursos/${course.id}/avisos`} className="inline-flex h-9 items-center gap-2 rounded-xl border border-white/10 px-3 text-sm text-mist-200 hover:bg-white/[0.06]"><Megaphone className="size-4" aria-hidden /> Avisos</Link>
             <Link href={`/admin/cursos/${course.id}/embudo`} className="inline-flex h-9 items-center gap-2 rounded-xl border border-white/10 px-3 text-sm text-mist-200 hover:bg-white/[0.06]"><Filter className="size-4" aria-hidden /> Embudo de alumnos</Link>
             <Link href={`/cursos/${course.slug}`} target="_blank" className="inline-flex h-9 items-center gap-2 rounded-xl border border-white/10 px-3 text-sm text-mist-200 hover:bg-white/[0.06]"><ExternalLink className="size-4" /> Ver página pública</Link>
@@ -44,7 +45,7 @@ export default async function EditCourse({ params, searchParams }: { params: Pro
       {creado && <p role="status" className="mb-4 rounded-xl border border-emerald-400/25 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">Curso creado. Ahora arma el temario.</p>}
       {archivado && <p role="status" className="mb-4 rounded-xl border border-amber-400/25 bg-amber-500/10 px-4 py-3 text-sm text-amber-200">El curso tiene alumnos inscritos, así que se archivó en lugar de eliminarse para no quitarles el acceso.</p>}
 
-      <div className="grid gap-4 2xl:grid-cols-[1fr_520px]">
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-4 2xl:grid-cols-[minmax(0,1fr)_520px]">
         <Panel title="Información del curso">
           <CourseForm course={course} categories={categories ?? []} instructors={instructors ?? []} />
         </Panel>
@@ -54,8 +55,8 @@ export default async function EditCourse({ params, searchParams }: { params: Pro
             <div className="space-y-4">
               {sorted.map((m, mi) => (
                 <div key={m.id} className="rounded-xl border border-white/[0.07]">
-                  <div className="flex items-center gap-1 border-b border-white/[0.06] p-2">
-                    <form action={renameModuleAction} className="flex flex-1 items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-1 border-b border-white/[0.06] p-2">
+                    <form action={renameModuleAction} className="flex min-w-0 flex-1 basis-48 items-center gap-2">
                       <input type="hidden" name="id" value={m.id} />
                       <span className="pl-1 text-xs text-mist-500">M{mi + 1}</span>
                       <input name="title" defaultValue={m.title} aria-label={`Título del módulo ${mi + 1}`} className="h-9 min-w-0 flex-1 rounded-lg bg-transparent px-2 text-sm font-medium text-white hover:bg-white/[0.03] focus:bg-white/[0.05] focus:outline-none" />

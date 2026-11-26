@@ -27,13 +27,13 @@ function Fields({ b, courses }: { b?: Bundle; courses: { id: string; title: stri
         <Field label="Precio de referencia" htmlFor={`c-${k}`}><Input id={`c-${k}`} name="compare_at" type="number" step="0.01" min={0} defaultValue={b?.compare_at_price_cents ? b.compare_at_price_cents / 100 : ""} /></Field>
         <Field label="Estado" htmlFor={`e-${k}`}><Select id={`e-${k}`} name="status" defaultValue={b?.status ?? "draft"}><option value="draft">Borrador</option><option value="published">Publicado</option><option value="archived">Archivado</option></Select></Field>
       </div>
-      <fieldset>
+      <fieldset className="min-w-0">
         <legend className="mb-2 text-sm font-medium text-mist-200">Cursos incluidos (mínimo 2)</legend>
-        <div className="grid max-h-56 gap-1 overflow-y-auto rounded-xl border border-white/[0.07] p-2 sm:grid-cols-2">
+        <div className="grid max-h-56 grid-cols-[minmax(0,1fr)] gap-1 overflow-y-auto rounded-xl border border-white/[0.07] p-2 sm:grid-cols-2">
           {courses.map((c) => (
             <label key={c.id} className="flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm text-mist-200 hover:bg-white/[0.04]">
               <input type="checkbox" name="course_ids" value={c.id} defaultChecked={selected.has(c.id)} className="size-4 accent-electric-500" />
-              <span className="flex-1 truncate">{c.title}</span><span className="text-xs text-mist-500">{formatPrice(c.price_cents)}</span>
+              <span className="min-w-0 flex-1 truncate">{c.title}</span><span className="shrink-0 text-xs text-mist-500">{formatPrice(c.price_cents)}</span>
             </label>
           ))}
         </div>
@@ -52,12 +52,12 @@ export default async function AdminBundles() {
   return (
     <>
       <AdminHeader title="Paquetes" description="Vende varios cursos juntos a un precio especial." />
-      <div className="grid gap-4 xl:grid-cols-[1fr_460px]">
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-4 xl:grid-cols-[minmax(0,1fr)_460px]">
         <div className="space-y-3">
           {(bundles ?? []).map((b) => (
             <details key={b.id} className="glass rounded-2xl">
-              <summary className="flex cursor-pointer items-center gap-3 p-4">
-                <span className="flex-1 font-medium text-white">{b.title}</span>
+              <summary className="flex cursor-pointer flex-wrap items-center gap-x-3 gap-y-1 p-4">
+                <span className="min-w-0 flex-1 basis-40 font-medium text-white">{b.title}</span>
                 <span className="text-xs text-mist-400">{b.bundle_courses.length} cursos · {formatPrice(b.price_cents)} · {b.status}</span>
               </summary>
               <div className="border-t border-white/[0.06] p-4"><ActionForm action={saveBundleAction} submitLabel="Guardar"><Fields b={b} courses={courses ?? []} /></ActionForm></div>

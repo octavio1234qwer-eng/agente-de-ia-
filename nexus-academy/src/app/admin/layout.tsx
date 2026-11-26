@@ -28,7 +28,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           <Avatar name={admin.full_name || admin.email} url={admin.avatar_url} size={30} />
         </div>
       </header>
-      <div className="mx-auto grid max-w-[1500px] gap-6 px-4 py-6 sm:px-6 lg:grid-cols-[220px_1fr]">
+      <div className="mx-auto grid max-w-[1500px] grid-cols-[minmax(0,1fr)] gap-6 px-4 py-6 sm:px-6 lg:grid-cols-[220px_minmax(0,1fr)]">
         <aside className="space-y-6 lg:sticky lg:top-20 lg:h-fit">
           <AdminNav />
           <div className="hidden rounded-2xl border border-white/[0.06] p-4 lg:block">

@@ -7,7 +7,8 @@ import { LinkButton } from "@/components/ui/button";
 
 export const metadata: Metadata = { title: "Nueva contraseña", robots: { index: false } };
 
-export default async function ResetPage() {
+export default async function ResetPage({ searchParams }: { searchParams: Promise<{ bienvenida?: string }> }) {
+  const { bienvenida } = await searchParams;
   const user = await getCurrentUser();
   if (!user) {
     return (
@@ -18,8 +19,8 @@ export default async function ResetPage() {
   }
   return (
     <AuthCard
-      title="Crea una nueva contraseña"
-      subtitle={`Para la cuenta ${user.email}`}
+      title={bienvenida ? "Crea tu contraseña" : "Crea una nueva contraseña"}
+      subtitle={bienvenida ? `Te dieron acceso a cursos. Elige una contraseña para entrar con ${user.email}.` : `Para la cuenta ${user.email}`}
       footer={<Link href="/cuenta/cursos" className="font-medium text-electric-300 hover:text-white">Ir a mis cursos</Link>}
     >
       <NewPasswordForm />

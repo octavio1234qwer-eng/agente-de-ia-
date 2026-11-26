@@ -36,7 +36,7 @@ export default async function AdminOrder({ params, searchParams }: { params: Pro
           {reembolso === "total" ? "Reembolso total registrado. El acceso a los cursos comprados en este pedido fue retirado." : "Reembolso parcial registrado. El alumno conserva el acceso."}
         </p>
       )}
-      <div className="grid gap-4 xl:grid-cols-[1fr_380px]">
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-4 xl:grid-cols-[minmax(0,1fr)_380px]">
         <div className="space-y-4">
           <Panel title="Detalle">
             <Table head={["Producto", "Precio", "Descuento", "Total"]}>
@@ -44,7 +44,7 @@ export default async function AdminOrder({ params, searchParams }: { params: Pro
                 <tr key={i.id}><Td>{i.title}</Td><Td>{formatMoney(i.unit_price_cents, o.currency)}</Td><Td>{i.discount_cents ? `−${formatMoney(i.discount_cents, o.currency)}` : "—"}</Td><Td>{formatMoney(i.total_cents, o.currency)}</Td></tr>
               ))}
             </Table>
-            <dl className="mt-4 grid gap-1 text-sm sm:grid-cols-2">
+            <dl className="mt-4 grid grid-cols-[minmax(0,1fr)] gap-1 text-sm sm:grid-cols-[auto_minmax(0,1fr)] sm:gap-x-6 [&_dd]:break-words">
               <dt className="text-mist-400">Cliente</dt><dd><Link className="text-electric-300" href={`/admin/alumnos/${o.profiles?.id}`}>{o.profiles?.full_name || o.customer_email}</Link></dd>
               <dt className="text-mist-400">Correo</dt><dd className="text-mist-100">{o.customer_email}</dd>
               <dt className="text-mist-400">Cupón</dt><dd className="text-mist-100">{o.coupon_code ?? "—"}</dd>

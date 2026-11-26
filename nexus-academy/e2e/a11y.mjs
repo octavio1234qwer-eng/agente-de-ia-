@@ -31,7 +31,7 @@ const { data: anyOrder } = await admin.from("orders").select("id").limit(1).mayb
 const pages = {
   public: ["/", "/cursos", "/cursos/javascript-moderno", "/paquetes", "/instructores", "/nexus-ai", "/login", "/registro", "/recuperar", "/verificar", `/certificados/${cert.code}`, "/terminos", "/privacidad", "/reembolsos", "/carrito"],
   student: ["/cuenta", "/cuenta/cursos", "/cuenta/buscar?q=commit", "/cuenta/notas", "/cuenta/certificados", "/cuenta/compras", "/cuenta/favoritos", "/cuenta/ajustes", `/aprender/git-github-esencial/${lesson.id}`, `/aprender/git-github-esencial/${quiz.id}`],
-  admin: ["/admin", "/admin/cursos", `/admin/cursos/${git.id}`, `/admin/cursos/${git.id}/embudo`, `/admin/cursos/${git.id}/lecciones/${lesson.id}`, "/admin/categorias", "/admin/instructores", "/admin/paquetes", "/admin/alumnos", "/admin/pedidos", "/admin/ingresos", ...(anyOrder ? [`/admin/pedidos/${anyOrder.id}`] : []), `/admin/cursos/${git.id}/avisos`, "/admin/cupones", "/admin/preguntas", "/admin/preguntas?filtro=all", "/admin/resenas", "/admin/correos"],
+  admin: ["/admin", "/admin/cursos", `/admin/cursos/${git.id}`, `/admin/cursos/${git.id}/embudo`, `/admin/cursos/${git.id}/lecciones/${lesson.id}`, "/admin/categorias", "/admin/instructores", "/admin/paquetes", "/admin/alumnos", "/admin/pedidos", "/admin/ingresos", ...(anyOrder ? [`/admin/pedidos/${anyOrder.id}`] : []), `/admin/cursos/${git.id}/avisos`, `/admin/cursos/${git.id}/inscribir`, "/admin/cupones", "/admin/preguntas", "/admin/preguntas?filtro=all", "/admin/resenas", "/admin/correos"],
 };
 
 const browser = await pw.chromium.launch();
@@ -102,6 +102,21 @@ await mobile.click("button:has-text('NEXUS AI')");
 await mobile.waitForTimeout(400);
 await audit(mobile, "chat NEXUS AI abierto");
 await mctx.close();
+
+// Ancho móvil (360 px): ninguna página del panel debe desbordar horizontalmente.
+const actx = await context(adminEmail);
+const amobile = await actx.newPage();
+await amobile.setViewportSize({ width: 360, height: 780 });
+for (const path of pages.admin) {
+  await amobile.goto(`${BASE}${path}`, { waitUntil: "networkidle" });
+  const overflow = await amobile.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+  if (overflow > 0) {
+    total++;
+    summary.set(`desborde-360:${path}`, { help: `La página desborda ${overflow}px a 360 px de ancho`, pages: new Set([path]), nodes: [] });
+  }
+  console.log(`${overflow > 0 ? "✘" : "✔"} [360 px] ${path}${overflow > 0 ? ` — desborda ${overflow}px` : ""}`);
+}
+await actx.close();
 await browser.close();
 
 if (summary.size) {

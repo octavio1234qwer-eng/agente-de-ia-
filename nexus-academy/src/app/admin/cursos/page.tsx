@@ -23,7 +23,7 @@ export default async function AdminCourses({ searchParams }: { searchParams: Pro
     <>
       <AdminHeader title="Cursos" description="Crea, edita y publica cursos. Los cursos con alumnos se archivan en lugar de eliminarse." actions={<LinkButton href="/admin/cursos/nuevo" size="sm"><Plus className="size-4" /> Nuevo curso</LinkButton>} />
       {eliminado && <p role="status" className="mb-4 rounded-xl border border-emerald-400/25 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">Curso eliminado.</p>}
-      <div className="mb-4 flex gap-2 text-sm">
+      <div className="mb-4 flex flex-wrap gap-2 text-sm">
         {[["", "Todos"], ["published", "Publicados"], ["draft", "Borradores"], ["archived", "Archivados"]].map(([v, l]) => (
           <Link key={v} href={v ? `/admin/cursos?estado=${v}` : "/admin/cursos"} className={`rounded-lg px-3 py-1.5 ${(estado ?? "") === v ? "bg-white/[0.08] text-white" : "text-mist-400 hover:text-white"}`}>{l}</Link>
         ))}
