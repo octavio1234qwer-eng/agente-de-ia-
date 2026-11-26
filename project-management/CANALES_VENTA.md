@@ -61,3 +61,11 @@ El dueño pidió no recibir tareas: todo lo hacen las sesiones de código.
 
 ### Sin vía automática (ni API ni conector disponible)
 Crear tableros de Pinterest, activar afiliados de Gumroad y crear workflows de correo en Gumroad solo se pueden hacer en sus aplicaciones con la sesión del dueño iniciada. Quedan anotados; ninguna sesión los puede ejecutar hoy.
+
+## Actualización 2026-11-26
+- Ventas al 26-nov: **$0** (Gumroad, desde el 20-nov).
+- Product Hunt: galería completada con 3 imágenes (inicio, compra, móvil) en el lanzamiento 1331091.
+- La otra sesión de 2 h puso la portada al regalo `bhbdx` y agregará enlaces desde cotizafacil, plantillasmx, resicoclaro y costeodulce.
+- Gumroad Discover: las búsquedas en español no devuelven ningún producto (ni propios ni ajenos); no sirve como canal hasta tener ventas.
+- Correo en frío a negocios de Cancún: evaluado y **no ejecutado**. Los correos públicos encontrados son de cadenas grandes o no están verificados, el rendimiento esperado es muy bajo y el riesgo para la cuenta de Gmail del dueño es alto. El servicio de WhatsApp se vende mejor en persona o por recomendación.
+- Revisión automática programada para el 2-dic a las 10:30 (hora Cancún), id `trig_01VFtBZ1Kky5f7asMAYXq79V`.
