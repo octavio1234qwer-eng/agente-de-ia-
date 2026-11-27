@@ -1,0 +1,36 @@
+{
+  "_comment": "Precios iniciales. Son HIPÓTESIS sin validar (ver product/research.md). bootstrap crea los productos si no existen, pero nunca sobrescribe un precio: los cambios pasan por aprobación desde el panel.",
+  "business": { "slug": "cotizafacil-mx", "name": "CotizaFácil MX", "description": "Cotizaciones profesionales para independientes y pequeños negocios en México." },
+  "products": [
+    {
+      "slug": "cotizafacil-gratis",
+      "name": "CotizaFácil MX Gratis",
+      "kind": "free_tool",
+      "price_cents": 0,
+      "currency": "MXN",
+      "initial_status": "published",
+      "description": "Cotizaciones ilimitadas con IVA y retenciones, clientes, catálogo, historial, 3 plantillas y PDF."
+    },
+    {
+      "slug": "cotizafacil-pro",
+      "name": "CotizaFácil MX Pro (pago único)",
+      "kind": "one_time",
+      "price_cents": 14900,
+      "currency": "MXN",
+      "feature": "cotizafacil_pro",
+      "initial_status": "draft",
+      "description": "Tu logo y color en el PDF, sin marca de CotizaFácil, plantillas ilimitadas, respaldo y exportación CSV. Para siempre en tus dispositivos."
+    },
+    {
+      "slug": "cotizafacil-nube",
+      "name": "CotizaFácil MX Nube (mensual)",
+      "kind": "subscription",
+      "billing_interval": "month",
+      "price_cents": 4900,
+      "currency": "MXN",
+      "feature": "cotizafacil_nube",
+      "initial_status": "draft",
+      "description": "Todo Pro, más enlaces para que tu cliente acepte la cotización en línea, página para recibir solicitudes y respaldo en la nube."
+    }
+  ]
+}

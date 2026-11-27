@@ -1,0 +1,16 @@
+{
+  "_comment": "Calendario de automatizaciones. GitHub Actions llama a /api/cron/tick cada 15 min; el tick encola lo que toca. El administrador puede activarlas o desactivarlas desde el panel.",
+  "schedules": [
+    { "key": "payments.reconcile", "name": "Conciliar pagos pendientes", "task_type": "agent.run", "agent": "finance", "interval_minutes": 30 },
+    { "key": "delivery.retry", "name": "Entregar pedidos pagados pendientes", "task_type": "agent.run", "agent": "delivery", "interval_minutes": 15 },
+    { "key": "audit.monitor", "name": "Auditoría y detección de anomalías", "task_type": "agent.run", "agent": "auditor", "interval_minutes": 60 },
+    { "key": "sales.followup", "name": "Seguimiento consentido a prospectos", "task_type": "agent.run", "agent": "sales", "interval_minutes": 60 },
+    { "key": "notifications.dispatch", "name": "Enviar notificaciones pendientes", "task_type": "notifications.dispatch", "agent": null, "interval_minutes": 15 },
+    { "key": "traffic.daily", "name": "Informe diario de tráfico y conversión", "task_type": "agent.run", "agent": "traffic", "interval_minutes": 1440 },
+    { "key": "research.daily", "name": "Investigación diaria: puntuar oportunidades", "task_type": "agent.run", "agent": "research", "interval_minutes": 1440 },
+    { "key": "product.qa", "name": "Control de calidad de versiones", "task_type": "agent.run", "agent": "product", "interval_minutes": 1440 },
+    { "key": "marketing.content", "name": "Borradores del calendario editorial", "task_type": "agent.run", "agent": "marketing", "interval_minutes": 1440 },
+    { "key": "ceo.weekly", "name": "Informe semanal y prioridades", "task_type": "agent.run", "agent": "ceo", "interval_minutes": 10080 },
+    { "key": "maintenance.cleanup", "name": "Limpieza de sesiones, límites y tareas antiguas", "task_type": "maintenance.cleanup", "agent": null, "interval_minutes": 1440 }
+  ]
+}

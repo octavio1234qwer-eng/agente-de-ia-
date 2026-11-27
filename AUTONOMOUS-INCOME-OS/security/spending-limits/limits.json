@@ -1,0 +1,17 @@
+{
+  "_comment": "Presupuesto autorizado. Cualquier acción con costo mayor que el disponible se bloquea. Subir un límite requiere un commit del administrador.",
+  "currency": "MXN",
+  "monthly_total_cents": 0,
+  "per_action_cents": 0,
+  "categories": {
+    "hosting": 0,
+    "database": 0,
+    "email": 0,
+    "domain": 0,
+    "ads": 0,
+    "software": 0,
+    "llm": 0,
+    "payments": 0,
+    "other": 0
+  }
+}

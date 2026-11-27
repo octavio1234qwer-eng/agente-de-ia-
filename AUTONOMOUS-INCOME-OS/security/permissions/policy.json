@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "_comment": "Política de mínimo privilegio. Este archivo solo cambia con un commit revisado por una persona: ningún agente ni API puede modificarlo en tiempo de ejecución.",
+  "actions": {
+    "report.write": { "mode": "auto", "description": "Guardar un informe o resumen" },
+    "notify.admin": { "mode": "auto", "description": "Avisar al administrador" },
+    "research.create_opportunity": { "mode": "auto", "description": "Registrar una oportunidad para investigar" },
+    "research.score": { "mode": "auto", "description": "Puntuar oportunidades con la evidencia registrada" },
+    "product.run_qa": { "mode": "auto", "description": "Ejecutar el control de calidad de una versión" },
+    "product.publish": { "mode": "approval", "description": "Publicar un producto o versión" },
+    "product.change_price": { "mode": "approval", "description": "Cambiar un precio" },
+    "business.launch": { "mode": "approval", "description": "Publicar un negocio nuevo" },
+    "content.create_draft": { "mode": "auto", "description": "Crear borradores de contenido" },
+    "content.publish": { "mode": "approval", "description": "Publicar contenido en un canal externo" },
+    "campaign.activate": { "mode": "approval", "description": "Activar una campaña" },
+    "ads.spend": { "mode": "approval", "description": "Gastar en publicidad" },
+    "email.send_followup": { "mode": "auto", "description": "Enviar seguimiento a prospectos que dieron su consentimiento" },
+    "order.fulfill": { "mode": "auto", "description": "Entregar pedidos con pago verificado" },
+    "payment.reconcile": { "mode": "auto", "description": "Consultar el estado real de pagos y conciliar" },
+    "payment.refund": { "mode": "approval", "description": "Reembolsar un pago" },
+    "expense.create": { "mode": "approval", "description": "Contratar o pagar un servicio" },
+    "legal.change": { "mode": "approval", "description": "Cambiar textos legales o fiscales" },
+    "agent.pause": { "mode": "auto", "description": "Pausar un agente por seguridad" },
+    "system.kill_switch": { "mode": "auto", "description": "Detener todas las operaciones automáticas" },
+    "llm.use": { "mode": "auto", "description": "Usar un modelo de IA dentro del límite de gasto" },
+    "task.enqueue": { "mode": "auto", "description": "Encolar una subtarea (profundidad máxima 3)" },
+    "recovery.retry": { "mode": "auto", "description": "Reintentar procesos fallidos que son seguros" },
+    "money.transfer": { "mode": "forbidden", "description": "Retirar o transferir dinero" },
+    "permissions.modify": { "mode": "forbidden", "description": "Modificar permisos" },
+    "hiring": { "mode": "forbidden", "description": "Contratar personas" }
+  },
+  "agents": {
+    "ceo": ["report.write", "notify.admin", "task.enqueue", "llm.use", "business.launch", "product.change_price"],
+    "research": ["report.write", "research.create_opportunity", "research.score", "llm.use"],
+    "product": ["report.write", "product.run_qa", "product.publish", "notify.admin"],
+    "marketing": ["report.write", "content.create_draft", "content.publish", "campaign.activate", "llm.use"],
+    "traffic": ["report.write", "notify.admin"],
+    "sales": ["report.write", "email.send_followup"],
+    "finance": ["report.write", "payment.reconcile", "payment.refund", "notify.admin", "expense.create"],
+    "delivery": ["report.write", "order.fulfill", "recovery.retry", "notify.admin"],
+    "auditor": ["report.write", "notify.admin", "agent.pause", "system.kill_switch", "recovery.retry"]
+  }
+}
