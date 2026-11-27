@@ -221,6 +221,7 @@ CREATE TABLE entitlements (
   subscription_id uuid REFERENCES subscriptions(id),
   license_key_hash text NOT NULL UNIQUE,
   license_key_hint text NOT NULL,
+  key_version int NOT NULL DEFAULT 1 CHECK (key_version > 0),
   status text NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'suspended', 'revoked', 'expired')),
   public_slug text UNIQUE CHECK (public_slug IS NULL OR public_slug ~ '^[a-z0-9-]{3,40}$'),
   public_profile jsonb,
