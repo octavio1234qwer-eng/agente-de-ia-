@@ -1,0 +1,21 @@
+# Secretos
+.env
+.env.*
+!.env.example
+!env.example
+
+# Dependencias y builds
+node_modules/
+.next/
+dist/
+coverage/
+*.tsbuildinfo
+
+# Datos locales
+.data/
+__pycache__/
+*.pyc
+
+# Sistema
+.DS_Store
+npm-debug.log*
