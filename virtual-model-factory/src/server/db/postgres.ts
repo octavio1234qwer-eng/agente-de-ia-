@@ -50,14 +50,14 @@ export function createPostgresDatabase(opts: PostgresOptions): Database {
       const result = await client.query(sql, params);
       return result.rows as T[];
     },
+    async exec(sql: string) {
+      await client.query(sql);
+    },
   });
 
   return {
     kind: "postgres",
-    query: wrap(pool).query,
-    async exec(sql) {
-      await pool.query(sql);
-    },
+    ...wrap(pool),
     async transaction(fn) {
       const client = await pool.connect();
       try {

@@ -14,21 +14,22 @@ export async function createPgliteDatabase(dataDir?: string): Promise<Database> 
   const pg = new PGlite({ dataDir, parsers });
   await pg.waitReady;
 
-  const wrap = (q: { query: PGlite["query"] }): Queryable => ({
+  type Q = { query: PGlite["query"]; exec: PGlite["exec"] };
+  const wrap = (q: Q): Queryable => ({
     async query<T>(sql: string, params?: unknown[]) {
       const result = await q.query<T>(sql, params as unknown[] | undefined);
       return result.rows;
+    },
+    async exec(sql: string) {
+      await q.exec(sql);
     },
   });
 
   return {
     kind: "pglite",
-    query: wrap(pg).query,
-    async exec(sql) {
-      await pg.exec(sql);
-    },
+    ...wrap(pg),
     transaction(fn) {
-      return pg.transaction((tx) => fn(wrap(tx as unknown as { query: PGlite["query"] })));
+      return pg.transaction((tx) => fn(wrap(tx as unknown as Q)));
     },
     close: () => pg.close(),
   };

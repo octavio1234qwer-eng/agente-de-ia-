@@ -6,7 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:e2e": "playwright test --trace off",
+    "db:migrate": "node --conditions=react-server --import tsx scripts/migrate.ts",
+    "db:seed:demo": "node --conditions=react-server --import tsx scripts/seed-demo.ts",
+    "admin:create": "node --conditions=react-server --import tsx scripts/create-admin.ts",
+    "secrets:generate": "node scripts/generate-secrets.mjs"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.6.0",
@@ -30,5 +37,8 @@
     "tsx": "^4.23.15",
     "typescript": "^5",
     "vitest": "^5.1.2"
+  },
+  "engines": {
+    "node": ">=20.9 <25"
   }
 }

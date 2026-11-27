@@ -52,7 +52,7 @@ export async function migrate(db: Database, dir = MIGRATIONS_DIR): Promise<strin
     }
     await db.transaction(async (tx) => {
       // Las sentencias múltiples sin parámetros usan el protocolo simple en ambos drivers.
-      await tx.query(m.sql);
+      await tx.exec(m.sql);
       await tx.query("insert into vmf_meta.schema_migrations (version, name, checksum) values ($1, $2, $3)", [
         m.version,
         m.name,
