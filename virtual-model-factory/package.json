@@ -10,9 +10,9 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:e2e": "playwright test --trace off",
-    "db:migrate": "node --conditions=react-server --import tsx scripts/migrate.ts",
-    "db:seed:demo": "node --conditions=react-server --import tsx scripts/seed-demo.ts",
-    "admin:create": "node --conditions=react-server --import tsx scripts/create-admin.ts",
+    "db:migrate": "node --conditions=react-server --import tsx scripts/migrate.mts",
+    "db:seed:demo": "node --conditions=react-server --import tsx scripts/seed-demo.mts",
+    "admin:create": "node --conditions=react-server --import tsx scripts/create-admin.mts",
     "secrets:generate": "node scripts/generate-secrets.mjs"
   },
   "dependencies": {

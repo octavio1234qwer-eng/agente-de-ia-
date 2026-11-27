@@ -8,11 +8,11 @@ export const MIGRATIONS_DIR = path.join(process.cwd(), "db", "migrations");
 export type Migration = { version: string; name: string; sql: string; checksum: string };
 
 export function loadMigrations(dir = MIGRATIONS_DIR): Migration[] {
-  return readdirSync(dir)
+  return readdirSync(/*turbopackIgnore: true*/ dir)
     .filter((f) => /^\d{4}_[a-z0-9_]+\.sql$/.test(f))
     .sort()
     .map((file) => {
-      const sql = readFileSync(path.join(dir, file), "utf8");
+      const sql = readFileSync(path.join(/*turbopackIgnore: true*/ dir, file), "utf8");
       return {
         version: file.slice(0, 4),
         name: file.replace(/\.sql$/, ""),

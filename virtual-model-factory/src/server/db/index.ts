@@ -26,7 +26,7 @@ async function init(): Promise<Database> {
       "DATABASE_URL no está configurada. En producción usa PostgreSQL (Supabase); la base embebida no persiste en servidores efímeros.",
     );
   }
-  const db = await createPgliteDatabase(path.resolve(process.cwd(), env.PGLITE_DATA_DIR));
+  const db = await createPgliteDatabase(path.resolve(/*turbopackIgnore: true*/ process.cwd(), env.PGLITE_DATA_DIR));
   await migrate(db);
   return db;
 }
