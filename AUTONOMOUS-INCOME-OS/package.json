@@ -1,0 +1,38 @@
+{
+  "name": "autonomous-income-os",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AUTO-INCOME AI: infraestructura para operar negocios digitales con agentes supervisados. Primer negocio: CotizaFácil MX.",
+  "engines": {
+    "node": ">=20.9 <25"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "node scripts/e2e.mjs",
+    "db:migrate": "node --experimental-strip-types scripts/migrate.ts",
+    "admin:setup-token": "node scripts/setup-token.mjs",
+    "check": "npm run typecheck && npm test"
+  },
+  "dependencies": {
+    "@electric-sql/pglite": "0.6.0",
+    "next": "16.4.6",
+    "pdf-lib": "1.17.1",
+    "pg": "8.23.1",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.7",
+    "@types/pg": "8.23.1",
+    "@types/react": "19.3.3",
+    "@types/react-dom": "19.3.0",
+    "typescript": "5.9.3",
+    "vitest": "4.1.12"
+  }
+}
