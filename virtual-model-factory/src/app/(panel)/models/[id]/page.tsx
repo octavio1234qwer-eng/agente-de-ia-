@@ -50,7 +50,7 @@ export default async function ModelPage({ params, searchParams }: PageProps<"/mo
         {model.isDemo ? <Notice tone="info">Modelo de demostración: nunca publica ni conversa en plataformas reales.</Notice> : null}
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-3">
+      <div className="grid gap-6 lg:grid-cols-3 [&>*]:min-w-0">
         <div className="space-y-6 lg:col-span-2">
           <Card>
             <div className="flex items-start gap-4">

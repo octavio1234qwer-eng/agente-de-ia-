@@ -28,7 +28,7 @@ export async function toggleSwitchAction(_prev: SettingsState, form: FormData): 
   return { ok: active ? "Activado." : "Desactivado." };
 }
 
-export async function loadDemoAction(_prev: SettingsState): Promise<SettingsState> {
+export async function loadDemoAction(): Promise<SettingsState> {
   const user = await requirePermission("demo.load");
   const created = await withServiceContext("panel", (db) => seedDemoData(db, user.id), user.id);
   revalidatePath("/", "layout");

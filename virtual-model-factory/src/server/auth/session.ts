@@ -1,11 +1,11 @@
 import "server-only";
 import { cookies, headers } from "next/headers";
-import { getEnv, useSecureCookies } from "../config/env";
+import { getEnv, shouldUseSecureCookies } from "../config/env";
 import type { RequestMeta } from "./service";
 
 /** Con HTTPS se usa el prefijo __Host- (sin dominio, ruta /, Secure obligatorio). */
 export function sessionCookieName(): string {
-  return useSecureCookies() ? "__Host-vmf_session" : "vmf_session";
+  return shouldUseSecureCookies() ? "__Host-vmf_session" : "vmf_session";
 }
 export const SESSION_COOKIE_NAMES = ["__Host-vmf_session", "vmf_session"];
 
@@ -16,7 +16,7 @@ export async function readSessionToken(): Promise<string | undefined> {
 export async function writeSessionCookie(token: string, expiresAt: Date): Promise<void> {
   (await cookies()).set(sessionCookieName(), token, {
     httpOnly: true,
-    secure: useSecureCookies(),
+    secure: shouldUseSecureCookies(),
     sameSite: "lax",
     path: "/",
     expires: expiresAt,

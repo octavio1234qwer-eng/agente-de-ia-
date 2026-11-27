@@ -21,8 +21,9 @@ beforeAll(async () => {
 afterAll(async () => db?.close());
 
 const input = (slug: string) => {
-  const { status: _s, ...rest } = DEMO_MODELS[0]!;
-  return { ...rest, slug };
+  const rest: Record<string, unknown> = { ...DEMO_MODELS[0]! };
+  delete rest.status;
+  return { ...(rest as Omit<(typeof DEMO_MODELS)[number], "status">), slug };
 };
 
 describe("gestor de modelos", () => {

@@ -20,7 +20,7 @@ export default async function SettingsPage() {
   return (
     <>
       <PageHeader title="Configuración" description="Controles de operación de la fábrica." />
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid gap-6 lg:grid-cols-2 [&>*]:min-w-0">
         {items.map((i) => (
           <Card key={i.key} className="space-y-3">
             <div className="flex items-center justify-between gap-2">

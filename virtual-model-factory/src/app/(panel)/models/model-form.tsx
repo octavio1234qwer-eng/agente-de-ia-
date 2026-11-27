@@ -29,8 +29,9 @@ const EMPTY: ModelInput = {
   likenessAttestation: false,
 };
 
-export function ModelForm({ action, initial = EMPTY, submitLabel }: Props) {
+export function ModelForm({ action, initial: initialProp = EMPTY, submitLabel }: Props) {
   const [state, formAction, pending] = useActionState<ModelFormState, FormData>(action, {});
+  const initial = state.values ?? initialProp;
   const err = (k: string) => state.fieldErrors?.[k];
   const aria = (k: string) => (err(k) ? { "aria-invalid": true, "aria-describedby": `${k}-error` } : {});
   const p = initial.personality;

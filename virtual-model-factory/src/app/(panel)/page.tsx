@@ -41,7 +41,7 @@ export default async function DashboardPage({ searchParams }: PageProps<"/">) {
         <ButtonLink href="/settings" variant="secondary">Controles</ButtonLink>
       </Card>
 
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4 [&>*]:min-w-0">
         <Stat label="Modelos activos" value={data.models.active} hint={`${data.models.total} en total · ${data.models.demo} demo`} />
         <Stat label="Aprobaciones pendientes" value={data.pendingApprovals} />
         <Stat label="Trabajos en cola" value={data.jobs.queued + data.jobs.running} hint={`${data.jobs.failed} fallidos`} tone={data.jobs.failed ? "alert" : "default"} />
@@ -52,7 +52,7 @@ export default async function DashboardPage({ searchParams }: PageProps<"/">) {
         <Stat label="Beneficio neto (mes)" value={formatMoney(profit)} tone={profit < 0 ? "alert" : "default"} />
       </div>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-3">
+      <div className="mt-6 grid gap-6 lg:grid-cols-3 [&>*]:min-w-0">
         <Card className="lg:col-span-2">
           <div className="mb-4 flex items-center justify-between">
             <h2 className="font-semibold text-white">Modelos</h2>

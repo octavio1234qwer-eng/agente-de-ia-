@@ -70,7 +70,7 @@ export function resetEnvCache(): void {
   cached = undefined;
 }
 
-export function useSecureCookies(env: ServerEnv = getEnv()): boolean {
+export function shouldUseSecureCookies(env: ServerEnv = getEnv()): boolean {
   if (env.SECURE_COOKIES === "auto") return env.NODE_ENV === "production";
   return env.SECURE_COOKIES === "true";
 }
