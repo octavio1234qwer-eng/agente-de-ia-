@@ -125,3 +125,29 @@ describe("Correo", () => {
     delete process.env.EMAIL_DAILY_CAP;
   });
 });
+
+describe("Conciliación de depósitos de afiliados", () => {
+  it("pasa a real solo si el depósito cuadra", async () => {
+    const { reconcilePayoutsCsv } = await import("../businesses/affiliate-engine/links");
+    await importCommissionsCsv(db, "order_id,date,commission_mxn,status\nA1,2026-11-01,35.50,pendiente\nA2,2026-11-02,14.50,pendiente\nA3,2026-11-03,20,pendiente", "t");
+    const bad = await reconcilePayoutsCsv(db, "payout_id,date,amount_mxn,order_ids\nP0,2026-11-20,99,A3", "t");
+    expect(bad[0]!.status).toBe("mismatch");
+    const ok = await reconcilePayoutsCsv(db, "payout_id,date,amount_mxn,order_ids\nP1,2026-11-20,50.00,A1|A2", "t");
+    expect(ok[0]!.status).toBe("reconciled");
+    const rows = (await db.query<{ external_id: string; nature: string; verified: boolean }>("select external_id, nature, verified from ledger_entries order by external_id")).rows;
+    expect(rows).toEqual([
+      { external_id: "A1", nature: "real", verified: true }, { external_id: "A2", nature: "real", verified: true }, { external_id: "A3", nature: "estimated", verified: false },
+    ]);
+    expect((await reconcilePayoutsCsv(db, "payout_id,date,amount_mxn,order_ids\nP1,2026-11-20,50.00,A1|A2", "t"))[0]!.status).toBe("already");
+  });
+});
+
+describe("Mantenimiento", () => {
+  it("borra datos técnicos vencidos y conserva negocio", async () => {
+    const { retention } = await import("../automation/maintenance");
+    await db.query("insert into rate_limits(key,count,window_start) values ('old',1, now() - interval '3 days'),('new',1, now())");
+    const r = await retention(db);
+    expect(r.rateLimits).toBe(1);
+    expect((await db.query("select * from rate_limits")).rows.length).toBe(1);
+  });
+});

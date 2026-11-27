@@ -2,6 +2,7 @@
 import type { Db } from "../../core/db";
 import { appendAudit } from "../../core/audit-log";
 import { syncAgents } from "../../core/agent-registry";
+import { seedResearch } from "./research-seed";
 
 export const UNITS = [
   { id: "cotizafacil-mx", name: "CotizaFácil MX", status: "validating", phase: 4, description: "Cotizaciones profesionales para oficios y pymes en México. Primera unidad a validar." },
@@ -26,4 +27,5 @@ export async function seed(db: Db) {
       await appendAudit(tx, { actor: "owner:master-prompt", action: "budget.set", level: "red", target: "initial", result: "approved", detail: { amountCents: 50000, currency: "MXN" } });
     await syncAgents(tx);
   });
+  await seedResearch(db);
 }

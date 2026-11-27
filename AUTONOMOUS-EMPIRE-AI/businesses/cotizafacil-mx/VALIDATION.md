@@ -2,7 +2,7 @@
 
 Compuertas calculadas por `product-manager.validation_gate` (diario):
 - **G1** ≥ 30 leads reales con consentimiento.
-- **G2** ≥ 40 % de quienes responden (mín. 10) pagaría ≥ $149 MXN/mes (precio hipotético `PILOT_PRICE_CENTS`).
+- **G2** ≥ 40 % de quienes responden (mín. 10) pagaría ≥ $99 MXN/mes (precio hipotético `PILOT_PRICE_CENTS`).
 - **G3** ≥ 5 pagos reales verificados por Mercado Pago.
 
 Veredicto: `KEEP_VALIDATING` → `PRESELL` (G1+G2) → `BUILD` (G1+G3).

@@ -23,14 +23,14 @@
 | # | Hipótesis | Señal | Umbral |
 |---|---|---|---|
 | H1 | El dolor existe y es frecuente | Leads con ≥ 4 cotizaciones/mes y descripción del problema | ≥ 30 leads |
-| H2 | Pagarían | Respuesta "¿cuánto pagarías?" ≥ $149/mes | ≥ 40 % de quienes responden (mín. 10) |
+| H2 | Pagarían | Respuesta "¿cuánto pagarías?" ≥ $99/mes (competidor directo a $49: ver MARKET_RESEARCH.md) | ≥ 40 % de quienes responden (mín. 10) |
 | H3 | Pagan de verdad | Pagos verificados (preventa/piloto) vía Mercado Pago | ≥ 5 pagos |
 
 La compuerta la calcula `product-manager.validation_gate` cada día: `KEEP_VALIDATING` → `PRESELL` → `BUILD`.
 
 **Adquisición sin presupuesto de anuncios:** grupos y comunidades donde participan los oficios (respetando sus reglas), contenido educativo de Content Factory, el sitio de calculadoras existente y entrevistas 1 a 1 con cada lead.
 
-**Pendiente (no inventado):** investigación de competencia con fuentes citadas — es la primera tarea de Market Intelligence en la próxima sesión.
+**Competencia y mercado:** ver `businesses/cotizafacil-mx/MARKET_RESEARCH.md` (fuentes citadas; cargado como oportunidades con evidencia).
 
 ## Monetización por unidad
 | Unidad | Modelo | Cobro |

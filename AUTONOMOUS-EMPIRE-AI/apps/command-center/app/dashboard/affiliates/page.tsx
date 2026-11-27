@@ -1,6 +1,6 @@
 import { q, n } from "@/lib/queries";
 import { Badge, Section, Table, dt } from "@/components/ui";
-import { addAffiliateLink, importCommissions } from "../actions";
+import { addAffiliateLink, importCommissions, reconcilePayouts } from "../actions";
 export const dynamic = "force-dynamic";
 export default async function Affiliates() {
   const rows = await q<{ slug: string; title: string; destination_url: string; status: string; last_http_status: number | null; last_checked_at: string | null; commission_rate_bps: number | null; clicks30: string; clicks: string }>(
@@ -30,6 +30,10 @@ export default async function Affiliates() {
       <Section title="Importar reporte de comisiones (CSV)">
         <p className="muted" style={{ fontSize: ".85rem" }}>Columnas: <span className="mono">order_id,date,commission_mxn,status</span></p>
         <form action={importCommissions}><div className="field"><input type="file" name="csv" accept=".csv,text/csv" required /></div><button className="btn">Importar</button></form>
+      </Section>
+      <Section title="Conciliar depósito de comisiones (propietario)">
+        <p className="muted" style={{ fontSize: ".85rem" }}>Columnas: <span className="mono">payout_id,date,amount_mxn,order_ids</span> (pedidos separados por |). Solo si el depósito cuadra (±$1) las comisiones pasan a dinero real.</p>
+        <form action={reconcilePayouts}><div className="field"><input type="file" name="csv" accept=".csv,text/csv" required /></div><button className="btn">Conciliar</button></form>
       </Section>
     </div>
   </>);

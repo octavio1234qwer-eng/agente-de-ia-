@@ -69,3 +69,38 @@ export async function importCommissionsCsv(db: Db, csv: string, actor: string) {
   }
   return { imported };
 }
+
+/**
+ * Concilia un depósito de comisiones: el propietario sube el detalle del pago del panel oficial
+ * (CSV `payout_id,date,amount_mxn,order_ids` con order_ids separados por "|").
+ * Solo si la suma de las comisiones estimadas de esos pedidos coincide con el depósito (±$1),
+ * pasan a dinero REAL verificado. Si no cuadra, no se cambia nada.
+ */
+export async function reconcilePayoutsCsv(db: Db, csv: string, actor: string) {
+  const [header, ...lines] = csv.trim().split(/\r?\n/);
+  const cols = header!.split(",").map((c) => c.trim().toLowerCase());
+  const idx = (n: string) => { const i = cols.indexOf(n); if (i < 0) throw new Error(`Falta la columna ${n}`); return i; };
+  const [iP, iD, iA, iO] = [idx("payout_id"), idx("date"), idx("amount_mxn"), idx("order_ids")];
+  const results: { payoutId: string; status: "reconciled" | "mismatch" | "already"; expectedCents: number; foundCents: number }[] = [];
+  for (const line of lines) {
+    const c = line.split(",").map((x) => x.trim());
+    const payoutId = c[iP]!, amount = Math.round(Number(c[iA]) * 100);
+    const orders = (c[iO] ?? "").split("|").map((s) => s.trim()).filter(Boolean);
+    if (!payoutId || !orders.length || !Number.isFinite(amount)) continue;
+    const r = await db.transaction(async (tx) => {
+      const rows = await tx.query<{ id: string; amount_cents: string; nature: string }>(
+        "select id, amount_cents, nature from ledger_entries where source='mercadolibre-affiliates' and external_id = any($1) for update", [orders]);
+      if (rows.rows.length && rows.rows.every((x) => x.nature === "real")) return { status: "already" as const, found: rows.rows.reduce((s, x) => s + Number(x.amount_cents), 0) };
+      const est = rows.rows.filter((x) => x.nature === "estimated");
+      const found = est.reduce((s, x) => s + Number(x.amount_cents), 0);
+      if (est.length !== orders.length || Math.abs(found - amount) > 100) return { status: "mismatch" as const, found };
+      await tx.query(
+        `update ledger_entries set nature='real', verified=true, occurred_at=$2, description = description || ' · pagada en depósito ' || $3 where id = any($1)`,
+        [est.map((x) => x.id), new Date(c[iD]!).toISOString(), payoutId]);
+      await appendAudit(tx, { actor, action: "commission.reconcile", level: "green", target: payoutId, result: "reconciled", detail: { orders: orders.length, amountCents: amount } });
+      return { status: "reconciled" as const, found };
+    });
+    results.push({ payoutId, status: r.status, expectedCents: amount, foundCents: r.found });
+  }
+  return results;
+}

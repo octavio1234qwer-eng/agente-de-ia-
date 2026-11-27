@@ -114,7 +114,7 @@ let singleton: Promise<Db> | null = null;
 export function getDb(): Promise<Db> {
   if (!singleton) {
     singleton = (async () => {
-      const url = process.env.DATABASE_URL;
+      const url = process.env.DATABASE_URL || process.env.POSTGRES_URL; // POSTGRES_URL: integraciones del Marketplace de Vercel (Neon/Supabase)
       let db: Db;
       if (url) db = await createPgDb(url);
       else {

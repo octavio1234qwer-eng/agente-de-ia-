@@ -1,5 +1,5 @@
 /** Puntuación 0–100 de un lead según señales de dolor y disposición de pago declaradas. */
-export const PILOT_PRICE_CENTS = 14900; // hipótesis: $149 MXN/mes (sin validar; ver VALIDATION.md)
+export const PILOT_PRICE_CENTS = 9900; // hipótesis: $99 MXN/mes — competidor directo a $49 (MARKET_RESEARCH.md)
 
 export function scoreLead(l: {
   quotesPerMonth: number | null; willingnessToPayCents: number | null; need: string;

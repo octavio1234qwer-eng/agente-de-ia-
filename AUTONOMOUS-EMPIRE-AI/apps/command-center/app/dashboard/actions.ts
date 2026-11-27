@@ -5,7 +5,7 @@ import { userActor } from "@empire/core/auth";
 import { authorize, decideApproval } from "@empire/core/permissions";
 import { appendAudit } from "@empire/core/audit-log";
 import { LEAD_STATUSES } from "@empire/businesses/cotizafacil-mx/leads";
-import { createLink, importCommissionsCsv } from "@empire/businesses/affiliate-engine/links";
+import { createLink, importCommissionsCsv, reconcilePayoutsCsv } from "@empire/businesses/affiliate-engine/links";
 import { requestSpend, recordApprovedExpense } from "@empire/finance/ledger";
 import { runAgentTask } from "@empire/core/orchestrator";
 import { ROUTINES, runRoutine } from "@empire/automation/routines";
@@ -141,4 +141,14 @@ export async function setUnitStatus(f: FormData) {
   await appendAudit(d, { actor: actor.id, action: "unit.status", level: "yellow", target: id, result: status });
   await d.query("insert into decisions(made_by, title, rationale) values ($1,$2,$3)", [actor.id, `Unidad ${id} → ${status}`, s(f, "rationale", 500) || "Sin justificación escrita"]);
   revalidatePath("/dashboard/businesses");
+}
+
+export async function reconcilePayouts(f: FormData) {
+  const { d, actor } = await guarded("owner", "metrics.update");
+  const file = f.get("csv");
+  const text = file instanceof File ? await file.text() : "";
+  if (!text || text.length > 1_000_000) throw new Error("CSV vacío o demasiado grande");
+  await reconcilePayoutsCsv(d, text, actor.id);
+  revalidatePath("/dashboard/affiliates");
+  revalidatePath("/dashboard/finance");
 }

@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
 import { timingSafeEqual } from "node:crypto";
 import { db } from "@/lib/server";
-import { ROUTINES, runRoutine } from "@empire/automation/routines";
+import { ROUTINES, routinesOfKind, runRoutine } from "@empire/automation/routines";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 300;
+const GROUPS = ["hourly", "daily", "weekly", "monthly"] as const;
 
 function authorized(req: Request) {
   const secret = process.env.CRON_SECRET;
@@ -13,11 +14,16 @@ function authorized(req: Request) {
   return timingSafeEqual(Buffer.from(got), Buffer.from(secret));
 }
 
+/** Acepta una rutina (daily.ceo-cycle) o un grupo (daily). Vercel Cron llama con GET y Bearer CRON_SECRET. */
 export async function POST(req: Request, { params }: { params: Promise<{ routine: string }> }) {
   if (!authorized(req)) return NextResponse.json({ error: "no autorizado" }, { status: 401 });
   const { routine } = await params;
-  if (!ROUTINES[routine]) return NextResponse.json({ error: "rutina desconocida" }, { status: 404 });
-  const r = await runRoutine(await db(), routine);
-  return NextResponse.json(r, { status: r.status === "failed" ? 500 : 200 });
+  const names = (GROUPS as readonly string[]).includes(routine) ? routinesOfKind(routine as "daily") : ROUTINES[routine] ? [routine] : [];
+  if (!names.length) return NextResponse.json({ error: "rutina desconocida" }, { status: 404 });
+  const d = await db();
+  const results: Record<string, { status: string; error?: string }> = {};
+  for (const n of names) { const r = await runRoutine(d, n); results[n] = { status: r.status, error: r.error }; }
+  const failed = Object.values(results).some((r) => r.status === "failed");
+  return NextResponse.json(results, { status: failed ? 500 : 200 });
 }
-export const GET = POST; // Vercel Cron usa GET con el encabezado Authorization: Bearer CRON_SECRET
+export const GET = POST;
