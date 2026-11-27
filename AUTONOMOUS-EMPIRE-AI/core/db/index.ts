@@ -4,9 +4,8 @@
  *  - PGlite (Postgres embebido en WASM) para desarrollo y pruebas.
  * Ambos ejecutan el mismo SQL: no hay "base falsa".
  */
-import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { MIGRATIONS } from "../../infrastructure/database/migrations/bundle.generated";
 
 export interface Queryable {
   query<T = Record<string, unknown>>(sql: string, params?: unknown[]): Promise<{ rows: T[] }>;
@@ -56,6 +55,7 @@ export async function createPgDb(connectionString: string): Promise<Db> {
 
 export async function createPgliteDb(dataDir?: string): Promise<Db> {
   const { PGlite } = await import("@electric-sql/pglite");
+  if (dataDir) (await import("node:fs")).mkdirSync(dataDir, { recursive: true });
   const db = dataDir ? new PGlite(dataDir) : new PGlite();
   await db.waitReady;
   const wrap = (q: { query: (s: string, p?: unknown[]) => Promise<{ rows: unknown[] }> }): Queryable => ({
@@ -78,23 +78,16 @@ export async function createPgliteDb(dataDir?: string): Promise<Db> {
   } as Db;
 }
 
-const MIGRATIONS_DIR = path.resolve(
-  path.dirname(fileURLToPath(import.meta.url)),
-  "../../infrastructure/database/migrations",
-);
-
-export async function migrate(db: Db, dir = MIGRATIONS_DIR): Promise<string[]> {
+export async function migrate(db: Db, migrations = MIGRATIONS): Promise<string[]> {
   await db.query(
     "create table if not exists schema_migrations (id text primary key, applied_at timestamptz not null default now())",
   );
-  const files = (await readdir(dir)).filter((f) => f.endsWith(".sql")).sort();
   const done = new Set(
     (await db.query<{ id: string }>("select id from schema_migrations")).rows.map((r) => r.id),
   );
   const applied: string[] = [];
-  for (const f of files) {
+  for (const [f, sql] of migrations) {
     if (done.has(f)) continue;
-    const sql = await readFile(path.join(dir, f), "utf8");
     await db.transaction(async (tx) => {
       for (const stmt of splitSql(sql)) await tx.query(stmt);
       await tx.query("insert into schema_migrations(id) values ($1)", [f]);
@@ -127,7 +120,7 @@ export function getDb(): Promise<Db> {
       else {
         if (process.env.NODE_ENV === "production" && !process.env.ALLOW_PGLITE_IN_PRODUCTION)
           throw new Error("DATABASE_URL es obligatoria en producción.");
-        db = await createPgliteDb(process.env.PGLITE_DIR ?? path.resolve(MIGRATIONS_DIR, "../../../.data/pglite"));
+        db = await createPgliteDb(process.env.PGLITE_DIR ?? path.join(process.cwd(), ".data", "pglite"));
       }
       await migrate(db);
       return db;

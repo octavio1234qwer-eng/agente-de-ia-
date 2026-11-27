@@ -1,0 +1,29 @@
+-- Supabase publica las tablas de 'public' por su API REST (roles anon/authenticated).
+-- RLS sin políticas bloquea ese acceso. La app usa el rol dueño de las tablas, que no está sujeto a RLS.
+alter table users enable row level security;
+alter table sessions enable row level security;
+alter table login_attempts enable row level security;
+alter table business_units enable row level security;
+alter table agents enable row level security;
+alter table tasks enable row level security;
+alter table job_runs enable row level security;
+alter table events enable row level security;
+alter table audit_log enable row level security;
+alter table approvals enable row level security;
+alter table decisions enable row level security;
+alter table alerts enable row level security;
+alter table reports enable row level security;
+alter table settings enable row level security;
+alter table budgets enable row level security;
+alter table ledger_entries enable row level security;
+alter table leads enable row level security;
+alter table lead_activities enable row level security;
+alter table email_outbox enable row level security;
+alter table page_views enable row level security;
+alter table rate_limits enable row level security;
+alter table affiliate_links enable row level security;
+alter table affiliate_clicks enable row level security;
+alter table products enable row level security;
+alter table content_items enable row level security;
+alter table opportunities enable row level security;
+alter table schema_migrations enable row level security;

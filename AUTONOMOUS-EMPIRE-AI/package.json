@@ -12,13 +12,14 @@
   "scripts": {
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run",
+    "db:bundle": "tsx scripts/bundle-migrations.ts",
     "db:migrate": "tsx scripts/migrate.ts",
     "db:seed": "tsx scripts/seed.ts",
     "user:create": "tsx scripts/create-user.ts",
     "routine": "tsx automation/run.ts",
     "audit:verify": "tsx scripts/verify-audit.ts",
     "dev": "npm run dev -w apps/command-center",
-    "build": "npm run build -w apps/command-center"
+    "build": "npm run db:bundle && npm run build -w apps/command-center"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.6.0",

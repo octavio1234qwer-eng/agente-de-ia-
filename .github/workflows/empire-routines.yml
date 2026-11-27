@@ -1,0 +1,63 @@
+# Rutinas programadas del EMPIRE CEO. No dependen de ningún computador encendido.
+# Requiere el secreto de repositorio EMPIRE_DATABASE_URL (cadena de Supabase). Sin él, el job termina sin hacer nada.
+name: Empire Routines
+on:
+  schedule:
+    - cron: "17 * * * *"    # cada hora (min 17 para evitar picos)
+    - cron: "41 12 * * *"   # diario 06:41 hora CDMX
+    - cron: "23 13 * * 1"   # lunes 07:23 CDMX
+    - cron: "11 14 1 * *"   # día 1 de cada mes 08:11 CDMX
+  workflow_dispatch:
+    inputs:
+      routine:
+        description: "Rutina o grupo (hourly, daily, weekly, monthly, daily.ceo-cycle...)"
+        required: true
+        default: daily
+permissions:
+  contents: read
+concurrency:
+  group: empire-routines
+  cancel-in-progress: false
+defaults:
+  run:
+    working-directory: AUTONOMOUS-EMPIRE-AI
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      DATABASE_URL: ${{ secrets.EMPIRE_DATABASE_URL }}
+      SESSION_SECRET: ${{ secrets.EMPIRE_SESSION_SECRET }}
+      GUMROAD_ACCESS_TOKEN: ${{ secrets.GUMROAD_ACCESS_TOKEN }}
+      MAIL_HOST: ${{ secrets.MAIL_HOST }}
+      MAIL_USER: ${{ secrets.MAIL_USER }}
+      MAIL_PASS: ${{ secrets.MAIL_PASS }}
+      MAIL_FROM: ${{ secrets.MAIL_FROM }}
+    steps:
+      - name: Comprobar configuración
+        id: cfg
+        working-directory: .
+        run: |
+          if [ -z "$DATABASE_URL" ]; then echo "EMPIRE_DATABASE_URL no configurado: no se ejecuta nada."; echo "skip=1" >> "$GITHUB_OUTPUT"; fi
+      - if: steps.cfg.outputs.skip != '1'
+        uses: actions/checkout@v4
+      - if: steps.cfg.outputs.skip != '1'
+        uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm, cache-dependency-path: AUTONOMOUS-EMPIRE-AI/package-lock.json }
+      - if: steps.cfg.outputs.skip != '1'
+        run: npm ci --omit=optional
+      - if: steps.cfg.outputs.skip != '1'
+        name: Ejecutar
+        env:
+          SCHEDULE: ${{ github.event.schedule }}
+          ROUTINE_INPUT: ${{ github.event.inputs.routine }}
+        run: |
+          case "$SCHEDULE" in
+            "17 * * * *") R=hourly ;;
+            "41 12 * * *") R=daily ;;
+            "23 13 * * 1") R=weekly ;;
+            "11 14 1 * *") R=monthly ;;
+            *) R="$ROUTINE_INPUT" ;;
+          esac
+          [[ "$R" =~ ^(hourly|daily|weekly|monthly|[a-z]+\.[a-z0-9-]+)$ ]] || { echo "Rutina inválida"; exit 1; }
+          npm run routine -- "$R"

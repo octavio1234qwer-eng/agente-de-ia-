@@ -1,0 +1,38 @@
+name: Empire CI
+on:
+  push:
+    paths: ["AUTONOMOUS-EMPIRE-AI/**", ".github/workflows/empire-*.yml"]
+  pull_request:
+    paths: ["AUTONOMOUS-EMPIRE-AI/**"]
+permissions:
+  contents: read
+concurrency:
+  group: empire-ci-${{ github.ref }}
+  cancel-in-progress: true
+defaults:
+  run:
+    working-directory: AUTONOMOUS-EMPIRE-AI
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:16
+        env: { POSTGRES_USER: empire, POSTGRES_PASSWORD: empire, POSTGRES_DB: empire }
+        ports: ["5432:5432"]
+        options: --health-cmd "pg_isready -U empire" --health-interval 5s --health-retries 10
+    env:
+      DATABASE_URL: postgres://empire:empire@localhost:5432/empire
+      SESSION_SECRET: ci-only-session-secret-not-used-in-prod
+      CRON_SECRET: ci-only-cron-secret-not-used-in-prod
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm, cache-dependency-path: AUTONOMOUS-EMPIRE-AI/package-lock.json }
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - name: Migraciones y ciclo diario contra PostgreSQL real
+        run: npm run db:migrate && npm run routine -- daily.ceo-cycle && npm run audit:verify
+      - run: npm run build

@@ -96,3 +96,19 @@ describe("planificador", () => {
 describe("registro de agentes", () => {
   it("cada tarea declarada tiene manejador", () => { expect(validateRegistry()).toEqual([]); });
 });
+
+describe("migraciones empaquetadas", () => {
+  it("bundle.generated.ts coincide con los .sql", async () => {
+    const { buildBundle } = await import("../scripts/bundle-migrations");
+    const { readFile } = await import("node:fs/promises");
+    const current = await readFile(new URL("../infrastructure/database/migrations/bundle.generated.ts", import.meta.url), "utf8");
+    expect(current).toBe(await buildBundle());
+  });
+});
+
+describe("RLS", () => {
+  it("todas las tablas tienen RLS activado", async () => {
+    const r = await db.query<{ relname: string }>("select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where n.nspname='public' and c.relkind='r' and not c.relrowsecurity");
+    expect(r.rows.map((x) => x.relname)).toEqual([]);
+  });
+});
