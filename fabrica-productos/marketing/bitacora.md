@@ -10,3 +10,10 @@
 | 2026-11-26 | — | — | — | Regalo gratis bhbdx enlazado en 10 páginas de precios/costeo/margen del sitio (calculadora de food cost + 9 guías); despliegue sin diferencias |
 | 2026-11-26 (rondas 06:21 y 12:21 UTC) | 27 en la tienda (26 directas, 1 DuckDuckGo) | 0 (bhbdx 0 descargas, shgbyx 0) | $0 | 2 guías nuevas verificadas (rosca de reyes, cena navideña por encargo) con enlace al regalo; 19 guías; despliegue sin diferencias; IndexNow; Buffer: sin nueva publicación (ya hubo 1 por canal hace menos de 24 h) |
 | 2026-11-26 18:21 UTC | — | 0 (bhbdx 0, shgbyx 0) | $0 | Buffer lleno (10/10 programadas, otros productos); sin guías nuevas (se publicaron 2 hace 6 h; nueva regla: máximo una tanda de guías cada 24 h). Textos para compartir listos en marketing/compartir-temporada.md |
+| 2026-11-27 00:21 UTC | 14 días (13–26 nov): Costeo 5, Inventario 4, Paquete 4, Menú 4, Ebook 4; regalo bhbdx 7 visitas | 0 (bhbdx 0 descargas) | $0 | Buffer lleno (10/10); sin guías (última tanda hace <24 h). Propuestas de mejora abajo, pendientes de aprobación |
+
+### Propuestas de mejora (14 días con visitas y 0 ventas) — NO aplicadas, decide el usuario
+
+1. **Capturas de pantalla como portadas adicionales** en Costeo, Inventario y Paquete: 3 imágenes del Excel lleno con el ejemplo (hoja Recetas, Resumen, alertas de resurtido). Hoy solo hay una portada; quien no ve el archivo por dentro no compra.
+2. **Prueba de precio en Costeo**: bajar de $12 a $9 durante 14 días y comparar conversión. Con 5 visitas en 2 semanas el volumen es bajo, así que la prioridad es tráfico, no precio.
+3. **Regalo gratis bhbdx**: 7 visitas y 0 descargas. La página no tiene portada; agregar una portada clara ("Gratis") puede subir descargas. (Lo atiende la otra sesión de ventas, según la coordinación del 26-nov.)
