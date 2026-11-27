@@ -17,3 +17,4 @@
 1. **Capturas de pantalla como portadas adicionales** en Costeo, Inventario y Paquete: 3 imágenes del Excel lleno con el ejemplo (hoja Recetas, Resumen, alertas de resurtido). Hoy solo hay una portada; quien no ve el archivo por dentro no compra.
 2. **Prueba de precio en Costeo**: bajar de $12 a $9 durante 14 días y comparar conversión. Con 5 visitas en 2 semanas el volumen es bajo, así que la prioridad es tráfico, no precio.
 3. **Regalo gratis bhbdx**: 7 visitas y 0 descargas. La página no tiene portada; agregar una portada clara ("Gratis") puede subir descargas. (Lo atiende la otra sesión de ventas, según la coordinación del 26-nov.)
+| 2026-11-27 12:21 y 18:21 UTC | — | 0 | $0 | 2 guías nuevas verificadas (canastas navideñas en la tiendita, tarifa por hora para freelancers) listas en el repo. Despliegue en Vercel NO hecho: el usuario interrumpió la llamada de despliegue; queda pendiente de su confirmación. Buffer lleno |
