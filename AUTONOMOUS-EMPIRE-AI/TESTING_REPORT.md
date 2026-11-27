@@ -27,10 +27,11 @@
 | `next start` + Playwright (Chromium) contra PostgreSQL real | Formulario → lead creado; `/dashboard` sin sesión → `/login`; contraseña errónea rechazada; login OK; 14 rutas del panel HTTP 200 sin errores de página; registrar enlace → `/go/taladro-demo` 302 a mercadolibre.com.mx; solicitud de gasto visible como pendiente; capturas en escritorio y iPhone 13 |
 | `/api/cron/daily.ceo-cycle` sin token → 401; con token → `succeeded` | OK |
 | `npm ci` limpio + typecheck + test + build (simulación del workflow CI) | OK |
+| GitHub Actions *Empire CI* (run 45926276029): npm ci, typecheck, 37 pruebas, migraciones + ciclo diario + audit:verify contra servicio postgres:16, build | ✅ success |
 
 ## No verificado todavía
 - Despliegue en Vercel/Supabase reales.
-- Workflows ejecutados en GitHub Actions (requieren push y secretos).
+- Workflow *Empire Routines* en GitHub (requiere secretos). *Empire CI* ya corrió en verde en GitHub (run 45926276029).
 - Mercado Pago con credenciales reales (sandbox) y webhook real.
 - SMTP real.
 - Revisión legal del aviso de privacidad.

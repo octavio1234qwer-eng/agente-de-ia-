@@ -13,7 +13,7 @@
 | 6 Digital Products | 2/3 conciliación Gumroad real, entrega (Gumroad) | tráfico/ventas |
 | 7 Media Engine | 1/3 borradores + revisión | métricas por publicación, programación vía integración |
 | 8 Micro SaaS | 1/3 motor de oportunidades | investigación, validación |
-| 9 Automatización | 3/4 workflows (simulados), webhook MP, recuperación | ejecución real en GitHub con secretos |
+| 9 Automatización | 3/4 workflows (CI verde en GitHub), webhook MP, recuperación | rutinas programadas con secretos de Supabase |
 | 10 Escalabilidad | 0/2 | medir con datos reales, recortar |
 
 ## Criterios de finalización (sección 14)
@@ -23,7 +23,7 @@
 | Base de datos conectada | ✅ PostgreSQL 16 local · ❌ Supabase |
 | Agentes ejecutan tareas | ✅ |
 | Registros verificables | ✅ auditoría encadenada |
-| Automatizaciones funcionan | 🟡 local y endpoint cron; GitHub sin ejecutar |
+| Automatizaciones funcionan | 🟡 local, endpoint cron y CI en GitHub ✅; rutinas programadas sin secretos aún |
 | CotizaFácil capta clientes | 🟡 local; falta URL pública |
 | Afiliados miden enlaces | ✅ local |
 | Pagos verificables | 🟡 código y pruebas; sin credenciales |
