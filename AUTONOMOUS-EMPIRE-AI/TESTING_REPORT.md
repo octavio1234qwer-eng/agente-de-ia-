@@ -1,6 +1,6 @@
 # TESTING REPORT — 2026-11-27
 
-## Automatizadas — `npm test` → **37/37 pasan** (Vitest, PGlite = PostgreSQL 17 en WASM, base aislada por prueba)
+## Automatizadas — `npm test` → **39/39 pasan** (Vitest, PGlite = PostgreSQL 17 en WASM, base aislada por prueba)
 | Área | Pruebas |
 |---|---|
 | Base de datos | migraciones + semilla; bundle de migraciones = archivos `.sql`; RLS activo en todas las tablas |
@@ -13,6 +13,8 @@
 | Afiliados | solo dominios ML; redirección + clic; viewer bloqueado; comisiones CSV como estimadas |
 | Gumroad | conciliación idempotente; excluye reembolsos; moneda del producto |
 | Correo | solo aprobados, con consentimiento y tope |
+| Conciliación de afiliados | depósito que no cuadra no cambia nada; depósito que cuadra pasa comisiones a real verificado; idempotente |
+| Mantenimiento | retención borra solo datos técnicos vencidos |
 | Agentes | ciclo diario completo sin cifras inventadas; idempotencia; bloqueo fuera de lista; compliance rechaza promesas; 404 roto vs 403 desconocido; rutina diaria no se duplica |
 | Auth | login/sesión/logout; bloqueo tras 5 fallos; contraseña corta rechazada |
 
@@ -29,8 +31,12 @@
 | `npm ci` limpio + typecheck + test + build (simulación del workflow CI) | OK |
 | GitHub Actions *Empire CI* (run 45926276029): npm ci, typecheck, 37 pruebas, migraciones + ciclo diario + audit:verify contra servicio postgres:16, build | ✅ success |
 
+| `/setup` contra PostgreSQL vacío (POSTGRES_URL): código erróneo rechazado; propietario creado; `/setup` → 404 después; login OK | OK |
+| `/api/cron/daily` (grupo): `daily.retention` y `daily.ceo-cycle` succeeded; sin token 401 | OK |
+| Semilla de investigación: 2 oportunidades con evidencia citada | OK |
+
 ## No verificado todavía
-- Despliegue en Vercel/Supabase reales.
+- Despliegue en Vercel: proyecto `empire-ai` creado y configurado; falta enlazar GitHub y base de datos (acciones del propietario).
 - Workflow *Empire Routines* en GitHub (requiere secretos). *Empire CI* ya corrió en verde en GitHub (run 45926276029).
 - Mercado Pago con credenciales reales (sandbox) y webhook real.
 - SMTP real.

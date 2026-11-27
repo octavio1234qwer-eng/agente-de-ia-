@@ -1,27 +1,27 @@
 # DEPLOYMENT GUIDE (costo $0)
 
-## 1. Base de datos — Supabase (plan gratuito)
-1. Crea un proyecto en supabase.com (región cercana, p. ej. `us-east`). Guarda la contraseña en tu gestor de contraseñas.
-2. Project Settings → Database → *Connection string* → **Session pooler** (puerto 5432). Esa es tu `DATABASE_URL`.
-3. En tu computadora: `cp .env.example .env`, pega `DATABASE_URL` y ejecuta `npm install && npm run db:migrate`.
-4. Crea al propietario: `npm run user:create -- --email tu@correo --name "Tu nombre" --role owner` (pide la contraseña, mín. 12).
-5. Supabase expone una API REST por tabla. La migración `002_rls.sql` activa RLS sin políticas en todas las tablas, así la API pública no puede leerlas; la app se conecta como dueña de las tablas y no se ve afectada. Verifica en *Table Editor* que todas muestren "RLS enabled".
+## Estado actual (2026-11-27)
+Ya hecho por Claude:
+- Proyecto **`empire-ai`** creado en tu Vercel (equipo `octavio`): Next.js, Node 22, carpeta raíz `AUTONOMOUS-EMPIRE-AI/apps/command-center`, install `cd ../.. && npm ci`, build `cd ../.. && npm run build`.
+- Variables de producción cargadas: `SESSION_SECRET`, `CRON_SECRET`, `ANALYTICS_SALT` (sensibles) y `SETUP_TOKEN` (cifrada, visible en Settings → Environment Variables).
+- Cron de Vercel definido en `apps/command-center/vercel.json` (diario, "hourly" una vez al día por límite del plan Hobby, semanal y mensual). Vercel envía `Authorization: Bearer CRON_SECRET` automáticamente.
+- La app acepta `DATABASE_URL` o `POSTGRES_URL` (la que inyectan Neon/Supabase del Marketplace de Vercel) y aplica migraciones y semilla al arrancar.
 
-## 2. Aplicación — Vercel (plan Hobby)
-1. Importa el repositorio en Vercel. **Root Directory:** `AUTONOMOUS-EMPIRE-AI/apps/command-center`. Activa "Include files outside the root directory".
-2. Install command: `cd ../.. && npm ci` · Build command: `cd ../.. && npm run build`.
-3. Variables de entorno (Production): `DATABASE_URL`, `SESSION_SECRET`, `CRON_SECRET`, `ANALYTICS_SALT` (+ opcionales de `.env.example`).
-   Genera secretos con: `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`.
-4. Despliega y prueba `https://<dominio>/api/health` → `{"ok":true,"db":"pg"}`.
+## Lo que falta (solo el propietario puede hacerlo)
+1. **Conectar GitHub a Vercel** (Vercel no pudo enlazar el repo: "add a Login Connection to your GitHub account").
+   Vercel → Account Settings → Authentication → GitHub → Connect. Luego `empire-ai` → Settings → Git → Connect Git Repository → `octavio1234qwer-eng/agente-de-ia-`.
+   El código está en la rama `claude/blissful-thompson-oeu79g`: fusiónala a `main` (o pide a Claude el pull request) o en Settings → Environments → Production → *Branch Tracking* pon esa rama.
+2. **Base de datos gratuita:** `empire-ai` → Storage → Create Database → **Neon** (plan Free) → conectar al proyecto (entornos Production y Preview). Esto inyecta la conexión. Luego Deployments → Redeploy.
+3. **Crear tu usuario:** abre `https://<tu-dominio>/setup`, escribe el código `SETUP_TOKEN` y tu correo/contraseña. La página se desactiva sola después.
 
-## 3. Rutinas — GitHub Actions
-Settings → Secrets and variables → Actions:
-- `EMPIRE_DATABASE_URL` (misma de Supabase), `EMPIRE_SESSION_SECRET`.
-- Opcionales: `GUMROAD_ACCESS_TOKEN`, `MAIL_HOST`, `MAIL_USER`, `MAIL_PASS`, `MAIL_FROM`.
-Prueba: Actions → *Empire Routines* → Run workflow → `daily`.
+Verificación: `https://<tu-dominio>/api/health` → `{"ok":true,"db":"pg"}`.
 
-## 4. Mercado Pago (cuando el propietario lo autorice)
-Ver `API_INTEGRATIONS.md`. Agrega `MP_ACCESS_TOKEN`, `MP_WEBHOOK_SECRET`, `PUBLIC_BASE_URL` en Vercel.
+## Alternativa: Supabase
+Si prefieres Supabase: crea el proyecto, copia la cadena *Session pooler* y agrégala en Vercel como `DATABASE_URL`. La migración `002_rls.sql` protege las tablas de la API REST pública de Supabase.
+
+## Rutinas
+- Principal: Vercel Cron (sin configuración extra).
+- Alternativa: `.github/workflows/empire-routines.yml` (requiere el secreto `EMPIRE_DATABASE_URL`; sin él no hace nada).
 
 ## Desarrollo local
 ```bash
@@ -29,11 +29,3 @@ npm install
 npm run user:create -- --email yo@local.test --role owner   # PGlite en .data/ si no hay DATABASE_URL
 npm run dev                                                  # http://localhost:3000
 ```
-PGlite es solo para desarrollo (un proceso a la vez). Para producción siempre PostgreSQL.
-
-## Verificación posterior al despliegue
-- [ ] `/api/health` ok con `db: pg`
-- [ ] `/cotizafacil` envía un lead de prueba y aparece en Clientes potenciales (luego márcalo `lost`)
-- [ ] Login con bloqueo tras 5 intentos fallidos
-- [ ] Workflow *Empire Routines* `daily` en verde y el informe visible en el Dashboard
-- [ ] Seguridad → cadena de auditoría íntegra

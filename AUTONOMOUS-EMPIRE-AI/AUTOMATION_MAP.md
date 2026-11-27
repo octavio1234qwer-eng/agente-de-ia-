@@ -4,12 +4,14 @@
 |---|---|---|
 | `hourly.gumroad-sync` | cada hora (:17) | Concilia ventas y productos de Gumroad (solo lectura) |
 | `hourly.email-outbox` | cada hora | Envía correos **aprobados** a leads con consentimiento, con tope diario |
+| `daily.retention` | diario | Borra datos técnicos vencidos (límites de tasa, sesiones expiradas, intentos de login > 90 d, eventos > 180 d). Nunca negocio ni auditoría |
 | `daily.ceo-cycle` | 06:41 | Salud → puntuar leads → seguimientos (borradores) → 2 borradores de contenido → cumplimiento → P&L 30 d → presupuesto → embudo → compuerta de validación → informe ejecutivo |
 | `weekly.ceo-cycle` | lunes 07:23 | Enlaces rotos → oportunidades → P&L 7 d → embudo 7 d → compuerta → informe semanal + decisión registrada |
 | `monthly.ceo-cycle` | día 1, 08:11 | P&L 30 d → oportunidades → compuerta → informe mensual |
 
 ## Disparadores
-1. **GitHub Actions** (`.github/workflows/empire-routines.yml`): ejecuta `npm run routine -- <grupo>` directamente contra Supabase. No depende de un computador encendido ni del despliegue web. Requiere el secreto `EMPIRE_DATABASE_URL`.
+0. **Vercel Cron (principal en producción):** `vercel.json` llama `/api/cron/daily|hourly|weekly|monthly` (los grupos ejecutan todas sus rutinas). En el plan Hobby el grupo "hourly" corre una vez al día.
+1. **GitHub Actions (alternativa)** (`.github/workflows/empire-routines.yml`): ejecuta `npm run routine -- <grupo>` directamente contra Supabase. No depende de un computador encendido ni del despliegue web. Requiere el secreto `EMPIRE_DATABASE_URL`.
 2. **Alternativa HTTP:** `GET/POST /api/cron/<rutina>` con `Authorization: Bearer CRON_SECRET` (Vercel Cron o cualquier cron externo).
 3. **Manual:** Command Center → Automatizaciones, o `npm run routine -- daily.ceo-cycle [--force]`.
 4. **Claude Code Scheduled Tasks:** disponible en esta cuenta; no se creó ninguna sin autorización del propietario. Uso sugerido: una tarea semanal que lea el informe y proponga cambios de código en una rama.
