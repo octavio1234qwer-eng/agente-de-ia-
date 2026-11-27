@@ -1,0 +1,53 @@
+{
+  "_comment": "Calendario editorial. El agente de marketing crea el borrador 7 días antes y pide aprobación para publicarlo. Ningún texto inventa testimonios, cifras de usuarios ni ventas.",
+  "items": [
+    {
+      "key": "2026-12-01-fb-como-cotizar",
+      "publish_on": "2026-12-01",
+      "kind": "social_post",
+      "channel": "facebook_grupos",
+      "title": "Consejo: 3 datos que toda cotización debe tener",
+      "body": "Si cobras por proyecto (plomería, electricidad, diseño, eventos), tu cotización debería tener siempre:\n\n1. Vigencia (por ejemplo, 15 días). Evita que te pidan el precio viejo meses después.\n2. Materiales y mano de obra por separado. El cliente entiende qué está pagando.\n3. Condiciones de pago (por ejemplo, 50 % de anticipo).\n\nHice una herramienta gratis para armarlas desde el celular, con IVA y retenciones, y mandarlas en PDF por WhatsApp: {APP_URL}/app\n\nSi la pruebas, me ayuda mucho saber qué le falta."
+    },
+    {
+      "key": "2026-12-03-articulo-margen",
+      "publish_on": "2026-12-03",
+      "kind": "article",
+      "channel": "blog",
+      "title": "Margen vs. recargo: cómo calcular tu precio sin perder dinero",
+      "body": "Borrador de guía SEO. Puntos clave:\n- Recargo: precio = costo × (1 + %). Margen: precio = costo ÷ (1 − %).\n- Ejemplo: costo $100, 30 %. Recargo → $130 (margen real 23 %). Margen → $142.86.\n- Por qué importa: con recargo crees que ganas 30 % y ganas 23 %.\n- Cómo verlo en CotizaFácil: agrega el costo interno a cada concepto; el cliente no lo ve.\nLlamado a la acción: {APP_URL}/app"
+    },
+    {
+      "key": "2026-12-05-whatsapp-estado",
+      "publish_on": "2026-12-05",
+      "kind": "social_post",
+      "channel": "whatsapp_estado",
+      "title": "Estado de WhatsApp: cotiza en 2 minutos",
+      "body": "¿Te piden cotización por WhatsApp? Ármala gratis con IVA y retenciones y mándala en PDF: {APP_URL}/app"
+    },
+    {
+      "key": "2026-12-08-video-guion",
+      "publish_on": "2026-12-08",
+      "kind": "video_script",
+      "channel": "tiktok_reels",
+      "title": "Guion: cotización profesional en 60 segundos",
+      "body": "0-3 s: \"¿Sigues mandando precios en un mensaje de WhatsApp?\"\n3-15 s: Pantalla del celular: abrir CotizaFácil, escribir el nombre del cliente.\n15-35 s: Agregar 2 conceptos (material y mano de obra), elegir IVA 16 %.\n35-50 s: Tocar \"PDF\" y compartir por WhatsApp.\n50-60 s: \"Gratis, sin registro: {APP_URL}\".\nNota: grabar con datos de ejemplo, sin clientes reales."
+    },
+    {
+      "key": "2026-12-10-correo-novedades",
+      "publish_on": "2026-12-10",
+      "kind": "email",
+      "channel": "email_prospectos",
+      "title": "Cierra el año con tus cotizaciones en orden",
+      "body": "Para prospectos con consentimiento. Tema: revisar las cotizaciones enviadas en diciembre y dar seguimiento a las que no tuvieron respuesta. Incluir enlace a {APP_URL}/app y enlace de baja."
+    },
+    {
+      "key": "2026-12-15-articulo-retenciones",
+      "publish_on": "2026-12-15",
+      "kind": "article",
+      "channel": "blog",
+      "title": "Retenciones de ISR e IVA en una cotización: cuándo aplican",
+      "body": "Borrador de guía SEO (revisar con contador antes de publicar):\n- Cuándo una persona moral retiene a una persona física (honorarios, arrendamiento, RESICO).\n- Ejemplo numérico con base $10,000.\n- Aclarar que la cotización no es un CFDI y que las tasas deben confirmarse con un contador.\nLlamado a la acción: {APP_URL}/app"
+    }
+  ]
+}
