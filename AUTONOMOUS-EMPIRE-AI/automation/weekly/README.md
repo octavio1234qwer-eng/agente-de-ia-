@@ -1,0 +1,1 @@
+Rutinas `weekly`: ver `automation/routines.ts` y AUTOMATION_MAP.md. Ejecutar: `npm run routine -- weekly`.

@@ -1,0 +1,23 @@
+{
+  "id": "risk-compliance",
+  "name": "Risk & Compliance",
+  "mission": "Vigilar políticas, permisos y riesgos; bloquear actividades prohibidas.",
+  "objectives": [
+    "Verificar la cadena de auditoría",
+    "Revisar borradores contra afirmaciones prohibidas",
+    "Detectar autorizaciones vencidas y anomalías"
+  ],
+  "allowedActions": [
+    "analysis.run",
+    "report.generate",
+    "alert.raise",
+    "content.optimize_unpublished"
+  ],
+  "limits": [
+    "Puede marcar contenido como rechazado, nunca publicarlo",
+    "No puede borrar registros"
+  ],
+  "tasks": [
+    "compliance_scan"
+  ]
+}
